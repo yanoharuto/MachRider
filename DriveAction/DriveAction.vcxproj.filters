@@ -1,0 +1,678 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="ソース ファイル">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="ヘッダー ファイル">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="リソース ファイル">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="ソース ファイル\Object">
+      <UniqueIdentifier>{1c037b93-3ff8-4e9b-ac34-ce56881180fd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Object">
+      <UniqueIdentifier>{251e742b-3038-41b0-af8b-8686bbe3d6b2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Other">
+      <UniqueIdentifier>{00ee31b7-c722-4f40-8b03-75f0a1442fa4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Scene">
+      <UniqueIdentifier>{204955e0-8da9-440a-9af2-537e4376a80c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Scene">
+      <UniqueIdentifier>{8383fa5b-9d83-4856-842e-ebd272738527}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Other">
+      <UniqueIdentifier>{1957b2a2-f757-4027-be7f-e2fd38e93bec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\UI">
+      <UniqueIdentifier>{7a644cc7-0945-46ec-9a27-555aa01c42b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Manager">
+      <UniqueIdentifier>{35d7828b-b971-49c4-a607-acf5b8c69e9b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\UI">
+      <UniqueIdentifier>{338e45e3-91c8-4426-b4db-7bd6ecacbcff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Manager">
+      <UniqueIdentifier>{bcab736a-8690-4787-bc16-996bc2bc75f0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Loader">
+      <UniqueIdentifier>{08a6480f-c62b-4a47-87c2-801018dd7c44}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\StructAndEnum">
+      <UniqueIdentifier>{b2fbedbf-26c1-46e3-ba8e-9808f1d792fe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\ConflictCheck">
+      <UniqueIdentifier>{23c088e0-5aaa-4786-ad3f-22dc6e6cbce1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Item">
+      <UniqueIdentifier>{97863e50-3e6b-490c-b1a7-28a01d39d6c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Item">
+      <UniqueIdentifier>{d3456835-4762-4ee4-af44-83faa7c095e0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\ConflictCheck">
+      <UniqueIdentifier>{66dd1af6-8217-4128-a578-1ce41ea1a203}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\DataCreate">
+      <UniqueIdentifier>{d45e06d8-cfc2-46f7-9cd1-d890e6ad5d45}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\DataCreate">
+      <UniqueIdentifier>{beb78013-cb70-4f43-890e-89347d2a22e0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Loader">
+      <UniqueIdentifier>{43866282-d834-46d9-921c-4ce1e384f969}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="SkyDome.cpp">
+      <Filter>ソース ファイル\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerCar.cpp">
+      <Filter>ソース ファイル\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Utility.h">
+      <Filter>ヘッダー ファイル\Other</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayScene.cpp">
+      <Filter>ソース ファイル\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="ResultScene.cpp">
+      <Filter>ソース ファイル\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="TitleScene.cpp">
+      <Filter>ソース ファイル\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="UserInput.cpp">
+      <Filter>ソース ファイル\Other</Filter>
+    </ClCompile>
+    <ClCompile Include="CircuitTrack.cpp">
+      <Filter>ソース ファイル\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="RaceCamera.cpp">
+      <Filter>ソース ファイル\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Car.cpp">
+      <Filter>ソース ファイル\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="CPUCar.cpp">
+      <Filter>ソース ファイル\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>ソース ファイル\Other</Filter>
+    </ClCompile>
+    <ClCompile Include="Timer.cpp">
+      <Filter>ソース ファイル\Other</Filter>
+    </ClCompile>
+    <ClCompile Include="Wheels.cpp">
+      <Filter>ソース ファイル\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="StageManager.cpp">
+      <Filter>ソース ファイル\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="TitleSceeneFlow.cpp">
+      <Filter>ソース ファイル\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="PlaySceneFlow.cpp">
+      <Filter>ソース ファイル\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="RacePrevProcess.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="RacerManager.cpp">
+      <Filter>ソース ファイル\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="MiniMap.cpp">
+      <Filter>ソース ファイル\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="CountDown.cpp">
+      <Filter>ソース ファイル\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="ResultSceneFlow.cpp">
+      <Filter>ソース ファイル\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="SwitchUI.cpp">
+      <Filter>ソース ファイル\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Effect.cpp">
+      <Filter>ソース ファイル\Other</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerRelatedUI.cpp">
+      <Filter>ソース ファイル\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="ConflictManager.cpp">
+      <Filter>ソース ファイル\ConflictCheck</Filter>
+    </ClCompile>
+    <ClCompile Include="HitChecker.cpp">
+      <Filter>ソース ファイル\ConflictCheck</Filter>
+    </ClCompile>
+    <ClCompile Include="DamageObject.cpp">
+      <Filter>ソース ファイル\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Item.cpp">
+      <Filter>ソース ファイル\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="PostGoalStaging.cpp">
+      <Filter>ソース ファイル\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="CreatePosAndDirData.cpp">
+      <Filter>ソース ファイル\DataCreate</Filter>
+    </ClCompile>
+    <ClCompile Include="VectorDataCreator.cpp">
+      <Filter>ソース ファイル\DataCreate</Filter>
+    </ClCompile>
+    <ClCompile Include="FiringItemManager.cpp">
+      <Filter>ソース ファイル\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Racer.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="CPU.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="DamageObjectGenerator.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="AssetManager.cpp">
+      <Filter>ソース ファイル\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="FadeInFadeOut.cpp">
+      <Filter>ソース ファイル\Other</Filter>
+    </ClCompile>
+    <ClCompile Include="GimmickObject.cpp">
+      <Filter>ソース ファイル\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Rocket.cpp">
+      <Filter>ソース ファイル\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="SoundPlayer.cpp">
+      <Filter>ソース ファイル\Other</Filter>
+    </ClCompile>
+    <ClCompile Include="StageSelect.cpp">
+      <Filter>ソース ファイル\Other</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneFlowBase.cpp">
+      <Filter>ソース ファイル\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="ResultScore.cpp">
+      <Filter>ソース ファイル\Other</Filter>
+    </ClCompile>
+    <ClCompile Include="RaceMenu.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="FlyShip.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="RotatingLasers.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="LaserFlyShip.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="BomberFlyShip.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Clock.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="FlyShipManager.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="ArgumentConflictResultInfo.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="ConflictProccesor.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="SphereCollider.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="MeshCollider.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="ShadowMap.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="UpDownLaserFlyShip.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="BigRadiusLaser.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="LittleRadiusLaser.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="LineCollider.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="CircleLaserFlyShip.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Coin.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="CoinManager.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="TimerUI.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="NumUI.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="CSVFileLoader.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Rock.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="WallCollider.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="StageWall.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="RaceScreen.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="RankingData.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="InitActor.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="UIManager.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="EffectManager.cpp">
+      <Filter>ソース ファイル\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectSubject.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectObserver.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneBase.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Menu.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="FirstPositionGetter.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="FlyShipCommander.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="StopWatch.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="CircleFlyshipCommander.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="ChallengeFlow.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="UpDownFlyShipCommander.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="SkyDome.h">
+      <Filter>ヘッダー ファイル\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerCar.h">
+      <Filter>ヘッダー ファイル\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="UserInput.h">
+      <Filter>ヘッダー ファイル\Other</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayScene.h">
+      <Filter>ヘッダー ファイル\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="ResultScene.h">
+      <Filter>ヘッダー ファイル\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneBase.h">
+      <Filter>ヘッダー ファイル\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="TitleScene.h">
+      <Filter>ヘッダー ファイル\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="CircuitTrack.h">
+      <Filter>ヘッダー ファイル\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object.h">
+      <Filter>ヘッダー ファイル\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor.h">
+      <Filter>ヘッダー ファイル\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Car.h">
+      <Filter>ヘッダー ファイル\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="CPUCar.h">
+      <Filter>ヘッダー ファイル\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="HitChecker.h">
+      <Filter>ヘッダー ファイル\Other</Filter>
+    </ClInclude>
+    <ClInclude Include="Timer.h">
+      <Filter>ヘッダー ファイル\Other</Filter>
+    </ClInclude>
+    <ClInclude Include="UIManager.h">
+      <Filter>ヘッダー ファイル\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="RaceCamera.h">
+      <Filter>ヘッダー ファイル\Other</Filter>
+    </ClInclude>
+    <ClInclude Include="Wheels.h">
+      <Filter>ヘッダー ファイル\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="StageManager.h">
+      <Filter>ヘッダー ファイル\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="StageSelect.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="PlaySceneFlow.h">
+      <Filter>ヘッダー ファイル\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="TitleSceeneFlow.h">
+      <Filter>ヘッダー ファイル\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="UIDataStruct.h">
+      <Filter>ヘッダー ファイル\StructAndEnum</Filter>
+    </ClInclude>
+    <ClInclude Include="CircuitDataStruct.h">
+      <Filter>ヘッダー ファイル\StructAndEnum</Filter>
+    </ClInclude>
+    <ClInclude Include="StageDataAddressStruct.h">
+      <Filter>ヘッダー ファイル\StructAndEnum</Filter>
+    </ClInclude>
+    <ClInclude Include="ConflictExamineResultInfo.h">
+      <Filter>ヘッダー ファイル\StructAndEnum</Filter>
+    </ClInclude>
+    <ClInclude Include="RacePrevProcess.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="RacerManager.h">
+      <Filter>ヘッダー ファイル\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="CountDown.h">
+      <Filter>ヘッダー ファイル\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="ListUtility.h">
+      <Filter>ヘッダー ファイル\Other</Filter>
+    </ClInclude>
+    <ClInclude Include="MiniMap.h">
+      <Filter>ヘッダー ファイル\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="PostGoalStaging.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="ResultScore.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="NeighborhoodInfo.h">
+      <Filter>ヘッダー ファイル\StructAndEnum</Filter>
+    </ClInclude>
+    <ClInclude Include="PlaySceeneProgressEnum.h">
+      <Filter>ヘッダー ファイル\StructAndEnum</Filter>
+    </ClInclude>
+    <ClInclude Include="CarNeighborhoodExamineInfo.h">
+      <Filter>ヘッダー ファイル\StructAndEnum</Filter>
+    </ClInclude>
+    <ClInclude Include="OriginalMath.h">
+      <Filter>ヘッダー ファイル\Other</Filter>
+    </ClInclude>
+    <ClInclude Include="Saw.h">
+      <Filter>ヘッダー ファイル\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="HitCheckExamineObjectInfo.h">
+      <Filter>ヘッダー ファイル\StructAndEnum</Filter>
+    </ClInclude>
+    <ClInclude Include="GimmickObject.h">
+      <Filter>ヘッダー ファイル\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerRelatedUI.h">
+      <Filter>ヘッダー ファイル\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="ResultSceneFlow.h">
+      <Filter>ヘッダー ファイル\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SwitchUI.h">
+      <Filter>ヘッダー ファイル\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="SoundPlayer.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneFlowBase.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemArgumentCarInfo.h">
+      <Filter>ヘッダー ファイル\StructAndEnum</Filter>
+    </ClInclude>
+    <ClInclude Include="DamageObject.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Item.h">
+      <Filter>ヘッダー ファイル\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Rocket.h">
+      <Filter>ヘッダー ファイル\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="CpuCarMode.h">
+      <Filter>ヘッダー ファイル\StructAndEnum</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemUseSituation.h">
+      <Filter>ヘッダー ファイル\StructAndEnum</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemTag.h">
+      <Filter>ヘッダー ファイル\StructAndEnum</Filter>
+    </ClInclude>
+    <ClInclude Include="Effect.h">
+      <Filter>ヘッダー ファイル\Other</Filter>
+    </ClInclude>
+    <ClInclude Include="FadeInFadeOut.h">
+      <Filter>ヘッダー ファイル\Other</Filter>
+    </ClInclude>
+    <ClInclude Include="ConflictManager.h">
+      <Filter>ヘッダー ファイル\ConflictCheck</Filter>
+    </ClInclude>
+    <ClInclude Include="CreatePosAndDirData.h">
+      <Filter>ヘッダー ファイル\DataCreate</Filter>
+    </ClInclude>
+    <ClInclude Include="FadeMode.h">
+      <Filter>ヘッダー ファイル\StructAndEnum</Filter>
+    </ClInclude>
+    <ClInclude Include="FiringItemManager.h">
+      <Filter>ヘッダー ファイル\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="InputDirection.h">
+      <Filter>ヘッダー ファイル\StructAndEnum</Filter>
+    </ClInclude>
+    <ClInclude Include="HandleDirection.h">
+      <Filter>ヘッダー ファイル\StructAndEnum</Filter>
+    </ClInclude>
+    <ClInclude Include="VectorDataCreator.h">
+      <Filter>ヘッダー ファイル\DataCreate</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemInfo.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Racer.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="CPU.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjPosAndDir.h">
+      <Filter>ヘッダー ファイル\StructAndEnum</Filter>
+    </ClInclude>
+    <ClInclude Include="AssetManager.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="DamageObjectGenerator.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="EffectManager.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="RaceMenu.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneType.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Rule.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="CarModelEnum.h">
+      <Filter>ヘッダー ファイル\StructAndEnum</Filter>
+    </ClInclude>
+    <ClInclude Include="CarParamater.h">
+      <Filter>ヘッダー ファイル\StructAndEnum</Filter>
+    </ClInclude>
+    <ClInclude Include="FlyShip.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="FlyShipKind.h">
+      <Filter>ヘッダー ファイル\StructAndEnum</Filter>
+    </ClInclude>
+    <ClInclude Include="FlyShipArgumentInfo.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="RotatingLasers.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="LaserFlyShip.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="BomberFlyShip.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Clock.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="FlyShipManager.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="ArgumentConflictResultInfo.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="ConflictProccesor.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="SphereCollider.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="MeshCollider.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="ShadowMap.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="UpDownLaserFlyShip.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="BigRadiusLaser.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="LittleRadiusLaser.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="LineCollider.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="CircleLaserFlyShip.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Coin.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="CoinManager.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="TimerUI.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="NumUI.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="CSVFileLoader.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Rock.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="FirstPositionGetter.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="WallCollider.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="StageWall.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="RaceScreen.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="RankingData.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="InitActor.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="InitObjKind.h">
+      <Filter>ヘッダー ファイル\StructAndEnum</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectSubject.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectObserver.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Menu.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="FlyShipCommander.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="StopWatch.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="CircleFlyshipCommander.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="ChallengeFlow.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="UpDownFlyShipCommander.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

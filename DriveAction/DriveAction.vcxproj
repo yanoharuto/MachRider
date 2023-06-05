@@ -1,0 +1,376 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>16.0</VCProjectVersion>
+    <Keyword>Win32Proj</Keyword>
+    <ProjectGuid>{ed942629-c9c9-4a15-b546-f0ea5b1ca83f}</ProjectGuid>
+    <RootNamespace>DriveAction</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>DxLib_h</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <CallingConvention>Cdecl</CallingConvention>
+      <LanguageStandard_C>Default</LanguageStandard_C>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>DxLib_h</AdditionalLibraryDirectories>
+      <AdditionalDependencies>onecore.lib;onecoreuap.lib;user32.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>C:\Users\8bith\OneDrive\デスクトップ\DxLib_h</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <CallingConvention>Cdecl</CallingConvention>
+      <LanguageStandard_C>Default</LanguageStandard_C>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>C:\Users\8bith\OneDrive\デスクトップ\DxLib_h</AdditionalLibraryDirectories>
+      <AdditionalDependencies>onecore.lib;onecoreuap.lib;user32.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>DxLib_h</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <CallingConvention>Cdecl</CallingConvention>
+      <LanguageStandard_C>Default</LanguageStandard_C>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>DxLib_h</AdditionalLibraryDirectories>
+      <AdditionalDependencies>onecore.lib;onecoreuap.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>C:\Users\8bith\OneDrive\デスクトップ\DxLib_h</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <CallingConvention>Cdecl</CallingConvention>
+      <LanguageStandard_C>Default</LanguageStandard_C>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>C:\Users\8bith\OneDrive\デスクトップ\DxLib_h</AdditionalLibraryDirectories>
+      <AdditionalDependencies>onecore.lib;onecoreuap.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="Actor.cpp" />
+    <ClCompile Include="ArgumentConflictResultInfo.cpp" />
+    <ClCompile Include="AssetManager.cpp" />
+    <ClCompile Include="BigRadiusLaser.cpp" />
+    <ClCompile Include="BomberFlyShip.cpp" />
+    <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="ChallengeFlow.cpp" />
+    <ClCompile Include="CircleFlyshipCommander.cpp" />
+    <ClCompile Include="CircleLaserFlyShip.cpp" />
+    <ClCompile Include="Clock.cpp" />
+    <ClCompile Include="Coin.cpp" />
+    <ClCompile Include="CoinManager.cpp" />
+    <ClCompile Include="ConflictProccesor.cpp" />
+    <ClCompile Include="CPU.cpp" />
+    <ClCompile Include="CSVFileLoader.cpp" />
+    <ClCompile Include="DamageObject.cpp" />
+    <ClCompile Include="EffectManager.cpp" />
+    <ClCompile Include="FiringItemManager.cpp" />
+    <ClCompile Include="DamageObjectGenerator.cpp" />
+    <ClCompile Include="FlyShipCommander.cpp" />
+    <ClCompile Include="FirstPositionGetter.cpp" />
+    <ClCompile Include="Menu.cpp" />
+    <ClCompile Include="ObjectObserver.cpp" />
+    <ClCompile Include="FlyShip.cpp" />
+    <ClCompile Include="FlyShipManager.cpp" />
+    <ClCompile Include="CreatePosAndDirData.cpp" />
+    <ClCompile Include="FadeInFadeOut.cpp" />
+    <ClCompile Include="InitActor.cpp" />
+    <ClCompile Include="Item.cpp" />
+    <ClCompile Include="LaserFlyShip.cpp" />
+    <ClCompile Include="LineCollider.cpp" />
+    <ClCompile Include="LittleRadiusLaser.cpp" />
+    <ClCompile Include="MeshCollider.cpp" />
+    <ClCompile Include="NumUI.cpp" />
+    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="RaceMenu.cpp" />
+    <ClCompile Include="Racer.cpp" />
+    <ClCompile Include="RaceScreen.cpp" />
+    <ClCompile Include="RankingData.cpp" />
+    <ClCompile Include="Rock.cpp" />
+    <ClCompile Include="Rocket.cpp" />
+    <ClCompile Include="RotatingLasers.cpp" />
+    <ClCompile Include="SceneBase.cpp" />
+    <ClCompile Include="SceneFlowBase.cpp" />
+    <ClCompile Include="ShadowMap.cpp" />
+    <ClCompile Include="SoundPlayer.cpp" />
+    <ClCompile Include="Car.cpp" />
+    <ClCompile Include="ConflictManager.cpp" />
+    <ClCompile Include="CountDown.cpp" />
+    <ClCompile Include="CPUCar.cpp" />
+    <ClCompile Include="Effect.cpp" />
+    <ClCompile Include="GimmickObject.cpp" />
+    <ClCompile Include="MiniMap.cpp" />
+    <ClCompile Include="PlayerRelatedUI.cpp" />
+    <ClCompile Include="PostGoalStaging.cpp" />
+    <ClCompile Include="RacePrevProcess.cpp" />
+    <ClCompile Include="ResultSceneFlow.cpp" />
+    <ClCompile Include="ResultScore.cpp" />
+    <ClCompile Include="SphereCollider.cpp" />
+    <ClCompile Include="StageWall.cpp" />
+    <ClCompile Include="ObjectSubject.cpp" />
+    <ClCompile Include="StopWatch.cpp" />
+    <ClCompile Include="SwitchUI.cpp" />
+    <ClCompile Include="TimerUI.cpp" />
+    <ClCompile Include="UIManager.cpp" />
+    <ClCompile Include="UpDownFlyShipCommander.cpp" />
+    <ClCompile Include="UpDownLaserFlyShip.cpp" />
+    <ClCompile Include="RacerManager.cpp" />
+    <ClCompile Include="PlaySceneFlow.cpp" />
+    <ClCompile Include="StageManager.cpp" />
+    <ClCompile Include="StageSelect.cpp" />
+    <ClCompile Include="TitleSceeneFlow.cpp" />
+    <ClCompile Include="VectorDataCreator.cpp" />
+    <ClCompile Include="WallCollider.cpp" />
+    <ClCompile Include="Wheels.cpp" />
+    <ClCompile Include="HitChecker.cpp" />
+    <ClCompile Include="RaceCamera.cpp" />
+    <ClCompile Include="CircuitTrack.cpp" />
+    <ClCompile Include="Timer.cpp" />
+    <ClCompile Include="UserInput.cpp" />
+    <ClCompile Include="SkyDome.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="PlayerCar.cpp" />
+    <ClCompile Include="PlayScene.cpp" />
+    <ClCompile Include="ResultScene.cpp" />
+    <ClCompile Include="TitleScene.cpp" />
+    <ClCompile Include="Utility.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Actor.h" />
+    <ClInclude Include="ArgumentConflictResultInfo.h" />
+    <ClInclude Include="AssetManager.h" />
+    <ClInclude Include="BigRadiusLaser.h" />
+    <ClInclude Include="BomberFlyShip.h" />
+    <ClInclude Include="Camera.h" />
+    <ClInclude Include="CarModelEnum.h" />
+    <ClInclude Include="CarParamater.h" />
+    <ClInclude Include="ChallengeFlow.h" />
+    <ClInclude Include="CircleFlyshipCommander.h" />
+    <ClInclude Include="CircleLaserFlyShip.h" />
+    <ClInclude Include="Clock.h" />
+    <ClInclude Include="Coin.h" />
+    <ClInclude Include="CoinManager.h" />
+    <ClInclude Include="ConflictProccesor.h" />
+    <ClInclude Include="CPU.h" />
+    <ClInclude Include="CSVFileLoader.h" />
+    <ClInclude Include="DamageObject.h" />
+    <ClInclude Include="EffectManager.h" />
+    <ClInclude Include="FiringItemManager.h" />
+    <ClInclude Include="DamageObjectGenerator.h" />
+    <ClInclude Include="FlyShipCommander.h" />
+    <ClInclude Include="Menu.h" />
+    <ClInclude Include="ObjectObserver.h" />
+    <ClInclude Include="FlyShip.h" />
+    <ClInclude Include="FlyShipArgumentInfo.h" />
+    <ClInclude Include="FlyShipKind.h" />
+    <ClInclude Include="FlyShipManager.h" />
+    <ClInclude Include="CpuCarMode.h" />
+    <ClInclude Include="CreatePosAndDirData.h" />
+    <ClInclude Include="FadeInFadeOut.h" />
+    <ClInclude Include="FadeMode.h" />
+    <ClInclude Include="FirstPositionGetter.h" />
+    <ClInclude Include="HandleDirection.h" />
+    <ClInclude Include="InitActor.h" />
+    <ClInclude Include="InitObjKind.h" />
+    <ClInclude Include="InputDirection.h" />
+    <ClInclude Include="Item.h" />
+    <ClInclude Include="ItemArgumentCarInfo.h" />
+    <ClInclude Include="ItemInfo.h" />
+    <ClInclude Include="ItemTag.h" />
+    <ClInclude Include="ItemUseSituation.h" />
+    <ClInclude Include="LaserFlyShip.h" />
+    <ClInclude Include="LineCollider.h" />
+    <ClInclude Include="LittleRadiusLaser.h" />
+    <ClInclude Include="MeshCollider.h" />
+    <ClInclude Include="NumUI.h" />
+    <ClInclude Include="Player.h" />
+    <ClInclude Include="ObjPosAndDir.h" />
+    <ClInclude Include="RaceMenu.h" />
+    <ClInclude Include="Racer.h" />
+    <ClInclude Include="RaceScreen.h" />
+    <ClInclude Include="RankingData.h" />
+    <ClInclude Include="Rock.h" />
+    <ClInclude Include="Rocket.h" />
+    <ClInclude Include="RotatingLasers.h" />
+    <ClInclude Include="Rule.h" />
+    <ClInclude Include="SceneFlowBase.h" />
+    <ClInclude Include="SceneType.h" />
+    <ClInclude Include="ShadowMap.h" />
+    <ClInclude Include="SoundPlayer.h" />
+    <ClInclude Include="ConflictExamineResultInfo.h" />
+    <ClInclude Include="Car.h" />
+    <ClInclude Include="CarNeighborhoodExamineInfo.h" />
+    <ClInclude Include="CircuitDataStruct.h" />
+    <ClInclude Include="ConflictManager.h" />
+    <ClInclude Include="CountDown.h" />
+    <ClInclude Include="CPUCar.h" />
+    <ClInclude Include="Effect.h" />
+    <ClInclude Include="GimmickObject.h" />
+    <ClInclude Include="ListUtility.h" />
+    <ClInclude Include="MiniMap.h" />
+    <ClInclude Include="NeighborhoodInfo.h" />
+    <ClInclude Include="PlayerRelatedUI.h" />
+    <ClInclude Include="Saw.h" />
+    <ClInclude Include="OriginalMath.h" />
+    <ClInclude Include="PostGoalStaging.h" />
+    <ClInclude Include="RacePrevProcess.h" />
+    <ClInclude Include="ResultSceneFlow.h" />
+    <ClInclude Include="ResultScore.h" />
+    <ClInclude Include="SphereCollider.h" />
+    <ClInclude Include="StageDataAddressStruct.h" />
+    <ClInclude Include="StageWall.h" />
+    <ClInclude Include="ObjectSubject.h" />
+    <ClInclude Include="StopWatch.h" />
+    <ClInclude Include="SwitchUI.h" />
+    <ClInclude Include="TimerUI.h" />
+    <ClInclude Include="UpDownFlyShipCommander.h" />
+    <ClInclude Include="UpDownLaserFlyShip.h" />
+    <ClInclude Include="RacerManager.h" />
+    <ClInclude Include="PlaySceneFlow.h" />
+    <ClInclude Include="PlaySceeneProgressEnum.h" />
+    <ClInclude Include="StageManager.h" />
+    <ClInclude Include="StageSelect.h" />
+    <ClInclude Include="TitleSceeneFlow.h" />
+    <ClInclude Include="UIDataStruct.h" />
+    <ClInclude Include="UIManager.h" />
+    <ClInclude Include="VectorDataCreator.h" />
+    <ClInclude Include="WallCollider.h" />
+    <ClInclude Include="Wheels.h" />
+    <ClInclude Include="HitChecker.h" />
+    <ClInclude Include="Object.h" />
+    <ClInclude Include="RaceCamera.h" />
+    <ClInclude Include="CircuitTrack.h" />
+    <ClInclude Include="Timer.h" />
+    <ClInclude Include="UserInput.h" />
+    <ClInclude Include="SkyDome.h" />
+    <ClInclude Include="PlayerCar.h" />
+    <ClInclude Include="PlayScene.h" />
+    <ClInclude Include="ResultScene.h" />
+    <ClInclude Include="SceneBase.h" />
+    <ClInclude Include="TitleScene.h" />
+    <ClInclude Include="HitCheckExamineObjectInfo.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
