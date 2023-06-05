@@ -1,0 +1,18 @@
+﻿        //描画範囲の開始距離
+        nearValue = 2
+15
+        //描画範囲の最終距離
+        farValue = 5
+10700
+        //オブジェクトの見える範囲角度
+        lookingDegree = 8
+180
+        //描画対象との距離
+        targetBetween = 11
+100
+        //カメラのY距離
+        yBetween = 14
+10
+        //カメラの移動速度
+        cameraSpeed = 17
+0.045

@@ -1,0 +1,9 @@
+﻿        //タイトルシーンのカメラ
+        title
+data/Camera/TitleCameraInitData.csv
+        //遊んでる時のカメラ
+        game
+data/Camera/GameCameraInitData.csv
+        //リザルト画面でのカメラ
+        result
+data/Camera/ResultCameraInitData.csv

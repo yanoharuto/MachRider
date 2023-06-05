@@ -1,0 +1,5 @@
+﻿    width,6000
+length,6000
+    rockFilePass,data/stageData/stage1/stage_Map_stageMap_Rocks.csv
+    challengesListFilePass,data/stageData/stage1/challengeList.xlsx
+    playerPositionFilePass,data/stageData/stage1/stage_Map_player_firstPos.csv

@@ -1,0 +1,36 @@
+        //爆撃機の飛ぶ音
+       bomberShipFlight
+data/sound/bomberShipFlight.csv
+       //プレイヤーの動くときの音
+       playerFlight
+data/sound/playerFlight.csv
+       //プレイヤーのダメージを受けた時の音
+       playerDamage
+data/sound/playerDamage.csv
+       //コインをゲットしたときの音
+       coinGet
+data/sound/coinGet.csv
+       //カウントダウン
+       countDown
+data/sound/countDown.csv
+       //遊んでいるときのBGM
+       playBGM
+data/sound/playBGM.csv
+       //拍手
+       clap
+data/sound/clap.csv
+       //ゲーム開始
+       fanfare
+data/sound/fanfare.csv
+       //タイトルのBGM
+       titleBGM
+data/sound/titleBGM.csv
+//スコアを表示するときに鳴る音
+       scoreStartSE
+data/sound/scoreStartSE.csv
+       //スコアを表示し終わったときに鳴る音
+       scoreEndSE
+data/sound/scoreEndSE.csv
+       //次のシーンに行く時の音
+       sceneNextSE
+data/sound/sceneNextSE.csv

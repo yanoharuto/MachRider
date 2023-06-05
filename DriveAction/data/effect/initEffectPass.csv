@@ -1,0 +1,27 @@
+    //車がぶつかった時のエフェクト
+    carConflict
+data/effect/carConflict.csv
+    //車が風を切っているときのエフェクト
+    carWind
+data/effect/carMove.csv
+    //車が加速したときのエフェクト
+    carTurbo
+data/effect/.csv
+    //車がダメージを受けた時のエフェクト
+    carDamage
+data/effect/carDamage.csv
+    //回転半径が小さいレーザー
+    littleRadiusLaser
+data/effect/littleRadiusLaser.csv
+    //回転半径が大きいレーザー
+    bigRadiusLaser
+data/effect/bigRadiusLaser.csv
+    //レーザーの跡
+    LaserTrack
+data/effect/LaserTrack.csv
+//コインをゲットしたときのエフェクト
+    getCoin
+data/effect/getCoin.csv
+    //爆弾の爆発
+    bombExplosion
+data/effect/bomb.csv

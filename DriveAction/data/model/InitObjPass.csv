@@ -1,0 +1,48 @@
+﻿//プレイヤー機
+    player
+data/model/Player/iceBrades.csv
+    //小さい岩
+    littleRock
+data/model/Stage/LittleRock.csv
+    //中くらいの岩
+    middleRock
+data/model/Stage/MiddleRock.csv
+    //大きい岩
+    bigRock
+data/model/Stage/BigRock.csv
+    //回転丸鋸
+    saw
+data/model/saw.csv
+    //爆撃機
+    bomberShip
+data/model/BomberShip/bomberShip.csv
+    //爆弾
+    bomber
+data/model/Rocket/bomb.csv
+//上下にレーザー撃つ飛行船
+    upDownLaserShip
+data/model/LaserShip/upDownLaserShip.csv
+    //円状に並ぶ機体
+    circleLaserShip
+data/model/LaserShip/circleLaserShip.csv
+    //小回りレーザー
+    littleRadiusLaser
+data/model/LaserShip/littleRadiusLaser.csv
+    //大回りレーザー
+    bigRadiusLaser
+data/model/LaserShip/bigRadiusLaser.csv
+//タイヤ
+    wheel
+data/model/Player/wheel.csv
+//収集アイテム
+collect
+data/model/Coin/coin.csv
+//床
+    floor
+data/model/Stage/floor.csv
+    //スカイドーム
+    skyDome
+data/model/SkyDome/skyDome.csv
+//ステージの外に出ないようにする壁
+stageWall
+data/model/Stage/wall.csv

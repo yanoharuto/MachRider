@@ -1,0 +1,24 @@
+﻿    //modelの相対パス
+    assetPass = 2
+data/model/LaserShip/Rocker.mv1
+    //大きさ
+    modelSize = 5
+0.3
+    //最初のポジション
+    firstPosY = 8
+400
+    //modelの当たり半径
+    collRadius = 11
+0
+    //跳ね返りの大きさ
+    bouncePower = 14
+0
+//マップの初期位置で使われている番号
+        mapTiledNum = 17
+1
+        //初期位置の情報が書いてあるファイル名
+        firstPosName = 20
+stageMap_enemyPos.csv
+        //追加情報の置いてある場所
+        addDataPass = 23
+data/model/LaserShip/addDataCircleShip.csv

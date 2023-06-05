@@ -1,0 +1,24 @@
+﻿    //modelの相対パス
+    assetPass = 2
+data/model/BomberShip/PrototypeZero.mv1
+    //大きさ
+    modelSize = 5
+0.7
+    //最初のポジション
+    firstPosY = 8
+500
+    //modelの当たり半径
+    collRadius = 11
+0
+    //跳ね返りの大きさ
+    bouncePower = 14
+0
+        //マップの初期位置で使われている番号
+        mapTiledNum = 20
+0
+ //初期位置の情報が書いてあるファイル名
+        firstPosName = 20
+/
+        //追加情報の置いてある場所
+        addDataPass = 23
+data/model/BomberShip/InitBomberShip.csv

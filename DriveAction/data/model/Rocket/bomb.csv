@@ -1,0 +1,24 @@
+﻿    //modelの相対パス
+    assetPass = 2
+data/model/Rocket/Rocket04_Grey.mv1
+    //大きさ
+    modelSize = 5
+3.5
+    //最初のポジション
+    firstPosY = 8
+0
+    //modelの当たり半径
+    collRadius = 11
+25
+    //跳ね返りの大きさ
+    bouncePower = 14
+4.25
+//マップの初期位置で使われている番号
+        mapTiledNum = 17
+0
+ //初期位置の情報が書いてあるファイル名
+        firstPosName = 20
+/
+        //追加情報の置いてある場所
+        addDataPass = 23
+/
