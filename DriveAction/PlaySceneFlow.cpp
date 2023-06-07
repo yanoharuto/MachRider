@@ -183,7 +183,7 @@ void PlaySceneFlow::GameUpdate()
 	shadowMap->SetShadowMapErea();
 
 	//レース終了
-	if (gameLimitTimer->IsOverLimitTime() || coinManager->GetCoinNowNum() == 0)
+	if (gameLimitTimer->IsOverLimitTime() || coinManager->GetRemainingCoin() == 0)
 	{
 		nowProgress = PlaySceeneProgress::playerGoal;
 		score = new ResultScore(gameLimitTimer, racerManager);

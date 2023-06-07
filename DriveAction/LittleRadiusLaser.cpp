@@ -1,5 +1,7 @@
 #include "LittleRadiusLaser.h"
 #include "EffectManager.h"
+#include "ObjectObserver.h"
+
 //回転速度
 const float LittleRadiusLaser::rotaSpeed = 4.0f;
 //レーザーの中心からの距離
@@ -22,6 +24,9 @@ LittleRadiusLaser::LittleRadiusLaser(ObjectObserver* setObserver)
 
 void LittleRadiusLaser::Update()
 {
-    RotateLaser(rotaSpeed,initParam.laserRange);
-    SetLaserTrack();
+    if (observer->GetSubjectState() == alive)
+    {
+        RotateLaser(rotaSpeed, initParam.laserRange);
+        SetLaserTrack();
+    }
 }

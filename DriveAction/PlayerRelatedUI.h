@@ -36,7 +36,7 @@ public:
     /// <summary>
     /// •`‰æ
     /// </summary>
-    void Draw();
+    void Draw()const;
 private:
     //Å‰‚ÌƒRƒCƒ“‚Ì–‡”
     int firstCoinNum = 0;

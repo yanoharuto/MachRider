@@ -8,9 +8,10 @@ class ObjectObserver
 public:
     ObjectObserver(ObjectSubject* setSubject);
     ~ObjectObserver();
-    VECTOR GetSubPos();
-    VECTOR GetSubDir();
-    int GetObjHitCount(Object::ObjectTag objTag);
+    VECTOR GetSubjectPos() const;
+    VECTOR GetSubjectDir() const;
+    int GetSubjectHitCount(Object::ObjectTag objTag)const;
+    Object::ObjectState GetSubjectState()const;
 private:
     ObjectSubject* subject;
 };

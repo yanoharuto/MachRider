@@ -39,7 +39,7 @@ void FiringItemManager::Update()
     while (objIte != damageObjList.end())
     {
         (*objIte)->Update();
-        if (!(*objIte)->GetAliveFlag()) //もう存在していなかったら更新終了
+        if ((*objIte)->GetObjectState()==Object::ObjectState::dead) //もう存在していなかったら更新終了
         {
             brokenList.push_back((*objIte));
 

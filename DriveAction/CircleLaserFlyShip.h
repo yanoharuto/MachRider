@@ -17,6 +17,7 @@ public:
     /// ƒŒ[ƒU[‚ğ”­Ë‚·‚é
     /// </summary>
     void GenerateLaser() override;
+    void Update()override;
 private:
 };
 

@@ -25,3 +25,6 @@ data/effect/getCoin.csv
     //爆弾の爆発
     bombExplosion
 data/effect/bomb.csv
+//コインの出すオーラ
+        coinAura=29
+data/effect/coinAura.csv

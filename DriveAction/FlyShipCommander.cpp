@@ -24,14 +24,14 @@ void FlyShipCommander::Update()
 {
     for (auto ite = flyShipList.begin(); ite != flyShipList.end(); ite++)
     {
-        if ((*ite)->GetAliveFlag())
+        if ((*ite)->GetObjectState() != Object::dead)
         {
             (*ite)->Update();
         }
     }
 }
 
-void FlyShipCommander::Draw()
+void FlyShipCommander::Draw()const
 {
     for (auto ite = flyShipList.begin(); ite != flyShipList.end(); ite++)
     {

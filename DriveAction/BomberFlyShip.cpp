@@ -39,7 +39,7 @@ void BomberFlyShip::Update()
     }
     if (aliveTimer->IsOverLimitTime())
     {
-        aliveFlag = false;
+        objState = dead;
     }
     SoundPlayer::SetPosition3DSound(position, bomberShipFlight);
     UpdatePosition();

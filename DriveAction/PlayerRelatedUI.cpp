@@ -38,15 +38,14 @@ PlayerRelatedUI::~PlayerRelatedUI()
 
 void PlayerRelatedUI::Update(CoinManager* coinManager)
 {
-    nowGetCoinNum = playerObserver->GetObjHitCount(Object::ObjectTag::coin);
+    nowGetCoinNum = playerObserver->GetSubjectHitCount(Object::ObjectTag::coin);
     
     minimapUI->Update(coinManager->GetCoinPosList());
 }
 
-void PlayerRelatedUI::Draw()
+void PlayerRelatedUI::Draw()const
 {
     DrawRotaGraph(manualData.x, manualData.y, manualData.size, 0, manualData.dataHandle[0], true);
-
     DrawRotaGraph( slashHandle.x,slashHandle.y, slashHandle.size, 0, slashHandle.dataHandle[0], true);
     firstNumUI->Draw(firstCoinNum);
     getNumUI->Draw(nowGetCoinNum); 

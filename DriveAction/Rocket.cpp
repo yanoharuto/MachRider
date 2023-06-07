@@ -16,7 +16,7 @@
 Rocket::Rocket(ObjectObserver* setObserver)
     :DamageObject(ObjectInit::bomber,setObserver)
 {
-    position = observer->GetSubPos();
+    position = observer->GetSubjectPos();
     fallingSpeed = setFallingSpeed;
     tag = ObjectTag::damageObject;
     EffectManager::LoadEffect(bombExplosion);
@@ -64,7 +64,7 @@ void Rocket::Update()
         //エフェクトを描画し終わったら終了
         if (IsEffekseer3DEffectPlaying(burnEffect) == -1)
         {
-            aliveFlag = false;
+            objState = dead;
             burnEffect = -1;
         }
     }

@@ -41,7 +41,7 @@ RotatingLasers::~RotatingLasers()
 
 void RotatingLasers::RotateLaser(float rotaSpeed, float laserRange)
 {
-    position = observer->GetSubPos();
+    position = observer->GetSubjectPos();
     //方向変更　エフェクトの向きを変える
     direction = VNorm(OriginalMath::GetYRotateVector(direction, rotaSpeed));
     effectRota -= rotaSpeed * RAGE;

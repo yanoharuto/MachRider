@@ -22,8 +22,8 @@ ShadowMap::~ShadowMap()
 /// <param name="objInfo">ˆø”‚ÌÀ•W‚ğ’†S‚É‚·‚é</param>
 void ShadowMap::SetShadowMapErea()
 {
-    VECTOR minPos = VAdd(playerObserber->GetSubPos(), DrawAreaMinPos);
-    VECTOR maxPos = VAdd(playerObserber->GetSubPos(), DrawAreaMaxPos);
+    VECTOR minPos = VAdd(playerObserber->GetSubjectPos(), DrawAreaMinPos);
+    VECTOR maxPos = VAdd(playerObserber->GetSubjectPos(), DrawAreaMaxPos);
     SetShadowMapDrawArea(shadowMap, minPos, maxPos);
 }
 /// <summary>

@@ -6,7 +6,7 @@
 bool FirstPositionGetter::fileLoadFlag = false;
 int FirstPositionGetter::stageWidth;
 int FirstPositionGetter::stageLength;
-std::vector<std::string> FirstPositionGetter::challengeList;
+std::vector<std::string> FirstPositionGetter::challengeVec;
 std::unordered_map<FirstPositionDataKind, std::string> FirstPositionGetter::positionDataPassMap;
 FirstPositionGetter::FirstPositionGetter()
 {
@@ -16,7 +16,7 @@ FirstPositionGetter::FirstPositionGetter()
         auto setStageInitDataVec = fileLoader->GetLoadStringData();
         SAFE_DELETE(fileLoader);
         fileLoader = new CSVFileLoader(setStageInitDataVec[challengesListFilePass]);
-        challengeList = fileLoader->GetLoadStringData();
+        challengeVec = fileLoader->GetLoadStringData();
         SAFE_DELETE(fileLoader);
 
         stageWidth = atoi(setStageInitDataVec[width].c_str());
@@ -39,10 +39,10 @@ std::unordered_map<int, std::vector<VECTOR>> FirstPositionGetter::GetFirstPositi
     switch (dataKind)
     {
     case playerPosition:
-        CSVConvertPosition(map,positionDataPassMap[playerPosition]);
+        CSVConvertPosition(&map,positionDataPassMap[playerPosition]);
         break;
     case rockPosition:
-        CSVConvertPosition(map,positionDataPassMap[rockPosition]);
+        CSVConvertPosition(&map,positionDataPassMap[rockPosition]);
         break;
     }
     return map;
@@ -51,21 +51,21 @@ std::unordered_map<int, std::vector<VECTOR>> FirstPositionGetter::GetFirstPositi
 std::vector<ChallengeData> FirstPositionGetter::GetChallengeData()
 {
     std::vector<ChallengeData> challengeDataVec;
-    for (int i = 0; i < challengeList.size(); i++)
+    for (int i = 0; i < challengeVec.size(); i++)
     {
-        auto fileLoader = new CSVFileLoader(StageSelect::GetLoadeStageName());
+        auto fileLoader = new CSVFileLoader(challengeVec[i]);
         auto passData = fileLoader->GetLoadStringData();
         SAFE_DELETE(fileLoader);
         ChallengeData challengeData;
-        CSVConvertPosition(challengeData.collectPos,passData[collectPositionFilePass]);
-        CSVConvertPosition(challengeData.enemyPos,passData[enemyPositionFilePass]);
+        CSVConvertPosition(&challengeData.collectPos,passData[collectPositionFilePass]);
+        CSVConvertPosition(&challengeData.enemyPos,passData[enemyPositionFilePass]);
 
         challengeDataVec.push_back(challengeData);
     }
     return challengeDataVec;
 }
 
-void FirstPositionGetter::CSVConvertPosition(std::unordered_map<int, std::vector<VECTOR>>& map, std::string fileName)
+void FirstPositionGetter::CSVConvertPosition(std::unordered_map<int, std::vector<VECTOR>>* map, std::string fileName)
 {
     CSVFileLoader* csv = new CSVFileLoader(fileName);
     std::vector<std::string> positionData;
@@ -87,7 +87,7 @@ void FirstPositionGetter::CSVConvertPosition(std::unordered_map<int, std::vector
                 VECTOR pos;
                 pos.x = j * stageWidth / lineCount - stageWidth / 2;
                 pos.z = i * stageLength / sideLine - stageLength / 2;
-                map[num].push_back(pos);
+                (*map)[num].push_back(pos);
             }
         }
     }

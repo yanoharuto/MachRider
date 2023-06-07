@@ -1,6 +1,5 @@
 #include "MiniMap.h"
 #include "UIManager.h"
-#include "CourceDataLoader.h"
 #include "OriginalMath.h"
 #include "ObjectObserver.h"
 #include "RacerManager.h"
@@ -28,9 +27,9 @@ MiniMap::~MiniMap()
 /// <param name="setCollectPos"></param>
 void MiniMap::Update( std::list<VECTOR> setCollectPos)
 {
-    mapRotate = OriginalMath::GetDegreeMisalignment(VGet(1, 0, 0), playerObserver->GetSubDir()) * RAGE;
+    mapRotate = OriginalMath::GetDegreeMisalignment(VGet(1, 0, 0), playerObserver->GetSubjectDir()) * RAGE;
     //プレイヤーの車の向きに合わせる
-    mapRotate = VCross(VGet(1, 0, 0), playerObserver->GetSubDir()).y < 0 ? -mapRotate: mapRotate;
+    mapRotate = VCross(VGet(1, 0, 0), playerObserver->GetSubjectDir()).y < 0 ? -mapRotate: mapRotate;
     coinPosList.clear();
     //収集アイテムをミニマップに反映
     for (auto ite = setCollectPos.begin(); ite != setCollectPos.end(); ite++)
@@ -38,7 +37,7 @@ void MiniMap::Update( std::list<VECTOR> setCollectPos)
         VECTOR collectPos = *ite;
         collectPos.y = 0;
 
-        VECTOR playerPos = playerObserver->GetSubPos();
+        VECTOR playerPos = playerObserver->GetSubjectPos();
         playerPos.y = 0;
         collectPos = VScale(VSub(collectPos, playerPos),collectBetween);
         //マップの大きさに入っているなら

@@ -6,6 +6,7 @@
 #include "RacerManager.h"
 #include "FirstPositionGetter.h"
 #include "Object.h"
+
 /// <summary>
 /// 空を飛ぶ船のマネージャー
 /// </summary>
@@ -17,25 +18,24 @@ FlyShipManager::FlyShipManager(RacerManager* racerManager)
 
     for (int i = 0; i < challengeVec.size(); i++)
     {
-        int n = 0;
-        
         for (int j = 0; j < challengeVec[i].enemyPos.size(); j++)
         {
-            VECTOR firstPos = challengeVec[i].enemyPos[j][n];
-            FlyShipCommander* commander;
-            switch (i)
+            for (int n = 0; n < challengeVec[i].enemyPos[j].size(); n++)
             {
-            case 0:
-                commander = new UpDownFlyShipCommander(firstPos);
-                break;
-            case1:
-                commander = new CircleFlyshipCommander(firstPos);
-                break;
-            default:
-                break;
+                VECTOR firstPos = challengeVec[i].enemyPos[j][n];
+                FlyShipCommander* commander;
+                switch (j)
+                {
+                case 0:
+                    commander = new UpDownFlyShipCommander(firstPos);
+                    break;
+                case1:
+                default:
+                    commander = new CircleFlyshipCommander(firstPos);
+                    break;
+                }
+                commanderMap[i].push_back(commander);
             }
-            n++;
-            commanderMap[i].push_back(commander);
         }
     }
 }
@@ -43,27 +43,36 @@ FlyShipManager::FlyShipManager(RacerManager* racerManager)
 FlyShipManager::~FlyShipManager()
 {
     int key = commanderMap.size();
-    for (auto ite = commanderMap[0].begin(); ite != commanderMap[key].end(); ite++)
+    for (int i = 0; i < key; i++)
     {
-        SAFE_DELETE(*(ite));
+        for (auto ite = commanderMap[i].begin(); ite != commanderMap[i].end(); ite++)
+        {
+            SAFE_DELETE(*(ite));
+        }
     }
 }
 
 void FlyShipManager::Update()
 {
     
-    int key = playerObserver->GetObjHitCount(Object::coin);
-    for (auto ite = commanderMap[0].begin(); ite != commanderMap[key].end(); ite++)
+    int key = playerObserver->GetSubjectHitCount(Object::coin) + 1;
+    for (int i = 0; i < key; i++)
     {
-        (*ite)->Update();
+        for (auto ite = commanderMap[i].begin(); ite != commanderMap[i].end(); ite++)
+        {
+            (*ite)->Update();
+        }
     }
 }
 
 void FlyShipManager::Draw()
 {
-    int key = playerObserver->GetObjHitCount(Object::coin);
-    for (auto ite = commanderMap[0].begin(); ite != commanderMap[key].end(); ite++)
+    int key = playerObserver->GetSubjectHitCount(Object::coin) + 1;
+    for (int i = 0; i < key; i++)
     {
-        (*ite)->Draw();
+        for (auto ite = commanderMap[i].begin(); ite != commanderMap[i].end(); ite++)
+        {
+            (*ite)->Draw();
+        }
     }
 }

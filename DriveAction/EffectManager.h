@@ -22,7 +22,9 @@ namespace EffectInit
         //コインをゲットしたときのエフェクト
         getCoin = 23,
         //爆弾の爆発
-        bombExplosion = 26
+        bombExplosion = 26,
+        //コインの出すオーラ
+        coinAura=29
     };
     enum EffectInitData
     {

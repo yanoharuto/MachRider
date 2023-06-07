@@ -28,6 +28,7 @@ namespace FlyShipInit
     /// </summary>
     enum FlyShipParamator
     {
+        
         //生存時間
         aliveTime = 2,
 
@@ -51,8 +52,8 @@ public:
     FlyShipCommander();
     FlyShipCommander(ObjectInit::InitObjKind objKind, VECTOR playerPos);
     ~FlyShipCommander();
-    void Update();
-    void Draw();
+    virtual void Update();
+    virtual void Draw() const;
 protected:
     /// <summary>
     /// 初期化するために必要なデータを所得

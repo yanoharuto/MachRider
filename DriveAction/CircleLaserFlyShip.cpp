@@ -15,3 +15,8 @@ void CircleLaserFlyShip::GenerateLaser()
 {
     DamageObjectGenerator::GenerateDamageObject(Item::littleRadLaser, sub);
 }
+
+void CircleLaserFlyShip::Update()
+{
+    objState = alive;
+}

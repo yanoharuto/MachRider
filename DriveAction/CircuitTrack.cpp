@@ -26,6 +26,7 @@ CircuitTrack::CircuitTrack(FirstPositionGetter* firstPosGetter)
             Rock* rock = new Rock(rocksFirstPos[i][j], i);
             rocks.push_back(rock);
         }
+
     }
     stageWall = new StageWall();
 }

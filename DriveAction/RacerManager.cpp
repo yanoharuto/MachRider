@@ -2,7 +2,7 @@
 #include "CPU.h"
 #include "Player.h"
 #include "Utility.h"
-#include "RacerGenerater.h"
+
 #include "SoundPlayer.h"
 #include "ObjectSubject.h"
 #include "FirstPositionGetter.h"

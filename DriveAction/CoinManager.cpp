@@ -2,6 +2,8 @@
 #include "Utility.h"
 #include "ListUtility.h"
 #include "FirstPositionGetter.h"
+#include "Coin.h"
+#include "Object.h"
 /// <summary>
 /// コインの設置
 /// </summary>
@@ -9,17 +11,20 @@ CoinManager::CoinManager()
 {
     auto challengeVec = FirstPositionGetter::GetChallengeData();
     coinFirstNum = challengeVec.size();
-    Coin* newCoin = new Coin(challengeVec[0].collectPos[0][0]);
-    coinList.push_back(newCoin);
+    for (int i = 0; i < coinFirstNum; i++)
+    {
+        Coin* newCoin = new Coin(challengeVec[i].collectPos[0][0]);
+        coinVec.push_back(newCoin);
+    }
 }
 
 CoinManager::~CoinManager()
 {
-    for (auto ite = coinList.begin(); ite != coinList.end(); ite++)
+    for (auto ite = coinVec.begin(); ite != coinVec.end(); ite++)
     {
         SAFE_DELETE((*ite));
     }
-    coinList.clear();
+    coinVec.clear();
 }
 /// <summary>
 /// coinPosListの更新と取られたコインの削除
@@ -27,43 +32,29 @@ CoinManager::~CoinManager()
 void CoinManager::Update()
 {
     coinPosList.clear();
-    auto objIte = coinList.begin();
-    std::list<Coin*> brokenList;
-    //更新する必要が無くなったら消去
-    while (objIte != coinList.end())
+    Coin* coin = coinVec[0];
+    if (coin->GetObjectState() != Object::ObjectState::dead)
     {
-        //回転させたり
-        (*objIte)->Update();
-        //もう存在していなかったら更新終了
-        if (!(*objIte)->GetAliveFlag())
-        {
-            //壊すものリストに追加
-            brokenList.push_back((*objIte));
-            //eraseは消したイテレーターの次の奴を返す
-            objIte = coinList.erase(objIte);
-        }
-        else
-        {
-            //コインの位置を更新
-            coinPosList.push_back((*objIte)->GetPos());
-            //消す条件に合わなかったら次
-            ++objIte;
-        }
+        coin->Update();
+        //コインの位置を更新
+        coinPosList.push_back(coin->GetPos());
     }
-    //消していいやつ消す
-    for (auto ite = brokenList.begin(); ite != brokenList.end(); ite++)
+    else 
     {
-        SAFE_DELETE(*ite);
+        //eraseは消したイテレーターの次の奴を返す
+        coinVec.erase(coinVec.begin());
+        brokenCoinNum++;
+        SAFE_DELETE(coin);
     }
 }
 /// <summary>
 /// コインの描画
 /// </summary>
-void CoinManager::Draw()
+void CoinManager::Draw()const
 {
-    for (auto ite = coinList.begin(); ite != coinList.end(); ite++)
+    if (!coinVec.empty())
     {
-        (*ite)->Draw();
+        coinVec[0]->Draw();
     }
 }
 
@@ -71,7 +62,7 @@ void CoinManager::Draw()
 /// コインの位置
 /// </summary>
 /// <returns></returns>
-std::list<VECTOR> CoinManager::GetCoinPosList()
+std::list<VECTOR> CoinManager::GetCoinPosList() const
 {
     return coinPosList;
 }
@@ -79,16 +70,13 @@ std::list<VECTOR> CoinManager::GetCoinPosList()
 /// コインの初期枚数
 /// </summary>
 /// <returns></returns>
-int CoinManager::GetCoinFirstNum()
+int CoinManager::GetCoinFirstNum() const
 {
     return coinFirstNum;
 }
-/// <summary>
-/// コインの現在の枚数
-/// </summary>
-/// <returns></returns>
-int CoinManager::GetCoinNowNum()
+
+int CoinManager::GetRemainingCoin()
 {
-    return coinList.size();
+    return coinVec.size();
 }
 

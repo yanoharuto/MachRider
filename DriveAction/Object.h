@@ -15,6 +15,12 @@ public:
         acelerationFloor,
         countSystem
     };
+    enum ObjectState
+    {
+        sleep,
+        alive,
+        dead
+    };
     /// <summary>
     /// コンストラクタ
     /// </summary>
@@ -32,9 +38,9 @@ public:
     /// 現在動けるかどうか
     /// </summary>
     /// <returns></returns>
-    bool GetAliveFlag() const
+    Object::ObjectState GetObjectState() const
     {
-        return aliveFlag;
+        return objState;
     };
     /// <summary>
     /// ポジション所得
@@ -80,12 +86,11 @@ protected:
     //跳ね返す力
     float bouncePower = 0;
     //生存フラグ
-    bool aliveFlag = true;
+    ObjectState objState = sleep;
     //自分が何なのか
     ObjectTag tag = ObjectTag::stage;
     //方向
     VECTOR direction = {1,0,0};
     //場所
     VECTOR position = {};
-
 };

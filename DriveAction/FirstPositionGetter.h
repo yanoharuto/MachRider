@@ -7,17 +7,17 @@ namespace InitStage
 {
     enum StageData
     {
-        width,
-        length,
-        rockFilePass,
-        challengesListFilePass,
-        playerPositionFilePass
+        width = 1,
+        length = 3,
+        rockFilePass = 5,
+        challengesListFilePass = 7,
+        playerPositionFilePass = 9
     };
 
     enum Challenge
     {
-        collectPositionFilePass,
-        enemyPositionFilePass
+        collectPositionFilePass = 1,
+        enemyPositionFilePass = 3
     };
     struct ChallengeData
     {
@@ -43,10 +43,10 @@ public:
 
     static std::vector<ChallengeData> GetChallengeData();
 private:
-    static void CSVConvertPosition(std::unordered_map<int, std::vector<VECTOR>>& map,std::string fileName);
+    static void CSVConvertPosition(std::unordered_map<int, std::vector<VECTOR>>* map,std::string fileName);
     static int stageWidth;
     static int stageLength;
-    static std::vector<std::string> challengeList;
+    static std::vector<std::string> challengeVec;
     static std::unordered_map<FirstPositionDataKind,std::string> positionDataPassMap;
     static bool fileLoadFlag;
 

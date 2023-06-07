@@ -13,6 +13,7 @@ UpDownLaserFlyShip::UpDownLaserFlyShip(VECTOR setPos)
 
 void UpDownLaserFlyShip::Update()
 {
+    objState = alive;
     totalMoveValue += addMoveValue;
     position.y += cosf(totalMoveValue) * updownSpeed;
     UpdatePosition();

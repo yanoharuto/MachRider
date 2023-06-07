@@ -31,10 +31,17 @@ public:
     /// <returns></returns>
     Object::ObjectTag GetObjTag();
     /// <summary>
+    /// オブジェクトの状態
+    /// </summary>
+    /// <returns></returns>
+    Object::ObjectState GetObjectState();
+    /// <summary>
     /// 引数のタグのオブジェクトに何回ぶつかったか
     /// </summary>
     /// <returns></returns>
     int GetTagObjectHitCount(Object::ObjectTag hitObjTag);
+
+    
 private:
     //観察対象のオブジェクト
     Object* subObject;

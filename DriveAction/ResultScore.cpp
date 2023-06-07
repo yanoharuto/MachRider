@@ -22,8 +22,8 @@ ResultScore::ResultScore(Timer* timer,RacerManager* racerManager)
     ObjectSubject* subject = racerManager->GetPlayerSubject(0);
     ObjectObserver* playerObserver = new ObjectObserver(racerManager->GetPlayerSubject(0));
 
-    hitScore = noHitScore - playerObserver->GetObjHitCount(Object::ObjectTag::damageObject) * damageObjHitDec;
-    collectScore = playerObserver->GetObjHitCount(Object::ObjectTag::coin) * coinBonus;
+    hitScore = noHitScore - playerObserver->GetSubjectHitCount(Object::ObjectTag::damageObject) * damageObjHitDec;
+    collectScore = playerObserver->GetSubjectHitCount(Object::ObjectTag::coin) * coinBonus;
 
     SAFE_DELETE(playerObserver);
 }

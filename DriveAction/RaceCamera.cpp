@@ -9,7 +9,7 @@ RaceCamera::RaceCamera(RacerManager* racerManager)
     :Camera(InitParamater::game)
 {
     playerObserver = new ObjectObserver(racerManager->GetPlayerSubject(0));
-    VECTOR pos = playerObserver->GetSubPos();
+    VECTOR pos = playerObserver->GetSubjectPos();
     position = {0,pos.y,0};
     SetCameraPositionAndTarget_UpVecY(position, pos);
 }
@@ -23,10 +23,10 @@ RaceCamera::~RaceCamera()
 void RaceCamera::Update()
 {
     //向きの更新 cameraSpeedの速度で車の向きに合わせている
-    VECTOR tempDir = VScale(VSub(playerObserver->GetSubDir(), direction), cameraSpeed);
+    VECTOR tempDir = VScale(VSub(playerObserver->GetSubjectDir(), direction), cameraSpeed);
     direction = VNorm(VAdd(direction, tempDir));
     //カメラの位置の更新
-    position = playerObserver->GetSubPos();
+    position = playerObserver->GetSubjectPos();
     position.y += posY;
     position.x += -(direction.x * targetBetween);
     position.z += -(direction.z * targetBetween);

@@ -36,6 +36,11 @@ Object::ObjectTag ObjectSubject::GetObjTag()
     return subObject->GetTag();
 }
 
+Object::ObjectState ObjectSubject::GetObjectState()
+{
+    return subObject->GetObjectState();
+}
+
 int ObjectSubject::GetTagObjectHitCount(Object::ObjectTag hitObjTag)
 {
     if (subCollider != nullptr)

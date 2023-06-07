@@ -3,7 +3,8 @@
 #include "EffekseerForDXLib.h"
 #include "OriginalMath.h"
 #include "ConflictManager.h"
-#include "Utility.h"
+#include "Utility.h "
+#include "ObjectObserver.h"
 const InitParam BigRadiusLaser::initParam =
 {
     ObjectInit::InitObjKind::bigRadiusLaser,
@@ -25,6 +26,9 @@ BigRadiusLaser::BigRadiusLaser(ObjectObserver* setObserver)
 
 void BigRadiusLaser::Update()
 {
-    RotateLaser(rotaSpeed, initParam.laserRange);
-    SetLaserTrack();
+    if (observer->GetSubjectState() == alive)
+    {
+        RotateLaser(rotaSpeed, initParam.laserRange);
+        SetLaserTrack();
+    }
 }

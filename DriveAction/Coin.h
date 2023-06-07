@@ -47,6 +47,8 @@ private:
     //車にぶつかった
     bool isCarConflict = false;
     //プレイヤーがコインをゲットしたときのエフェクト
-    int coinPlayEffect = -1;
+    int coinGetEffect = -1;
+    //コインの出すオーラ
+    int coinAuraEffect = -1;
 };
 

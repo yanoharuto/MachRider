@@ -30,6 +30,7 @@ Coin::Coin(VECTOR firstPos)
     radius = setRadius;
     SoundPlayer::LoadSound(coinGet);
     EffectManager::LoadEffect(getCoin);
+    EffectManager::LoadEffect(coinAura);
     tag = ObjectTag::coin;
     firstPos.y += radius;
 }
@@ -56,8 +57,14 @@ void Coin::Update()
         SAFE_DELETE(collider);
         if(!SoundPlayer::IsPlaySound(coinGet))
         {
-            aliveFlag = false;
+            objState = dead;
         }
+    }
+    //コインの出すオーラが途切れたら再開させる
+    if (!IsEffekseer3DEffectPlaying(coinAuraEffect) || coinAuraEffect == -1)
+    {
+        coinAuraEffect = EffectManager::GetPlayEffect3D(coinAura);
+        SetPosPlayingEffekseer3DEffect(coinAuraEffect, position.x, position.y, position.z);
     }
     UpdatePosition();
 }
@@ -70,22 +77,17 @@ void Coin::ConflictProccess(const ConflictExamineResultInfo conflictInfo)
     if (conflictInfo.tag == ObjectTag::player)
     {
        //エフェクトと音を出す
-       coinPlayEffect = EffectManager::GetPlayEffect2D(getCoin);
+       coinGetEffect = EffectManager::GetPlayEffect2D(getCoin);
        int effectX = SCREEN_WIDTH / 2;
        int effectY = SCREEN_HEIGHT / 2;
-       int success = SetPosPlayingEffekseer2DEffect(coinPlayEffect,effectX, effectY, 5);
+       int success = SetPosPlayingEffekseer2DEffect(coinGetEffect,effectX, effectY, 5);
        SoundPlayer::Play3DSE(coinGet);
        isCarConflict = true;
     }
 }
 
 void Coin::Draw() const
-{/*
-    VECTOR lightDir = GetLightDirection();
-    VECTOR lightPos = position;
-    lightPos.y += 300;
-    ChangeLightTypeSpot(lightPos, VGet(0, -1.0f, 0), DX_PI_F / 2, DX_PI_F / 4, 2000.0f, 0.0f, 0.008f, 0.0f);*/
-
+{
     MATRIX tmpMat = MV1GetMatrix(modelHandle);
     if (modelHandle != -1)
     {
@@ -98,5 +100,4 @@ void Coin::Draw() const
     //行列を元に戻す
     MV1SetRotationMatrix(modelHandle, tmpMat);
 
-   // ChangeLightTypeDir(lightDir);
 }

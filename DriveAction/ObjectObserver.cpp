@@ -10,17 +10,22 @@ ObjectObserver::~ObjectObserver()
 {
 }
 
-VECTOR ObjectObserver::GetSubPos()
+Object::ObjectState ObjectObserver::GetSubjectState() const
+{
+    return subject->GetObjectState();
+}
+
+VECTOR ObjectObserver::GetSubjectPos() const
 {
     return subject->GetObjPos();
 }
 
-VECTOR ObjectObserver::GetSubDir()
+VECTOR ObjectObserver::GetSubjectDir() const
 {
     return subject->GetObjDir();
 }
 
-int ObjectObserver::GetObjHitCount(Object::ObjectTag objTag)
+int ObjectObserver::GetSubjectHitCount(Object::ObjectTag objTag) const
 {
     return subject->GetTagObjectHitCount(objTag);
 }

@@ -1,8 +1,9 @@
 #pragma once
 #include <string>
 #include <list>
-#include "Coin.h"
-#include "ObjPosAndDir.h"
+#include <vector>
+#include "DxLib.h"
+class Coin;
 /// <summary>
 /// 位置をミニマップに教えたりする
 /// </summary>
@@ -21,32 +22,27 @@ public:
     /// <summary>
     /// コインの描画
     /// </summary>
-    void Draw();
+    void Draw()const;
  
     /// <summary>
     /// コインの位置
     /// </summary>
     /// <returns></returns>
-    std::list<VECTOR> GetCoinPosList();
+    std::list<VECTOR> GetCoinPosList() const;
+
     /// <summary>
     /// コインの初期枚数
     /// </summary>
     /// <returns></returns>
-    int GetCoinFirstNum();
-    /// <summary>
-    /// コインの現在の枚数
-    /// </summary>
-    /// <returns></returns>
-    int GetCoinNowNum();
+    int GetCoinFirstNum() const;
+
+    int GetRemainingCoin();
 private:
-    //コインのポジションのパス
-    const std::string coinPosPass = "data/stageMap_collectPos.csv";
     //コインの最初の枚数
     int coinFirstNum;
-    //コインの現在枚数
-    int coinNum;
-    //コインの実体リスト
-    std::list<Coin*> coinList;
+    int brokenCoinNum;
+    //コインのリスト
+    std::vector<Coin*> coinVec;
     //コインのポジション
     std::list<VECTOR> coinPosList;
 };
