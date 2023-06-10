@@ -8,15 +8,15 @@ class RacerManager;
 /// <summary>
 /// 敵機のマネージャー
 /// </summary>
-class FlyShipManager
+class EnemyManager
 {
 public:
     /// <summary>
     /// 敵機の初期化する
     /// </summary>
-    FlyShipManager(RacerManager* racerManager);
+    EnemyManager(RacerManager* racerManager);
 
-    ~FlyShipManager();
+    ~EnemyManager();
     /// <summary>
     /// 敵機たちの更新
     /// </summary>

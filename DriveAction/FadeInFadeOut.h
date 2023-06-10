@@ -7,41 +7,27 @@ class FadeInFadeOut
 {
 public:
     /// <summary>
+    /// フェードインの更新
+    /// </summary>
+    static void FadeIn();
+    /// <summary>
+    /// フェードアウトの更新
+    /// </summary>
+    static void FadeOut();
+
+    /// <summary>
+    /// アウト中なら白くなる　インなら周りのモデルとかが見える
+    /// </summary>
+    static void Fading();
+private:
+    /// <summary>
     /// フェードインフェードアウトをする
     /// </summary>
     FadeInFadeOut();
     ~FadeInFadeOut();
-    /// <summary>
-    /// フェードインの更新
-    /// </summary>
-    void FadeIn();
-    /// <summary>
-    /// フェードアウトの準備
-    /// </summary>
-    void FadeOutStart();
-    /// <summary>
-    /// フェードインの準備
-    /// </summary>
-    void FadeInStart();
-    /// <summary>
-    /// フェードアウトの更新
-    /// </summary>
-    void FadeOut();
-    /// <summary>
-    /// 今何の作業中か
-    /// </summary>
-    /// <returns></returns>
-    FadeMode GetFadeMode();
-    /// <summary>
-    /// アウト中なら白くなる　インなら周りのモデルとかが見える
-    /// </summary>
-    void Draw();
-private:
     //高いほど白くなるよ
-    float fadeValue = 0;
+    static int fadeValue;
     //フェードアウトする速度
-    const float fadeSpeed = 10.0f;
-    //今何の作業しているか
-    FadeMode fadeMode;
+    static const int fadeSpeed;
 };
 

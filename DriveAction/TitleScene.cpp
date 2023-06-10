@@ -8,13 +8,11 @@ TitleScene::TitleScene()
     :SceneBase(SceneType::TITLE)
 {
     sceneFlow = new TitleSceeneFlow();
-    fadeInFadeOut->FadeInStart();
     SoundPlayer::LoadSound(titleBGM);
 }
 
 TitleScene::~TitleScene()
 {
-    SAFE_DELETE(fadeInFadeOut);
     SAFE_DELETE(sceneFlow);
     SoundPlayer::StopAllSound();
     DeleteUniquePtr();

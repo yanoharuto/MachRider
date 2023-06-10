@@ -144,7 +144,7 @@
     <ClCompile Include="Effect.cpp">
       <Filter>ソース ファイル\Other</Filter>
     </ClCompile>
-    <ClCompile Include="PlayerRelatedUI.cpp">
+    <ClCompile Include="GamePlayUI.cpp">
       <Filter>ソース ファイル\UI</Filter>
     </ClCompile>
     <ClCompile Include="ConflictManager.cpp">
@@ -225,7 +225,7 @@
     <ClCompile Include="Clock.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="FlyShipManager.cpp">
+    <ClCompile Include="EnemyManager.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="ArgumentConflictResultInfo.cpp">
@@ -452,7 +452,7 @@
     <ClInclude Include="GimmickObject.h">
       <Filter>ヘッダー ファイル\Object</Filter>
     </ClInclude>
-    <ClInclude Include="PlayerRelatedUI.h">
+    <ClInclude Include="GamePlayUI.h">
       <Filter>ヘッダー ファイル\UI</Filter>
     </ClInclude>
     <ClInclude Include="ResultSceneFlow.h">
@@ -575,7 +575,7 @@
     <ClInclude Include="Clock.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="FlyShipManager.h">
+    <ClInclude Include="EnemyManager.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="ArgumentConflictResultInfo.h">

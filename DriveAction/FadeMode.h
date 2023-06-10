@@ -1,8 +1,7 @@
 #pragma once
 enum class FadeMode
 {
-    fadeInStart,
     fadeInEnd,
-    fadeOutStart,
+    fading,
     fadeOutEnd
 };

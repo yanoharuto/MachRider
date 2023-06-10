@@ -2,6 +2,7 @@
 #include <vector>
 #include <unordered_map>
 #include <string>
+#include "DxLib.h"
 #include "InitObjKind.h"
 
 namespace ObjectInit
@@ -39,8 +40,10 @@ namespace ObjectInit
         float setRadius;
         //跳ね返り力
         float setBouncePow;
-        //Tiledで割り振られた番号
-        int tiledNum;
+        //描画モデル
+        int modelHandle;
+        //追加情報のPass
+        std::string addData;
         /// <summary>
         /// 引数から抽出
         /// </summary>
@@ -53,7 +56,7 @@ namespace ObjectInit
             setModelSize = strtof(paramatorString[InitObjParamator::modelSize], &end);
             setBouncePow = strtof(paramatorString[InitObjParamator::bouncePower], &end);
             setRadius = strtof(paramatorString[InitObjParamator::collRadius], &end);
-            tiledNum = strtof(paramatorString[InitObjParamator::mapTiledNum], &end);
+            
         }
         /// <summary>
         /// 引数から抽出
@@ -67,7 +70,6 @@ namespace ObjectInit
             setModelSize = strtof(paramatorString[InitObjParamator::modelSize].c_str(), &end);
             setBouncePow = strtof(paramatorString[InitObjParamator::bouncePower].c_str(), &end);
             setRadius = strtof(paramatorString[InitObjParamator::collRadius].c_str(), &end);
-            tiledNum = strtof(paramatorString[InitObjParamator::mapTiledNum].c_str(), &end);
         }
     };
     /// <summary>
@@ -75,8 +77,6 @@ namespace ObjectInit
     /// </summary>
     struct InitDataPass
     {
-        //初期位置の場所のファイルのPass
-        std::string firstPosPass;
         //modelのPass
         std::string modelPass;
         //追加情報のPass
@@ -117,12 +117,18 @@ public:
     /// <returns></returns>
     static ActorParametor GetActorParamator(InitObjKind obj);
     /// <summary>
+    /// 初期位置の番号を返す
+    /// </summary>
+    /// <param name="obj"></param>
+    /// <returns></returns>
+    static int GetActorTileNum(InitObjKind obj);
+private:
+    /// <summary>
     /// 初期化に必要な色々なパスを所得
     /// </summary>
     /// <param name="obj"></param>
     /// <returns></returns>
     static InitDataPass GetActorInitPassData(InitObjKind obj);
-private:
     /// <summary>
     /// 初期化文字列を所得
     /// </summary>
@@ -131,8 +137,6 @@ private:
     static std::vector<std::string> GetActorParametorString(InitObjKind obj);
     //initActorFileNameの先のファイルから所得したデータをまとめたVector
     static std::vector<std::string> objectInitDataPassVec;
-    //modelのパスとか保存
-    static std::unordered_map<InitObjKind,InitDataPass> initPassDataFileMap;
     //初期化するパスを纏めているファイルの名前
     static std::string initActorFileName; 
 };

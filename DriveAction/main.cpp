@@ -6,6 +6,7 @@
 #include "ResultScene.h"
 #include "Utility.h"
 #include "UserInput.h"
+#include "FadeInFadeOut.h"
 //シーンを作るのに必要
 SceneBase* MakeScene(SceneType _NowSceneType);
 //ひとつ前のシーン
@@ -40,8 +41,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	SetDrawScreen(DX_SCREEN_BACK);
 	//今のシーン
 	SceneType nowSceneType = SceneType::TITLE;
+	
 	//シーンを生成
 	SceneBase* scene = new TitleScene;
+	FadeInFadeOut::FadeIn();
 
 	UserInput* userInput = new UserInput;
 
@@ -67,8 +70,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		if (nowSceneType != prevSceneType)
 		{
 			SAFE_DELETE(scene);//シーンの開放
+			FadeInFadeOut::FadeOut();
 			//新しいシーンの作成
 			scene = MakeScene(nowSceneType);
+			FadeInFadeOut::FadeIn();
 		}
 		//直前のシーンを記録
 		prevSceneType = nowSceneType;

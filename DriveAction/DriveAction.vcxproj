@@ -191,7 +191,7 @@
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="ObjectObserver.cpp" />
     <ClCompile Include="FlyShip.cpp" />
-    <ClCompile Include="FlyShipManager.cpp" />
+    <ClCompile Include="EnemyManager.cpp" />
     <ClCompile Include="CreatePosAndDirData.cpp" />
     <ClCompile Include="FadeInFadeOut.cpp" />
     <ClCompile Include="InitActor.cpp" />
@@ -220,7 +220,7 @@
     <ClCompile Include="Effect.cpp" />
     <ClCompile Include="GimmickObject.cpp" />
     <ClCompile Include="MiniMap.cpp" />
-    <ClCompile Include="PlayerRelatedUI.cpp" />
+    <ClCompile Include="GamePlayUI.cpp" />
     <ClCompile Include="PostGoalStaging.cpp" />
     <ClCompile Include="RacePrevProcess.cpp" />
     <ClCompile Include="ResultSceneFlow.cpp" />
@@ -283,7 +283,7 @@
     <ClInclude Include="FlyShip.h" />
     <ClInclude Include="FlyShipArgumentInfo.h" />
     <ClInclude Include="FlyShipKind.h" />
-    <ClInclude Include="FlyShipManager.h" />
+    <ClInclude Include="EnemyManager.h" />
     <ClInclude Include="CpuCarMode.h" />
     <ClInclude Include="CreatePosAndDirData.h" />
     <ClInclude Include="FadeInFadeOut.h" />
@@ -329,7 +329,7 @@
     <ClInclude Include="ListUtility.h" />
     <ClInclude Include="MiniMap.h" />
     <ClInclude Include="NeighborhoodInfo.h" />
-    <ClInclude Include="PlayerRelatedUI.h" />
+    <ClInclude Include="GamePlayUI.h" />
     <ClInclude Include="Saw.h" />
     <ClInclude Include="OriginalMath.h" />
     <ClInclude Include="PostGoalStaging.h" />

@@ -16,7 +16,7 @@ CircuitTrack::CircuitTrack(FirstPositionGetter* firstPosGetter)
     //’n–Ê‚Ì‰Šú‰»
     auto initParam= InitActor::GetActorParamator(stageFloor);
     
-    floorModelHandle = AssetManager::Get3DModelAssetHandle(InitActor::GetActorInitPassData(stageFloor).modelPass);
+    floorModelHandle = initParam.modelHandle;
     auto rocksFirstPos = firstPosGetter->GetFirstPositionLoad(FirstPositionDataKind::rockPosition);
     //Šâ‚ð”z’u‚·‚é
     for (int i = 0; i < rocksFirstPos.size(); i++)

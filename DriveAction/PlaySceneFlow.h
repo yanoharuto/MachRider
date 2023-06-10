@@ -8,9 +8,9 @@ class ConflictManager;
 class CoinManager;
 class EffectManager;
 class FiringItemManager;
-class FlyShipManager;
+class EnemyManager;
 class PostGoalStaging;
-class PlayerRelatedUI;
+class GamePlayUI;
 class RaceCamera;
 class ResultScore;
 class RaceScreen;
@@ -62,7 +62,7 @@ private:
     /// <summary>
     /// シャドウマップを使う
     /// </summary>
-    void UseShadowMap();
+    void UseShadowMapDraw();
     /// <summary>
     /// 遊んでいるときの処理
     /// </summary>
@@ -92,7 +92,7 @@ private:
     //ゴール後の処理
     PostGoalStaging* postGoalStaging;
     //プレイヤー関係のUI
-    PlayerRelatedUI* playerUI;
+    GamePlayUI* playerUI;
     //当たり判定処理
     ConflictManager* conflictManager;
     //発射アイテムのマネージャー
@@ -106,7 +106,7 @@ private:
     //運転手用のマネージャー
     RacerManager* racerManager;
     //敵のオブジェクトのマネージャー
-    FlyShipManager* flyShipManager;
+    EnemyManager* enemyManager;
     //ゲーム終了タイマー
     Timer* gameLimitTimer;
 

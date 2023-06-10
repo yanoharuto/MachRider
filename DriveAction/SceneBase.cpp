@@ -9,9 +9,8 @@
 #include "UIManager.h"
 SceneBase::SceneBase(SceneType _SceneType)
 {
-    
     nowSceneType = _SceneType;
-    fadeInFadeOut = new FadeInFadeOut();
+
     clock = std::make_unique<Clock*>(new Clock());
     uiManager = std::make_unique<UIManager*>(new UIManager());
     initActor = std::make_unique<InitActor* >(new InitActor());
@@ -21,34 +20,17 @@ SceneBase::SceneBase(SceneType _SceneType)
 
 SceneBase::~SceneBase()
 {
-    SAFE_DELETE(fadeInFadeOut);
+    
     SAFE_DELETE(sceneFlow);
 }
 
 SceneType SceneBase::Update()
 {
-    switch (fadeInFadeOut->GetFadeMode())
+    //シーンごとの処理
+    sceneFlow->Update();
+    if (sceneFlow->GetIsEndProccess())//処理が終わったら
     {
-    case FadeMode::fadeInStart:
-
-        fadeInFadeOut->FadeIn();
-        break;
-    case FadeMode::fadeInEnd:
-        //シーンごとの処理
-        sceneFlow->Update();
-        if (sceneFlow->GetIsEndProccess())//処理が終わったら
-        {
-            fadeInFadeOut->FadeOutStart();
-        }
-        break;
-    case FadeMode::fadeOutStart:
-        fadeInFadeOut->FadeOut();
-        break;
-    case FadeMode::fadeOutEnd://フェードアウトが終わったら次のシーン
         return sceneFlow->GetNextSceneType();
-        break;
-    default:
-        break;
     }
     (*clock)->Update();
     return nowSceneType;
@@ -56,7 +38,6 @@ SceneType SceneBase::Update()
 void SceneBase::Draw()
 {
     sceneFlow->Draw();
-    fadeInFadeOut->Draw();
 }
 void SceneBase::DeleteUniquePtr()
 {

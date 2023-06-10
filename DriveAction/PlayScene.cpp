@@ -10,7 +10,7 @@ PlayScene::PlayScene()
     :SceneBase(SceneType::PLAY)
 {
     sceneFlow = new PlaySceneFlow();
-    fadeInFadeOut->FadeInStart();
+    
     SoundPlayer::LoadSound(playBGM);
     menu = new Menu();
 }
@@ -18,7 +18,7 @@ PlayScene::PlayScene()
 PlayScene::~PlayScene()
 {
     SAFE_DELETE(menu);
-    SAFE_DELETE(fadeInFadeOut);
+    
     SAFE_DELETE(sceneFlow);
     SoundPlayer::StopSound(playBGM);
     DeleteUniquePtr();
@@ -27,47 +27,21 @@ PlayScene::~PlayScene()
 SceneType PlayScene::Update()
 {
     menu->Update();
-
-    if (menu->GetMenuState() == retry)
+    auto menuState = menu->GetMenuState();
+    //ゲームを中断する場合
+    if (menuState != continueGame)
     {
-        if (fadeInFadeOut->GetFadeMode() != FadeMode::fadeOutStart)
-        {
-            fadeInFadeOut->FadeOutStart();
-        }
-        else if (fadeInFadeOut->GetFadeMode() == FadeMode::fadeOutStart)
-        {
-            fadeInFadeOut->FadeOut();
-            if (fadeInFadeOut->GetFadeMode() == FadeMode::fadeOutEnd)
-            {
-                nowSceneType = SceneType::RELOAD;
-            }
-        }
+
+        nowSceneType = menuState == retry ? SceneType::RELOAD : SceneType::ESCAPE;
     }
     //menu画面が開いてないなら普通の処理
     else if (menu->IsMenuOpen() == false)
     {
-
-        switch (fadeInFadeOut->GetFadeMode())
+        //シーンごとの処理
+        sceneFlow->Update();
+        if (sceneFlow->GetIsEndProccess())//処理が終わったら
         {
-        case FadeMode::fadeInStart:
-            fadeInFadeOut->FadeIn();
-            break;
-        case FadeMode::fadeInEnd:
-            //シーンごとの処理
-            sceneFlow->Update();
-            if (sceneFlow->GetIsEndProccess())//処理が終わったら
-            {
-                fadeInFadeOut->FadeOutStart();
-            }
-            break;
-        case FadeMode::fadeOutStart:
-            fadeInFadeOut->FadeOut();
-            break;
-        case FadeMode::fadeOutEnd://フェードアウトが終わったら次のシーン
             return sceneFlow->GetNextSceneType();
-            break;
-        default:
-            break;
         }
     }
     (*clock)->Update();
@@ -78,5 +52,4 @@ void PlayScene::Draw()
 {
     sceneFlow->Draw();
     menu->Draw();
-    fadeInFadeOut->Draw();
 }

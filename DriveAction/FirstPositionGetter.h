@@ -40,7 +40,6 @@ public:
     FirstPositionGetter();
     ~FirstPositionGetter();
     static std::unordered_map<int, std::vector<VECTOR>>GetFirstPositionLoad(FirstPositionDataKind dataKind);
-
     static std::vector<ChallengeData> GetChallengeData();
 private:
     static void CSVConvertPosition(std::unordered_map<int, std::vector<VECTOR>>* map,std::string fileName);
@@ -48,7 +47,4 @@ private:
     static int stageLength;
     static std::vector<std::string> challengeVec;
     static std::unordered_map<FirstPositionDataKind,std::string> positionDataPassMap;
-    static bool fileLoadFlag;
-
-
 };

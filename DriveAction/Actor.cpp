@@ -16,7 +16,7 @@ Actor::Actor(ObjectInit::InitObjKind kind)
 {
     ActorParametor initParam = InitActor::GetActorParamator(kind);
     //アセットを持ってくる
-    modelHandle = AssetManager::Get3DModelAssetHandle(InitActor::GetActorInitPassData(kind).modelPass);
+    modelHandle = initParam.modelHandle;
     //ポジション
     position.y = initParam.firstPosY;
     //跳ね返り力

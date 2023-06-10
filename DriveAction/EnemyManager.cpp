@@ -1,4 +1,4 @@
-#include "FlyShipManager.h"
+#include "EnemyManager.h"
 #include "CircleFlyshipCommander.h"
 #include "UpDownFlyShipCommander.h"
 #include "Utility.h"
@@ -11,7 +11,7 @@
 /// 空を飛ぶ船のマネージャー
 /// </summary>
 /// <param name="racerManager"></param>
-FlyShipManager::FlyShipManager(RacerManager* racerManager)
+EnemyManager::EnemyManager(RacerManager* racerManager)
 {
     playerObserver = new ObjectObserver(racerManager->GetPlayerSubject(0));
     auto challengeVec = FirstPositionGetter::GetChallengeData();
@@ -40,7 +40,7 @@ FlyShipManager::FlyShipManager(RacerManager* racerManager)
     }
 }
 
-FlyShipManager::~FlyShipManager()
+EnemyManager::~EnemyManager()
 {
     int key = commanderMap.size();
     for (int i = 0; i < key; i++)
@@ -52,9 +52,8 @@ FlyShipManager::~FlyShipManager()
     }
 }
 
-void FlyShipManager::Update()
+void EnemyManager::Update()
 {
-    
     int key = playerObserver->GetSubjectHitCount(Object::coin) + 1;
     for (int i = 0; i < key; i++)
     {
@@ -65,7 +64,7 @@ void FlyShipManager::Update()
     }
 }
 
-void FlyShipManager::Draw()
+void EnemyManager::Draw()
 {
     int key = playerObserver->GetSubjectHitCount(Object::coin) + 1;
     for (int i = 0; i < key; i++)

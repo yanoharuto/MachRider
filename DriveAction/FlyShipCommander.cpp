@@ -45,7 +45,7 @@ FlyShipInit::InitFlyShipParamator FlyShipCommander::GetInitData(ObjectInit::Init
     FlyShipInit::InitFlyShipParamator param = {};
     param.actorParam = InitActor::GetActorParamator(kind);
     //FlyShip用のデータをロード
-    CSVFileLoader* addDataLoader = new CSVFileLoader(InitActor::GetActorInitPassData(kind).addData);
+    CSVFileLoader* addDataLoader = new CSVFileLoader(InitActor::GetActorParamator(kind).addData);
     auto addData = addDataLoader->GetLoadCharData();
     param.moveSpeed = atof(addData[moveSpeed]);
     param.setAliveTime = atof(addData[aliveTime]);

@@ -20,8 +20,6 @@ public:
     //終了したら
     bool IsProccesEnd();
 private:
-    //ファンファーレの効果音のパス
-    const std::string fanfareSEPass = "Fanfare.mp3";
     //収集物のアイコン
     UIData collectIconData;
     //操作説明のUI

@@ -22,11 +22,11 @@ class CountDown;
 /// <summary>
 /// プレイヤーに関係のあるUI
 /// </summary>
-class PlayerRelatedUI final
+class GamePlayUI final
 {
 public:
-    PlayerRelatedUI(Timer* setTimer,int setFirstCoinNum,RacerManager* manager);
-    ~PlayerRelatedUI();
+    GamePlayUI(Timer* setTimer,int setFirstCoinNum,RacerManager* manager);
+    ~GamePlayUI();
     /// <summary>
     /// ミニマップの更新　やコインの枚数を更新
     /// </summary>
@@ -54,7 +54,8 @@ private:
     UIData manualData;
     //スラッシュ
     UIData slashHandle;  
-  
+    //カウントダウン
+    CountDown* countDown;
     //フォントのサイズ
     const int fontSize = 1;
     //プレイヤーの位置とかコインの所得数などを教えてくれる奴

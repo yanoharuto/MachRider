@@ -4,10 +4,10 @@
 #include "CoinManager.h"
 #include "ConflictManager.h"
 #include "DamageObjectGenerator.h"
-#include "FlyShipManager.h"
+#include "EnemyManager.h"
 #include "FiringItemManager.h"
 #include "PostGoalStaging.h"
-#include "PlayerRelatedUI.h"
+#include "GamePlayUI.h"
 #include "RacePrevProcess.h"
 #include "RaceScreen.h"
 #include "EffekseerForDXLib.h"
@@ -37,12 +37,12 @@ PlaySceneFlow::PlaySceneFlow()
 	modelManager = new AssetManager();
 	firingManager = new FiringItemManager();
 	coinManager = new CoinManager();
-	flyShipManager = new FlyShipManager(racerManager); 
+	enemyManager = new EnemyManager(racerManager); 
 	shadowMap = new ShadowMap(racerManager);
 	stageManager = new StageManager();
 	racePrevProccess = new RacePrevProcess();
 	screen = new RaceScreen();
-	playerUI = new PlayerRelatedUI(gameLimitTimer,coinManager->GetCoinFirstNum(),racerManager);
+	playerUI = new GamePlayUI(gameLimitTimer,coinManager->GetCoinFirstNum(),racerManager);
 	UpdateFunc[PlaySceneFlow::start] = &PlaySceneFlow::StartUpdate;
 	UpdateFunc[PlaySceneFlow::game] = &PlaySceneFlow::GameUpdate;
 	UpdateFunc[PlaySceneFlow::playerGoal] = &PlaySceneFlow::PlayerGoalUpdate;
@@ -63,7 +63,7 @@ PlaySceneFlow::~PlaySceneFlow()
 	SAFE_DELETE(score);
 	SAFE_DELETE(modelManager);
 	SAFE_DELETE(firingManager);
-	SAFE_DELETE(flyShipManager);
+	SAFE_DELETE(enemyManager);
 	SAFE_DELETE(conflictManager);
 	SAFE_DELETE(shadowMap);
 	SAFE_DELETE(racePrevProccess);
@@ -107,21 +107,21 @@ void PlaySceneFlow::Draw()
 	}
 	else
 	{
-		UseShadowMap();
 		switch (nowProgress)
 		{
 		case PlaySceeneProgress::start:
-			screen->ScreenUpdate();
-			racePrevProccess->Draw();
+			UseShadowMapDraw();
 			DrawEffekseer3D();
 			DrawEffekseer2D();
+			racePrevProccess->Draw();
+			screen->ScreenUpdate();
 			break;
 		case PlaySceeneProgress::game:
-			screen->ScreenUpdate();
+			UseShadowMapDraw();
 			DrawEffekseer3D();
 			DrawEffekseer2D();
 			playerUI->Draw();
-			conflictManager->DrawCollisionSphere();
+			screen->ScreenUpdate();
 			break;
 		case PlaySceeneProgress::playerGoal:
 			SetDrawBright(60, 60, 60);
@@ -145,7 +145,7 @@ void PlaySceneFlow::DrawManagers()
 	{
 		firingManager->Draw();
 		racerManager->Draw();
-		flyShipManager->Draw();
+		enemyManager->Draw();
 		stageManager->Draw();
 		coinManager->Draw();
 	}
@@ -153,7 +153,7 @@ void PlaySceneFlow::DrawManagers()
 /// <summary>
 /// シャドウマップを使う
 /// </summary>
-void PlaySceneFlow::UseShadowMap()
+void PlaySceneFlow::UseShadowMapDraw()
 {
 	shadowMap->SetUP();
 	DrawManagers();
@@ -169,7 +169,7 @@ void PlaySceneFlow::GameUpdate()
 {
 	coinManager->Update();
 	racerManager->RacerUpdate();
-	flyShipManager->Update();
+	enemyManager->Update();
 
 	//飛び道具の更新
 	firingManager->Update();

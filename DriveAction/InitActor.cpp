@@ -2,11 +2,9 @@
 #include "CSVFileLoader.h"
 #include "Utility.h"
 #include "InitObjKind.h"
-
+#include "AssetManager.h"
 //initActorFileNameの先のファイルから所得したデータをまとめたVector
 std::vector<std::string> InitActor::objectInitDataPassVec;
-//modelのパスとか保存
-std::unordered_map<InitObjKind, InitDataPass> InitActor::initPassDataFileMap;
 //初期化するパスを纏めているファイルの名前
 std::string InitActor::initActorFileName = "data/model/InitObjPass.csv";
 /// <summary>
@@ -33,7 +31,15 @@ ActorParametor InitActor::GetActorParamator(InitObjKind obj)
     auto initData = GetActorParametorString(obj);
     ActorParametor initParam = {};
     initParam.GetExtractParamator(initData);
+    auto dataPass = GetActorInitPassData(obj);
+    initParam.modelHandle = AssetManager::Get3DModelAssetHandle(dataPass.modelPass);
+    initParam.addData = dataPass.addData;
     return initParam;
+}
+int InitActor::GetActorTileNum(InitObjKind obj)
+{
+    auto initData = GetActorParametorString(obj);
+    return atof(initData[mapTiledNum].c_str());
 }
 /// <summary>
 /// 初期化に必要な色々なパスを所得
@@ -42,14 +48,10 @@ ActorParametor InitActor::GetActorParamator(InitObjKind obj)
 /// <returns></returns>
 InitDataPass InitActor::GetActorInitPassData(InitObjKind obj)
 {
-    if (!initPassDataFileMap.contains(obj))//まだ所得したことがないなら所得
-    {
-        auto initData = GetActorParametorString(obj);
-        InitDataPass passData = {};
-        passData.GetExtractParamator(initData);
-        initPassDataFileMap.insert(std::make_pair(obj,passData));
-    }
-    return initPassDataFileMap[obj];
+    auto initData = GetActorParametorString(obj);
+    InitDataPass passData = {};
+    passData.GetExtractParamator(initData);
+    return passData;
 }
 
 /// <summary>

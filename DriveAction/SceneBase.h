@@ -33,8 +33,6 @@ protected:
     void DeleteUniquePtr();
     //このシーンの種類
     SceneType nowSceneType;
-    //フェードインフェードアウト
-    FadeInFadeOut* fadeInFadeOut;
     //シーンの処理の流れ
     SceneFlowBase* sceneFlow;
     //タイマー
