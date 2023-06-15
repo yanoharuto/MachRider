@@ -3,7 +3,7 @@
 #include "InitObjKind.h"
 #include <list>
 #include "InitActor.h"
-
+#include "ActorController.h"
 namespace FlyShipInit
 {
     /// <summary>
@@ -11,7 +11,7 @@ namespace FlyShipInit
     /// </summary>
     struct InitFlyShipParamator
     {
-        ActorParametor actorParam;
+        ActorParameter actorParam;
         //生存時間
         float setAliveTime;
         //移動速度
@@ -28,7 +28,6 @@ namespace FlyShipInit
     /// </summary>
     enum FlyShipParamator
     {
-        
         //生存時間
         aliveTime = 2,
 
@@ -46,14 +45,11 @@ namespace FlyShipInit
     };
 }
 class FlyShip;
-class FlyShipCommander
+class FlyShipCommander:public ActorController
 {
 public:
     FlyShipCommander();
-    FlyShipCommander(ObjectInit::InitObjKind objKind, VECTOR playerPos);
-    ~FlyShipCommander();
-    virtual void Update();
-    virtual void Draw() const;
+
 protected:
     /// <summary>
     /// 初期化するために必要なデータを所得
@@ -61,6 +57,5 @@ protected:
     /// <param name="kind">初期化したいFlyShipの種類</param>
     /// <returns></returns>
     FlyShipInit::InitFlyShipParamator GetInitData(ObjectInit::InitObjKind kind);
-    std::list<FlyShip*> flyShipList;
 };
 

@@ -20,7 +20,7 @@ public:
     /// <summary>
     /// •`‰æ
     /// </summary>
-    virtual void Draw() = 0;
+    virtual void Draw() const = 0;
     /// <summary>
     /// ˆ—‚ªI‚í‚Á‚½‚©
     /// </summary>

@@ -1,11 +1,12 @@
 #include "DamageObjectGenerator.h"
-#include "Rocket.h"
-#include "LittleRadiusLaser.h"
-#include "BigRadiusLaser.h"
-#include "FiringItemManager.h"
-#include "DamageObject.h"
+#include "BomberController.h"
+#include "LittleRadiusLaserController.h"
+#include "BigRadiusLaserController.h"
 #include "ObjectObserver.h"
+#include "ActorController.h"
+#include "ActorControllerManager.h"
 
+std::list<ActorController*> DamageObjectGenerator::createDamageObject;
 DamageObjectGenerator::DamageObjectGenerator()
 {    
 
@@ -18,25 +19,32 @@ DamageObjectGenerator::~DamageObjectGenerator()
 /// </summary>
 /// <param name="itemTag"></param>
 /// <param name="carInfo"></param>
-DamageObject* DamageObjectGenerator::GenerateDamageObject(Item::ItemTag itemTag,ObjectSubject* sub)
+void DamageObjectGenerator::GenerateDamageObject(Item::ItemTag itemTag,ObjectSubject* sub)
 {
-    DamageObject* obj = nullptr;
-    ObjectObserver* observer = new ObjectObserver(sub);
+    ActorController* obj = nullptr;
+    
     switch (itemTag)
     {
     case Item:: bomber:
-        obj = new Rocket(observer);
+        obj = new BomberController(sub);
         break;
     case Item::littleRadLaser:
-        obj = new LittleRadiusLaser(observer);
+        obj = new LittleRadiusLaserController(sub);
         break;
     case Item::bigRadLaser:
-        obj = new BigRadiusLaser(observer);
+        obj = new BigRadiusLaserController(sub);
         break;
     default:
         break;
     }
-    
-    FiringItemManager::AddFiringObject(obj);
-    return obj;
+    createDamageObject.push_back(obj);
+}
+
+void DamageObjectGenerator::GetObjectList(ActorControllerManager* controllerManager)
+{
+    for (auto ite = createDamageObject.begin(); ite != createDamageObject.end(); ite++)
+    {
+        controllerManager->AddActorController(std::move(*ite));
+    }
+    createDamageObject.clear();
 }

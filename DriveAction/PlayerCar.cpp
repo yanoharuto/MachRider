@@ -9,28 +9,17 @@
 #include "ConflictManager.h"
 #include "AssetManager.h"
 #include "SphereCollider.h"
-const CarInfomation PlayerCar::setCarParam =
-{
-	1.0f,
-	10.0f,
-	3.0f,
-	0.13f,
-	1.0f,
-	0.34f,
-	7.0f,
-};
 
-PlayerCar::PlayerCar(VECTOR firstPos)
-	:Car(setCarParam,ObjectInit::player)
+PlayerCar::PlayerCar(VECTOR firstPos,VECTOR setDirection)
+	:Car(ObjectInit::player)
 {
 	firstPosY = position.y;
 	position = firstPos;
 	position.y = firstPosY;
-
 	prevPos = position;
-	direction = VGet(0.0f, 0.0f, -1.0f);
+	direction = setDirection;
+	
 	SoundPlayer::SetListener(position,VAdd(position,direction));
-
 	EffectManager::LoadEffect(EffectInit::carConflict);
 	EffectManager::LoadEffect(EffectInit::carWind);
 	EffectManager::LoadEffect(EffectInit::carDamage);
@@ -61,46 +50,65 @@ PlayerCar::~PlayerCar()
 /// </summary>
 void PlayerCar::Update()
 {
-	SoundPlayer::Play2DSE(playerFlight);
+	position.y = firstPosY;
+	DamagePostProccess();
+	//速さを所得
+	VECTOR accelVec = GetAccelVec();
+	//速度を更新
+	UpdateVelocity(accelVec);
+	//位置の更新
+	ReflectsVelocity();
+	//回転とかを制御
+	ModelSetMatrix();
+	//タイヤの更新
+	WheelArgumentCarInfo carInfo;
+	carInfo.Init(MV1GetMatrix(modelHandle), direction, VSize(velocity));
+	wheels->WheelUpdate(carInfo);
+
 	SetInputDir();
-	CommonUpdate();
 	SoundPlayer::SetListener(position, VAdd(position, direction));
-	ArgumentConflictResultInfo resultInfo = GetConflictArgumentInfo();
-	resultInfo.pos = position;
-	VECTOR damageEffectPos = position;
+	SoundPlayer::Play2DSE(playerFlight);
 	EffectUpdate();
-	UpdatePosition();
-#ifdef _DEBUG
-	printfDx("position::%f,%f,%f\n", position.x,position.y,position.z);
-	printfDx("dir::%f,%f,%f\n", direction.x,direction.y,direction.z);
-	printfDx("velocity::%f,%f,%f\n", velocity.x,velocity.y,velocity.z);
-#endif
+
+}
+
+void PlayerCar::GameReserve()
+{
+	totalCosSeed += cosSeed;
+	position.y = firstPosY + cosf(totalCosSeed) * upDownSpeed;
+}
+
+void PlayerCar::ConflictProccess(ConflictExamineResultInfo conflictInfo)
+{
+	if (conflictInfo.tag == damageObject)
+	{
+		DamageReaction(conflictInfo);
+	}
+	else if (conflictInfo.tag != collect)
+	{
+		ConflictReaction(conflictInfo);
+	}
 }
 
 void PlayerCar::SetInputDir()
 {
-	wheelArgumentCarInfo.inputDir.isBreake = false;
 	//右か左か押してたら
 	if (UserInput::GetInputState(Right) == Hold)
 	{
-		wheelArgumentCarInfo.inputDir.handleDir = HandleDirection::right;
 		twistZRota += twistZRotaSpeed;
 		
 	}
 	else if (UserInput::GetInputState(Left) == Hold)
 	{
-		wheelArgumentCarInfo.inputDir.handleDir = HandleDirection::left;
 		twistZRota -= twistZRotaSpeed;
 		
 	}
 	else if (UserInput::GetInputState(Up) == Hold)
 	{
-		wheelArgumentCarInfo.inputDir.handleDir = HandleDirection::straight;
 		twistZRota -= twistZRota * twistZRotaSpeed;
 	}
 	else//なにも押していない時の処理
 	{
-		wheelArgumentCarInfo.inputDir.handleDir = HandleDirection::straight;
 		twistZRota -= twistZRota * twistZRotaSpeed;
 	}
 	//曲がる時の傾きの制御
@@ -110,7 +118,6 @@ void PlayerCar::SetInputDir()
 	}
 	if (UserInput::GetInputState(KeyInputKind::Down) == Hold)
 	{
-		wheelArgumentCarInfo.inputDir.isBreake = true;
 		twistZRota -= twistZRota * twistZRotaSpeed;
 	}
 }
@@ -150,13 +157,20 @@ void PlayerCar::EffectUpdate()
 
 void PlayerCar::DamageReaction(const ConflictExamineResultInfo conflictInfo)
 {
-	damageEffect = EffectManager::GetPlayEffect3D(EffectInit::carDamage);
-	SetPosPlayingEffekseer3DEffect(damageEffect, position.x, position.y, position.z);
-	SoundPlayer::Play3DSE(playerDamage);
-	isDamage = true;
-	damageReactionTime = setDamageReactionTime;
-	//無敵時間セット
-	twistZRota = 0.0f;
+	collVec = conflictInfo.bounceVec;
+	collVec.y = 0;
+	position = conflictInfo.pos;
+	position.y = firstPosY;
+	if (!isDamage)
+	{
+		damageEffect = EffectManager::GetPlayEffect3D(EffectInit::carDamage);
+		SetPosPlayingEffekseer3DEffect(damageEffect, position.x, position.y, position.z);
+		SoundPlayer::Play3DSE(playerDamage);
+		isDamage = true;
+		//無敵時間セット
+		damageTimer = new Timer(setDamageReactionTime);
+		twistZRota = 0.0f;
+	}
 }
 
 void PlayerCar::ConflictReaction(const ConflictExamineResultInfo conflictInfo)
@@ -172,4 +186,36 @@ void PlayerCar::ConflictReaction(const ConflictExamineResultInfo conflictInfo)
 	position = conflictInfo.pos;
 	position.y = firstPosY;
 	MV1SetPosition(modelHandle, position);
+}
+
+void PlayerCar::DamagePostProccess()
+{
+	if (isDamage)
+	{
+		if (damageTimer->IsOverLimitTime())
+		{
+			isDamage = false;
+			SAFE_DELETE(damageTimer);
+		}
+	}
+}
+
+/// <summary>
+/// 機体を回転させる
+/// </summary>
+void PlayerCar::ModelSetMatrix() const
+{
+	float rota = 0;
+	if (isDamage)
+	{
+		rota = damageTimer->GetLimitTime() / setDamageReactionTime * 100;
+		rota *= damageReactionRotaSpeed;
+	}
+	// 向きに合わせて回転.
+	MV1SetRotationZYAxis(modelHandle, direction, VGet(0.0f, 1.0f, 0.0f), twistZRota);
+	// モデルに向いてほしい方向に回転.
+	MATRIX tmpMat = MV1GetMatrix(modelHandle);
+	MATRIX rotYMat = MGetRotY((180.0f + rota) * RAGE);
+	tmpMat = MMult(tmpMat, rotYMat);
+	MV1SetRotationMatrix(modelHandle, tmpMat);
 }

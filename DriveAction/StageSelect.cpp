@@ -10,9 +10,8 @@ StageSelect::StageSelect()
     auto fileLoader = new CSVFileLoader(allStageAddresFile);
     dataLoader = fileLoader->GetLoadStringData();
     SAFE_DELETE(fileLoader);
-    fileNameIte = dataLoader.begin();
-    fileAddres = *fileNameIte;
-    fileNameIte++;
+    dataNum = 0;
+    fileAddres = dataLoader[dataNum];
 }
 
 StageSelect::~StageSelect()
@@ -24,21 +23,21 @@ void StageSelect::Update()
     //上下に押したら変更
     if (UserInput::GetInputState(Up))
     {
-        fileNameIte++;
-        if (fileNameIte == dataLoader.end())
+        dataNum++;
+        if (dataNum >= dataLoader.size())
         {
-            fileNameIte = dataLoader.begin();
+            dataNum = 0;
         }
     }
     else if (UserInput::GetInputState(Down))
     {
-        if (fileNameIte == dataLoader.begin())
+        dataNum--;
+        if (dataNum < 0)
         {
-            fileNameIte = dataLoader.end();
+            dataNum = dataLoader.size() - 1;
         }
-        fileNameIte--;
     }
-    fileAddres = *fileNameIte;
+    fileAddres = dataLoader[dataNum];
 }
 /// <summary>
 /// どのステージを選んでいるか

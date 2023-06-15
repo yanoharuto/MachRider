@@ -7,7 +7,7 @@ public:
     enum ObjectTag
     {
         player,
-        coin,
+        collect,
         damageObject,
         obstacle,
         stage,

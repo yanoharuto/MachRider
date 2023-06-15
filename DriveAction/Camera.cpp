@@ -3,31 +3,23 @@
 #include "OriginalMath.h"
 #include "CSVFileLoader.h"
 #include "Utility.h"
-std::unordered_map<VECTOR*, VECTOR*> Camera::cameraPosDir;
+
 float Camera::lookingDeg = 0;
-using namespace InitParamater;
+using namespace InitCamera;
 Camera::Camera(CameraType type)
 {
     LoadData(type);
-    pPosition = &position;
-    pDirection = &direction;
-    cameraPosDir.insert(std::make_pair(pPosition, pDirection));
 }
 
 Camera::~Camera()
 {
 }
 
-bool Camera::IsLookingCamera(const Actor* actor)
+bool Camera::IsLookingCamera(const Actor* const actor) const
 {
-    for (auto itr = cameraPosDir.begin(); itr != cameraPosDir.end(); itr++)
-    {
-        VECTOR between = VSub(actor->GetPos(), *(*itr).first);
-        return OriginalMath::GetDegreeMisalignment(between, *(*itr).second) < lookingDeg;
-    }
-    return false;
+    VECTOR between = VSub(actor->GetPos(), position);
+    return OriginalMath::GetDegreeMisalignment(between, direction) < lookingDeg;
 }
-
 
 void Camera::LoadData(CameraType type)
 {

@@ -56,7 +56,7 @@ void RotatingLasers::RotateLaser(float rotaSpeed, float laserRange)
     //エフェクトの向きとか場所を修正
     SetPosPlayingEffekseer3DEffect(laserEffect, position.x, position.y, position.z);
     SetRotationPlayingEffekseer3DEffect(laserEffect, 0, effectRota, 0);
-
+    //地面にレーザー跡エフェクト
     SetLaserTrack();
     isDrawShadow = false;
 }

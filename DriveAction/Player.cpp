@@ -1,38 +1,23 @@
-#include <iostream>
-#include <fstream>
 #include "Player.h"
-#include "Utility.h"
-#include "Rule.h"
-#include "UserInput.h"
 #include "ObjectSubject.h"
 #include "PlayerCar.h"
 #include "SphereCollider.h"
-#include "Object.h"
-#include "ConflictManager.h"
-Player::Player(VECTOR firstPos)
-    :Racer()
+#include "ObjectObserver.h"
+Player::Player(VECTOR firstPos,VECTOR direction)
 {
-    car = new PlayerCar(firstPos);
+    actorList.push_back( new PlayerCar(firstPos,direction));
 
-    collider = new SphereCollider(car);
+    collider = new SphereCollider(*actorList.begin());
     collider->SetCoolTimer(Object::ObjectTag::damageObject, setDamageCoolTime);
-    subject = new ObjectSubject(car,collider);
+    subject = new ObjectSubject(*actorList.begin(), collider);
 }
 
-Player::~Player()
+std::shared_ptr<ObjectObserver> Player::CreatePlayerObserver() const
 {
-    ConflictManager::EraceConflictObjInfo(collider);
-    SAFE_DELETE(collider);
-    SAFE_DELETE(subject);
-    SAFE_DELETE(car);
+    return std::make_shared<ObjectObserver>(subject);
 }
 
-void Player::Update()
+void Player::GameReserve()
 {
-    car->Update();
-}
-
-ObjectSubject* Player::GetSubject()
-{
-    return subject;
+    (*actorList.begin())->GameReserve();
 }

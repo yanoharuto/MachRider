@@ -20,11 +20,13 @@ namespace EffectInit
         //レーザーの跡
         laserTrack = 20,
         //コインをゲットしたときのエフェクト
-        getCoin = 23,
+        getCollect = 23,
         //爆弾の爆発
         bombExplosion = 26,
         //コインの出すオーラ
-        coinAura=29
+        collectAura=29,
+        //収集アイテムの方角を指すエフェクト
+        compass=32
     };
     enum EffectInitData
     {

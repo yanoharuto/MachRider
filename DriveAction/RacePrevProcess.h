@@ -16,7 +16,7 @@ public:
     //更新
     void Update();
     //描画
-    void Draw();
+    void Draw() const;
     //終了したら
     bool IsProccesEnd();
 private:
@@ -36,4 +36,5 @@ private:
     bool proccesEnd = false;
     //現在のコマ
     int iconIncrement = 0;
+    int fadeValue = 0;
 };

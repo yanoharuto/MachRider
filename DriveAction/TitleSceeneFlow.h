@@ -4,7 +4,7 @@
 #include "UIManager.h"
 
 class StageSelect;
-class StageManager;
+class StageInitializer;
 class SwitchUI;
 
 
@@ -17,15 +17,13 @@ public:
     TitleSceeneFlow();
     ~TitleSceeneFlow();
     void Update() override;
-    void Draw() override;
+    void Draw()const override;
 private:
     //ステージの情報
     StageSelect* stageSelect;
-    StageManager* stageManager;
-    UIManager* uiManager;
     SwitchUI* switchUI;
     const float logoSize = 1.0f;
-    const float setNearValue = 0.1f;
-    const float setFarValue = 10000.0f;
+    int stageNum = 0;
     UIData titleLogoData;
+    UIData stageNameData;
 };

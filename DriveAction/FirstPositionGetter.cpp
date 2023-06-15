@@ -1,28 +1,28 @@
 #include "FirstPositionGetter.h"
 #include "CSVFileLoader.h"
 #include "Utility.h"
-#include "StageManager.h"
 #include "StageSelect.h"
+//ステージの横幅
 int FirstPositionGetter::stageWidth;
+//ステージの縦幅
 int FirstPositionGetter::stageLength;
-std::vector<std::string> FirstPositionGetter::challengeVec;
-std::unordered_map<FirstPositionDataKind, std::string> FirstPositionGetter::positionDataPassMap;
+
 FirstPositionGetter::FirstPositionGetter()
 {
-
+    //データを読み取り
     auto fileLoader = new CSVFileLoader(StageSelect::GetLoadeStageName());
     auto setStageInitDataVec = fileLoader->GetLoadStringData();
     SAFE_DELETE(fileLoader);
     fileLoader = new CSVFileLoader(setStageInitDataVec[challengesListFilePass]);
     challengeVec = fileLoader->GetLoadStringData();
     SAFE_DELETE(fileLoader);
-
+    //ステージの横幅縦幅を設定
     stageWidth = atoi(setStageInitDataVec[width].c_str());
     stageLength = atoi(setStageInitDataVec[length].c_str());
+
     using enum FirstPositionDataKind;
     positionDataPassMap.insert(std::make_pair(playerPosition, setStageInitDataVec[playerPositionFilePass]));
     positionDataPassMap.insert(std::make_pair(rockPosition, setStageInitDataVec[rockFilePass]));
-
 }
 
 FirstPositionGetter::~FirstPositionGetter()

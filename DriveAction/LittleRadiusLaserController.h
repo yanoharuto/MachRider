@@ -1,0 +1,17 @@
+#pragma once
+#include <iostream>
+#include <memory>
+#include "ActorController.h"
+class ObjectSubject;
+class ObjectObserver;
+/// <summary>
+/// è¨Ç≥Ç≠âÒÇÈÉåÅ[ÉUÅ[
+/// </summary>
+class LittleRadiusLaserController :
+    public ActorController
+{
+public:
+    LittleRadiusLaserController(ObjectSubject* sub);
+private:
+    ObjectObserver* observer;
+};

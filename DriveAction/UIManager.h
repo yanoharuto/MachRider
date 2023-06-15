@@ -55,7 +55,9 @@ namespace UIInit
         //メニュー画面のカーソル
         menuCursor = 68,
         //ゲーム終了UI
-        exitUI = 71
+        exitUI = 71,
+        //タイトル画面でステージ選択をするときに使う
+        stageName = 74
     };
     /// <summary>
     /// UIの初期化情報　数字は読み込み段数

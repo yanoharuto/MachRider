@@ -1,88 +1,39 @@
-#include <iostream>
+#include "ResultScore.h"
 #include <fstream>
 #include <math.h>
 #include "Utility.h"
-#include "ResultScore.h"
 #include "Timer.h"
 #include "ObjectObserver.h"
-#include "RacerManager.h"
 
-#include "Object.h"
-#include "ConflictProccesor.h"
-//収集物のスコア
-int ResultScore::collectScore;
-//敵にヒットすると減点するスコア
-int ResultScore::hitScore;
-//残り時間ボーナス
-int ResultScore::timeScore;
-
-ResultScore::ResultScore(Timer* timer,RacerManager* racerManager)
+const int ResultScore::coinBonus;
+const int ResultScore::noHitScore;
+const int ResultScore::timeBonus;
+const int ResultScore::damageObjHitDec;
+ResultScore::ResultScore(Timer* timer, std::shared_ptr<ObjectObserver> player)
 {
-    timeScore = static_cast<int>(timer->GetLimitTime() * timeBonus);
-    ObjectSubject* subject = racerManager->GetPlayerSubject(0);
-    ObjectObserver* playerObserver = new ObjectObserver(racerManager->GetPlayerSubject(0));
-
-    hitScore = noHitScore - playerObserver->GetSubjectHitCount(Object::ObjectTag::damageObject) * damageObjHitDec;
-    collectScore = playerObserver->GetSubjectHitCount(Object::ObjectTag::coin) * coinBonus;
-
-    SAFE_DELETE(playerObserver);
+    playerObserver = player;
+    gameTimer = timer;
 }
 
-int ResultScore::GetScore(ScoreKind scoreKind)
+
+int ResultScore::GetScore(ScoreKind scoreKind) const
 {
     switch (scoreKind)
     {
     case ScoreKind::time:
-        return timeScore;
-         break;
+        return static_cast<int>(gameTimer->GetLimitTime() * timeBonus);
+        break;
     case ScoreKind::hit:
-        return hitScore;
+        return noHitScore - playerObserver.lock()->GetSubjectHitCount(Object::ObjectTag::damageObject) * damageObjHitDec;
         break;
     case ScoreKind::collect:
-        return collectScore;
+        return playerObserver.lock()->GetSubjectHitCount(Object::ObjectTag::collect) * coinBonus;
         break;
     case ScoreKind::total:
-        return timeScore + hitScore + collectScore;
+        return GetScore(time) + GetScore(hit) + GetScore(collect);
         break;
     default:
         break;
     }
     return 0;
-}
-
-int ResultScore::GetScore(int kindNum)
-{
-    switch (kindNum)
-    {
-    case ScoreKind::time:
-        return timeScore;
-        break;
-    case ScoreKind::hit:
-        return hitScore;
-        break;
-    case ScoreKind::collect:
-        return collectScore;
-        break;
-    case ScoreKind::total:
-        return timeScore + hitScore + collectScore;
-        break;
-    default:
-        break;
-    }
-    return 0;
-}
-
-int ResultScore::GetCollectBonus()
-{
-    return coinBonus;
-}
-
-int ResultScore::GetHitDecrease()
-{
-    return damageObjHitDec;
-}
-
-int ResultScore::GetTimeBunus()
-{
-    return timeScore;
 }

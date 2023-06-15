@@ -30,7 +30,7 @@ namespace ObjectInit
     /// <summary>
     /// ゲームキャラの初期位置とか当たり判定の大きさとか
     /// </summary>
-    struct ActorParametor
+    struct ActorParameter
     {
         //初期高度
         float firstPosY;
@@ -115,7 +115,7 @@ public:
     /// </summary>
     /// <param name="obj"></param>
     /// <returns></returns>
-    static ActorParametor GetActorParamator(InitObjKind obj);
+    static ActorParameter GetActorParamator(InitObjKind obj);
     /// <summary>
     /// 初期位置の番号を返す
     /// </summary>

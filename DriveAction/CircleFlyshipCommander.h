@@ -6,6 +6,5 @@ class CircleFlyshipCommander :
 {
 public:
     CircleFlyshipCommander(VECTOR firstPos);
-    ~CircleFlyshipCommander();
 };
 

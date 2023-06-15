@@ -167,10 +167,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ActorController.cpp" />
     <ClCompile Include="Actor.cpp" />
+    <ClCompile Include="ActorControllerManager.cpp" />
     <ClCompile Include="ArgumentConflictResultInfo.cpp" />
     <ClCompile Include="AssetManager.cpp" />
     <ClCompile Include="BigRadiusLaser.cpp" />
+    <ClCompile Include="BigRadiusLaserController.cpp" />
+    <ClCompile Include="BomberController.cpp" />
     <ClCompile Include="BomberFlyShip.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="ChallengeFlow.cpp" />
@@ -178,20 +182,19 @@
     <ClCompile Include="CircleLaserFlyShip.cpp" />
     <ClCompile Include="Clock.cpp" />
     <ClCompile Include="Coin.cpp" />
-    <ClCompile Include="CoinManager.cpp" />
+    <ClCompile Include="CollectController.cpp" />
     <ClCompile Include="ConflictProccesor.cpp" />
-    <ClCompile Include="CPU.cpp" />
     <ClCompile Include="CSVFileLoader.cpp" />
     <ClCompile Include="DamageObject.cpp" />
     <ClCompile Include="EffectManager.cpp" />
-    <ClCompile Include="FiringItemManager.cpp" />
     <ClCompile Include="DamageObjectGenerator.cpp" />
     <ClCompile Include="FlyShipCommander.cpp" />
     <ClCompile Include="FirstPositionGetter.cpp" />
+    <ClCompile Include="LittleRadiusLaserController.cpp" />
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="ObjectObserver.cpp" />
     <ClCompile Include="FlyShip.cpp" />
-    <ClCompile Include="EnemyManager.cpp" />
+    <ClCompile Include="EnemyGenerator.cpp" />
     <ClCompile Include="CreatePosAndDirData.cpp" />
     <ClCompile Include="FadeInFadeOut.cpp" />
     <ClCompile Include="InitActor.cpp" />
@@ -203,12 +206,12 @@
     <ClCompile Include="NumUI.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="RaceMenu.cpp" />
-    <ClCompile Include="Racer.cpp" />
     <ClCompile Include="RaceScreen.cpp" />
     <ClCompile Include="RankingData.cpp" />
     <ClCompile Include="Rock.cpp" />
     <ClCompile Include="Rocket.cpp" />
     <ClCompile Include="RotatingLasers.cpp" />
+    <ClCompile Include="Saw.cpp" />
     <ClCompile Include="SceneBase.cpp" />
     <ClCompile Include="SceneFlowBase.cpp" />
     <ClCompile Include="ShadowMap.cpp" />
@@ -216,7 +219,6 @@
     <ClCompile Include="Car.cpp" />
     <ClCompile Include="ConflictManager.cpp" />
     <ClCompile Include="CountDown.cpp" />
-    <ClCompile Include="CPUCar.cpp" />
     <ClCompile Include="Effect.cpp" />
     <ClCompile Include="GimmickObject.cpp" />
     <ClCompile Include="MiniMap.cpp" />
@@ -234,9 +236,8 @@
     <ClCompile Include="UIManager.cpp" />
     <ClCompile Include="UpDownFlyShipCommander.cpp" />
     <ClCompile Include="UpDownLaserFlyShip.cpp" />
-    <ClCompile Include="RacerManager.cpp" />
     <ClCompile Include="PlaySceneFlow.cpp" />
-    <ClCompile Include="StageManager.cpp" />
+    <ClCompile Include="StageInitializer.cpp" />
     <ClCompile Include="StageSelect.cpp" />
     <ClCompile Include="TitleSceeneFlow.cpp" />
     <ClCompile Include="VectorDataCreator.cpp" />
@@ -244,10 +245,9 @@
     <ClCompile Include="Wheels.cpp" />
     <ClCompile Include="HitChecker.cpp" />
     <ClCompile Include="RaceCamera.cpp" />
-    <ClCompile Include="CircuitTrack.cpp" />
+    <ClCompile Include="StageObjectController.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="UserInput.cpp" />
-    <ClCompile Include="SkyDome.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="PlayerCar.cpp" />
     <ClCompile Include="PlayScene.cpp" />
@@ -256,10 +256,14 @@
     <ClCompile Include="Utility.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ActorController.h" />
     <ClInclude Include="Actor.h" />
+    <ClInclude Include="ActorControllerManager.h" />
     <ClInclude Include="ArgumentConflictResultInfo.h" />
     <ClInclude Include="AssetManager.h" />
     <ClInclude Include="BigRadiusLaser.h" />
+    <ClInclude Include="BigRadiusLaserController.h" />
+    <ClInclude Include="BomberController.h" />
     <ClInclude Include="BomberFlyShip.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CarModelEnum.h" />
@@ -269,22 +273,20 @@
     <ClInclude Include="CircleLaserFlyShip.h" />
     <ClInclude Include="Clock.h" />
     <ClInclude Include="Coin.h" />
-    <ClInclude Include="CoinManager.h" />
+    <ClInclude Include="CollectController.h" />
     <ClInclude Include="ConflictProccesor.h" />
-    <ClInclude Include="CPU.h" />
     <ClInclude Include="CSVFileLoader.h" />
     <ClInclude Include="DamageObject.h" />
     <ClInclude Include="EffectManager.h" />
-    <ClInclude Include="FiringItemManager.h" />
     <ClInclude Include="DamageObjectGenerator.h" />
     <ClInclude Include="FlyShipCommander.h" />
+    <ClInclude Include="LittleRadiusLaserController.h" />
     <ClInclude Include="Menu.h" />
     <ClInclude Include="ObjectObserver.h" />
     <ClInclude Include="FlyShip.h" />
     <ClInclude Include="FlyShipArgumentInfo.h" />
     <ClInclude Include="FlyShipKind.h" />
-    <ClInclude Include="EnemyManager.h" />
-    <ClInclude Include="CpuCarMode.h" />
+    <ClInclude Include="EnemyGenerator.h" />
     <ClInclude Include="CreatePosAndDirData.h" />
     <ClInclude Include="FadeInFadeOut.h" />
     <ClInclude Include="FadeMode.h" />
@@ -306,7 +308,6 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="ObjPosAndDir.h" />
     <ClInclude Include="RaceMenu.h" />
-    <ClInclude Include="Racer.h" />
     <ClInclude Include="RaceScreen.h" />
     <ClInclude Include="RankingData.h" />
     <ClInclude Include="Rock.h" />
@@ -323,7 +324,6 @@
     <ClInclude Include="CircuitDataStruct.h" />
     <ClInclude Include="ConflictManager.h" />
     <ClInclude Include="CountDown.h" />
-    <ClInclude Include="CPUCar.h" />
     <ClInclude Include="Effect.h" />
     <ClInclude Include="GimmickObject.h" />
     <ClInclude Include="ListUtility.h" />
@@ -345,10 +345,9 @@
     <ClInclude Include="TimerUI.h" />
     <ClInclude Include="UpDownFlyShipCommander.h" />
     <ClInclude Include="UpDownLaserFlyShip.h" />
-    <ClInclude Include="RacerManager.h" />
     <ClInclude Include="PlaySceneFlow.h" />
     <ClInclude Include="PlaySceeneProgressEnum.h" />
-    <ClInclude Include="StageManager.h" />
+    <ClInclude Include="StageInitializer.h" />
     <ClInclude Include="StageSelect.h" />
     <ClInclude Include="TitleSceeneFlow.h" />
     <ClInclude Include="UIDataStruct.h" />
@@ -359,10 +358,9 @@
     <ClInclude Include="HitChecker.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="RaceCamera.h" />
-    <ClInclude Include="CircuitTrack.h" />
+    <ClInclude Include="StageObjectController.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="UserInput.h" />
-    <ClInclude Include="SkyDome.h" />
     <ClInclude Include="PlayerCar.h" />
     <ClInclude Include="PlayScene.h" />
     <ClInclude Include="ResultScene.h" />

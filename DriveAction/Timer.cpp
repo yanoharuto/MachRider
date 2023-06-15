@@ -31,7 +31,7 @@ bool Timer::IsOverLimitTime()
     return  Clock::GetNowGameTime() - startTime > limitTime;
 }
 /// <summary>
-/// Œv‘ªŠÔ
+/// ‰ß‚¬‚½ŠÔ
 /// </summary>
 /// <returns></returns>
 float Timer::GetLimitTime()

@@ -42,5 +42,5 @@ void BomberFlyShip::Update()
         objState = dead;
     }
     SoundPlayer::SetPosition3DSound(position, bomberShipFlight);
-    UpdatePosition();
+    ReflectsVelocity();
 }

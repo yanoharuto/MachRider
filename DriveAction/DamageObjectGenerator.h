@@ -1,9 +1,10 @@
 #pragma once
-#include <string>
+#include <list>
 #include "ItemTag.h"
 class ObjectSubject;
 class DamageObject;
-class ObjectObserver;
+class ActorController;
+class ActorControllerManager;
 /// <summary>
 /// 投擲アイテムなどのダメージがあるオブジェクトを生成する
 /// </summary>
@@ -16,9 +17,14 @@ public:
     DamageObjectGenerator();
     ~DamageObjectGenerator();
     /// <summary>
-    /// アイテムの種類によって生成するアイテムを変更する
+    /// 
     /// </summary>
     /// <param name="itemTag"></param>
-    /// <param name="carInfo"></param>
-    static DamageObject* GenerateDamageObject(Item::ItemTag itemTag,ObjectSubject* sub);
+    /// <param name="sub">発射した人の情報を渡す</param>
+    /// <returns></returns>
+    static void GenerateDamageObject(Item::ItemTag itemTag,ObjectSubject* sub);
+
+    void GetObjectList(ActorControllerManager* controllerManager);
+private:
+    static std::list<ActorController*> createDamageObject;
 };

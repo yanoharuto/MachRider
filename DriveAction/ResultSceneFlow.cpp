@@ -28,7 +28,7 @@ void ResultSceneFlow::Update()
     }
 }
 
-void ResultSceneFlow::Draw()
+void ResultSceneFlow::Draw() const
 {
-    switchUI->Draw();
+    
 }

@@ -26,10 +26,10 @@ InitActor::~InitActor()
 /// </summary>
 /// <param name="obj"></param>
 /// <returns></returns>
-ActorParametor InitActor::GetActorParamator(InitObjKind obj)
+ActorParameter InitActor::GetActorParamator(InitObjKind obj)
 {
     auto initData = GetActorParametorString(obj);
-    ActorParametor initParam = {};
+    ActorParameter initParam = {};
     initParam.GetExtractParamator(initData);
     auto dataPass = GetActorInitPassData(obj);
     initParam.modelHandle = AssetManager::Get3DModelAssetHandle(dataPass.modelPass);

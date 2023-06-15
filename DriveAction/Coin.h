@@ -25,21 +25,21 @@ public:
     /// </summary>
     /// <param name="conflictInfo"></param>
     void ConflictProccess(const ConflictExamineResultInfo conflictInfo);
+    void GameReserve()override;
     /// <summary>
     /// ‚¿‚å‚Á‚Æ‰e‚ğ•ÏX‚µ‚Ä•`‰æ
     /// </summary>
     void Draw() const override;
 private:
+    
     //–ˆ•bŒü‚«‚ª‚±‚Ì’l•ª•Ï‰»‚·‚é
     static const float rotateY;
     //c•ûŒü‚ÉˆÚ“®‚·‚é—Ê
     static const float moveYValue;
     //c•ûŒü‚ÉˆÚ“®‚·‚é‘¬“x
     static const float moveYSpeed;
-    //”¼Œa
-    static const float setRadius;
     //Å‰‚Ì‚‚³
-    static const float firstY;
+    float firstY;
     //‰ñ“]—Ê
     float totalMoveYValue = 0;
     //‹…“–‚½‚è”»’è

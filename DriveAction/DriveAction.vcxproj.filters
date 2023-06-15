@@ -72,9 +72,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="SkyDome.cpp">
-      <Filter>ソース ファイル\Object</Filter>
-    </ClCompile>
     <ClCompile Include="PlayerCar.cpp">
       <Filter>ソース ファイル\Object</Filter>
     </ClCompile>
@@ -93,16 +90,13 @@
     <ClCompile Include="UserInput.cpp">
       <Filter>ソース ファイル\Other</Filter>
     </ClCompile>
-    <ClCompile Include="CircuitTrack.cpp">
+    <ClCompile Include="StageObjectController.cpp">
       <Filter>ソース ファイル\Object</Filter>
     </ClCompile>
     <ClCompile Include="RaceCamera.cpp">
       <Filter>ソース ファイル\Object</Filter>
     </ClCompile>
     <ClCompile Include="Car.cpp">
-      <Filter>ソース ファイル\Object</Filter>
-    </ClCompile>
-    <ClCompile Include="CPUCar.cpp">
       <Filter>ソース ファイル\Object</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp">
@@ -114,7 +108,7 @@
     <ClCompile Include="Wheels.cpp">
       <Filter>ソース ファイル\Object</Filter>
     </ClCompile>
-    <ClCompile Include="StageManager.cpp">
+    <ClCompile Include="StageInitializer.cpp">
       <Filter>ソース ファイル\Manager</Filter>
     </ClCompile>
     <ClCompile Include="TitleSceeneFlow.cpp">
@@ -125,9 +119,6 @@
     </ClCompile>
     <ClCompile Include="RacePrevProcess.cpp">
       <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="RacerManager.cpp">
-      <Filter>ソース ファイル\Manager</Filter>
     </ClCompile>
     <ClCompile Include="MiniMap.cpp">
       <Filter>ソース ファイル\UI</Filter>
@@ -168,16 +159,7 @@
     <ClCompile Include="VectorDataCreator.cpp">
       <Filter>ソース ファイル\DataCreate</Filter>
     </ClCompile>
-    <ClCompile Include="FiringItemManager.cpp">
-      <Filter>ソース ファイル\Manager</Filter>
-    </ClCompile>
-    <ClCompile Include="Racer.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="Player.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="CPU.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="DamageObjectGenerator.cpp">
@@ -225,7 +207,7 @@
     <ClCompile Include="Clock.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="EnemyManager.cpp">
+    <ClCompile Include="EnemyGenerator.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="ArgumentConflictResultInfo.cpp">
@@ -261,7 +243,7 @@
     <ClCompile Include="Coin.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="CoinManager.cpp">
+    <ClCompile Include="CollectController.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="TimerUI.cpp">
@@ -333,11 +315,26 @@
     <ClCompile Include="UpDownFlyShipCommander.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="ActorController.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="ActorControllerManager.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="LittleRadiusLaserController.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="BomberController.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="BigRadiusLaserController.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Saw.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="SkyDome.h">
-      <Filter>ヘッダー ファイル\Object</Filter>
-    </ClInclude>
     <ClInclude Include="PlayerCar.h">
       <Filter>ヘッダー ファイル\Object</Filter>
     </ClInclude>
@@ -356,7 +353,7 @@
     <ClInclude Include="TitleScene.h">
       <Filter>ヘッダー ファイル\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="CircuitTrack.h">
+    <ClInclude Include="StageObjectController.h">
       <Filter>ヘッダー ファイル\Object</Filter>
     </ClInclude>
     <ClInclude Include="Object.h">
@@ -366,9 +363,6 @@
       <Filter>ヘッダー ファイル\Object</Filter>
     </ClInclude>
     <ClInclude Include="Car.h">
-      <Filter>ヘッダー ファイル\Object</Filter>
-    </ClInclude>
-    <ClInclude Include="CPUCar.h">
       <Filter>ヘッダー ファイル\Object</Filter>
     </ClInclude>
     <ClInclude Include="HitChecker.h">
@@ -386,7 +380,7 @@
     <ClInclude Include="Wheels.h">
       <Filter>ヘッダー ファイル\Object</Filter>
     </ClInclude>
-    <ClInclude Include="StageManager.h">
+    <ClInclude Include="StageInitializer.h">
       <Filter>ヘッダー ファイル\Manager</Filter>
     </ClInclude>
     <ClInclude Include="StageSelect.h">
@@ -412,9 +406,6 @@
     </ClInclude>
     <ClInclude Include="RacePrevProcess.h">
       <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="RacerManager.h">
-      <Filter>ヘッダー ファイル\Manager</Filter>
     </ClInclude>
     <ClInclude Include="CountDown.h">
       <Filter>ヘッダー ファイル\UI</Filter>
@@ -479,9 +470,6 @@
     <ClInclude Include="Rocket.h">
       <Filter>ヘッダー ファイル\Item</Filter>
     </ClInclude>
-    <ClInclude Include="CpuCarMode.h">
-      <Filter>ヘッダー ファイル\StructAndEnum</Filter>
-    </ClInclude>
     <ClInclude Include="ItemUseSituation.h">
       <Filter>ヘッダー ファイル\StructAndEnum</Filter>
     </ClInclude>
@@ -503,9 +491,6 @@
     <ClInclude Include="FadeMode.h">
       <Filter>ヘッダー ファイル\StructAndEnum</Filter>
     </ClInclude>
-    <ClInclude Include="FiringItemManager.h">
-      <Filter>ヘッダー ファイル\Manager</Filter>
-    </ClInclude>
     <ClInclude Include="InputDirection.h">
       <Filter>ヘッダー ファイル\StructAndEnum</Filter>
     </ClInclude>
@@ -518,13 +503,7 @@
     <ClInclude Include="ItemInfo.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Racer.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="Player.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="CPU.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="ObjPosAndDir.h">
@@ -575,7 +554,7 @@
     <ClInclude Include="Clock.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="EnemyManager.h">
+    <ClInclude Include="EnemyGenerator.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="ArgumentConflictResultInfo.h">
@@ -611,7 +590,7 @@
     <ClInclude Include="Coin.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="CoinManager.h">
+    <ClInclude Include="CollectController.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="TimerUI.h">
@@ -672,6 +651,21 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="UpDownFlyShipCommander.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="ActorController.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="ActorControllerManager.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="LittleRadiusLaserController.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="BomberController.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="BigRadiusLaserController.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

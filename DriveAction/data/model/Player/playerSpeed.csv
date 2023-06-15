@@ -1,0 +1,21 @@
+﻿//加速量
+acceleSpeed = 2
+6
+//最低速度
+lowestSpeed = 5
+6
+//最高速度
+maxSpeed = 8
+17
+//急加速速度
+turboSpeed = 11
+4
+//急加速時間
+turboTime = 14
+2
+//曲がる力
+gripPower = 17
+0.06
+//止まる力
+breakePower = 20
+0.01

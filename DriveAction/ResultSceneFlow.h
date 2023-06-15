@@ -23,7 +23,7 @@ public:
     /// <summary>
     /// 描画
     /// </summary>
-    void Draw()override;
+    void Draw() const override;
 private:
     UIManager* uiManager;
     //スペースキーの催促

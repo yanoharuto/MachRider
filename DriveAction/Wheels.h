@@ -19,8 +19,14 @@ struct WheelArgumentCarInfo
 {
 	MATRIX matrix;//車のmodelの行列
 	VECTOR direction;//車の向き
-	float velocitySize;//速さの大きさ
-	InputInfo inputDir;
+	float carSpeed;//速さの大きさ
+
+	void Init(MATRIX setM, VECTOR setDir, float setSpeed)
+	{
+		matrix = setM;
+		direction = setDir;
+		carSpeed = setSpeed;
+	}
 };
 
 /// <summary>
@@ -49,11 +55,7 @@ public:
 	/// <returns>負の数ならだったら左</returns>
 	float GetMoveDirTheta(const float velocitySize);
 private:	
-	/// <summary>
-	/// 煙のエフェクトが出る
-	/// </summary>
-	/// <param name="pos"></param>
-	void SmokeEffectUpdate(VECTOR pos);
+
 	/// <summary>
 	/// 全てのタイヤのマトリックスをセットする
 	/// </summary>

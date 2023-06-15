@@ -4,26 +4,26 @@
 #include "TimerUI.h"
 #include "Timer.h"
 #include "NumUI.h"
-#include "ObjectSubject.h"
+#include "ChallengeFlow.h"
 #include "ObjectObserver.h"
-#include "CoinManager.h"
-#include "RacerManager.h"
 #include "CountDown.h"
+
+
 /// <summary>
 /// プレイヤーに関するUI　コインの所得数とか
 /// </summary>
 /// <param name="setTimer"></param>
 /// <param name="setFirstCoinNum"></param>
-GamePlayUI::GamePlayUI(Timer* setTimer, int setFirstCoinNum,RacerManager* racerManager)
+GamePlayUI::GamePlayUI(Timer* setTimer,ChallengeFlow* challengeFlow, std::shared_ptr<ObjectObserver> player)
 {
     timerUI = new TimerUI(setTimer);
-    minimapUI = new MiniMap(racerManager);
+    minimapUI = new MiniMap(player);
     manualData = UIManager::CreateUIData(manual);
-    firstCoinNum = setFirstCoinNum;
+    firstCoinNum = challengeFlow->GetTotalCollectNum();
     firstNumUI = new NumUI(allCollectItemNum);
     getNumUI = new NumUI(getCollectItemNum);
     slashHandle = UIManager::CreateUIData(collectItemUI);
-    playerObserver = new ObjectObserver(racerManager->GetPlayerSubject(0));
+    playerObserver = player;
     countDown = new CountDown(setTimer);
 }
 
@@ -34,15 +34,15 @@ GamePlayUI::~GamePlayUI()
     SAFE_DELETE(minimapUI);
     SAFE_DELETE(getNumUI);
     SAFE_DELETE(firstNumUI);
-    SAFE_DELETE(playerObserver);
     SAFE_DELETE(countDown);
+    playerObserver.reset();
 }
 
-void GamePlayUI::Update(CoinManager* coinManager)
+void GamePlayUI::Update(ChallengeFlow* challengeFlow)
 {
-    nowGetCoinNum = playerObserver->GetSubjectHitCount(Object::ObjectTag::coin);
+    nowGetCoinNum = playerObserver.lock()->GetSubjectHitCount(Object::ObjectTag::collect);
     countDown->Update();
-    minimapUI->Update(coinManager->GetCoinPosList());
+    minimapUI->Update();
 }
 
 void GamePlayUI::Draw()const

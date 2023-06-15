@@ -1,38 +1,32 @@
 #pragma once
+#include <iostream>
+#include <memory>
 #include <list>
 #include "Utility.h"
 #include "UIManager.h"
-class CoinManager;
-//収集アイテムのマップ
 class MiniMap;
-//残り時間を表示してくれる
 class TimerUI;
-//ゲームの残り時間とかのタイマー
 class Timer;
-//数字に関するUI
 class NumUI;
-//情報を更新してくれる
-class ObjectSubject;
-//Subjectを見ている
 class ObjectObserver;
-//走ってるやつのマネージャー
-class RacerManager;
-//カウントダウン
 class CountDown;
+class Player;
+class ChallengeFlow;
+
 /// <summary>
 /// プレイヤーに関係のあるUI
 /// </summary>
 class GamePlayUI final
 {
 public:
-    GamePlayUI(Timer* setTimer,int setFirstCoinNum,RacerManager* manager);
+    GamePlayUI(Timer* setTimer,ChallengeFlow* challengeFlow, std::shared_ptr<ObjectObserver> player);
     ~GamePlayUI();
     /// <summary>
     /// ミニマップの更新　やコインの枚数を更新
     /// </summary>
     /// <param name="relatedInfo"></param>
     /// <param name="setCoinPosList"></param>
-    void Update(CoinManager* coinManager);
+    void Update(ChallengeFlow* challengeFlow);
     /// <summary>
     /// 描画
     /// </summary>
@@ -59,5 +53,6 @@ private:
     //フォントのサイズ
     const int fontSize = 1;
     //プレイヤーの位置とかコインの所得数などを教えてくれる奴
-    ObjectObserver* playerObserver;
+    std::weak_ptr<ObjectObserver> playerObserver;
+    
 };

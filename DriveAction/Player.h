@@ -1,14 +1,16 @@
 #pragma once
+#include <iostream>
+#include<memory>
 #include "DxLib.h"
-#include "Racer.h"
+#include "ActorController.h"
 class SphereCollider;
 class ObjectSubject;
-class Timer;
+class ObjectObserver;
 /// <summary>
 /// プレイヤーの車やアイテムの処理を呼び出す
 /// </summary>
 class Player final:
-    public Racer 
+    public ActorController
 {
 public:
     /// <summary>
@@ -17,23 +19,17 @@ public:
     /// <param name="circuitData"></param>
     /// <param name="firstPos"></param>
     /// <param name="firstDir"></param>
-    Player(VECTOR firstPos);
-    ~Player();
-    /// <summary>
-    /// プレイヤーの更新処理
-    /// </summary>
-    /// <param name="deltaTime"></param>
-    /// <param name="outsideHitFlag"></param>
-    /// <param name="damageObjGene"></param>
-    void Update()override;
+    Player(VECTOR firstPos,VECTOR direction);
     /// <summary>
     /// 車の位置とかを渡す
     /// </summary>
     /// <returns></returns>
-    ObjectSubject* GetSubject();
+    std::shared_ptr<ObjectObserver> CreatePlayerObserver() const;
+    void GameReserve()override;
 private:
     SphereCollider* collider;
     ObjectSubject* subject;
+    std::shared_ptr <ObjectObserver> observer;
     const float setDamageCoolTime = 1.5f;
 };
 

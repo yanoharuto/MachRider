@@ -1,8 +1,10 @@
 #pragma once
+#include <iostream>
+#include <memory>
 #define SCORE_KIND_NUM 4
 class Timer;
 class ObjectObserver;
-class RacerManager;
+
 /// <summary>
 /// 最終的なスコアの保存役
 /// </summary>
@@ -19,43 +21,25 @@ public:
     /// <summary>
     /// 最終的なスコアの保存
     /// </summary>
-    ResultScore(Timer* timer,RacerManager* racerManager);
+    ResultScore(Timer* timer, std::shared_ptr<ObjectObserver> player);
     ~ResultScore() {};
     /// <summary>
     /// スコアの所得
     /// </summary>
     /// <returns></returns>
-    static int GetScore(ScoreKind);
-    static int GetScore(int kindNum);
-    /// <summary>
-    /// コインを取ったスコア
-    /// </summary>
-    /// <returns></returns>
-    int GetCollectBonus();
-    /// <summary>
-    /// 当たった回数分ヘルスコア
-    /// </summary>
-    /// <returns></returns>
-    int GetHitDecrease();
-    /// <summary>
-    /// 残り時間のスコア
-    /// </summary>
-    /// <returns></returns>
-    int GetTimeBunus();
+    int GetScore(ScoreKind scoreKind) const;
+    
 private:
-    //コインのスコア
-    static int collectScore;
-    //ダメージを受けたら減るスコア
-    static int hitScore;
-    //残り時間スコア
-    static int timeScore;
+    Timer* gameTimer;
     //ダメージ判定のあるオブジェクトに触れたらスコア減少
-    const int damageObjHitDec = 30;
+    static const int damageObjHitDec = 30;
     //残り時間のボーナス
-    const int timeBonus = 10;
+    static const int timeBonus = 10;
     //一度も当たらなかった場合のスコア
-    const int noHitScore = 500;
+    static const int noHitScore = 500;
     //コインはボーナス
-    const int coinBonus = 500;
+    static const int coinBonus = 500;
+    //プレイヤーの情報を渡してくれるやつ
+    std::weak_ptr<ObjectObserver> playerObserver;
 };
 

@@ -35,7 +35,7 @@ public:
     /// スコアを徐々に渡す
     /// </summary>
     /// <returns></returns>
-    bool Update();
+    bool Update(ResultScore* result);
     /// <summary>
     /// スコアの描画
     /// </summary>

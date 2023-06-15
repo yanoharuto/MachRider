@@ -15,11 +15,12 @@ public:
     /// </summary>
     static void FadeOut();
 
+private:
+
     /// <summary>
     /// アウト中なら白くなる　インなら周りのモデルとかが見える
     /// </summary>
     static void Fading();
-private:
     /// <summary>
     /// フェードインフェードアウトをする
     /// </summary>

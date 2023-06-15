@@ -1,7 +1,7 @@
 #include "UpDownLaserFlyShip.h"
 #include "ItemArgumentCarInfo.h"
 #include "DamageObjectGenerator.h"
-
+#include <math.h>
 const float UpDownLaserFlyShip::addMoveValue = 0.05f;
 const float UpDownLaserFlyShip::updownSpeed = 6.0f;
 
@@ -16,7 +16,7 @@ void UpDownLaserFlyShip::Update()
     objState = alive;
     totalMoveValue += addMoveValue;
     position.y += cosf(totalMoveValue) * updownSpeed;
-    UpdatePosition();
+    ReflectsVelocity();
 }
 
 void UpDownLaserFlyShip::GenerateLaser()

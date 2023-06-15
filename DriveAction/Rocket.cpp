@@ -68,7 +68,7 @@ void Rocket::Update()
             burnEffect = -1;
         }
     }
-    UpdatePosition();
+    ReflectsVelocity();
 }
 /// <summary>
 /// Õ“ËŒã‚Ìˆ—

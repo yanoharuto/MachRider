@@ -1,9 +1,10 @@
 #pragma once
+#include <iostream>
+#include <memory>
 #include "DxLib.h"
-#include "ObjPosAndDir.h"
+
 class ObjectObserver;
-class ObjectSubject;
-class RacerManager;
+
 /// <summary>
 /// 影を描画するクラス
 /// </summary>
@@ -13,7 +14,7 @@ public:
     /// <summary>
     /// 影を描画するクラス
     /// </summary>
-    ShadowMap(RacerManager* manager);
+    ShadowMap(std::shared_ptr<ObjectObserver> player);
     ~ShadowMap();
     /// <summary>
     /// 影の描画範囲の変更
@@ -40,6 +41,6 @@ private:
     //シャドウマップ作製
     int shadowMap = MakeShadowMap(2048, 2048);
     //こいつを軸に影を作る範囲を決める
-     ObjectObserver* playerObserber;
+     std::weak_ptr<ObjectObserver> playerObserber;
 };
 

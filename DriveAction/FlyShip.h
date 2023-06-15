@@ -11,6 +11,7 @@ public:
     FlyShip(ObjectInit::InitObjKind kind);
     virtual ~FlyShip();
     virtual void Update();
+
 protected:
     //撃ったレーザーの位置などを教える用
     ObjectSubject* sub;

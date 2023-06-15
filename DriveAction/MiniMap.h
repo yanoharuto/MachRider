@@ -1,40 +1,48 @@
 #pragma once
+#include <iostream>
+#include <memory>
 #include <string>
 #include <list>
 #include "DxLib.h"
 #include "UIManager.h"
-class RacerManager;
+
 class ObjectObserver;
+/// <summary>
+/// プレイヤーを中心に近くにアイテムがあるか調べさせる
+/// </summary>
 class MiniMap
 {
 public:
-    MiniMap(RacerManager* racerManager);
+    MiniMap(std::shared_ptr<ObjectObserver> player);
     ~MiniMap();
-    void Update(std::list<VECTOR> setCoinPosList);
-    void Draw();
+    void Update();
+    void Draw()const;
+    static void AddMarker(ObjectObserver* obserber);
 private:
-    VECTOR ConvertPosition(VECTOR pos);
+    static VECTOR ConvertPosition(VECTOR pos);
     //プレイヤーのマーカーの色
     const unsigned int playerColor = GetColor(255,0,0);
     //収集物の色
     const unsigned int coinColor = GetColor(200,0,200);
     
     //自機のIconの大きさ
-    const int iconSize = 5;
+    static const int iconSize = 5;
     //ミニマップの画像の横幅
-    int mapGraphWidth = 0;
+    static int mapGraphWidth;
     //ミニマップの画像の縦幅
-    int mapGraphHeight = 0;
+    static int mapGraphHeight;
     //マップの大きさ
-    const float mapSize = 420;
-    //収集物の縮尺
-    const float collectBetween = 0.3f;
+    static const float mapSize;
+    //収集物の位置の縮尺
+    static const float collectBetween;
     //マップの大きさの係数
-    float mapSizeCoefficient = 0;
+    static float mapSizeCoefficient;
     //回転度合い
     float mapRotate = 0;
     //ミニマップ
-    UIData miniMap;
-    ObjectObserver* playerObserver;
-    std::list<VECTOR> coinPosList;
+    static UIData miniMap;
+    std::weak_ptr<ObjectObserver> playerObserver;
+
+    static std::list<VECTOR> posList;
+    std::list<VECTOR> drawPosList;
 };

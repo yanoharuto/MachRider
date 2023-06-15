@@ -27,8 +27,7 @@ public:
     /// <returns></returns>
     static std::string GetLoadeStageName();
 private:
-    //プレイヤーが遊びたいステージのアセットのアドレスを指す
-    std::vector<std::string>::iterator fileNameIte;
+    int dataNum;
     //ステージの一覧的な奴
     std::string allStageAddresFile = "data/stageData/stageDataList.csv";
 

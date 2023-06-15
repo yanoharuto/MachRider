@@ -3,7 +3,7 @@
 #include <unordered_map>
 #include <string>
 class Actor;
-namespace InitParamater
+namespace InitCamera
 {
     enum CameraParameter
     {
@@ -11,7 +11,7 @@ namespace InitParamater
         setNearValue = 2,
         //描画範囲の最終距離
         setFarValue = 5,
-        //オブジェクトの見える範囲
+        //オブジェクトの見える範囲角
         setLookingDegree = 8,
         //描画対象との距離
         setTargetBetween = 11,
@@ -33,29 +33,28 @@ namespace InitParamater
 class Camera
 {
 public:
-    Camera(InitParamater::CameraType type);
+    Camera(InitCamera::CameraType type);
     virtual ~Camera();
-    static bool IsLookingCamera(const Actor* actor);
+    bool IsLookingCamera(const Actor* const actor) const;
  
 protected:
-    void LoadData(InitParamater::CameraType type);
-    //カメラの位置
-    static std::unordered_map<VECTOR*,VECTOR*> cameraPosDir;
+    void LoadData(InitCamera::CameraType type);
+    //初期化に必要なパラメーターへのパス
     std::string initFileName= "data/Camera/CameraInitPass.csv";
     //カメラの位置
     VECTOR position;
     //カメラの方向
     VECTOR direction;
-    //ポジションのポインター
-    VECTOR* pPosition; 
-    //方向のポインター
-    VECTOR* pDirection;
     //描画しようとする範囲
     float nearValue;
     //描画しようとする範囲
     float farValue;
+    //ターゲットとの距離
     float targetBetween;
+    //高さ
     float posY;
+    //カメラの追いつく速度
     float cameraSpeed;
+    //カメラが見ている範囲角
     static float lookingDeg;
 };

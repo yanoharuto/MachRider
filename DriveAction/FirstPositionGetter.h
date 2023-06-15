@@ -3,33 +3,7 @@
 #include <unordered_map>
 #include <string>
 #include "DxLib.h"
-namespace InitStage
-{
-    enum StageData
-    {
-        width = 1,
-        length = 3,
-        rockFilePass = 5,
-        challengesListFilePass = 7,
-        playerPositionFilePass = 9
-    };
-
-    enum Challenge
-    {
-        collectPositionFilePass = 1,
-        enemyPositionFilePass = 3
-    };
-    struct ChallengeData
-    {
-        std::unordered_map<int, std::vector<VECTOR>> collectPos;
-        std::unordered_map<int, std::vector<VECTOR>> enemyPos;
-    };
-    enum class FirstPositionDataKind
-    {
-        playerPosition,
-        rockPosition,
-    };
-}
+#include "StageInitializer.h"
 using namespace InitStage;
 /// <summary>
 /// 初期位置を設定する
@@ -39,12 +13,19 @@ class FirstPositionGetter
 public:
     FirstPositionGetter();
     ~FirstPositionGetter();
-    static std::unordered_map<int, std::vector<VECTOR>>GetFirstPositionLoad(FirstPositionDataKind dataKind);
-    static std::vector<ChallengeData> GetChallengeData();
+    /// <summary>
+    /// 初期位置をロード
+    /// </summary>
+    /// <param name="dataKind"></param>
+    /// <returns></returns>
+    std::unordered_map<int, std::vector<VECTOR>>GetFirstPositionLoad(FirstPositionDataKind dataKind);
+    std::vector<ChallengeData> GetChallengeData();
 private:
     static void CSVConvertPosition(std::unordered_map<int, std::vector<VECTOR>>* map,std::string fileName);
     static int stageWidth;
     static int stageLength;
-    static std::vector<std::string> challengeVec;
-    static std::unordered_map<FirstPositionDataKind,std::string> positionDataPassMap;
+    //プレイヤーがこなさなければいけない課題のVector
+    std::vector<std::string> challengeVec;
+    //プレイヤーかステージのオブジェクトの配置
+    std::unordered_map<FirstPositionDataKind,std::string> positionDataPassMap;
 };

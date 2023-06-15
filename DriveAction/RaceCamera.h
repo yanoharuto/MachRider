@@ -1,16 +1,19 @@
 #pragma once
+#include <iostream>
+#include <memory>
 #include "Camera.h"
 class ObjectObserver;
-class ObjectSubject;
-class RacerManager;
+/// <summary>
+/// 遊んでいるときのカメラ
+/// </summary>
 class RaceCamera final : Camera
 {
 public:
-    RaceCamera(RacerManager* manager);
+    RaceCamera(std::shared_ptr<ObjectObserver> player);
     ~RaceCamera() override;
     void Update();
 private:
     //プレイヤーの位置を教えてくれるやつ
-    ObjectObserver* playerObserver;
+    std::weak_ptr<ObjectObserver> playerObserver;
 };
 

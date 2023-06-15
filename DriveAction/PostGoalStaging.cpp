@@ -44,9 +44,8 @@ PostGoalStaging::~PostGoalStaging()
     SAFE_DELETE(switchUI);
 }
 
-bool PostGoalStaging::Update()
+bool PostGoalStaging::Update(ResultScore* result)
 {
-
     //終了のアナウンスの表示が終えたら
     if (!SoundPlayer::IsPlaySound(scoreEndSE) && spaceClickCount < SCORE_KIND_NUM )
     {
@@ -54,16 +53,35 @@ bool PostGoalStaging::Update()
         {
             SoundPlayer::Play2DSE(scoreStartSE);
         }
+        ResultScore::ScoreKind scoreKind = ResultScore::ScoreKind::time;
+        switch (spaceClickCount)
+        {
+        case 0:
+            scoreKind = ResultScore::ScoreKind::time;
+            break;
+        case 1:
+            scoreKind = ResultScore::ScoreKind::collect;
+            break;
+        case 2:
+            scoreKind = ResultScore::ScoreKind::hit;
+            break;
+        case 3:
+            scoreKind = ResultScore::ScoreKind::total;
+            break;
+        default:
+            break;
+        }
+
         //スコアの表示を少しずつしていく
         float larp = 1 - timer->GetLimitTime() / spaceKeyCoolTime;
-        scoreUI[spaceClickCount].score = static_cast<int>(ResultScore::GetScore(spaceClickCount) * larp);
+        scoreUI[spaceClickCount].score = static_cast<int>(result->GetScore(scoreKind) * larp);
         //スコアを表示しきるかボタンを押されたら
         if (UserInput::GetInputState(Space) == Detach || timer->IsOverLimitTime())
         {
             //スコアの最終表示
             SoundPlayer::StopSound(scoreStartSE);
             SoundPlayer::Play2DSE(scoreEndSE);
-            scoreUI[spaceClickCount].score = ResultScore::GetScore(spaceClickCount);
+            scoreUI[spaceClickCount].score = result->GetScore(scoreKind);
             //次のスコアの更新の準備
             spaceClickCount++;
 

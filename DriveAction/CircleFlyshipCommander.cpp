@@ -9,20 +9,17 @@ CircleFlyshipCommander::CircleFlyshipCommander(VECTOR firstPos)
 {
     auto param = GetInitData(circleLaserShip);
 
-    VECTOR generatePos = {};
+    VECTOR generatePos = {};//生成位置
     FlyShip* flyship;
-    VECTOR dir = VGet(1, 0, 0);
+    VECTOR dir = VGet(1, 0, 0);//方向　GeneratePosを計算するのに使う
     float temp = 0;
     temp = 360 / param.unitNum;
+    //firstPosを囲むように配置
     for (int i = 0; i < param.unitNum; i++)
     {
-        dir = VNorm(OriginalMath::GetYRotateVector(dir, 60));
+        dir = VNorm(OriginalMath::GetYRotateVector(dir, temp));
         generatePos = VAdd(firstPos, VScale(dir, param.unitBetween));
         flyship = new CircleLaserFlyShip(generatePos, firstPos);
-        flyShipList.push_back(flyship);
+        actorList.push_back(flyship);
     }
-}
-
-CircleFlyshipCommander::~CircleFlyshipCommander()
-{
 }

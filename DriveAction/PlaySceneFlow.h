@@ -1,27 +1,25 @@
 ﻿#pragma once
-#include "SceneFlowBase.h"
 #include <string>
+#include <iostream>
+#include <memory>
+#include "SceneFlowBase.h"
+
 #define PlaySceneProccess 4
+class ObjectObserver;
 class AssetManager;
-class CountDown;
 class ConflictManager;
-class CoinManager;
 class EffectManager;
-class FiringItemManager;
-class EnemyManager;
 class PostGoalStaging;
 class GamePlayUI;
 class RaceCamera;
 class ResultScore;
 class RaceScreen;
 class RacePrevProcess;
-class RacerManager;
 class ShadowMap;
-class StageManager;
 class Timer;
 class UIManager;
-class SubjectInfoCentor;
-
+class ActorControllerManager;
+class ChallengeFlow;
 /// <summary>
 /// どういう順番で処理を行うか決める
 /// </summary>
@@ -42,12 +40,12 @@ public:
     /// <summary>
     /// 描画
     /// </summary>
-    void Draw() override;
+    void Draw()const override;
     
 private:
     /// <summary>
-/// プレイシーンの段階
-/// </summary>
+    /// プレイシーンの段階
+    /// </summary>
     enum PlaySceeneProgress
     {
         start,
@@ -58,11 +56,11 @@ private:
     /// <summary>
     /// マネージャーの描画関数を呼び出す
     /// </summary>
-    void DrawManagers();
+    void DrawManagers()const;
     /// <summary>
-    /// シャドウマップを使う
+    /// シャドウマップを使った描画
     /// </summary>
-    void UseShadowMapDraw();
+    void UseShadowMapDraw()const;
     /// <summary>
     /// 遊んでいるときの処理
     /// </summary>
@@ -81,12 +79,12 @@ private:
     void StartUpdate();
 
     void (PlaySceneFlow::*UpdateFunc[PlaySceneProccess])();
-    //ステージのマネージャー
-    StageManager* stageManager;
+    
+    const int menuBright = 60;
     //カメラ
     RaceCamera* camera;
-    //コースの情報を読み取って
-   
+    //ゲームミッションの進行管理
+    ChallengeFlow* challenge;
     //スコア
     ResultScore* score = nullptr;
     //ゴール後の処理
@@ -95,25 +93,20 @@ private:
     GamePlayUI* playerUI;
     //当たり判定処理
     ConflictManager* conflictManager;
-    //発射アイテムのマネージャー
-    FiringItemManager* firingManager;
     //modelの管理
     AssetManager* modelManager;
     //今何の処理を行うか決める変数
     PlaySceeneProgress nowProgress;
     //レース前の処理
     RacePrevProcess* racePrevProccess;
-    //運転手用のマネージャー
-    RacerManager* racerManager;
-    //敵のオブジェクトのマネージャー
-    EnemyManager* enemyManager;
     //ゲーム終了タイマー
     Timer* gameLimitTimer;
-
-    //コインのマネージャー
-    CoinManager* coinManager;
+    //こいつを回してプレイヤーとか敵を動かす
+    ActorControllerManager* controllerManager;
     //シャドウマップ
     ShadowMap* shadowMap;
     //レース中の描画した物を保存する
     RaceScreen* screen;
+    //プレイヤーの情報を教える係
+    std::shared_ptr <ObjectObserver> playerObserver;
 };

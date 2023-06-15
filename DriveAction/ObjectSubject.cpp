@@ -40,7 +40,10 @@ Object::ObjectState ObjectSubject::GetObjectState()
 {
     return subObject->GetObjectState();
 }
-
+/// <summary>
+/// 引数のタグのオブジェクトに何回ぶつかったか
+/// </summary>
+/// <returns></returns>
 int ObjectSubject::GetTagObjectHitCount(Object::ObjectTag hitObjTag)
 {
     if (subCollider != nullptr)

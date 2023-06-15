@@ -1,15 +1,13 @@
 #include "ShadowMap.h"
 #include "ObjectObserver.h"
 
-#include "ObjectSubject.h"
-#include "RacerManager.h"
 
-ShadowMap::ShadowMap(RacerManager* racerManager)
+ShadowMap::ShadowMap(std::shared_ptr <ObjectObserver> player)
 {
     //‚©‚°‚ÌŒü‚«
     SetShadowMapLightDirection(shadowMap, VGet(0.1f, -1, 0));
     SetShadowMapDrawArea(shadowMap, DrawAreaMinPos, DrawAreaMaxPos);
-    playerObserber = new ObjectObserver(racerManager->GetPlayerSubject(0));;
+    playerObserber = player;
 }
 
 ShadowMap::~ShadowMap()
@@ -22,8 +20,9 @@ ShadowMap::~ShadowMap()
 /// <param name="objInfo">ˆø”‚ÌÀ•W‚ğ’†S‚É‚·‚é</param>
 void ShadowMap::SetShadowMapErea()
 {
-    VECTOR minPos = VAdd(playerObserber->GetSubjectPos(), DrawAreaMinPos);
-    VECTOR maxPos = VAdd(playerObserber->GetSubjectPos(), DrawAreaMaxPos);
+    VECTOR targetPos = playerObserber.lock()->GetSubjectPos();
+    VECTOR minPos = VAdd(targetPos, DrawAreaMinPos);
+    VECTOR maxPos = VAdd(targetPos, DrawAreaMaxPos);
     SetShadowMapDrawArea(shadowMap, minPos, maxPos);
 }
 /// <summary>

@@ -21,4 +21,4 @@ data/model/Player/IceBlades.mv1
 stageMap_playerPos.csv
         //追加情報の置いてある場所
         addDataPass = 23
-/
+data/model/Player/playerSpeed.csv

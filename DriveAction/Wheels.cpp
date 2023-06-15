@@ -1,7 +1,7 @@
 #include "Wheels.h"
-#include "EffekseerForDXLib.h"
 #include <math.h>
-#include "EffectManager.h"
+#include "EffekseerForDXLib.h"
+#include "UserInput.h"
 #include "OriginalMath.h"
 #include "AssetManager.h"
 //左側タイヤの初期角度
@@ -52,12 +52,12 @@ void Wheels::WheelUpdate(const WheelArgumentCarInfo info)
 	carInfo = info;
 	AllSetWheelMatrix();
 	//車が速いとよく回る
-	if (carInfo.velocitySize > 0)
+	if (carInfo.carSpeed > 0)
 	{
-		wheelDriveSpeed += -carInfo.velocitySize * wheelDriveRotaPower;
+		wheelDriveSpeed += -carInfo.carSpeed * wheelDriveRotaPower;
 	}
 	//タイヤを傾ける処理
-	if (carInfo.inputDir.handleDir == HandleDirection::right)
+	if (UserInput::GetInputState(Right) != Free)
 	{		
 		isStraightDash = false;
 		if (wheelDriveRota < maxWheelRotaY)
@@ -70,7 +70,7 @@ void Wheels::WheelUpdate(const WheelArgumentCarInfo info)
 		}
 
 	}
-	else if (carInfo.inputDir.handleDir == HandleDirection::left)
+	else if (UserInput::GetInputState(Left) != Free)
 	{		
 		isStraightDash = false;
 		if (wheelDriveRota > -maxWheelRotaY)
@@ -112,17 +112,7 @@ float Wheels::GetMoveDirTheta(const float velocitySize)
 	}
 	return 0.0f;
 }
-/// <summary>
-/// 煙のエフェクトが出る
-/// </summary>
-/// <param name="pos"></param>
-void Wheels::SmokeEffectUpdate(VECTOR pos)
-{
-	if (isStraightDash)
-	{
-	}
-	
-}
+
 void Wheels::AllSetWheelMatrix()
 {
 	//左前タイヤ

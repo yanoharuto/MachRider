@@ -12,7 +12,7 @@ data/model/Stage/MiddleRock.csv
 data/model/Stage/BigRock.csv
     //回転丸鋸
     saw
-data/model/saw.csv
+data/model/Saw/saw.csv
     //爆撃機
     bomberShip
 data/model/BomberShip/bomberShip.csv

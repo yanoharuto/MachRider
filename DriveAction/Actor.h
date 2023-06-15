@@ -40,7 +40,10 @@ public:
     /// </summary>
     /// <returns></returns>
     virtual HitCheckExamineObjectInfo GetHitCheckExamineInfo();
-
+    /// <summary>
+    /// ゲームが始まる前にすること
+    /// </summary>
+    virtual void GameReserve() {};
 protected:
     /// <summary>
     /// 他のオブジェクトに当たってるか調べる用の情報
@@ -51,9 +54,15 @@ protected:
     /// 描画モデルの行列をセット
     /// </summary>
     virtual void ModelSetMatrix() const;
-    
-    //ポジションの位置に変更する
-    virtual void UpdatePosition();
+    /// <summary>
+    /// コンストラクタで呼ばれる処理
+    /// </summary>
+    virtual void InitParamater(ObjectInit::InitObjKind kind);
+    /// <summary>
+    /// 位置や向きをVelocityに合わせて更新する
+    /// </summary>
+    virtual void ReflectsVelocity();
+
     
     //描画モデル
     int modelHandle;

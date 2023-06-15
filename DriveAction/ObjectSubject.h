@@ -40,8 +40,6 @@ public:
     /// </summary>
     /// <returns></returns>
     int GetTagObjectHitCount(Object::ObjectTag hitObjTag);
-
-    
 private:
     //観察対象のオブジェクト
     Object* subObject;

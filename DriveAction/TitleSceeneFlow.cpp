@@ -4,26 +4,22 @@
 #include "DxLib.h"
 #include "StageSelect.h"
 #include "SwitchUI.h"
-#include "StageManager.h"
 #include "SoundPlayer.h"
 #include "UIManager.h"
+#include "UserInput.h"
+#include "FadeInFadeOut.h"
 TitleSceeneFlow::TitleSceeneFlow()
 {
-    uiManager = new UIManager();
     stageSelect = new StageSelect();  
     switchUI = new SwitchUI();
     titleLogoData = UIManager::CreateUIData(tilteLogo);
-    stageManager = new StageManager();
-    SetCameraNearFar(setNearValue, setFarValue);
+    stageNameData= UIManager::CreateUIData(stageName);
 }
 
 TitleSceeneFlow::~TitleSceeneFlow()
 {
-    SAFE_DELETE(stageManager);
     SAFE_DELETE(stageSelect);
     SAFE_DELETE(switchUI);
-    SAFE_DELETE(uiManager);
-
 }
 
 void TitleSceeneFlow::Update()
@@ -32,22 +28,34 @@ void TitleSceeneFlow::Update()
     {
         SoundPlayer::Play2DSE(titleBGM);
     }
-    //スカイドームを回転
-    stageManager->Update();
     //スペースキーの催促
     switchUI->Update();
-
-    int key = GetJoypadInputState(DX_INPUT_KEY_PAD1);
-    if (key & PAD_INPUT_10)
+    stageSelect->Update();
+    if (UserInput::GetInputState(Up) == Push)
+    {
+        stageNum++;
+        if(stageNameData.dataHandle.size() <= stageNum) 
+        {
+            stageNum = 0;
+        }
+    }
+    if (UserInput::GetInputState(Down) == Push)
+    {
+        stageNum--;
+        if (0 > stageNum)
+        {
+            stageNum = stageNameData.dataHandle.size() - 1;
+        }
+    }
+    if (UserInput::GetInputState(Space)==Push)
     {
         isEndProccess = true;
         nextSceneType = SceneType::PLAY;
     }
 }
 
-void TitleSceeneFlow::Draw()
+void TitleSceeneFlow::Draw()const
 {  
-    stageManager->Draw();
-    switchUI->Draw();
     DrawRotaGraph(titleLogoData.x, titleLogoData.y, titleLogoData.size, 0, titleLogoData.dataHandle[0], true, false);
+    DrawGraph(stageNameData.x, stageNameData.y, stageNameData.dataHandle[stageNum], false);
 }

@@ -28,3 +28,6 @@ data/effect/bomb.csv
 //コインの出すオーラ
         coinAura=29
 data/effect/coinAura.csv
+//収集アイテムの方角を指すエフェクト
+        compass=32
+data/effect/collectCompass.csv

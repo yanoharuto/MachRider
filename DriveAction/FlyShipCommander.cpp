@@ -1,43 +1,10 @@
 #include "FlyShipCommander.h"
-#include "Utility.h"
-#include "FlyShip.h"
 #include "CSVFileLoader.h"
 
 FlyShipCommander::FlyShipCommander()
 {
 }
 
-FlyShipCommander::FlyShipCommander(ObjectInit::InitObjKind objKind, VECTOR playerPos)
-{
-    
-}
-
-FlyShipCommander::~FlyShipCommander()
-{
-    for (auto ite = flyShipList.begin(); ite != flyShipList.end(); ite++)
-    {
-        SAFE_DELETE(*(ite));
-    }
-}
-
-void FlyShipCommander::Update()
-{
-    for (auto ite = flyShipList.begin(); ite != flyShipList.end(); ite++)
-    {
-        if ((*ite)->GetObjectState() != Object::dead)
-        {
-            (*ite)->Update();
-        }
-    }
-}
-
-void FlyShipCommander::Draw()const
-{
-    for (auto ite = flyShipList.begin(); ite != flyShipList.end(); ite++)
-    {
-        (*ite)->Draw();
-    }
-}
 using namespace FlyShipInit;
 FlyShipInit::InitFlyShipParamator FlyShipCommander::GetInitData(ObjectInit::InitObjKind kind)
 {

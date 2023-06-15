@@ -11,6 +11,7 @@ RacePrevProcess::RacePrevProcess()
     gamePuroseData = UIManager::CreateUIData(gamePurose);
     
     frameByFrameTimer = new Timer(gamePuroseData.frameSpeed);
+    fadeValue = MAX1BYTEVALUE;
 }
 
 RacePrevProcess::~RacePrevProcess()
@@ -22,6 +23,7 @@ RacePrevProcess::~RacePrevProcess()
 
 void RacePrevProcess::Update()
 {
+    fadeValue--;
     //描画する画像のコマ送り用　何秒かごとに次のコマに行く
     if (frameByFrameTimer->IsOverLimitTime())
     {
@@ -47,10 +49,14 @@ void RacePrevProcess::Update()
     
 }
 
-void RacePrevProcess::Draw()
+void RacePrevProcess::Draw() const
 {
     if (countDown == nullptr)
     {
+        int colorValue = MAX1BYTEVALUE;
+        SetDrawBlendMode(DX_BLENDMODE_ALPHA, fadeValue);//α値をいじる
+        DrawBox(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, GetColor(colorValue, colorValue, colorValue), true);
+        SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);//元に戻す
         int num = iconIncrement % gamePuroseData.dataHandle.size();
         DrawRotaGraph(gamePuroseData.x, gamePuroseData.y, 1, 0, gamePuroseData.dataHandle[num], true);
     }
