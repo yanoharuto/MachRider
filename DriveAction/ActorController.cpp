@@ -39,7 +39,7 @@ bool ActorController::IsAlive() const
 {
     for (auto ite = actorList.begin(); ite != actorList.end(); ite++)
     {
-        if ((*ite)->GetObjectState() != Object::dead)return true;
+        if (!(*ite)->GetObjectState(Object::ObjectState::dead))return true;
     }
     return false;
 }

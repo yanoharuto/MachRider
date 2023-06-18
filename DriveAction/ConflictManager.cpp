@@ -53,8 +53,8 @@ std::list<ConflictExamineResultInfo> ConflictManager::GetConflictObjInfo(Conflic
     ConflictExamineResultInfo examineResultInfo = {};
     for (auto objIte = conflictObjList.begin(); objIte != conflictObjList.end(); objIte++)
     {
-        //引数のオブジェクトそのものと当たってたらスルー
-        if (conflictProccesor != (*objIte))
+        //引数のオブジェクトそのものと当たってたらスルー 動いていなくても
+        if (conflictProccesor != (*objIte)||(*objIte)->IsObjectAlive())
         {
             //当たっているか調べる
             examineResultInfo = (*objIte)->HitCheck(conflictProccesor->GetHitExamineCheckInfo());

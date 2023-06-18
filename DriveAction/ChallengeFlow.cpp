@@ -5,13 +5,17 @@
 #include "ActorControllerManager.h"
 #include "EnemyGenerator.h"
 #include "CollectController.h"
-ChallengeFlow::ChallengeFlow(std::weak_ptr<ObjectObserver> player)
+
+
+ChallengeFlow::ChallengeFlow(std::weak_ptr<ObjectObserver> player, ActorControllerManager* controllerManager)
 {
     auto getter = new FirstPositionGetter();
     challengeDataVec = getter->GetChallengeData();
     totalCollectNum = challengeDataVec.size();
     playerObserver = player;
     enemyCreator = new EnemyGenerator();
+    controllerManager->AddActorController(new CollectController());
+    
 }
 
 ChallengeFlow::~ChallengeFlow()
@@ -49,7 +53,6 @@ void ChallengeFlow::Update(ActorControllerManager* controllerManager)
         AddEnemyController(circleLaserShip, controllerManager);
         AddEnemyController(upDownLaserShip, controllerManager);
         AddEnemyController(saw, controllerManager);
-        controllerManager->AddActorController(new CollectController(challengeDataVec[collectNum].collectPos[0][0]));
     }   
 }
 /// <summary>

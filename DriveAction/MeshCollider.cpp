@@ -78,7 +78,7 @@ ConflictExamineResultInfo MeshCollider::GetSphereConflictModelInfo(HitCheckExami
 /// mesh‚È‚Ì‚ÅˆÊ’u‚Æ‚©‚Í‹³‚¦‚ê‚È‚¢
 /// </summary>
 /// <returns></returns>
-HitCheckExamineObjectInfo MeshCollider::GetHitExamineCheckInfo()
+HitCheckExamineObjectInfo MeshCollider::GetHitExamineCheckInfo() const
 {
     return { {},{},0};
 }

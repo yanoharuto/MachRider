@@ -17,7 +17,7 @@ ConflictProccesor::~ConflictProccesor()
 /// 当たり判定で必要な情報を渡す
 /// </summary>
 /// <returns></returns>
-HitCheckExamineObjectInfo ConflictProccesor::GetHitExamineCheckInfo()
+HitCheckExamineObjectInfo ConflictProccesor::GetHitExamineCheckInfo() const
 {
     HitCheckExamineObjectInfo info;
     info.SetExamineInfo(object);
@@ -76,6 +76,14 @@ void ConflictProccesor::SetCoolTimer(Object::ObjectTag tag,float setCoolTime)
 int ConflictProccesor::GetTagHitCount(Object::ObjectTag objTag)
 {
     return hitCountMap[objTag];
+}
+/// <summary>
+/// 今当たり判定を持つオブジェクトが動いているか
+/// </summary>
+/// <returns></returns>
+bool ConflictProccesor::IsObjectAlive() const
+{
+    return object->GetObjectState(Object::alive);
 }
 /// <summary>
 /// 引数のオブジェクトの当たった回数を増やす

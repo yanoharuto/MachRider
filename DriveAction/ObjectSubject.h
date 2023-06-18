@@ -34,7 +34,7 @@ public:
     /// オブジェクトの状態
     /// </summary>
     /// <returns></returns>
-    Object::ObjectState GetObjectState();
+    bool GetObjectState(Object::ObjectState compareState);
     /// <summary>
     /// 引数のタグのオブジェクトに何回ぶつかったか
     /// </summary>

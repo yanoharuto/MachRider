@@ -41,17 +41,18 @@ public:
     /// <returns></returns>
     static VECTOR GetYRotateVector(VECTOR rotateVector, float degree)
     {
-        int deg = static_cast<int> (degree);
+        //òZè\ìxÇ∏Ç¬åvéZÇ∑ÇÈ
+        int num = abs(static_cast<int> (degree)) / 60;
         float rota = 60 * RAGE;
         VECTOR tempVec = degree > 0 ? VGet(0, 1, 0) : VGet(0, -1, 0);
-        VECTOR addVec = VNorm(VCross(rotateVector, tempVec));
-        addVec = VScale(addVec, rota);
-        for (int i = 0; i < deg / 60; i++)
+        //60ìxã»Ç™Ç¡ÇΩìz
+        VECTOR addVec = VScale(VNorm(VCross(rotateVector, tempVec)), rota);
+        for (int i = 0; i < num; i++)
         {
             rotateVector = VAdd(rotateVector, addVec);
-            degree -= 60;
         }
-        rota = degree * RAGE;
+        //ç≈å„Ç…ForÇ≈âÒÇπÇ»Ç©Ç¡ÇΩï™ÇåvéZ
+        rota = (degree - num * 60) * RAGE;
         addVec = VScale(VNorm(VCross(rotateVector, tempVec)), rota);
         rotateVector = VAdd(rotateVector, addVec);
         return rotateVector;

@@ -1,5 +1,5 @@
 #pragma once
-#include "Timer.h"
+#include "DxLib.h"
 
 /// <summary>
 /// •`‰æ‚µ‚½‰æ‘œ‚ð•Û‘¶‚·‚é
@@ -14,6 +14,7 @@ public:
     /// </summary>
     void ScreenUpdate();
     void Draw();
+    
 private:
    int screen;
 };

@@ -38,9 +38,9 @@ public:
     /// Œ»İ“®‚¯‚é‚©‚Ç‚¤‚©
     /// </summary>
     /// <returns></returns>
-    Object::ObjectState GetObjectState() const
+    bool GetObjectState(Object::ObjectState compareState) const
     {
-        return objState;
+        return objState == compareState;
     };
     /// <summary>
     /// ƒ|ƒWƒVƒ‡ƒ“Š“¾

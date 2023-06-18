@@ -23,4 +23,3 @@
 #define DELTATIME 0.016667f
 
 #define HUNDRED 100
-

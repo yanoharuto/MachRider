@@ -1,18 +1,18 @@
 ﻿ drawX
-760
+200
  drawY
-515
+300
  width
-280
+180
  height
-60
+180
  xNum
-4
+1
  yNum
 1
 graphPass
-data/UI/collectIcon/Jwel.png
+data/UI/collectIcon/Marker.png
 size
-3
+0.7
 frameSpeed
-0.4
+1

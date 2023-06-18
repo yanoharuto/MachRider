@@ -17,7 +17,7 @@ class EnemyGenerator;
 class ChallengeFlow
 {
 public:
-    ChallengeFlow(std::weak_ptr<ObjectObserver> player);
+    ChallengeFlow(std::weak_ptr<ObjectObserver> player, ActorControllerManager* controllerManager);
     ~ChallengeFlow();
 
     /// <summary>

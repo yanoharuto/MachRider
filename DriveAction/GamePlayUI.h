@@ -12,7 +12,7 @@ class ObjectObserver;
 class CountDown;
 class Player;
 class ChallengeFlow;
-
+class CollectSign;
 /// <summary>
 /// プレイヤーに関係のあるUI
 /// </summary>
@@ -47,12 +47,12 @@ private:
     //操作説明のUI情報
     UIData manualData;
     //スラッシュ
-    UIData slashHandle;  
+    UIData slashData;  
+    //収集アイテムのマーカー
+    UIData collectSignData;
     //カウントダウン
     CountDown* countDown;
-    //フォントのサイズ
-    const int fontSize = 1;
     //プレイヤーの位置とかコインの所得数などを教えてくれる奴
     std::weak_ptr<ObjectObserver> playerObserver;
-    
+    CollectSign* cSign;
 };

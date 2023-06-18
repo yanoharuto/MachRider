@@ -57,7 +57,17 @@ namespace UIInit
         //ゲーム終了UI
         exitUI = 71,
         //タイトル画面でステージ選択をするときに使う
-        stageName = 74
+        stageName = 74,
+        //スペースキー催促
+        pressSpaceKey = 77,
+        //収集アイテムのアイコン
+        markerAllow = 80,
+        //収集アイテムの目印
+        collectSign = 83,
+        //カウントダウン終了時
+        startCountDownEnd = 86,
+        //誉め言葉
+        PraiseWord = 89
     };
     /// <summary>
     /// UIの初期化情報　数字は読み込み段数
@@ -117,10 +127,15 @@ public:
     /// <returns></returns>
     UIManager();
     ~UIManager();
+    //UI情報
     static UIData CreateUIData(UIKind uiKind);
+    //UI情報
     static UIData CreateUIData(int kindNum);
  private:
+     //読み込んだ情報
     static std::vector<std::string> initDataVec;
+    //読み込んだ画像
     static std::unordered_map<int,int*> loadGraphs;
+    //uiの情報を纏めておいてあるファイル
     const std::string initUIDataPassFile = "data/UI/InitUIPass.csv";
 };

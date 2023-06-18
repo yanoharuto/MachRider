@@ -15,7 +15,7 @@ const float MiniMap::mapSize = 420;
 const float MiniMap::collectBetween = 0.3f;
 //マップの大きさの係数
 float MiniMap::mapSizeCoefficient = 0;
-std::list<VECTOR> MiniMap::posList;
+std::list<ObjectObserver*> MiniMap::markerObserverList;
 UIData MiniMap::miniMap;
 /// <summary>
 /// 収集アイテムとかを描画するための奴
@@ -48,9 +48,9 @@ void MiniMap::Update()
     playerPos.y = 0;
     drawPosList.clear();
     //収集アイテムのリストをマップに反映できるようにする
-    for (auto ite = posList.begin(); ite != posList.end(); ite++)
+    for (auto ite = markerObserverList.begin(); ite != markerObserverList.end(); ite++)
     {
-        VECTOR pos = VScale(VSub(*ite, playerPos), collectBetween);        
+        VECTOR pos = VScale(VSub((*ite)->GetSubjectPos(), playerPos), collectBetween);
         //マップの大きさに入っているなら
         if (VSize(pos) < mapGraphWidth)
         {
@@ -59,7 +59,7 @@ void MiniMap::Update()
             drawPosList.push_back(pos);
         }
     }
-    posList.clear();
+    markerObserverList.clear();
 }
 
 void MiniMap::Draw()const
@@ -78,9 +78,7 @@ void MiniMap::Draw()const
 
 void MiniMap::AddMarker(ObjectObserver* obserber)
 {
-    VECTOR collectPos = obserber->GetSubjectPos();
-    collectPos.y = 0;
-    posList.push_back(collectPos);
+    markerObserverList.push_back(obserber);
 }
 
 VECTOR MiniMap::ConvertPosition(VECTOR pos)

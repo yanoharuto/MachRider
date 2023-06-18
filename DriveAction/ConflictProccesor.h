@@ -32,7 +32,7 @@ public:
     /// 当たり判定で必要な情報を渡す
     /// </summary>
     /// <returns></returns>
-    virtual HitCheckExamineObjectInfo GetHitExamineCheckInfo();
+    virtual HitCheckExamineObjectInfo GetHitExamineCheckInfo()const;
     /// <summary>
     /// 当たり判定の処理を呼び出す
     /// </summary>
@@ -50,6 +50,8 @@ public:
     /// <param name="objTag"></param>
     /// <returns></returns>
     int GetTagHitCount(Object::ObjectTag objTag);
+
+    bool IsObjectAlive() const;
 protected:
     /// <summary>
     /// 引数のオブジェクトの当たった回数を増やす

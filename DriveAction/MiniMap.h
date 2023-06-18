@@ -43,6 +43,6 @@ private:
     static UIData miniMap;
     std::weak_ptr<ObjectObserver> playerObserver;
 
-    static std::list<VECTOR> posList;
+    static std::list<ObjectObserver*> markerObserverList;
     std::list<VECTOR> drawPosList;
 };

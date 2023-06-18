@@ -1,6 +1,6 @@
 #include "RaceScreen.h"
 #include "Utility.h"
-#include "DxLib.h"
+
 /// <summary>
 /// •`‰æ‚µ‚½‰æ‘œ‚ð•Û‘¶‚·‚é
 /// </summary>
@@ -30,3 +30,4 @@ void RaceScreen::Draw()
 {
    DrawGraph(0, 0, screen, false);
 }
+

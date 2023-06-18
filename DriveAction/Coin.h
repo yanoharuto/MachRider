@@ -25,13 +25,15 @@ public:
     /// </summary>
     /// <param name="conflictInfo"></param>
     void ConflictProccess(const ConflictExamineResultInfo conflictInfo);
+    /// <summary>
+    /// UpdateŠÖ”‚Æ“¯‚¶‚±‚Æ‚ğ‚·‚é
+    /// </summary>
     void GameReserve()override;
     /// <summary>
     /// ‚¿‚å‚Á‚Æ‰e‚ğ•ÏX‚µ‚Ä•`‰æ
     /// </summary>
     void Draw() const override;
 private:
-    
     //–ˆ•bŒü‚«‚ª‚±‚Ì’l•ª•Ï‰»‚·‚é
     static const float rotateY;
     //c•ûŒü‚ÉˆÚ“®‚·‚é—Ê

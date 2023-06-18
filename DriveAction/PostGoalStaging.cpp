@@ -7,6 +7,7 @@
 #include "RaceScreen.h"
 #include "SwitchUI.h"
 #include "NumUI.h"
+#include "Timer.h"
 PostGoalStaging::PostGoalStaging()
 {
     SoundPlayer::StopAllSound();

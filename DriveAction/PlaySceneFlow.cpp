@@ -31,7 +31,7 @@ PlaySceneFlow::PlaySceneFlow()
 	stageInitializer->Init(controllerManager);
 	playerObserver = stageInitializer->GetPlayerObserver();
 	gameLimitTimer = new Timer(stageInitializer->GetGameTime());
-	challenge = new ChallengeFlow(playerObserver);
+	challenge = new ChallengeFlow(playerObserver,controllerManager);
 	playerUI = new GamePlayUI(gameLimitTimer, challenge,playerObserver);
 	camera = new RaceCamera(playerObserver);
 	shadowMap = new ShadowMap(playerObserver);

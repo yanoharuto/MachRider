@@ -9,18 +9,18 @@
 #include "FadeInFadeOut.h"
 //シーンを作るのに必要
 SceneBase* MakeScene(SceneType _NowSceneType);
+
 //ひとつ前のシーン
 SceneType prevSceneType = SceneType::TITLE;
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
-	ChangeWindowMode(true);
-
 	// DirectX11を使用するようにする。(DirectX9も可、一部機能不可)
 	// Effekseerを使用するには必ず設定する。
 	SetUseDirect3DVersion(DX_DIRECT3D_11);
 
 	// 画面の解像度と色ビット深度を設定
 	SetGraphMode(SCREEN_WIDTH, SCREEN_HEIGHT, 32);
+	ChangeWindowMode(true);
 	SetZBufferBitDepth(24);
 	
 

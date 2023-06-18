@@ -11,7 +11,7 @@ public:
     VECTOR GetSubjectPos() const;
     VECTOR GetSubjectDir() const;
     int GetSubjectHitCount(Object::ObjectTag objTag)const;
-    Object::ObjectState GetSubjectState()const;
+    bool GetSubjectState(Object::ObjectState compareState)const;
 private:
     ObjectSubject* subject;
 };

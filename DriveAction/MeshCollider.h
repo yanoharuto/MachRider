@@ -27,7 +27,7 @@ public:
     /// mesh‚È‚Ì‚ÅˆÊ’u‚Æ‚©‚Í‹³‚¦‚ê‚È‚¢
     /// </summary>
     /// <returns></returns>
-    HitCheckExamineObjectInfo GetHitExamineCheckInfo()override;
+    HitCheckExamineObjectInfo GetHitExamineCheckInfo() const override;
     /// <summary>
     /// “–‚½‚Á‚½ê‡‚Ì”½‰
     /// </summary>

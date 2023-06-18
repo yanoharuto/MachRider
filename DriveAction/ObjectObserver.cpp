@@ -10,9 +10,9 @@ ObjectObserver::~ObjectObserver()
 {
 }
 
-Object::ObjectState ObjectObserver::GetSubjectState() const
+bool ObjectObserver::GetSubjectState(Object::ObjectState compareState) const
 {
-    return subject->GetObjectState();
+    return subject->GetObjectState(compareState);
 }
 
 VECTOR ObjectObserver::GetSubjectPos() const
