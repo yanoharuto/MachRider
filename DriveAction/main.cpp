@@ -1,3 +1,4 @@
+ï»¿#include <iostream>
 #include "DxLib.h"
 #include "Effect.h"
 #include "SceneBase.h"
@@ -7,89 +8,103 @@
 #include "Utility.h"
 #include "UserInput.h"
 #include "FadeInFadeOut.h"
-//ƒV[ƒ“‚ğì‚é‚Ì‚É•K—v
+#include "Clock.h"
+#include "SoundPlayer.h"
+#include "InitActor.h"
+#include "EffectManager.h"
+#include "UIManager.h"
+
+//ã‚·ãƒ¼ãƒ³ã‚’ä½œã‚‹ã®ã«å¿…è¦
 SceneBase* MakeScene(SceneType _NowSceneType);
 
-//‚Ğ‚Æ‚Â‘O‚ÌƒV[ƒ“
+//ã²ã¨ã¤å‰ã®ã‚·ãƒ¼ãƒ³
 SceneType prevSceneType = SceneType::TITLE;
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
-	// DirectX11‚ğg—p‚·‚é‚æ‚¤‚É‚·‚éB(DirectX9‚à‰ÂAˆê•”‹@”\•s‰Â)
-	// Effekseer‚ğg—p‚·‚é‚É‚Í•K‚¸İ’è‚·‚éB
+	// DirectX11ã‚’ä½¿ç”¨ã™ã‚‹ã‚ˆã†ã«ã™ã‚‹ã€‚(DirectX9ã‚‚å¯ã€ä¸€éƒ¨æ©Ÿèƒ½ä¸å¯)
+	// Effekseerã‚’ä½¿ç”¨ã™ã‚‹ã«ã¯å¿…ãšè¨­å®šã™ã‚‹ã€‚
 	SetUseDirect3DVersion(DX_DIRECT3D_11);
 
-	// ‰æ–Ê‚Ì‰ğ‘œ“x‚ÆFƒrƒbƒg[“x‚ğİ’è
+	// ç”»é¢ã®è§£åƒåº¦ã¨è‰²ãƒ“ãƒƒãƒˆæ·±åº¦ã‚’è¨­å®š
 	SetGraphMode(SCREEN_WIDTH, SCREEN_HEIGHT, 32);
 	ChangeWindowMode(true);
 	SetZBufferBitDepth(24);
 	
 
-	// ‚Pƒ[ƒgƒ‹‚É‘Š“–‚·‚é’l‚ğİ’è‚·‚é
+	// ï¼‘ãƒ¡ãƒ¼ãƒˆãƒ«ã«ç›¸å½“ã™ã‚‹å€¤ã‚’è¨­å®šã™ã‚‹
 	Set3DSoundOneMetre(16.0f);
-	if (DxLib_Init() == -1)		// ‚c‚wƒ‰ƒCƒuƒ‰ƒŠ‰Šú‰»ˆ—
+	if (DxLib_Init() == -1)		// ï¼¤ï¼¸ãƒ©ã‚¤ãƒ–ãƒ©ãƒªåˆæœŸåŒ–å‡¦ç†
 	{
-		return -1;			// ƒGƒ‰[‚ª‹N‚«‚½‚ç’¼‚¿‚ÉI—¹
+		return -1;			// ã‚¨ãƒ©ãƒ¼ãŒèµ·ããŸã‚‰ç›´ã¡ã«çµ‚äº†
 	}
-	//Effekseer‚ğ‰Šú‰»‚·‚é
+	//Effekseerã‚’åˆæœŸåŒ–ã™ã‚‹
 	if (Effect_Initialize() == -1) 
 	{
 		DxLib_End();
 		return -1;
 	}
 
-	// •`‰ææ‚ğ— ‰æ–Ê‚É•ÏX
+	// æç”»å…ˆã‚’è£ç”»é¢ã«å¤‰æ›´
 	SetDrawScreen(DX_SCREEN_BACK);
-	//¡‚ÌƒV[ƒ“
+	//ä»Šã®ã‚·ãƒ¼ãƒ³
 	SceneType nowSceneType = SceneType::TITLE;
-	
-	//ƒV[ƒ“‚ğ¶¬
+
+	UserInput* userInput = new UserInput();
+	std::unique_ptr <Clock> clock = std::make_unique<Clock>();//æ™‚é–“
+	std::unique_ptr <UIManager> uiManager = std::make_unique<UIManager>();//UIç”»åƒã‚’å–ã£ã¦ãã‚‹
+	std::unique_ptr <InitActor> initActor = std::make_unique<InitActor>();//å„actorã®ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã®åˆæœŸåŒ–
+	std::unique_ptr <SoundPlayer> soundPlayer = std::make_unique <SoundPlayer>();//éŸ³ã‚’æµã™
+	std::unique_ptr<EffectManager> effectManager = std::make_unique <EffectManager>();//ã‚¨ãƒ•ã‚§ã‚¯ãƒˆã®åˆæœŸåŒ–
+	//ã‚·ãƒ¼ãƒ³ã‚’ç”Ÿæˆ
 	SceneBase* scene = new TitleScene;
 	FadeInFadeOut::FadeIn();
-
-	UserInput* userInput = new UserInput;
-
-	//ƒQ[ƒ€ƒ‹[ƒv
+	
+	//ã‚²ãƒ¼ãƒ ãƒ«ãƒ¼ãƒ—
 	while (ProcessMessage() == 0 && nowSceneType != SceneType::ESCAPE)
 	{
 
 #ifdef _DEBUG
-		clsDx(); // printfDx ‚ÌŒ‹‰Ê‚ğƒŠƒZƒbƒg‚·‚é‚½‚ß‚ÌŠÖ”.
-#endif	// ‚±‚±‚ÅDEBUG—p‚Ìˆ—‚ğI—¹.
+		clsDx(); // printfDx ã®çµæœã‚’ãƒªã‚»ãƒƒãƒˆã™ã‚‹ãŸã‚ã®é–¢æ•°.
+#endif	// ã“ã“ã§DEBUGç”¨ã®å‡¦ç†ã‚’çµ‚äº†.
 		
-		//XV
+		//æ›´æ–°
+		clock->Update();
 		userInput->Update();
 		nowSceneType = scene->Update();
-
-		//‰æ–Ê‚ğ‰Šú‰»‚·‚é
+		//ç”»é¢ã‚’åˆæœŸåŒ–ã™ã‚‹
 		ClearDrawScreen();
-
-		scene->Draw();//•`‰æ
-		//— ‰æ–Ê‚Ì“à—e‚ğ•\‰æ–Ê‚É”½‰f‚³‚¹‚é
+		scene->Draw();//æç”»
+		//è£ç”»é¢ã®å†…å®¹ã‚’è¡¨ç”»é¢ã«åæ˜ ã•ã›ã‚‹
 		ScreenFlip();
-		//Update‚ÅŸ‚ÌƒV[ƒ“‚ÉXV‚µ‚½‚È‚ç
+		//Updateã§æ¬¡ã®ã‚·ãƒ¼ãƒ³ã«æ›´æ–°ã—ãŸãªã‚‰
 		if (nowSceneType != prevSceneType)
 		{
-			SAFE_DELETE(scene);//ƒV[ƒ“‚ÌŠJ•ú
+			SAFE_DELETE(scene);//ã‚·ãƒ¼ãƒ³ã®é–‹æ”¾
 			FadeInFadeOut::FadeOut();
-			//V‚µ‚¢ƒV[ƒ“‚Ìì¬
+			//æ–°ã—ã„ã‚·ãƒ¼ãƒ³ã®ä½œæˆ
 			scene = MakeScene(nowSceneType);
 			FadeInFadeOut::FadeIn();
 		}
-		//’¼‘O‚ÌƒV[ƒ“‚ğ‹L˜^
+		//ç›´å‰ã®ã‚·ãƒ¼ãƒ³ã‚’è¨˜éŒ²
 		prevSceneType = nowSceneType;
 	}
-	
+
+	SAFE_UNIQUE_DELETE(uiManager);
+	SAFE_UNIQUE_DELETE(initActor);
+	SAFE_UNIQUE_DELETE(soundPlayer);
+	SAFE_UNIQUE_DELETE(effectManager);
+	SAFE_UNIQUE_DELETE(clock);
 	SAFE_DELETE(userInput);
 	SAFE_DELETE(scene);
 	Effect_Finalize();
 
-	DxLib_End();				// ‚c‚wƒ‰ƒCƒuƒ‰ƒŠg—p‚ÌI—¹ˆ—
+	DxLib_End();				// ï¼¤ï¼¸ãƒ©ã‚¤ãƒ–ãƒ©ãƒªä½¿ç”¨ã®çµ‚äº†å‡¦ç†
 
-	return 0;				// ƒ\ƒtƒg‚ÌI—¹ 
+	return 0;				// ã‚½ãƒ•ãƒˆã®çµ‚äº† 
 }
 
 /// <summary>
-/// V‚µ‚­g‚¤ƒV[ƒ“‚ğŠm•Û
+/// æ–°ã—ãä½¿ã†ã‚·ãƒ¼ãƒ³ã‚’ç¢ºä¿
 /// </summary>
 /// <param name="_NowSceneType"></param>
 /// <returns></returns>

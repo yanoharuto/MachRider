@@ -6,8 +6,6 @@ class TitleScene final :
 {
 public:
     TitleScene();
-    ~TitleScene()override;
-    
 private:
 };
 

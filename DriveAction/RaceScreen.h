@@ -10,12 +10,16 @@ public:
     RaceScreen();
     ~RaceScreen();
     /// <summary>
-    /// •`‰æ‚µ‚Ä‚¢‚é‰æ‘œ‚ğXV
+    /// •`‰æ‚µ‚½‰æ–Ê‚ğ•Û‘¶
     /// </summary>
     void ScreenUpdate();
-    void Draw();
+    /// <summary>
+    /// •Û‘¶‚µ‚½‰æ–Ê‚ğ“n‚·
+    /// </summary>
+    /// <returns></returns>
+    static int GetScreen();
     
 private:
-   int screen;
+   static int screen;
 };
 

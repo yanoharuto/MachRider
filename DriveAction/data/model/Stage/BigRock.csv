@@ -1,6 +1,6 @@
 ﻿    //modelの相対パス
     assetPass = 2
-data/model/Stage/BigRock.mv1
+data/model/Stage/tree.mv1
     //大きさ
     modelSize = 5
 1
@@ -9,7 +9,7 @@ data/model/Stage/BigRock.mv1
 -40
     //modelの当たり半径
     collRadius = 11
-200
+180
     //跳ね返りの大きさ
     bouncePower = 14
 15

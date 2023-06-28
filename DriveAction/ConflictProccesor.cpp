@@ -83,7 +83,7 @@ int ConflictProccesor::GetTagHitCount(Object::ObjectTag objTag)
 /// <returns></returns>
 bool ConflictProccesor::IsObjectAlive() const
 {
-    return object->GetObjectState(Object::alive);
+    return object->GetObjectState() == Object::active;
 }
 /// <summary>
 /// 引数のオブジェクトの当たった回数を増やす

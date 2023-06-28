@@ -56,12 +56,6 @@ public:
     /// </summary>
     ~SoundPlayer();
     /// <summary>
-    /// 3Ⅾの音を聞くために座標とかを更新してもらう
-    /// </summary>
-    /// <param name="pos"></param>
-    /// <param name="front"></param>
-    static void SetListener(VECTOR pos,VECTOR front);
-    /// <summary>
     /// 効果音を鳴らす
     /// </summary>
     /// <param name="soundFileName"></param>

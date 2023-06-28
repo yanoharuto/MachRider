@@ -129,7 +129,7 @@
     <ClCompile Include="ResultSceneFlow.cpp">
       <Filter>ソース ファイル\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="SwitchUI.cpp">
+    <ClCompile Include="SpaceKeyUI.cpp">
       <Filter>ソース ファイル\UI</Filter>
     </ClCompile>
     <ClCompile Include="Effect.cpp">
@@ -146,9 +146,6 @@
     </ClCompile>
     <ClCompile Include="DamageObject.cpp">
       <Filter>ソース ファイル\Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Item.cpp">
-      <Filter>ソース ファイル\Item</Filter>
     </ClCompile>
     <ClCompile Include="PostGoalStaging.cpp">
       <Filter>ソース ファイル\UI</Filter>
@@ -309,9 +306,6 @@
     <ClCompile Include="CircleFlyshipCommander.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="ChallengeFlow.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="UpDownFlyShipCommander.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -334,6 +328,27 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="CollectSign.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="TitleCamera.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="DemoCar.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="DemoCarController.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="TitleDemo.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="StageDataPass.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="EndCountDown.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="SoundListener.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -395,13 +410,7 @@
     <ClInclude Include="TitleSceeneFlow.h">
       <Filter>ヘッダー ファイル\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="UIDataStruct.h">
-      <Filter>ヘッダー ファイル\StructAndEnum</Filter>
-    </ClInclude>
     <ClInclude Include="CircuitDataStruct.h">
-      <Filter>ヘッダー ファイル\StructAndEnum</Filter>
-    </ClInclude>
-    <ClInclude Include="StageDataAddressStruct.h">
       <Filter>ヘッダー ファイル\StructAndEnum</Filter>
     </ClInclude>
     <ClInclude Include="ConflictExamineResultInfo.h">
@@ -452,7 +461,7 @@
     <ClInclude Include="ResultSceneFlow.h">
       <Filter>ヘッダー ファイル\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="SwitchUI.h">
+    <ClInclude Include="SpaceKeyUI.h">
       <Filter>ヘッダー ファイル\UI</Filter>
     </ClInclude>
     <ClInclude Include="SoundPlayer.h">
@@ -461,23 +470,11 @@
     <ClInclude Include="SceneFlowBase.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="ItemArgumentCarInfo.h">
-      <Filter>ヘッダー ファイル\StructAndEnum</Filter>
-    </ClInclude>
     <ClInclude Include="DamageObject.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Item.h">
-      <Filter>ヘッダー ファイル\Item</Filter>
-    </ClInclude>
     <ClInclude Include="Rocket.h">
       <Filter>ヘッダー ファイル\Item</Filter>
-    </ClInclude>
-    <ClInclude Include="ItemUseSituation.h">
-      <Filter>ヘッダー ファイル\StructAndEnum</Filter>
-    </ClInclude>
-    <ClInclude Include="ItemTag.h">
-      <Filter>ヘッダー ファイル\StructAndEnum</Filter>
     </ClInclude>
     <ClInclude Include="Effect.h">
       <Filter>ヘッダー ファイル\Other</Filter>
@@ -502,9 +499,6 @@
     </ClInclude>
     <ClInclude Include="VectorDataCreator.h">
       <Filter>ヘッダー ファイル\DataCreate</Filter>
-    </ClInclude>
-    <ClInclude Include="ItemInfo.h">
-      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Player.h">
       <Filter>ヘッダー ファイル</Filter>
@@ -650,9 +644,6 @@
     <ClInclude Include="CircleFlyshipCommander.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="ChallengeFlow.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="UpDownFlyShipCommander.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
@@ -672,6 +663,27 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="CollectSign.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="TitleCamera.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="DemoCar.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="DemoCarController.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="TitleDemo.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="StageDataPass.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="EndCountDown.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="SoundListener.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

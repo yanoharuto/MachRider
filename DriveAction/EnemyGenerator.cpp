@@ -5,25 +5,51 @@
 #include "InitActor.h"
 #include "InitObjKind.h"
 #include "Saw.h"
-std::vector<ActorController*> EnemyGenerator::CreateActorController(InitObjKind kind, std::unordered_map<int,std::vector<VECTOR>> generatePosMap)
+#include "Utility.h"
+#include "ObjectObserver.h"
+#include "InitActor.h"
+#include "ActorControllerManager.h"
+#include "CollectController.h"
+
+EnemyGenerator::EnemyGenerator()
+{
+    auto getter = new FirstPositionGetter();
+    challengeDataVec = getter->GetChallengeData();
+    totalCollectNum = challengeDataVec.size();
+}
+void EnemyGenerator::GetActorControllerVector(ActorControllerManager* controllerManager)
+{
+    int collectGetNum = CollectController::TotalCollectNum() - CollectController::GetRemainingCollectNum();
+    
+    if (collectNum != collectGetNum && totalCollectNum > collectGetNum)
+    {
+        collectNum = collectGetNum;
+        CreateActorController(circleLaserShip, challengeDataVec[collectNum].enemyPos,controllerManager);
+        
+        CreateActorController(upDownLaserShip, challengeDataVec[collectNum].enemyPos, controllerManager);
+        
+        CreateActorController(saw, challengeDataVec[collectNum].enemyPos, controllerManager);
+    }
+    
+}
+void EnemyGenerator::CreateActorController(InitObjKind kind, std::unordered_map<int,std::vector<VECTOR>> generatePosMap, ActorControllerManager* controllerManager)
 {
     auto firstPosVec = generatePosMap[InitActor::GetActorTileNum(kind)];
-    std::vector<ActorController*> commander;
     for (auto ite = firstPosVec.begin(); ite != firstPosVec.end(); ite++)
     {
         switch (kind)
         {
         case upDownLaserShip:
-            commander.push_back(new UpDownFlyShipCommander(*ite));
+            controllerManager->AddActorController(new UpDownFlyShipCommander(*ite));
             break;
         case circleLaserShip:
-            commander.push_back(new CircleFlyshipCommander(*ite));
+            controllerManager->AddActorController(new CircleFlyshipCommander(*ite));
             break;
         case saw:
-            commander.push_back(new ActorController(new Saw((*ite))));
+            controllerManager->AddActorController(new ActorController(new Saw((*ite))));
         default:
             break;
         }
     }
-    return commander;
+ 
 }

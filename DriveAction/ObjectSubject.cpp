@@ -36,9 +36,9 @@ Object::ObjectTag ObjectSubject::GetObjTag()
     return subObject->GetTag();
 }
 
-bool ObjectSubject::GetObjectState(Object::ObjectState compareState)
+Object::ObjectState ObjectSubject::GetObjectState()
 {
-    return subObject->GetObjectState(compareState);
+    return subObject->GetObjectState();
 }
 /// <summary>
 /// 引数のタグのオブジェクトに何回ぶつかったか

@@ -3,7 +3,7 @@
 15
         //描画範囲の最終距離
         farValue = 5
-11050
+11250
         //オブジェクトの見える範囲角度
         lookingDegree = 8
 180
@@ -11,8 +11,8 @@
         targetBetween = 11
 100
         //カメラのY距離
-        yBetween = 14
-10
+setYPosition
+17
         //カメラの移動速度
         cameraSpeed = 17
 0.045

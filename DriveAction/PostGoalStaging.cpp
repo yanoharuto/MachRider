@@ -3,151 +3,163 @@
 #include "Utility.h"
 #include "SoundPlayer.h"
 #include "UserInput.h"
-#include "ResultScore.h"
 #include "RaceScreen.h"
-#include "SwitchUI.h"
+#include "SpaceKeyUI.h"
 #include "NumUI.h"
 #include "Timer.h"
+#include "RaceScreen.h"
 PostGoalStaging::PostGoalStaging()
 {
     SoundPlayer::StopAllSound();
-    switchUI = new SwitchUI();
+    switchUI = new SpaceKeyUI(1020,900);
     SoundPlayer::LoadSound(clap);
     SoundPlayer::LoadSound(scoreEndSE);
     SoundPlayer::LoadSound(scoreStartSE);
     SoundPlayer::LoadSound(sceneNextSE);
     SoundPlayer::Play2DSE(clap);
     
-
-    InitScoreUI(collectScore, 0);
-    InitScoreUI(damageScore, 1);
-    InitScoreUI(totalScore, 2);
-    InitScoreUI(timeScore, 3);
-    //Y座標が高い順にソート
-    for (int i = 0; i < SCORE_KIND_NUM; i++)
-    {
-        int iY = scoreUI[i].data.y;
-        for (int j = i; j < SCORE_KIND_NUM; j++)
-        {
-            int jY = scoreUI[j].data.y;
-            //i番目の要素を決める
-            if (jY < iY)
-            {
-                std::swap(scoreUI[j],scoreUI[i] );
-            }
-        }
-    }
+    nowProcess = ResultScore::time;
+    AddScoreUI(nowProcess);
     timer = new Timer(spaceKeyCoolTime);
+    gameEndScreen = RaceScreen::GetScreen();
 }
 
 PostGoalStaging::~PostGoalStaging()
 {
     SAFE_DELETE(switchUI);
 }
-
-bool PostGoalStaging::Update(ResultScore* result)
+void PostGoalStaging::Update()
 {
-    //終了のアナウンスの表示が終えたら
-    if (!SoundPlayer::IsPlaySound(scoreEndSE) && spaceClickCount < SCORE_KIND_NUM )
+    using enum ResultScore::ScoreKind;
+    //スコアを表示しきったら
+    if (isDrawTotalScore)
     {
-        if (!SoundPlayer::IsPlaySound(scoreStartSE))
-        {
-            SoundPlayer::Play2DSE(scoreStartSE);
-        }
-        ResultScore::ScoreKind scoreKind = ResultScore::ScoreKind::time;
-        switch (spaceClickCount)
-        {
-        case 0:
-            scoreKind = ResultScore::ScoreKind::time;
-            break;
-        case 1:
-            scoreKind = ResultScore::ScoreKind::collect;
-            break;
-        case 2:
-            scoreKind = ResultScore::ScoreKind::hit;
-            break;
-        case 3:
-            scoreKind = ResultScore::ScoreKind::total;
-            break;
-        default:
-            break;
-        }
-
-        //スコアの表示を少しずつしていく
-        float larp = 1 - timer->GetLimitTime() / spaceKeyCoolTime;
-        scoreUI[spaceClickCount].score = static_cast<int>(result->GetScore(scoreKind) * larp);
-        //スコアを表示しきるかボタンを押されたら
-        if (UserInput::GetInputState(Space) == Detach || timer->IsOverLimitTime())
-        {
-            //スコアの最終表示
-            SoundPlayer::StopSound(scoreStartSE);
-            SoundPlayer::Play2DSE(scoreEndSE);
-            scoreUI[spaceClickCount].score = result->GetScore(scoreKind);
-            //次のスコアの更新の準備
-            spaceClickCount++;
-
-            timer->Init();
-        }
-    }
-
-
-    
-    //終了時の音が鳴ってない時
-    if (!SoundPlayer::IsPlaySound(sceneNextSE))
-    {
-        //スコアを表示しきったら音を鳴らして
-        if (spaceClickCount == SCORE_KIND_NUM && UserInput::GetInputState(Space))
+        //スペースキーを押して終了
+        if (UserInput::GetInputState(Space) == Push)
         {
             SoundPlayer::Play2DSE(sceneNextSE);
-            spaceClickCount++;
+            isEndProcess = true;
+        }
+    }
+    //最後までスコアを表示したときに出る音が鳴り終わったら
+    else if (!SoundPlayer::IsPlaySound(scoreEndSE))
+    {   
+        if (!SoundPlayer::IsPlaySound(scoreStartSE))
+        {
+            //スコアをちょっとずつ取ってきているときに音を鳴らす
+            SoundPlayer::Play2DSE(scoreStartSE);
+        }
+        //スコアの表示を少しずつしていく
+        float larp = timer->GetElaspedTime() / spaceKeyCoolTime;
+        scoreUI[nowProcess].score = static_cast<int>(ResultScore::GetScore(nowProcess) * larp);
+        //スコアを表示しきるかボタンを押されたら
+        if (UserInput::GetInputState(Space) == Push || timer->IsOverLimitTime())
+        {
+            scoreUI[nowProcess].score = ResultScore::GetScore(nowProcess);
+            //次の処理を取ってくる
+            GetNextProcess();
+            SoundPlayer::StopSound(scoreStartSE);
+            SoundPlayer::Play2DSE(scoreEndSE);
             timer->Init();
         }
-        //なり終わったら終了
-        if (spaceClickCount > SCORE_KIND_NUM )
+    }
+}
+
+/// <summary>
+/// スコアの描画
+/// </summary>
+void PostGoalStaging::Draw()const
+{
+    //ゲーム終了時の画面を暗く表示
+    SetDrawBright(backScreenBright, backScreenBright, backScreenBright);
+    DrawGraph(0, 0, gameEndScreen, false);
+    SetDrawBright(MAX1BYTEVALUE, MAX1BYTEVALUE, MAX1BYTEVALUE);
+    //各スコアを表示
+    for (auto itr = scoreUI.begin(); itr != scoreUI.end(); itr++)
+    {   
+        if ((*itr).second.draw)
         {
-            if (timer->IsOverLimitTime())
-            {
-                return true;
-            }
+            (*itr).second.numUI->Draw((*itr).second.score);
+            DrawRotaGraph((*itr).second.scoreKindData.x, (*itr).second.scoreKindData.y, (*itr).second.scoreKindData.size, 0, (*itr).second.scoreKindData.dataHandle[0], true);
         }
     }
-    return false;
 }
-
-void PostGoalStaging::Draw()
+/// <summary>
+/// 処理を終了したか
+/// </summary>
+/// <returns></returns>
+bool PostGoalStaging::IsEndProcess() const
 {
-    for (int i = 0; i <= spaceClickCount; i++)
+    return isEndProcess;
+}
+/// <summary>
+/// 今やるべき処理を所得
+/// </summary>
+/// <returns></returns>
+void PostGoalStaging::GetNextProcess()
+{
+    using enum ResultScore::ScoreKind;
+    switch (nowProcess)
     {
-        int safeNum = i % SCORE_KIND_NUM;
-        scoreUI[safeNum].ui->Draw(scoreUI[safeNum].score);
-        DrawRotaGraph(scoreUI[safeNum].data.x, scoreUI[safeNum].data.y, scoreUI[safeNum].data.size, 0, scoreUI[safeNum].data.dataHandle[0], true);
-    }
+    case time:
+        AddScoreUI(collect);
+        nowProcess = collect;
+        //得点がゼロとかだったら次に
+        if (!scoreUI[collect].draw) GetNextProcess();
+        break;
 
-    if (spaceClickCount != 0)
-    {
-        switchUI->Draw();
+    case collect:
+        AddScoreUI(hit);
+        nowProcess = hit;
+        if (!scoreUI[hit].draw) GetNextProcess();
+        break;
+    case hit:
+        AddScoreUI(total);
+        nowProcess = total;
+        break;
+    case total:
+        //スコアを表示し終わった
+        isDrawTotalScore = true;
+        break;
+    default:
+        break;
     }
 }
-
-void PostGoalStaging::InitScoreUI(UIKind kind,int index)
+/// <summary>
+/// スコアに関するUIの追加
+/// </summary>
+/// <param name="scoreKind">追加するUI</param>
+void PostGoalStaging::AddScoreUI(ResultScore::ScoreKind scoreKind)
 {
-    switch (kind)
+    ScoreUI scoreData;
+    scoreUI.insert(std::make_pair(scoreKind, scoreData));
+    using enum ResultScore::ScoreKind;
+    switch (scoreKind)
     {
-    case collectScore:
-        scoreUI[index].data = UIManager::CreateUIData(collectScore);
-        scoreUI[index].ui = new NumUI(collectScoreNum);
+    case time:
+        scoreUI[scoreKind].scoreKindData = UIManager::CreateUIData(timeScore);
+        scoreUI[scoreKind].numUI = new NumUI(timeScoreNum);
+        scoreUI[scoreKind].draw = true;
+        scoreUI[scoreKind].score = 0;
         break;
-    case timeScore:
-        scoreUI[index].data = UIManager::CreateUIData(timeScore);
-        scoreUI[index].ui = new NumUI(timeScoreNum);
+    case collect:
+        scoreUI[scoreKind].scoreKindData = UIManager::CreateUIData(collectScore);
+        scoreUI[scoreKind].numUI = new NumUI(collectScoreNum);
+        scoreUI[scoreKind].draw = true;
+        scoreUI[scoreKind].score = 0;
         break;
-    case totalScore:
-        scoreUI[index].data = UIManager::CreateUIData(totalScore);
-        scoreUI[index].ui = new NumUI(totalScoreNum);
+    case total:
+        scoreUI[scoreKind].scoreKindData = UIManager::CreateUIData(totalScore);
+        scoreUI[scoreKind].numUI = new NumUI(totalScoreNum);
+        scoreUI[scoreKind].draw = true;
+        scoreUI[scoreKind].score = 0;
         break;
-    case damageScore:
-        scoreUI[index].data = UIManager::CreateUIData(damageScore);
-        scoreUI[index].ui = new NumUI(damageScoreNum);
+    case hit:
+        scoreUI[scoreKind].scoreKindData = UIManager::CreateUIData(damageScore);
+        scoreUI[scoreKind].numUI = new NumUI(damageScoreNum);
+        scoreUI[scoreKind].draw = ResultScore::GetScore(hit) > 0;
+        scoreUI[scoreKind].score = 0;
         break;
     }
+    
 }

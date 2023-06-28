@@ -6,7 +6,6 @@ class ResultScene final:
 {
 public:
     ResultScene();
-    ~ResultScene() override;
 private:
 };
 

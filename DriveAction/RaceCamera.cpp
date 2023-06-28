@@ -4,29 +4,24 @@
 #include "Utility.h"
 #include "UserInput.h"
 
-RaceCamera::RaceCamera(std::shared_ptr<ObjectObserver> target)
+RaceCamera::RaceCamera(std::weak_ptr<ObjectObserver> target)
     :Camera(InitCamera::game)
 {
-    playerObserver = target;
-    VECTOR pos = playerObserver.lock()->GetSubjectPos();
+    targetObserver = target;
+    VECTOR pos = targetObserver.lock()->GetSubjectPos();
     position = {0,pos.y,0};
     SetCameraPositionAndTarget_UpVecY(position, pos);
 }
 
-RaceCamera::~RaceCamera()
-{
-    
-}
-
 void RaceCamera::Update()
 {
-    VECTOR subVec = VSub(playerObserver.lock()->GetSubjectDir(), direction);
+    VECTOR subVec = VSub(targetObserver.lock()->GetSubjectDir(), direction);
     subVec.y = 0;
     //向きの更新 cameraSpeedの速度で車の向きに合わせている
     VECTOR tempDir = VScale(subVec, cameraSpeed * VSize(subVec));
     direction = VNorm(VAdd(direction, tempDir));
     //カメラの位置の更新
-    position = playerObserver.lock()->GetSubjectPos();
+    position = targetObserver.lock()->GetSubjectPos();
     position.y = posY;
     position.x += -(direction.x * targetBetween);
     position.z += -(direction.z * targetBetween);

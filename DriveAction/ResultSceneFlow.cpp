@@ -3,18 +3,16 @@
 #include "Utility.h"
 #include "ResultScore.h"
 #include "UIManager.h"
-#include "SwitchUI.h"
+#include "SpaceKeyUI.h"
 
 ResultSceneFlow::ResultSceneFlow()
 {
-    uiManager = new UIManager();
-    switchUI = new SwitchUI();
+    switchUI = new SpaceKeyUI(1020,900);
 }
 
 ResultSceneFlow::~ResultSceneFlow()
 {
     SAFE_DELETE(switchUI);
-    SAFE_DELETE(uiManager);
 }
 
 void ResultSceneFlow::Update()

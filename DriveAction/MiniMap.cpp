@@ -2,7 +2,7 @@
 #include "UIManager.h"
 #include "OriginalMath.h"
 #include "ObjectObserver.h"
-
+#include "Object.h"
 //自機のIconの大きさ
 const int MiniMap::iconSize;
 //ミニマップの画像の横幅
@@ -15,12 +15,14 @@ const float MiniMap::mapSize = 420;
 const float MiniMap::collectBetween = 0.3f;
 //マップの大きさの係数
 float MiniMap::mapSizeCoefficient = 0;
+//ミニマップに表示する点
 std::list<ObjectObserver*> MiniMap::markerObserverList;
+//ミニマップのデータ
 UIData MiniMap::miniMap;
 /// <summary>
 /// 収集アイテムとかを描画するための奴
 /// </summary>
-MiniMap::MiniMap(std::shared_ptr<ObjectObserver> player)
+MiniMap::MiniMap(std::weak_ptr<ObjectObserver> player)
 {
     miniMap = UIManager::CreateUIData(radar);
     
@@ -32,12 +34,12 @@ MiniMap::MiniMap(std::shared_ptr<ObjectObserver> player)
 
 MiniMap::~MiniMap()
 {
+
 }
 /// <summary>
 /// 収集アイテムの位置を更新
 /// </summary>
 /// <param name="objInfo"></param>
-
 void MiniMap::Update()
 {
     mapRotate = OriginalMath::GetDegreeMisalignment(VGet(1, 0, 0), playerObserver.lock()->GetSubjectDir()) * RAGE;
@@ -50,18 +52,23 @@ void MiniMap::Update()
     //収集アイテムのリストをマップに反映できるようにする
     for (auto ite = markerObserverList.begin(); ite != markerObserverList.end(); ite++)
     {
-        VECTOR pos = VScale(VSub((*ite)->GetSubjectPos(), playerPos), collectBetween);
-        //マップの大きさに入っているなら
-        if (VSize(pos) < mapGraphWidth)
+        //アクティブなオブジェクトをマップに反映
+        if ((*ite)->GetSubjectState() == Object::active)
         {
-            OriginalMath::GetYRotateVector(pos, mapRotate);
-            pos = ConvertPosition(pos);
-            drawPosList.push_back(pos);
+            VECTOR pos = VScale(VSub((*ite)->GetSubjectPos(), playerPos), collectBetween);
+            //マップの大きさに入っているなら
+            if (VSize(pos) < mapGraphWidth)
+            {
+                OriginalMath::GetYRotateVector(pos, mapRotate);
+                pos = ConvertPosition(pos);
+                drawPosList.push_back(pos);
+            }
         }
     }
-    markerObserverList.clear();
 }
-
+/// <summary>
+/// マップに表示する点とレーダーの枠
+/// </summary>
 void MiniMap::Draw()const
 {
     //枠描画
@@ -75,7 +82,10 @@ void MiniMap::Draw()const
         DrawCircle(static_cast<int>((*ite).x), static_cast<int>((*ite).y), iconSize, coinColor, 1, 1);
     }
 }
-
+/// <summary>
+/// マップに反映させたいアイテムの追加
+/// </summary>
+/// <param name="obserber"></param>
 void MiniMap::AddMarker(ObjectObserver* obserber)
 {
     markerObserverList.push_back(obserber);

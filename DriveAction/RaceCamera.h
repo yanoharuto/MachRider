@@ -9,11 +9,7 @@ class ObjectObserver;
 class RaceCamera final : Camera
 {
 public:
-    RaceCamera(std::shared_ptr<ObjectObserver> player);
-    ~RaceCamera() override;
+    RaceCamera(std::weak_ptr<ObjectObserver> player);
     void Update();
-private:
-    //プレイヤーの位置を教えてくれるやつ
-    std::weak_ptr<ObjectObserver> playerObserver;
 };
 

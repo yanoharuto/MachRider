@@ -55,7 +55,7 @@ protected:
 	/// </summary>
 	/// <param name"deltaTime">経過時間</param>
 	/// <param name="accelVec">次の更新までに進む方向と速さ</param>
-	void UpdateVelocity(const VECTOR accelVec);
+	void UpdateVelocity();
 	/// <summary>
 	/// modelの描画場所を更新
 	/// </summary>
@@ -64,12 +64,8 @@ protected:
 	/// <summary>
 	/// このフレームの間に進む量を出す
 	/// </summary>
-	/// <param name="handleDir">入力された方向</param>
-	/// <param name="outsideHitFlag">コースの外にいるか</param>
-	/// <param name="deltaTime">経過時間</param>
-	/// <param name="soundPlayer">音を出すやつ</param>
 	/// <returns>進む量</returns>
-	VECTOR GetAccelVec();
+	virtual VECTOR GetAccelVec();
 
 	void InitParamater(ObjectInit::InitObjKind kind) override;
 	struct SpeedParamator
@@ -112,8 +108,6 @@ protected:
 	float accelPower = 0;
 	//最初のY座標
 	float firstPosY = 0;
-	//加速
-	float turboPower;
 	// なにもしない時の減速.
 	static const float defaultDecel;
 	// グリップの減速.

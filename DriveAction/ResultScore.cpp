@@ -1,6 +1,4 @@
 #include "ResultScore.h"
-#include <fstream>
-#include <math.h>
 #include "Utility.h"
 #include "Timer.h"
 #include "ObjectObserver.h"
@@ -9,31 +7,44 @@ const int ResultScore::coinBonus;
 const int ResultScore::noHitScore;
 const int ResultScore::timeBonus;
 const int ResultScore::damageObjHitDec;
-ResultScore::ResultScore(Timer* timer, std::shared_ptr<ObjectObserver> player)
-{
-    playerObserver = player;
-    gameTimer = timer;
-}
+int ResultScore::collectScore = 0;
+int ResultScore::timeScore = 0;
+bool ResultScore::noHit = false;
 
-
-int ResultScore::GetScore(ScoreKind scoreKind) const
+/// <summary>
+/// スコア所得
+/// </summary>
+/// <param name="scoreKind">どのスコアが欲しいか</param>
+/// <returns></returns>
+int ResultScore::GetScore(ScoreKind scoreKind)
 {
     switch (scoreKind)
     {
-    case ScoreKind::time:
-        return static_cast<int>(gameTimer->GetLimitTime() * timeBonus);
+    case ResultScore::time:
+        return timeScore;
         break;
-    case ScoreKind::hit:
-        return noHitScore - playerObserver.lock()->GetSubjectHitCount(Object::ObjectTag::damageObject) * damageObjHitDec;
+    case ResultScore::collect:
+        return collectScore;
         break;
-    case ScoreKind::collect:
-        return playerObserver.lock()->GetSubjectHitCount(Object::ObjectTag::collect) * coinBonus;
+    case ResultScore::hit:
+        return noHit ? noHitScore : 0;
         break;
-    case ScoreKind::total:
-        return GetScore(time) + GetScore(hit) + GetScore(collect);
-        break;
-    default:
+    case ResultScore::total:
+        return timeScore + collectScore + GetScore(hit);
         break;
     }
-    return 0;
+}
+/// <summary>
+/// スコアを確定させる
+/// </summary>
+/// <param name="timer"></param>
+/// <param name="player"></param>
+void ResultScore::FixScore(Timer* timer, std::weak_ptr<ObjectObserver> player)
+{
+    //制限時間を超過してたら0
+    timeScore = timer->IsOverLimitTime() ? 0 : static_cast<int>(timer->GetElaspedTime() * timeBonus);
+    //収集アイテムを取ってたらボーナス
+    collectScore= player.lock()->GetSubjectHitCount(Object::ObjectTag::collect) * coinBonus;
+    //
+    noHit = player.lock()->GetSubjectHitCount(Object::ObjectTag::damageObject) == 0;
 }

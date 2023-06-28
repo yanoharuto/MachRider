@@ -1,15 +1,15 @@
 ﻿    //modelの相対パス
     assetPass = 2
-data/model/Stage/LittleRock.mv1
+data/model/Stage/well.mv1
     //大きさ
     modelSize = 5
-1
+0.8
     //最初のポジション
     firstPosY = 8
-0
+-70
     //modelの当たり半径
     collRadius = 11
-65
+110
     //跳ね返りの大きさ
     bouncePower = 14
 15

@@ -18,10 +18,8 @@ PlayScene::PlayScene()
 PlayScene::~PlayScene()
 {
     SAFE_DELETE(menu);
-    
     SAFE_DELETE(sceneFlow);
     SoundPlayer::StopSound(playBGM);
-    DeleteUniquePtr();
 }
 
 SceneType PlayScene::Update()
@@ -31,7 +29,6 @@ SceneType PlayScene::Update()
     //ゲームを中断する場合
     if (menuState != continueGame)
     {
-
         nowSceneType = menuState == retry ? SceneType::RELOAD : SceneType::ESCAPE;
     }
     //menu画面が開いてないなら普通の処理
@@ -39,17 +36,23 @@ SceneType PlayScene::Update()
     {
         //シーンごとの処理
         sceneFlow->Update();
-        if (sceneFlow->GetIsEndProccess())//処理が終わったら
+        //処理が終わったら
+        if (sceneFlow->GetIsEndProccess())
         {
             return sceneFlow->GetNextSceneType();
         }
     }
-    (*clock)->Update();
     return nowSceneType;
 }
 
 void PlayScene::Draw()
 {
-    sceneFlow->Draw();
-    menu->Draw();
+    if (Menu::IsMenuOpen())
+    {
+         menu->Draw();
+    }
+    else
+    {
+        sceneFlow->Draw();
+    }
 }

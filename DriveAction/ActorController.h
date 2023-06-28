@@ -17,7 +17,7 @@ public:
     /// <summary>
     /// ƒQ[ƒ€ŠJn€”õˆ—
     /// </summary>
-    virtual void GameReserve() {};
+    virtual void GameReserve();
     /// <summary>
     /// •`‰æˆ—
     /// </summary>

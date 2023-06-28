@@ -26,9 +26,9 @@ BigRadiusLaser::BigRadiusLaser(ObjectObserver* setObserver)
 
 void BigRadiusLaser::Update()
 {
-    if (observer->GetSubjectState(alive))
+    if (observer->GetSubjectState()== active)
     {
-        RotateLaser(rotaSpeed, initParam.laserRange);
+        YRotate(rotaSpeed, initParam.laserRange);
         SetLaserTrack();
     }
 }

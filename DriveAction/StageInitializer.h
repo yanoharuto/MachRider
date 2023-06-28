@@ -1,54 +1,14 @@
 #pragma once
 #include <iostream>
 #include <memory>
-#include <vector>
-#include <unordered_map>
-#include "DxLib.h"
+#include "StageDataPass.h"
 class ActorControllerManager;
 class ObjectObserver;
 
-namespace InitStage
-{
-    enum StageData
-    {
-        width = 1,
-        length = 3,
-        rockFilePass = 5,
-        challengesListFilePass = 7,
-        playerPositionFilePass = 9,
-        gameTime = 11,
-        stageScoreFilePass = 13
-    };
-    enum StageScore
-    {
-        firstScore,
-        secondScore,
-        thirdScore
-    };
-    enum Challenge
-    {
-        collectPositionFilePass = 1,
-        enemyPositionFilePass = 3
-    };
-    /// <summary>
-    /// プレイヤーがこなす内容　
-    /// 集めるアイテムの位置と敵の位置を保存している
-    /// </summary>
-    struct ChallengeData
-    {
-        std::unordered_map<int, std::vector<VECTOR>> collectPos;
-        std::unordered_map<int, std::vector<VECTOR>> enemyPos;
-    };
-    enum class FirstPositionDataKind
-    {
-        playerPosition,
-        rockPosition,
-    };
-}
 /// <summary>
 /// ステージの初期化
 /// </summary>
-class StageInitializer
+class StageInitializer :StageDataPass
 {
 public:
     /// <summary>
@@ -57,9 +17,22 @@ public:
     /// <returns></returns>
     StageInitializer();
     ~StageInitializer();
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="cotrollerManager"></param>
     void Init(ActorControllerManager* cotrollerManager);
-    std::shared_ptr<ObjectObserver> GetPlayerObserver()const;
+    /// <summary>
+    /// プレイヤーの位置等を教えてくれるやつを出す
+    /// </summary>
+    /// <returns></returns>
+    std::weak_ptr<ObjectObserver> GetPlayerObserver()const;
+    /// <summary>
+    /// ステージの制限時間
+    /// </summary>
+    /// <returns></returns>
     float GetGameTime()const;
 private:
-    std::shared_ptr<ObjectObserver> playerObserver;
+    //プレイヤーの位置等を教えてくれるやつ
+    std::weak_ptr<ObjectObserver> playerObserver;
 };

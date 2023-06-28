@@ -27,6 +27,14 @@ void ActorController::Update()
     }
 }
 
+void ActorController::GameReserve()
+{
+    for (auto ite = actorList.begin(); ite != actorList.end(); ite++)
+    {
+        (*ite)->GameReserve();
+    }
+}
+
 void ActorController::Draw() const
 {
     for (auto ite = actorList.begin(); ite != actorList.end(); ite++)
@@ -37,9 +45,10 @@ void ActorController::Draw() const
 
 bool ActorController::IsAlive() const
 {
+    //Ž€‚ñ‚Å‚È‚¢‚È‚çtrue‚ð•Ô‚·
     for (auto ite = actorList.begin(); ite != actorList.end(); ite++)
     {
-        if (!(*ite)->GetObjectState(Object::ObjectState::dead))return true;
+        if ((*ite)->GetObjectState() != Object::ObjectState::dead)return true;
     }
     return false;
 }

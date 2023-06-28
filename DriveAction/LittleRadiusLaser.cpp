@@ -25,9 +25,9 @@ LittleRadiusLaser::LittleRadiusLaser(ObjectObserver* setObserver)
 
 void LittleRadiusLaser::Update()
 {
-    if (observer->GetSubjectState(alive))
+    if (observer->GetSubjectState()== active)
     {
-        RotateLaser(rotaSpeed, initParam.laserRange);
+        YRotate(rotaSpeed, initParam.laserRange);
         SetLaserTrack();
     }
 }

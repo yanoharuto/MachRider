@@ -11,7 +11,7 @@
         targetBetween = 11
 30
         //カメラのY距離
-        yBetween = 14
+setYPosition
 10
         //カメラの移動速度
         cameraSpeed = 17

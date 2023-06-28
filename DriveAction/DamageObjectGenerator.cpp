@@ -5,8 +5,11 @@
 #include "ObjectObserver.h"
 #include "ActorController.h"
 #include "ActorControllerManager.h"
-
+//作成したコントローラークラス。GetControllerListが呼ばれると初期化される
 std::list<ActorController*> DamageObjectGenerator::createDamageObject;
+/// <summary>
+/// 投擲アイテムなどのダメージがあるオブジェクトを生成する
+/// </summary>
 DamageObjectGenerator::DamageObjectGenerator()
 {    
 
@@ -15,23 +18,24 @@ DamageObjectGenerator::~DamageObjectGenerator()
 {
 }
 /// <summary>
-/// アイテムの種類によって生成するアイテムを変更する
+/// ダメージを与えるオブジェクトを生成
 /// </summary>
 /// <param name="itemTag"></param>
-/// <param name="carInfo"></param>
-void DamageObjectGenerator::GenerateDamageObject(Item::ItemTag itemTag,ObjectSubject* sub)
+/// <param name="sub">発射した人の情報を渡す</param>
+/// <returns></returns>
+void DamageObjectGenerator::GenerateDamageObject(DamageObjectKind itemTag,ObjectSubject* sub)
 {
     ActorController* obj = nullptr;
     
     switch (itemTag)
     {
-    case Item:: bomber:
+    case  bomber:
         obj = new BomberController(sub);
         break;
-    case Item::littleRadLaser:
+    case littleRadLaser:
         obj = new LittleRadiusLaserController(sub);
         break;
-    case Item::bigRadLaser:
+    case bigRadLaser:
         obj = new BigRadiusLaserController(sub);
         break;
     default:
@@ -39,8 +43,11 @@ void DamageObjectGenerator::GenerateDamageObject(Item::ItemTag itemTag,ObjectSub
     }
     createDamageObject.push_back(obj);
 }
-
-void DamageObjectGenerator::GetObjectList(ActorControllerManager* controllerManager)
+/// <summary>
+/// 生成されたオブジェクトをcontrollerManagerに追加
+/// </summary>
+/// <param name="controllerManager"></param>
+void DamageObjectGenerator::MoveControllerList(ActorControllerManager* controllerManager)
 {
     for (auto ite = createDamageObject.begin(); ite != createDamageObject.end(); ite++)
     {

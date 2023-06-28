@@ -1,7 +1,7 @@
 #include "FirstPositionGetter.h"
 #include "CSVFileLoader.h"
 #include "Utility.h"
-#include "StageSelect.h"
+#include "StageDataPass.h"
 //ステージの横幅
 int FirstPositionGetter::stageWidth;
 //ステージの縦幅
@@ -9,26 +9,28 @@ int FirstPositionGetter::stageLength;
 
 FirstPositionGetter::FirstPositionGetter()
 {
-    //データを読み取り
-    auto fileLoader = new CSVFileLoader(StageSelect::GetLoadeStageName());
-    auto setStageInitDataVec = fileLoader->GetLoadStringData();
-    SAFE_DELETE(fileLoader);
-    fileLoader = new CSVFileLoader(setStageInitDataVec[challengesListFilePass]);
+    //収集アイテムと敵の位置を保存
+    auto fileLoader = new CSVFileLoader(LoadStageData(challengesListFilePass));
     challengeVec = fileLoader->GetLoadStringData();
     SAFE_DELETE(fileLoader);
     //ステージの横幅縦幅を設定
-    stageWidth = atoi(setStageInitDataVec[width].c_str());
-    stageLength = atoi(setStageInitDataVec[length].c_str());
+    stageWidth = atoi(LoadStageData(width).c_str());
+    stageLength = atoi(LoadStageData(length).c_str());
 
     using enum FirstPositionDataKind;
-    positionDataPassMap.insert(std::make_pair(playerPosition, setStageInitDataVec[playerPositionFilePass]));
-    positionDataPassMap.insert(std::make_pair(rockPosition, setStageInitDataVec[rockFilePass]));
+    //各オブジェクトの初期位置
+    positionDataPassMap.insert(std::make_pair(playerPosition, LoadStageData(playerPositionFilePass)));
+    positionDataPassMap.insert(std::make_pair(rockPosition, LoadStageData(rockFilePass)));
 }
 
 FirstPositionGetter::~FirstPositionGetter()
 {
 }
-
+/// <summary>
+/// 初期位置を渡す
+/// </summary>
+/// <param name="dataKind"></param>
+/// <returns></returns>
 std::unordered_map<int, std::vector<VECTOR>> FirstPositionGetter::GetFirstPositionLoad(FirstPositionDataKind dataKind)
 {
     using enum FirstPositionDataKind;
@@ -44,24 +46,31 @@ std::unordered_map<int, std::vector<VECTOR>> FirstPositionGetter::GetFirstPositi
     }
     return map;
 }
-
+/// <summary>
+/// 収集アイテムと敵の位置データ
+/// </summary>
+/// <returns></returns>
 std::vector<ChallengeData> FirstPositionGetter::GetChallengeData()
 {
-    std::vector<ChallengeData> challengeDataVec;
+    std::vector<ChallengeData> challengeDataVec;//こっちに移す
     for (int i = 0; i < challengeVec.size(); i++)
     {
         auto fileLoader = new CSVFileLoader(challengeVec[i]);
         auto passData = fileLoader->GetLoadStringData();
         SAFE_DELETE(fileLoader);
         ChallengeData challengeData;
-        CSVConvertPosition(&challengeData.collectPos,passData[collectPositionFilePass]);
-        CSVConvertPosition(&challengeData.enemyPos,passData[enemyPositionFilePass]);
+        CSVConvertPosition(&challengeData.collectPos,passData[collectPositionFilePass]);//収集アイテムの位置
+        CSVConvertPosition(&challengeData.enemyPos,passData[enemyPositionFilePass]);//敵のアイテムの位置
 
         challengeDataVec.push_back(challengeData);
     }
     return challengeDataVec;
 }
-
+/// <summary>
+/// CSVファイルから引数のmapのkeyの場所を変換
+/// </summary>
+/// <param name="map"></param>
+/// <param name="fileName"></param>
 void FirstPositionGetter::CSVConvertPosition(std::unordered_map<int, std::vector<VECTOR>>* map, std::string fileName)
 {
     CSVFileLoader* csv = new CSVFileLoader(fileName);
@@ -89,6 +98,4 @@ void FirstPositionGetter::CSVConvertPosition(std::unordered_map<int, std::vector
         }
     }
     SAFE_DELETE(csv);
-
 }
-

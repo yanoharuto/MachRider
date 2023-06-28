@@ -1,12 +1,12 @@
 ﻿    //modelの相対パス
     assetPass = 2
-data/model/Stage/Floor.mv1
+data/model/Stage/DryFloor.mv1
     //大きさ
     modelSize = 5
-1
+0.5
     //最初のポジション
     firstPosY = 8
-0
+-15
     //modelの当たり半径
     collRadius = 11
 0

@@ -11,7 +11,7 @@ UserInput::UserInput()
     keyInputCode[KeyInputKind::Left] = PAD_INPUT_LEFT;
     keyInputCode[KeyInputKind::Right] = PAD_INPUT_RIGHT;
     keyInputCode[KeyInputKind::Space] = PAD_INPUT_10;
-    keyInputCode[KeyInputKind::Escape] = PAD_INPUT_9;
+    keyInputCode[KeyInputKind::EscapeKey] = PAD_INPUT_9;
 }
 
 void UserInput::Update()

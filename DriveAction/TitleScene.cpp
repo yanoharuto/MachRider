@@ -10,10 +10,3 @@ TitleScene::TitleScene()
     sceneFlow = new TitleSceeneFlow();
     SoundPlayer::LoadSound(titleBGM);
 }
-
-TitleScene::~TitleScene()
-{
-    SAFE_DELETE(sceneFlow);
-    SoundPlayer::StopAllSound();
-    DeleteUniquePtr();
-}

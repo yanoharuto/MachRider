@@ -1,6 +1,5 @@
 ﻿#include "PlaySceneFlow.h"
 #include "Utility.h"
-#include "AssetManager.h"
 #include "ActorControllerManager.h"
 #include "ConflictManager.h"
 #include "DamageObjectGenerator.h"
@@ -10,7 +9,7 @@
 #include "RaceScreen.h"
 #include "EffekseerForDXLib.h"
 #include "RaceCamera.h"
-#include "ChallengeFlow.h"
+#include "CollectController.h"
 #include "ResultScore.h"
 #include "Rule.h"
 #include "StageInitializer.h"
@@ -19,29 +18,42 @@
 #include "UIManager.h"
 #include "Menu.h"
 #include "FadeInFadeOut.h"
+#include "CollectController.h"
 /// <summary>
 /// ゲームしているときの流れ
 /// </summary>
 PlaySceneFlow::PlaySceneFlow()
 {
+	//衝突判定管理
 	conflictManager = new ConflictManager();
+	//様々なオブジェクトの更新などをする
 	controllerManager = new ActorControllerManager();
+	//ステージごとの配置などを行う
 	StageInitializer* stageInitializer = new StageInitializer();
-	modelManager = new AssetManager();
 	stageInitializer->Init(controllerManager);
-	playerObserver = stageInitializer->GetPlayerObserver();
+	player = stageInitializer->GetPlayerObserver();
+	
+	//収集アイテムコントローラーを追加
+	controllerManager->AddActorController(new CollectController());
+	//ゲーム終了タイマー
 	gameLimitTimer = new Timer(stageInitializer->GetGameTime());
-	challenge = new ChallengeFlow(playerObserver,controllerManager);
-	playerUI = new GamePlayUI(gameLimitTimer, challenge,playerObserver);
-	camera = new RaceCamera(playerObserver);
-	shadowMap = new ShadowMap(playerObserver);
-	score = new ResultScore(gameLimitTimer, playerObserver);
+	//UIを追加
+	playerUI = new GamePlayUI(gameLimitTimer, player);
+	//カメラ
+	camera = new RaceCamera(player);
+	//影
+	shadowMap = new ShadowMap(player);
+	//現在の処理
 	nowProgress = PlaySceeneProgress::start;
+	//ゴール後の処理はまだ呼ばない
 	postGoalStaging = nullptr;
+	//ゴール前処理
 	racePrevProccess = new RacePrevProcess();
+	//描画するたび保存
 	screen = new RaceScreen();
 	
 	SAFE_DELETE(stageInitializer);
+	//書く処理を分ける
 	UpdateFunc[PlaySceneFlow::start] = &PlaySceneFlow::StartUpdate;
 	UpdateFunc[PlaySceneFlow::game] = &PlaySceneFlow::GameUpdate;
 	UpdateFunc[PlaySceneFlow::playerGoal] = &PlaySceneFlow::PlayerGoalUpdate;
@@ -57,13 +69,9 @@ PlaySceneFlow::~PlaySceneFlow()
 	SAFE_DELETE(camera);
 	SAFE_DELETE(postGoalStaging);
 	SAFE_DELETE(playerUI);
-	SAFE_DELETE(score);
-	SAFE_DELETE(modelManager);
-	SAFE_DELETE(challenge);
 	SAFE_DELETE(controllerManager);
 	SAFE_DELETE(conflictManager);
 	SAFE_DELETE(shadowMap);
-	SAFE_DELETE(challenge);
 	SAFE_DELETE(racePrevProccess);
 	SAFE_DELETE(gameLimitTimer);
 	SAFE_DELETE(screen);
@@ -96,41 +104,29 @@ void PlaySceneFlow::Update()
 /// 描画
 /// </summary>
 void PlaySceneFlow::Draw()const
-{	
-	//メニュー画面を開いているときは暗くして一時停止
-	if (Menu::IsMenuOpen())
+{
+	//描画処理
+	switch (nowProgress)
 	{
-		SetDrawBright(menuBright, menuBright, menuBright);
-		screen->Draw();
-		SetDrawBright(MAX1BYTEVALUE, MAX1BYTEVALUE, MAX1BYTEVALUE);
+	case PlaySceeneProgress::start:
+		UseShadowMapDraw();
+		DrawEffekseer3D();
+		DrawEffekseer2D();
+		racePrevProccess->Draw();
+		screen->ScreenUpdate();
+		break;
+	case PlaySceeneProgress::game:
+		UseShadowMapDraw();
+		DrawEffekseer3D();
+		DrawEffekseer2D();
+		playerUI->Draw();
+		screen->ScreenUpdate();
+		break;
+	case PlaySceeneProgress::playerGoal:
+		postGoalStaging->Draw();
+		break;
 	}
-	else
-	{
-		//描画処理
-		switch (nowProgress)
-		{
-		case PlaySceeneProgress::start:
-			UseShadowMapDraw();
-			DrawEffekseer3D();
-			DrawEffekseer2D();
-			racePrevProccess->Draw();
-			screen->ScreenUpdate();
-			break;
-		case PlaySceeneProgress::game:
-			UseShadowMapDraw();
-			DrawEffekseer3D();
-			DrawEffekseer2D();
-			playerUI->Draw();
-			screen->ScreenUpdate();
-			break;
-		case PlaySceeneProgress::playerGoal:
-			SetDrawBright(menuBright, menuBright, menuBright);
-			screen->Draw();
-			SetDrawBright(MAX1BYTEVALUE, MAX1BYTEVALUE, MAX1BYTEVALUE);
-			postGoalStaging->Draw();
-			break;
-		}
-	}
+
 #ifdef DEBUG
 
 #endif // DEBUG
@@ -165,17 +161,16 @@ void PlaySceneFlow::GameUpdate()
 {
 	controllerManager->Update();
 	conflictManager->Update();
-	challenge->Update(controllerManager);
-	playerUI->Update(challenge);
+	playerUI->Update();
 	camera->Update();
 	//シャドウマップの範囲を更新
 	shadowMap->SetShadowMapErea();
 
-	//レース終了
-	if (gameLimitTimer->IsOverLimitTime() || challenge->IsEndingChallenge())
+	//ゲーム終了
+	if (gameLimitTimer->IsOverLimitTime() || CollectController::IsEndingChallenge())
 	{
+		ResultScore::FixScore(gameLimitTimer, player);
 		nowProgress = PlaySceeneProgress::playerGoal;		
-		//ゴール後の処理をお願い
 		postGoalStaging = new PostGoalStaging();
 	}
 }
@@ -192,7 +187,8 @@ void PlaySceneFlow::EndUpdate()
 /// </summary>
 void PlaySceneFlow::PlayerGoalUpdate()
 {
-	if (postGoalStaging->Update(score))
+	postGoalStaging->Update();
+	if (postGoalStaging->IsEndProcess())
 	{
 		nowProgress = PlaySceeneProgress::end;
 	}
@@ -204,7 +200,6 @@ void PlaySceneFlow::StartUpdate()
 {
 	racePrevProccess->Update();
 	controllerManager->GameReserve();
-	challenge->Update(controllerManager);
 	//カメラの処理
 	camera->Update();
 	//シャドウマップの更新

@@ -23,14 +23,6 @@ SoundPlayer::~SoundPlayer()
         int success = StopSoundMem((*soundHandleMap.begin()).second);
         success = DeleteSoundMem((*soundHandleMap.begin()).second);
     }
-}/// <summary>
-/// 3Ⅾの音を聞くために座標とかを更新してもらう
-/// </summary>
-/// <param name="pos"></param>
-/// <param name="front"></param>
-void SoundPlayer::SetListener(VECTOR pos, VECTOR front)
-{
-    Set3DSoundListenerPosAndFrontPos_UpVecY(pos, front);
 }
 
 /// <summary>

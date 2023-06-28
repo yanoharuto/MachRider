@@ -18,7 +18,7 @@ namespace Input
         Left = 2,
         Right = 3,
         Space = 4,
-        Escape = 5
+        EscapeKey = 5
     };
 #define KEY_INPUT_KIND_NUM 6
     struct StickValueStruct

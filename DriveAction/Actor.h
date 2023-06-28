@@ -6,7 +6,7 @@
 #include "InitObjKind.h"
 
 /// <summary>
-/// 描画するオブジェクト
+/// 動くやつ
 /// </summary>
 class Actor abstract:
     public Object

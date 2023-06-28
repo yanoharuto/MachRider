@@ -9,13 +9,14 @@ public:
     CountDown(Timer* timer);
     ~CountDown();
     void Update();
-    bool IsCountDownEnd();
-    void DrawUI();
-private:
-    bool countDownEnd;
+    bool IsCountDownEnd()const;
+    bool IsPlayCountDownSound()const;
+    virtual void DrawUI()const;
+protected:
+    bool countDownEnd = false;
     bool countStart = false;
     UIData countDownUIData;
-    const std::string countDownSE = "countdown.mp3";
+    UIData endUI;
     int uiNum = -1;
     Timer* timer;
 };

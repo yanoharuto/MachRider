@@ -3,22 +3,22 @@
 #include <iostream>
 #include <memory>
 class ObjectObserver;
-class Timer;
+/// <summary>
+/// 収集アイテムの方向を記すエフェクトを出す
+/// </summary>
 class CollectSign
 {
 public:
-    CollectSign(std::weak_ptr<ObjectObserver> player);
-    void Update();
-    void Draw()const;
-    
-private:
-    std::weak_ptr<ObjectObserver> playerObserver;
-    //収集アイテムのマーカー
-    UIData collectSignData;
-    UIData markerAllowData;
-    Timer* signTimer; 
-    float degree;
-    float signScale;
 
-    bool drawIcon;
+    CollectSign(std::weak_ptr<ObjectObserver> player);
+    ~CollectSign();
+    /// <summary>
+    /// エフェクトの位置と向きを設定
+    /// </summary>
+    void Update();
+private:
+    //プレイヤーの位置や向きを取ってくる
+    std::weak_ptr<ObjectObserver> playerObserver;
+    //エフェクトを出す
+    int signEffect;
 };

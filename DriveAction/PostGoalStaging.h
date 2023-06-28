@@ -1,11 +1,9 @@
 #pragma once
-#include <string>
-#include "Utility.h"
-#include "DxLib.h"
+#include <unordered_map>
 #include "UIManager.h"
 #include "ResultScore.h"
 class NumUI;
-class SwitchUI;
+class SpaceKeyUI;
 class Timer;
 
 /// <summary>
@@ -13,9 +11,10 @@ class Timer;
 /// </summary>
 struct ScoreUI
 {
-    UIData data;
-    int score;
-    NumUI* ui;
+    UIData scoreKindData;//スコアの種類を描画する
+    int score;//スコア量
+    bool draw;//描画するかどうか
+    NumUI* numUI;//スコア量を描画する
 };
 /// <summary>
 /// ゴール後の演出をする
@@ -35,31 +34,46 @@ public:
     /// スコアを徐々に渡す
     /// </summary>
     /// <returns></returns>
-    bool Update(ResultScore* result);
+    void Update();
     /// <summary>
     /// スコアの描画
     /// </summary>
-    void Draw();
-private:
+    void Draw()const;
     /// <summary>
-    /// スコアに関するUIの初期化
+    /// 処理を終了したか
     /// </summary>
-    /// <param name="kind"></param>
-    /// <param name="index"></param>
-    void InitScoreUI(UIKind kind,int index);
-    //終了アナウンス
-    int spaceClickCount = 0;
+    /// <returns></returns>
+    bool IsEndProcess()const;
+private:
+    
+    /// <summary>
+    /// 今やるべき処理を所得
+    /// </summary>
+    /// <returns></returns>
+    void GetNextProcess();
+    /// <summary>
+    /// スコアに関するUIの追加
+    /// </summary>
+    /// <param name="scoreKind">追加するUI</param>
+    void AddScoreUI(ResultScore::ScoreKind scoreKind);
+    //処理をすべて行えたら
+    bool isEndProcess = false;
+    //合計スコアを描画したか
+    bool isDrawTotalScore = false;
+    //後ろの画面の明るさを低くする
+    const int backScreenBright = 60;
     //アナウンスの移動量
     const float goalMoveX = 10.0f;
     //スペースキーを押す合間
-    const float spaceKeyCoolTime = 1.5f;
-    //終了のアナウンスの色
-    unsigned int goalMarkerUIColor = GetColor(200, 100, 100);
+    const float spaceKeyCoolTime = 0.2f;
+    //ゲーム終了時の画面
+    int gameEndScreen = -1;
     //スペースキー催促
-    SwitchUI* switchUI;
+    SpaceKeyUI* switchUI;
     //各スコアを表示するための配列
-    ScoreUI scoreUI[SCORE_KIND_NUM] = { {},{},{},{} };
-    //ゴールしたときの終了アナウンス
+    std::unordered_map<ResultScore::ScoreKind,ScoreUI> scoreUI;
+    //今何の処理を行っているか
+    ResultScore::ScoreKind nowProcess;
     //タイマー
     Timer* timer;
 };

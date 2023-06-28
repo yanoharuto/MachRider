@@ -30,7 +30,7 @@ public:
     /// </summary>
     /// <param name="rotaSpeed"></param>
     /// <param name="laserRange"></param>
-    void RotateLaser(float rotaSpeed, float laserRange);
+    void YRotate(float rotaSpeed, float laserRange);
     /// <summary>
     /// レーザー跡を出す
     /// </summary>

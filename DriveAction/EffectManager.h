@@ -1,32 +1,36 @@
-#pragma once
+ï»¿#pragma once
 #include <string>
 #include <unordered_map>
 namespace EffectInit
 {
     enum EffectKind
     {
-        //Ô‚ª‚Ô‚Â‚©‚Á‚½‚ÌƒGƒtƒFƒNƒg
+        //è»ŠãŒã¶ã¤ã‹ã£ãŸæ™‚ã®ã‚¨ãƒ•ã‚§ã‚¯ãƒˆ
         carConflict = 2,
-        //Ô‚ª•—‚ğØ‚Á‚Ä‚¢‚é‚Æ‚«‚ÌƒGƒtƒFƒNƒg
+        //è»ŠãŒé¢¨ã‚’åˆ‡ã£ã¦ã„ã‚‹ã¨ãã®ã‚¨ãƒ•ã‚§ã‚¯ãƒˆ
         carWind = 5,
-        //Ô‚ª‰Á‘¬‚µ‚½‚Æ‚«‚ÌƒGƒtƒFƒNƒg
+        //è»ŠãŒåŠ é€Ÿã—ãŸã¨ãã®ã‚¨ãƒ•ã‚§ã‚¯ãƒˆ
         carTurbo = 8,
-        //Ô‚ªƒ_ƒ[ƒW‚ğó‚¯‚½‚ÌƒGƒtƒFƒNƒg
+        //è»ŠãŒãƒ€ãƒ¡ãƒ¼ã‚¸ã‚’å—ã‘ãŸæ™‚ã®ã‚¨ãƒ•ã‚§ã‚¯ãƒˆ
         carDamage = 11,
-        //‰ñ“]”¼Œa‚ª¬‚³‚¢ƒŒ[ƒU[
+        //å›è»¢åŠå¾„ãŒå°ã•ã„ãƒ¬ãƒ¼ã‚¶ãƒ¼
         littleRadiusLaserEffect = 14,
-        //‰ñ“]”¼Œa‚ª‘å‚«‚¢ƒŒ[ƒU[
+        //å›è»¢åŠå¾„ãŒå¤§ãã„ãƒ¬ãƒ¼ã‚¶ãƒ¼
         bigRadiusLaserEffect = 17,
-        //ƒŒ[ƒU[‚ÌÕ
+        //ãƒ¬ãƒ¼ã‚¶ãƒ¼ã®è·¡
         laserTrack = 20,
-        //ƒRƒCƒ“‚ğƒQƒbƒg‚µ‚½‚Æ‚«‚ÌƒGƒtƒFƒNƒg
+        //ã‚³ã‚¤ãƒ³ã‚’ã‚²ãƒƒãƒˆã—ãŸã¨ãã®ã‚¨ãƒ•ã‚§ã‚¯ãƒˆ
         getCollect = 23,
-        //”š’e‚Ì”š”­
+        //çˆ†å¼¾ã®çˆ†ç™º
         bombExplosion = 26,
-        //ƒRƒCƒ“‚Ìo‚·ƒI[ƒ‰
-        collectAura=29,
-        //ûWƒAƒCƒeƒ€‚Ì•ûŠp‚ğw‚·ƒGƒtƒFƒNƒg
-        compass=32
+        //ã‚³ã‚¤ãƒ³ã®å‡ºã™ã‚ªãƒ¼ãƒ©
+        collectAura = 29,
+        //åé›†ã‚¢ã‚¤ãƒ†ãƒ ã®æ–¹è§’ã‚’æŒ‡ã™ã‚¨ãƒ•ã‚§ã‚¯ãƒˆ
+        compass = 32,
+        //è»Šã®å¾Œã‚ã‹ã‚‰å‡ºã™ã‚¨ãƒ•ã‚§ã‚¯ãƒˆ
+        burner = 35,
+        //è»ŠãŒé€Ÿããªã‚‹å‰ã«å‡ºã™ã‚¨ãƒ•ã‚§ã‚¯ãƒˆ
+        turboCourse = 38,
     };
     enum EffectInitData
     {
@@ -35,17 +39,39 @@ namespace EffectInit
     };
 }
 using namespace EffectInit;
-
+/// <summary>
+/// ã‚¨ãƒ•ã‚§ã‚¯ãƒˆã®ä¿ç®¡åº«
+/// </summary>
 class EffectManager
 {
 public:
+    /// <summary>
+    /// ã‚¨ãƒ•ã‚§ã‚¯ãƒˆã‚’èª­ã¿è¾¼ã‚“ã ã‚Šæ¸¡ã—ãŸã‚Šã™ã‚‹
+    /// </summary>
     EffectManager();
     ~EffectManager();
+    /// <summary>
+    /// èª­ã¿è¾¼ã‚€ã‚¨ãƒ•ã‚§ã‚¯ãƒˆ
+    /// </summary>
+    /// <param name="kind"></param>
     static void LoadEffect(EffectKind kind);
+    /// <summary>
+    /// 3â…®ã‚¨ãƒ•ã‚§ã‚¯ãƒˆã‚’æ¸¡ã™
+    /// </summary>
+    /// <param name="kind"></param>
+    /// <returns></returns>
     static int GetPlayEffect3D(EffectKind kind);
+    /// <summary>
+    /// 2Dã‚¨ãƒ•ã‚§ã‚¯ãƒˆã‚’æ¸¡ã™
+    /// </summary>
+    /// <param name="kind"></param>
+    /// <returns></returns>
     static int GetPlayEffect2D(EffectKind kind);
 private:
+    //ã‚¨ãƒ•ã‚§ã‚¯ãƒˆã®ãƒãƒ³ãƒ‰ãƒ«ãŒå…¥ã‚‹ãƒãƒƒãƒ—
     static std::unordered_map <EffectKind, int> effectMap;
+    //ã‚¨ãƒ•ã‚§ã‚¯ãƒˆã®ãƒ‘ã‚¹ãŒå…¥ã‚‹æ–‡å­—åˆ—
     static std::vector<std::string> initDataVec;
+    //å„ã‚¨ãƒ•ã‚§ã‚¯ãƒˆã®ãƒ‘ã‚¹ãŒå…¥ã£ã¦ã„ã‚‹ãƒ•ã‚¡ã‚¤ãƒ«
     const std::string initDataPassFile = "data/effect/initEffectPass.csv";
 };

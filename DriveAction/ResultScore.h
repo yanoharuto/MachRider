@@ -19,18 +19,27 @@ public:
         total = 3
     };
     /// <summary>
+    /// スコア所得
+    /// </summary>
+    /// <param name="scoreKind">どのスコアが欲しいか</param>
+    /// <returns></returns>
+    static int GetScore(ScoreKind scoreKind);
+    /// <summary>
+    /// スコアを確定させる
+    /// </summary>
+    /// <param name="timer"></param>
+    /// <param name="player"></param>
+    static void FixScore(Timer* timer, std::weak_ptr<ObjectObserver> player);
+private:
+
+    /// <summary>
     /// 最終的なスコアの保存
     /// </summary>
-    ResultScore(Timer* timer, std::shared_ptr<ObjectObserver> player);
+    ResultScore() {};
     ~ResultScore() {};
-    /// <summary>
-    /// スコアの所得
-    /// </summary>
-    /// <returns></returns>
-    int GetScore(ScoreKind scoreKind) const;
-    
-private:
-    Timer* gameTimer;
+    static int timeScore;
+    static int collectScore;
+    static bool noHit;
     //ダメージ判定のあるオブジェクトに触れたらスコア減少
     static const int damageObjHitDec = 30;
     //残り時間のボーナス
@@ -39,7 +48,6 @@ private:
     static const int noHitScore = 500;
     //コインはボーナス
     static const int coinBonus = 500;
-    //プレイヤーの情報を渡してくれるやつ
-    std::weak_ptr<ObjectObserver> playerObserver;
+    
 };
 

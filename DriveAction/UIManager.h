@@ -65,9 +65,15 @@ namespace UIInit
         //収集アイテムの目印
         collectSign = 83,
         //カウントダウン終了時
-        startCountDownEnd = 86,
+        onGameStartCountDownEnd = 86,
         //誉め言葉
-        PraiseWord = 89
+        PraiseWord = 89,
+        //ゲーム終了時のカウントダウン
+        onGameEndCountDownEnd = 92,
+        //残りの収集アイテムの数
+        remainingCollectItemNum = 95, 
+        //残りの収集アイテムについてのフレーズ
+        remainingCollectItemPhrase = 98
     };
     /// <summary>
     /// UIの初期化情報　数字は読み込み段数

@@ -31,3 +31,9 @@ data/effect/coinAura.csv
 //収集アイテムの方角を指すエフェクト
         compass=32
 data/effect/collectCompass.csv
+        //車の後ろから出すエフェクト
+        burner=35
+data/effect/burner.csv
+        //車が速くなる前に出すエフェクト
+        turboCourse=38
+data/effect/turboSign.csv

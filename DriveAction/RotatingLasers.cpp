@@ -31,15 +31,15 @@ RotatingLasers::RotatingLasers(InitParam setParam, ObjectObserver* setObserver)
 RotatingLasers::~RotatingLasers()
 {
     StopEffekseer3DEffect(laserEffect);
-    DeleteEffekseerEffect(laserEffect);
+    laserEffect = -2;
     StopEffekseer3DEffect(trackEffect);
-    DeleteEffekseerEffect(trackEffect);
+    trackEffect = -2;
     ConflictManager::EraceConflictObjInfo(collider);
     SAFE_DELETE(collider);
     SAFE_DELETE(observer);
 }
 
-void RotatingLasers::RotateLaser(float rotaSpeed, float laserRange)
+void RotatingLasers::YRotate(float rotaSpeed, float laserRange)
 {
     position = observer->GetSubjectPos();
     //方向変更　エフェクトの向きを変える

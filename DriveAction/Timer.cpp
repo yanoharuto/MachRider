@@ -6,7 +6,7 @@
 /// 制限時間とかを計測する
 /// </summary>
 /// <param name="setLimitTime"></param>
-Timer::Timer(float setLimitTime)
+Timer::Timer(double setLimitTime)
 {
     limitTime = setLimitTime;
     startTime = Clock::GetNowGameTime();
@@ -26,15 +26,33 @@ void Timer::Init()
 /// 設定時間を過ぎたか
 /// </summary>
 /// <returns>過ぎたらTrue</returns>
-bool Timer::IsOverLimitTime()
+bool Timer::IsOverLimitTime()const
 {
-    return  Clock::GetNowGameTime() - startTime > limitTime;
+    return  limitTime - GetElaspedTime() < 0;
 }
 /// <summary>
-/// 過ぎた時間
+/// 経過時間
 /// </summary>
 /// <returns></returns>
-float Timer::GetLimitTime()
+double Timer::GetElaspedTime()const
+{    
+    double nowTime = Clock::GetNowGameTime();
+    double elaspedTime = nowTime - startTime;
+    return elaspedTime;
+}
+/// <summary>
+/// タイマーに設定された時間
+/// </summary>
+/// <returns></returns>
+double Timer::GetLimitTime() const
 {
-    return limitTime - (Clock::GetNowGameTime() - startTime);
+    return limitTime;
+}
+/// <summary>
+/// 残り時間を所得
+/// </summary>
+/// <returns></returns>
+double Timer::GetRemainingTime() const
+{
+    return limitTime - GetElaspedTime();
 }

@@ -6,7 +6,7 @@
 
 float Camera::lookingDeg = 0;
 using namespace InitCamera;
-Camera::Camera(CameraType type)
+Camera::Camera(UseCameraSceneKind type)
 {
     LoadData(type);
 }
@@ -21,7 +21,7 @@ bool Camera::IsLookingCamera(const Actor* const actor) const
     return OriginalMath::GetDegreeMisalignment(between, direction) < lookingDeg;
 }
 
-void Camera::LoadData(CameraType type)
+void Camera::LoadData(UseCameraSceneKind type)
 {
     CSVFileLoader* initFileLoader = new CSVFileLoader(initFileName);
     std::vector<const char*> loadData = initFileLoader->GetLoadCharData();
@@ -32,7 +32,7 @@ void Camera::LoadData(CameraType type)
 
     SetCameraNearFar(atof(loadData[setNearValue]), atof(loadData[setFarValue]));
     targetBetween = atof(loadData[setTargetBetween]);
-    posY = atof(loadData[setYBetween]);
+    posY = atof(loadData[setYPosition]);
     cameraSpeed = atof(loadData[setCameraSpeed]);
     lookingDeg = atof(loadData[setLookingDegree]);
 

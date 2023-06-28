@@ -9,6 +9,7 @@ Clock::Clock()
 {
     // Œ»İ‚ÌƒJƒEƒ“ƒg‚ğæ“¾‚·‚é
     timeD = static_cast<double>(GetNowHiPerformanceCount());
+    gameTime = static_cast<double>(GetNowHiPerformanceCount()) / 1000000;
 }
 
 Clock::~Clock()

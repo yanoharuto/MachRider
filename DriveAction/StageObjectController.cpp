@@ -18,6 +18,7 @@ StageObjectController::StageObjectController(FirstPositionGetter* firstPosGetter
     auto param = InitActor::GetActorParamator(stageFloor);
     floorModelHandle = param.modelHandle;
     MV1SetScale(floorModelHandle, VGet(param.setModelSize, param.setModelSize, param.setModelSize));
+    MV1SetPosition(floorModelHandle, VGet(0, param.firstPosY, 0));
     //skyDome‚Ìİ’è
     param = InitActor::GetActorParamator(skyDome);
     skyDomeModelHandle = param.modelHandle;
@@ -62,5 +63,6 @@ void StageObjectController::Draw() const
     //ƒ‰ƒCƒg‚Ì‰e‹¿‚È‚µ‚Å‹ó‚ğ•`‰æ
     SetUseLighting(false);
     MV1DrawModel(skyDomeModelHandle);
+    
     SetUseLighting(true);
 }

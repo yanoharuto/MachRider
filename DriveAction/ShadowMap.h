@@ -14,7 +14,7 @@ public:
     /// <summary>
     /// ‰e‚ğ•`‰æ‚·‚éƒNƒ‰ƒX
     /// </summary>
-    ShadowMap(std::shared_ptr<ObjectObserver> player);
+    ShadowMap(std::weak_ptr<ObjectObserver> player);
     ~ShadowMap();
     /// <summary>
     /// ‰e‚Ì•`‰æ”ÍˆÍ‚Ì•ÏX

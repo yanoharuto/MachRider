@@ -41,6 +41,7 @@ Coin::~Coin()
 /// </summary>
 void Coin::Update()
 {
+    objState = active;
     //向きを変更
     direction = VNorm(OriginalMath::GetYRotateVector(direction, rotateY));
     totalMoveYValue += moveYValue;
@@ -76,28 +77,16 @@ void Coin::ConflictProccess(const ConflictExamineResultInfo conflictInfo)
        coinGetEffect = EffectManager::GetPlayEffect2D(getCollect);
        int effectX = SCREEN_WIDTH / 2;
        int effectY = SCREEN_HEIGHT / 2;
-       int success = SetPosPlayingEffekseer2DEffect(coinGetEffect,effectX, effectY, 5);
+       SetPosPlayingEffekseer2DEffect(coinGetEffect,effectX, effectY, 5);
        SoundPlayer::Play3DSE(coinGet);
        isCarConflict = true;
+       objState = activeEnd;
     }
 }
-
+/// <summary>
+/// ゲーム開始前の更新
+/// </summary>
 void Coin::GameReserve()
 {
     Update();
-}
-
-void Coin::Draw() const
-{
-    MATRIX tmpMat = MV1GetMatrix(modelHandle);
-    if (modelHandle != -1)
-    {
-        ModelSetMatrix();
-        // ３Dモデルのポジション設定
-        MV1SetPosition(modelHandle, position);
-        MV1SetScale(modelHandle, VGet(modelSize, modelSize, modelSize));
-        MV1DrawModel(modelHandle);
-    }
-    //行列を元に戻す
-    MV1SetRotationMatrix(modelHandle, tmpMat);
 }

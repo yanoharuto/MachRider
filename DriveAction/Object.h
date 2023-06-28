@@ -18,7 +18,8 @@ public:
     enum ObjectState
     {
         sleep,
-        alive,
+        active,
+        activeEnd,
         dead
     };
     /// <summary>
@@ -38,9 +39,9 @@ public:
     /// Œ»İ“®‚¯‚é‚©‚Ç‚¤‚©
     /// </summary>
     /// <returns></returns>
-    bool GetObjectState(Object::ObjectState compareState) const
+    Object::ObjectState GetObjectState() const
     {
-        return objState == compareState;
+        return objState;
     };
     /// <summary>
     /// ƒ|ƒWƒVƒ‡ƒ“Š“¾

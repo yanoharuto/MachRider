@@ -13,10 +13,10 @@ CircleLaserFlyShip::CircleLaserFlyShip(VECTOR firstPos, VECTOR setDestinationPos
 
 void CircleLaserFlyShip::GenerateLaser()
 {
-    DamageObjectGenerator::GenerateDamageObject(Item::littleRadLaser, sub);
+    DamageObjectGenerator::GenerateDamageObject(DamageObjectGenerator::littleRadLaser, sub);
 }
 
 void CircleLaserFlyShip::Update()
 {
-    objState = alive;
+    objState = active;
 }

@@ -1,61 +1,115 @@
 #include "TitleSceeneFlow.h"
 #include "Utility.h"
-#include "StageDataAddressStruct.h"
 #include "DxLib.h"
 #include "StageSelect.h"
-#include "SwitchUI.h"
+#include "SpaceKeyUI.h"
 #include "SoundPlayer.h"
 #include "UIManager.h"
 #include "UserInput.h"
 #include "FadeInFadeOut.h"
+#include "TitleDemo.h"
+#include "Timer.h"
+#include "RaceScreen.h"
+
 TitleSceeneFlow::TitleSceeneFlow()
 {
     stageSelect = new StageSelect();  
-    switchUI = new SwitchUI();
+    spaceKeyUI = new SpaceKeyUI(950,700);
+    titleDemo = new TitleDemo();
+    
     titleLogoData = UIManager::CreateUIData(tilteLogo);
-    stageNameData= UIManager::CreateUIData(stageName);
+    
+    SoundPlayer::LoadSound(sceneNextSE);
 }
 
 TitleSceeneFlow::~TitleSceeneFlow()
 {
     SAFE_DELETE(stageSelect);
-    SAFE_DELETE(switchUI);
+    SAFE_DELETE(spaceKeyUI);
+    SAFE_DELETE(titleDemo);
 }
 
 void TitleSceeneFlow::Update()
 {
-    if (!SoundPlayer::IsPlaySound(titleBGM))
+    titleDemo->Update();
+
+    //BGM長しっぱ
+    if (!SoundPlayer::IsPlaySound(titleBGM)&&titleState!=TitleState::processEnd)
     {
         SoundPlayer::Play2DSE(titleBGM);
     }
-    //スペースキーの催促
-    switchUI->Update();
-    stageSelect->Update();
-    if (UserInput::GetInputState(Up) == Push)
+    //状況によってやるべき処理を変更
+    switch (titleState)
     {
-        stageNum++;
-        if(stageNameData.dataHandle.size() <= stageNum) 
-        {
-            stageNum = 0;
-        }
+    case TitleSceeneFlow::TitleState::waitSpaceKey:
+        WaitPressSpaceKey();
+        break;
+    case TitleSceeneFlow::TitleState::stageSelect:
+        SelectStageProcess();
+        break;
+    case TitleSceeneFlow::TitleState::processEnd:
+        EndTitleProcess();
+        break;
+    default:
+        break;
     }
-    if (UserInput::GetInputState(Down) == Push)
-    {
-        stageNum--;
-        if (0 > stageNum)
-        {
-            stageNum = stageNameData.dataHandle.size() - 1;
-        }
-    }
-    if (UserInput::GetInputState(Space)==Push)
+    
+    //エスケープキーを押したら終了
+    if (UserInput::GetInputState(EscapeKey)==Push)
     {
         isEndProccess = true;
-        nextSceneType = SceneType::PLAY;
+        nextSceneType = SceneType::ESCAPE;
     }
 }
 
 void TitleSceeneFlow::Draw()const
-{  
+{
+    titleDemo->Draw();
     DrawRotaGraph(titleLogoData.x, titleLogoData.y, titleLogoData.size, 0, titleLogoData.dataHandle[0], true, false);
-    DrawGraph(stageNameData.x, stageNameData.y, stageNameData.dataHandle[stageNum], false);
+    if (titleState == TitleState::waitSpaceKey)
+    {
+        spaceKeyUI->Draw();
+    }
+    else
+    {
+        stageSelect->Draw();
+    }
+    screen->ScreenUpdate();
+}
+/// <summary>
+/// スペースキーを押したらtitleStateを変更
+/// </summary>
+/// <param name="changedState">変更先の状態</param>
+void TitleSceeneFlow::OnPressSpaceKeyProcess(TitleState changedState)
+{
+    if (UserInput::GetInputState(Space) == Push)
+    {
+        SoundPlayer::Play2DSE(sceneNextSE);
+        titleState = changedState;
+    }
+}
+/// <summary>
+/// スペースキーを押すのを待つ
+/// </summary>
+void TitleSceeneFlow::WaitPressSpaceKey()
+{
+    spaceKeyUI->Update();
+    OnPressSpaceKeyProcess(TitleState::stageSelect);
+}
+/// <summary>
+/// ステージ選択処理
+/// </summary>
+void TitleSceeneFlow::SelectStageProcess()
+{
+    stageSelect->Update();
+    OnPressSpaceKeyProcess(TitleState::processEnd);
+}
+/// <summary>
+/// タイトルシーン終了処理
+/// </summary>
+void TitleSceeneFlow::EndTitleProcess()
+{
+    SoundPlayer::StopSound(titleBGM);
+    isEndProccess = true;
+    nextSceneType = SceneType::PLAY;
 }

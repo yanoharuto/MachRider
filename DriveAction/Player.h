@@ -6,6 +6,7 @@
 class SphereCollider;
 class ObjectSubject;
 class ObjectObserver;
+class SoundListener;
 /// <summary>
 /// プレイヤーの車やアイテムの処理を呼び出す
 /// </summary>
@@ -20,16 +21,25 @@ public:
     /// <param name="firstPos"></param>
     /// <param name="firstDir"></param>
     Player(VECTOR firstPos,VECTOR direction);
+    ~Player();
     /// <summary>
     /// 車の位置とかを渡す
     /// </summary>
     /// <returns></returns>
-    std::shared_ptr<ObjectObserver> CreatePlayerObserver() const;
-    void GameReserve()override;
+    std::weak_ptr<ObjectObserver> CreatePlayerObserver() const;
+    /// <summary>
+    /// 音を聞くために場所を更新
+    /// </summary>
+    void Update()override;
 private:
     SphereCollider* collider;
-    ObjectSubject* subject;
+    std::shared_ptr<ObjectObserver> subject;
+
+    //音を聞く場所の更新
+    SoundListener* listener = nullptr;
+
     std::shared_ptr <ObjectObserver> observer;
+
     const float setDamageCoolTime = 1.5f;
 };
 

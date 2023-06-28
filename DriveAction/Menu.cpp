@@ -3,10 +3,14 @@
 #include "DxLib.h"
 #include "Utility.h"
 #include "StopWatch.h"
+#include "RaceScreen.h"
 //メニューの状態
 MenuState Menu::menuState=continueGame;
-bool Menu::openMenu = false;
+//メニューを開いているか
+bool Menu::isOpenMenu = false;
+//メニューを開いている時間
 double Menu::openMenuTime=0;
+
 Menu::Menu()
 {
     menuState = continueGame;
@@ -14,7 +18,7 @@ Menu::Menu()
     uiDatas[continueGame] = UIManager::CreateUIData(playUI);
     uiDatas[exitGame] = UIManager::CreateUIData(exitUI);
     uiDatas[retry] = UIManager::CreateUIData(retryUI);
-    openMenu = false;
+    isOpenMenu = false;
     openMenuTime = 0;
     stopWatch = new StopWatch();
 }
@@ -28,15 +32,16 @@ Menu::~Menu()
 void Menu::Update()
 {
     //Escapeを押したら
-    if (UserInput::GetInputState(Input::Escape) == Push)
+    if (UserInput::GetInputState(Input::EscapeKey) == Push)
     {
         //メニュー画面を開いたり閉じたり
-        openMenu = !openMenu;
+        isOpenMenu = !isOpenMenu;
         cursolPos = 0;
-        if (openMenu)
+        if (isOpenMenu)
         {
             //開いている時間を計測開始
             stopWatch->Run();
+            backScreen = RaceScreen::GetScreen();
         }
         else
         {
@@ -48,10 +53,10 @@ void Menu::Update()
     {
         //メニューを開いた状態でスペースキーを押したら押した項目を保存
         menuState = static_cast<MenuState>(cursolPos);
-        openMenu = !(menuState == continueGame);
+        isOpenMenu = !(menuState == continueGame);
     }
     //開いているときに上下に押すと項目を変更
-    if (openMenu)
+    if (isOpenMenu)
     {
         //メニュー画面を開いている時間を増やす
         openMenuTime = stopWatch->GetRunTime();
@@ -86,7 +91,7 @@ MenuState Menu::GetMenuState()
 }
 bool Menu::IsMenuOpen()
 {
-    return openMenu;
+    return isOpenMenu;
 }
 double Menu::GetOpenMenuTime()
 {
@@ -98,8 +103,12 @@ double Menu::GetOpenMenuTime()
 /// </summary>
 void Menu::Draw()
 {
-    if (openMenu)
+    if (isOpenMenu)
     {
+        SetDrawBright(backScreenBright, backScreenBright, backScreenBright);
+        DrawGraph(0, 0, backScreen, false);
+        SetDrawBright(MAX1BYTEVALUE, MAX1BYTEVALUE, MAX1BYTEVALUE);
+
         DrawUI(cursorUIData, 0);
         DrawUI(uiDatas[continueGame], cursolPos == 0 ? 0 : 1);
         DrawUI(uiDatas[retry], cursolPos == 1 ? 0 : 1);

@@ -10,8 +10,8 @@
         //描画対象との距離
         targetBetween = 11
 30
-        //カメラのY距離
-        yBetween = 14
+        //カメラのY位置
+setYPosition
 10
         //カメラの移動速度
         cameraSpeed = 17

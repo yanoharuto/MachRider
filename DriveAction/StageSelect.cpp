@@ -1,49 +1,46 @@
 #include "StageSelect.h"
-#include "Utility.h"
-#include "ListUtility.h"
-#include "CSVFileLoader.h"
 #include "UserInput.h"
-std::string StageSelect::fileAddres;
-
+/// <summary>
+/// ステージごとに必要なアセットのアドレスが
+/// 書いてあるファイルの
+/// アドレスが書いてあるファイルを読み込む
+/// </summary>
+/// <returns></returns>
 StageSelect::StageSelect()
+    :StageDataPass()
 {
-    auto fileLoader = new CSVFileLoader(allStageAddresFile);
-    dataLoader = fileLoader->GetLoadStringData();
-    SAFE_DELETE(fileLoader);
-    dataNum = 0;
-    fileAddres = dataLoader[dataNum];
+    stageNum = 0;
+    stageNameData = UIManager::CreateUIData(stageName);
 }
-
-StageSelect::~StageSelect()
-{
-}
-
+/// <summary>
+/// 遊ぶステージ変更するときに使う
+/// </summary>
+/// <param name="next">次のステージTrue前のステージかfalse</param>
 void StageSelect::Update()
 {
     //上下に押したら変更
-    if (UserInput::GetInputState(Up))
+    if (UserInput::GetInputState(Up) == Push)
     {
-        dataNum++;
-        if (dataNum >= dataLoader.size())
+        stageNum++;
+        if (stageNum >= dataLoader.size())
         {
-            dataNum = 0;
+            stageNum = 0;
         }
     }
-    else if (UserInput::GetInputState(Down))
+    else if (UserInput::GetInputState(Down) == Push)
     {
-        dataNum--;
-        if (dataNum < 0)
+        stageNum--;
+        if (stageNum < 0)
         {
-            dataNum = dataLoader.size() - 1;
+            stageNum = dataLoader.size() - 1;
         }
     }
-    fileAddres = dataLoader[dataNum];
+    fileAddres = dataLoader[stageNum];
 }
 /// <summary>
-/// どのステージを選んでいるか
+/// 現在選んでいるステージを表示
 /// </summary>
-/// <returns>選ばれているステージのアドレスを返す</returns>
-std::string StageSelect::GetLoadeStageName()
+void StageSelect::Draw() const
 {
-    return fileAddres;
+    DrawGraph(stageNameData.x, stageNameData.y, stageNameData.dataHandle[stageNum], true);
 }

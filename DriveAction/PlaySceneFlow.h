@@ -19,7 +19,7 @@ class ShadowMap;
 class Timer;
 class UIManager;
 class ActorControllerManager;
-class ChallengeFlow;
+class EnemyGenerator;
 /// <summary>
 /// どういう順番で処理を行うか決める
 /// </summary>
@@ -77,24 +77,16 @@ private:
     /// 初めにする処理
     /// </summary>
     void StartUpdate();
-
+    //各シーンの処理の関数ポインタ
     void (PlaySceneFlow::*UpdateFunc[PlaySceneProccess])();
-    
-    const int menuBright = 60;
     //カメラ
     RaceCamera* camera;
-    //ゲームミッションの進行管理
-    ChallengeFlow* challenge;
-    //スコア
-    ResultScore* score = nullptr;
     //ゴール後の処理
     PostGoalStaging* postGoalStaging;
     //プレイヤー関係のUI
     GamePlayUI* playerUI;
     //当たり判定処理
     ConflictManager* conflictManager;
-    //modelの管理
-    AssetManager* modelManager;
     //今何の処理を行うか決める変数
     PlaySceeneProgress nowProgress;
     //レース前の処理
@@ -107,6 +99,6 @@ private:
     ShadowMap* shadowMap;
     //レース中の描画した物を保存する
     RaceScreen* screen;
-    //プレイヤーの情報を教える係
-    std::shared_ptr <ObjectObserver> playerObserver;
+    //プレイヤーの位置や向いている方向を教えてくれる
+    std::weak_ptr<ObjectObserver> player;
 };

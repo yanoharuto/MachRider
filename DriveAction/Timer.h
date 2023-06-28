@@ -10,7 +10,7 @@ public:
     /// 制限時間とかを計測する
     /// </summary>
     /// <param name="setLimitTime"></param>
-    Timer(float limitTime);
+    Timer(double limitTime);
     ~Timer();
     ///<summary>
     ///時間をリセット
@@ -20,15 +20,25 @@ public:
     /// 設定時間を過ぎたか
     /// </summary>
     /// <returns>過ぎたらTrue</returns>
-    bool IsOverLimitTime();
+    bool IsOverLimitTime()const;
     /// <summary>
     /// 計測時間
     /// </summary>
     /// <returns></returns>
-    float GetLimitTime();
+    double GetElaspedTime()const;
+    /// <summary>
+    /// 最初に設定した制限時間を渡す
+    /// </summary>
+    /// <returns></returns>
+    double GetLimitTime()const;
+    /// <summary>
+    /// 残り時間
+    /// </summary>
+    /// <returns></returns>
+    double GetRemainingTime()const;
 private:
     //制限時間
-    float limitTime = 0;
+    double limitTime = 0;
     //計測開始時間
     double startTime = 0;
 };

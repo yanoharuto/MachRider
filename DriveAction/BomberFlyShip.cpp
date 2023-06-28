@@ -34,7 +34,7 @@ void BomberFlyShip::Update()
     if (bombFallTimer->IsOverLimitTime())
     {
         //”š’e‚ð“Š‰º
-        DamageObjectGenerator::GenerateDamageObject(Item::bomber,sub);
+        DamageObjectGenerator::GenerateDamageObject(DamageObjectGenerator::bomber,sub);
         bombFallTimer->Init();
     }
     if (aliveTimer->IsOverLimitTime())

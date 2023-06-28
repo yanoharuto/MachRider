@@ -2,7 +2,7 @@
 #include "ObjectObserver.h"
 
 
-ShadowMap::ShadowMap(std::shared_ptr <ObjectObserver> player)
+ShadowMap::ShadowMap(std::weak_ptr <ObjectObserver> player)
 {
     //‚©‚°‚ÌŒü‚«
     SetShadowMapLightDirection(shadowMap, VGet(0.1f, -1, 0));

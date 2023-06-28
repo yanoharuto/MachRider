@@ -1,6 +1,6 @@
 #include "RaceScreen.h"
 #include "Utility.h"
-
+int RaceScreen::screen = -1;
 /// <summary>
 /// •`‰æ‚µ‚½‰æ‘œ‚ð•Û‘¶‚·‚é
 /// </summary>
@@ -26,8 +26,9 @@ void RaceScreen::ScreenUpdate()
     GetDrawScreenGraph(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, screen);
 }
 
-void RaceScreen::Draw()
+int RaceScreen::GetScreen()
 {
-   DrawGraph(0, 0, screen, false);
+    return screen;
 }
+
 

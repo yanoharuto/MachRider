@@ -3,19 +3,19 @@ acceleSpeed = 2
 6
 //最低速度
 lowestSpeed = 5
-6
+4.5
 //最高速度
 maxSpeed = 8
 17
 //急加速速度
 turboSpeed = 11
-4
+3.5
 //急加速時間
 turboTime = 14
-2
+2.5
 //曲がる力
 gripPower = 17
-0.06
+0.1
 //止まる力
 breakePower = 20
-0.01
+0.1

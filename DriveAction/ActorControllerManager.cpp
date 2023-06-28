@@ -3,10 +3,16 @@
 #include "DamageObjectGenerator.h"
 #include "Utility.h"
 #include "DxLib.h"
+#include "EnemyGenerator.h"
+//actor管理クラスのリスト
 std::list<ActorController*> ActorControllerManager::actorControllerList;
+/// <summary>
+/// actorの動きを制御している物を全部束ねて動かす
+/// </summary>
 ActorControllerManager::ActorControllerManager()
 {
     actorControllerList.clear();
+    enemyGenerator = new EnemyGenerator();
 }
 
 ActorControllerManager::~ActorControllerManager()
@@ -17,7 +23,9 @@ ActorControllerManager::~ActorControllerManager()
     }
     actorControllerList.clear();
 }
-
+/// <summary>
+/// 更新
+/// </summary>
 void ActorControllerManager::Update()
 {
     //イテレーター
@@ -46,9 +54,12 @@ void ActorControllerManager::Update()
         SAFE_DELETE(*ite);
     }
     //さっきの処理でオブジェクトが増やしたアイテムを取ってくる
-    damageObjGenerator->GetObjectList(this);
+    damageObjGenerator->MoveControllerList(this);
+    enemyGenerator->GetActorControllerVector(this);
 }
-
+/// <summary>
+/// ゲーム開始前更新
+/// </summary>
 void ActorControllerManager::GameReserve()
 {
     for (auto objIte = actorControllerList.begin(); objIte != actorControllerList.end(); objIte++)
@@ -56,7 +67,9 @@ void ActorControllerManager::GameReserve()
         (*objIte)->GameReserve();
     }
 }
-
+/// <summary>
+/// 各アクターの描画
+/// </summary>
 void ActorControllerManager::Draw()const
 {
     for (auto objIte = actorControllerList.begin(); objIte != actorControllerList.end(); objIte++)
@@ -64,7 +77,10 @@ void ActorControllerManager::Draw()const
         (*objIte)->Draw();
     }
 }
-
+/// <summary>
+/// actor管理クラスを追加
+/// </summary>
+/// <param name="actorController"></param>
 void ActorControllerManager::AddActorController(ActorController* actorController)
 {
     if (actorController != nullptr)

@@ -37,10 +37,8 @@ Car::~Car()
 }
 void Car::Update()
 {
-	//速さを所得
-	VECTOR accelVec = GetAccelVec();
 	//速度を更新
-	UpdateVelocity(accelVec);
+	UpdateVelocity();
 	//位置の更新
 	ReflectsVelocity();
 	//回転とかを制御
@@ -86,8 +84,9 @@ void Car::ConflictReaction(const ConflictExamineResultInfo conflictInfo)
 /// </summary>
 /// <param name="deltaTime">経過時間</param>
 /// <param name="accelVec">次の更新までに進む方向と速さ</param>
-void Car::UpdateVelocity(const VECTOR accelVec)
+void Car::UpdateVelocity()
 {
+	const VECTOR accelVec = GetAccelVec();//速度を取ってくる
 	//タイヤの向きから進行方向を取る
 	float theta = wheels->GetMoveDirTheta(VSize(accelVec));
 	theta *= speedParamator.gripPower - (accelPower - speedParamator.lowestSpeed) / speedParamator.maxSpeed * speedParamator.gripPower;
@@ -119,20 +118,21 @@ void Car::ReflectsVelocity()
 		position = VAdd(position, velocity);
 	}
 }
-
-
+/// <summary>
+/// このフレームの間に進む量を出す
+/// </summary>
+/// <returns>進む量</returns>
 VECTOR Car::GetAccelVec()
 {
-	//ブレーキ
+	//ブレーキした
 	if (UserInput::GetInputState(Down) == InputState::Hold)
 	{
 		accelPower -= accelPower * speedParamator.breakPower;
 	}
-	else
+	else//してないなら加速
 	{
-		// 加速処理.
 		accelPower += speedParamator.acceleSpeed;
-		if (accelPower > speedParamator.maxSpeed)
+		if (accelPower > speedParamator.maxSpeed)//上限
 		{
 			accelPower = speedParamator.maxSpeed;
 		}
@@ -143,12 +143,12 @@ VECTOR Car::GetAccelVec()
 		//左右に曲がろうとしたら減速する
 		accelPower -= accelPower * gripDecel;
 	}
-	
 	//最低速度
-	if (accelPower < lowestSpeed)
+	if (accelPower < speedParamator.lowestSpeed)
 	{
-		accelPower = lowestSpeed;
+		accelPower = speedParamator.lowestSpeed;
 	}
+	//加速ベクトルを生成
 	return VScale(direction, accelPower);
 }
 

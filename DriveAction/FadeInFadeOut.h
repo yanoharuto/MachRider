@@ -30,5 +30,7 @@ private:
     static int fadeValue;
     //フェードアウトする速度
     static const int fadeSpeed;
+    //後ろで描画する画像
+    static int backScreen;
 };
 

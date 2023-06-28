@@ -36,5 +36,8 @@ private:
     bool proccesEnd = false;
     //åªç›ÇÃÉRÉ}
     int iconIncrement = 0;
+
     int fadeValue = 0;
+
+    const float startTimerLimit = 5;
 };

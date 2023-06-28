@@ -1,7 +1,11 @@
 #pragma once
-#include "DxLib.h"
 #include <unordered_map>
 #include <string>
+#include <iostream>
+#include <memory>
+#include "DxLib.h"
+#include "Camera.h"
+class ObjectObserver;
 class Actor;
 namespace InitCamera
 {
@@ -16,11 +20,11 @@ namespace InitCamera
         //描画対象との距離
         setTargetBetween = 11,
         //カメラのY距離
-        setYBetween = 14,
+        setYPosition = 14,
         //カメラの移動速度
         setCameraSpeed = 17,
     };
-    enum CameraType
+    enum UseCameraSceneKind
     {
         //タイトルシーンのカメラ
         title = 2,
@@ -33,12 +37,24 @@ namespace InitCamera
 class Camera
 {
 public:
-    Camera(InitCamera::CameraType type);
+    /// <summary>
+    /// どのタイミングで使うか教えて
+    /// </summary>
+    /// <param name="type"></param>
+    Camera(InitCamera::UseCameraSceneKind type);
     virtual ~Camera();
+    /// <summary>
+    /// カメラの範囲内か調べる
+    /// </summary>
+    /// <param name="actor"></param>
+    /// <returns></returns>
     bool IsLookingCamera(const Actor* const actor) const;
- 
 protected:
-    void LoadData(InitCamera::CameraType type);
+    /// <summary>
+    /// カメラのパラメータ等を読み取る
+    /// </summary>
+    /// <param name="type"></param>
+    void LoadData(InitCamera::UseCameraSceneKind type);
     //初期化に必要なパラメーターへのパス
     std::string initFileName= "data/Camera/CameraInitPass.csv";
     //カメラの位置
@@ -57,4 +73,6 @@ protected:
     float cameraSpeed;
     //カメラが見ている範囲角
     static float lookingDeg;
+    //プレイヤーの位置を教えてくれるやつ
+    std::weak_ptr<ObjectObserver> targetObserver;
 };

@@ -7,11 +7,4 @@ ResultScene::ResultScene()
     :SceneBase(SceneType::RESULT)
 {
     sceneFlow = new ResultSceneFlow();
-
-}
-
-ResultScene::~ResultScene()
-{
-    SAFE_DELETE(sceneFlow);
-    DeleteUniquePtr();
 }

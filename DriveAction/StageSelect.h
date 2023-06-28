@@ -1,11 +1,10 @@
 #pragma once
-#include <vector>
-#include <string>
-
+#include "UIManager.h"
+#include "StageDataPass.h"
 /// <summary>
 /// タイトル画面でステージ選ぶ時に使う
 /// </summary>
-class StageSelect
+class StageSelect :public StageDataPass
 {
 public:
     /// <summary>
@@ -15,24 +14,19 @@ public:
     /// </summary>
     /// <returns></returns>
     StageSelect();
-    ~StageSelect();
     /// <summary>
     /// 遊ぶステージ変更するときに使う
     /// </summary>
     /// <param name="next">次のステージTrue前のステージかfalse</param>
     void Update();
     /// <summary>
-    /// どのステージを選んでいるか
+    /// 現在選んでいるステージを表示
     /// </summary>
-    /// <returns></returns>
-    static std::string GetLoadeStageName();
+    void Draw()const;
 private:
-    int dataNum;
-    //ステージの一覧的な奴
-    std::string allStageAddresFile = "data/stageData/stageDataList.csv";
-
-    std::vector<std::string> dataLoader;
-    //各ステージのデータのパス
-    static std::string fileAddres;
+    //ステージ番号
+    int stageNum;
+    //選んでいるステージの名前を表示
+    UIData stageNameData;
 };
 

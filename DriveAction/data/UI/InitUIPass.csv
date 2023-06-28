@@ -6,7 +6,7 @@ data/UI/gamePurose/UIData.csv
 data/UI/countDown/UIData.csv
     //コレクトアイテムの残り数などのUI
     collectItemUI = 8
-data/UI/collectItemUI/UIData.csv
+data/UI/collectItemUI/collectUIFrame.csv
     //収集物のスコアの文字
     collectScore = 11
 data/UI/collectScore/UIData.csv
@@ -75,16 +75,25 @@ stageNames
 data/UI/stageName/initUIData.csv
 ゲームを開始するときにボタンを入力してもらう
 pressSpaceKey
-data/UI/pressSpaceKey/initUIData.csv
+data/UI/pressSpaceKey/UIData.csv
         //収集アイテムの矢印
-        collectIcon = 77
+        collectIcon 
 data/UI/collectIcon/MarkerAllow.csv
         //収集アイテムの目印
         collectSign = 80
 data/UI/collectIcon/marker.csv
-        //カウントダウン終了時
-        startCountDownEnd = 83
+        //ゲーム開始時のカウントダウン終了
+        onGameStartCountDownEnd = 83
 data/UI/countDown/startData.csv
         //誉め言葉
         PraiseWord = 89
 data/UI/PraiseWord/initUIData.csv
+//ゲーム終了時のカウントダウン
+        onGameEndCountDownEnd = 92
+data/UI/countDown/endData.csv
+        //残りの収集アイテムの数
+        remainingCollectItemNum = 95
+data/UI/collectItemUI/remainingNum.csv
+        //残りの収集アイテムについてのフレーズ
+        remainingCollectItemPhrase = 98
+data/UI/collectItemUI/remainingUI.csv

@@ -36,6 +36,11 @@ ActorParameter InitActor::GetActorParamator(InitObjKind obj)
     initParam.addData = dataPass.addData;
     return initParam;
 }
+/// <summary>
+/// 各アクターの位置を記すタイル番号を出す
+/// </summary>
+/// <param name="obj"></param>
+/// <returns></returns>
 int InitActor::GetActorTileNum(InitObjKind obj)
 {
     auto initData = GetActorParametorString(obj);

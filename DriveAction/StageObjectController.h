@@ -22,7 +22,6 @@ public:
     /// </summary>
     void Draw()const override;
 private:
-
     //コースの外側のmodelのポジション
     const float rockYPos = 20;
     //地面

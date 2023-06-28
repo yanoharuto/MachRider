@@ -13,9 +13,12 @@ Actor::Actor()
 
 Actor::Actor(ObjectInit::InitObjKind kind)
 {
+    objState = sleep;
     InitParamater(kind);
 };
-
+/// <summary>
+/// 描画
+/// </summary>
 void Actor::Draw() const
 {
     //描画するモデルがないなら終了
@@ -32,14 +35,20 @@ void Actor::Draw() const
     //行列を元に戻す
     MV1SetRotationMatrix(modelHandle, tmpMat);
 }
-
+/// <summary>
+/// 速度所得
+// </summary>
+/// <returns></returns>
 VECTOR Actor::GetVelocity()
 {
 
     return velocity;
 
 }
-
+/// <summary>
+/// 当たり判定で当たってたら渡す情報
+/// </summary>
+/// <returns></returns>
 HitCheckExamineObjectInfo Actor::GetHitCheckExamineInfo()
 {
     HitCheckExamineObjectInfo objInfo;
@@ -47,14 +56,19 @@ HitCheckExamineObjectInfo Actor::GetHitCheckExamineInfo()
     objInfo.velocity = velocity;
     return objInfo;
 }
-
+/// <summary>
+/// 他のオブジェクトに当たってるか調べる用の情報
+/// </summary>
+/// <returns></returns>
 ArgumentConflictResultInfo Actor::GetConflictArgumentInfo()
 {
     ArgumentConflictResultInfo resultInfo;
     resultInfo.SetObjInfo(this);
     return resultInfo;
 }
-
+/// <summary>
+/// 描画モデルの行列をセット
+/// </summary>
 void Actor::ModelSetMatrix() const
 {
     // 向きに合わせて回転.
@@ -66,7 +80,9 @@ void Actor::ModelSetMatrix() const
     tmpMat = MMult(tmpMat, rotYMat);
     MV1SetRotationMatrix(modelHandle, tmpMat);
 }
-
+/// <summary>
+/// コンストラクタで呼ばれる処理
+/// </summary>
 void Actor::InitParamater(ObjectInit::InitObjKind kind)
 {
     ActorParameter initParam = InitActor::GetActorParamator(kind);
@@ -84,7 +100,9 @@ void Actor::InitParamater(ObjectInit::InitObjKind kind)
     //modelの大きさ
     modelSize = initParam.setModelSize;
 }
-
+/// <summary>
+/// 位置や向きをVelocityに合わせて更新する
+/// </summary>
 void Actor::ReflectsVelocity()
 {
     // 力をかけ終わったベロシティの方向にディレクションを調整.

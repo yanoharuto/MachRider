@@ -4,4 +4,4 @@ length,6000
     challengesListFilePass,data/stageData/stage2/challengeList.csv
     playerPositionFilePass,data/stageData/stage2/stage2_player.csv
 time,100
-stageScoreFilePass,data/stageData/stage2/stageScore.csv
+scoreRanking,data/stageData/stage2/stageScore.csv

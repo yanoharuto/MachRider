@@ -3,21 +3,36 @@
 #include "PlayerCar.h"
 #include "SphereCollider.h"
 #include "ObjectObserver.h"
+#include "SoundPlayer.h"
+#include "SoundListener.h"
+#include "Utility.h"
 Player::Player(VECTOR firstPos,VECTOR direction)
 {
-    actorList.push_back( new PlayerCar(firstPos,direction));
+    actorList.push_back(new PlayerCar(firstPos,direction));
 
     collider = new SphereCollider(*actorList.begin());
     collider->SetCoolTimer(Object::ObjectTag::damageObject, setDamageCoolTime);
-    subject = new ObjectSubject(*actorList.begin(), collider);
+    subject = std::make_shared<ObjectObserver>(new ObjectSubject(*actorList.begin(), collider));
+    listener = new SoundListener(CreatePlayerObserver());
 }
 
-std::shared_ptr<ObjectObserver> Player::CreatePlayerObserver() const
+Player::~Player()
 {
-    return std::make_shared<ObjectObserver>(subject);
+    subject.reset();
+    SAFE_DELETE(collider);
+    SAFE_DELETE(listener);
 }
 
-void Player::GameReserve()
+std::weak_ptr<ObjectObserver> Player::CreatePlayerObserver() const
 {
-    (*actorList.begin())->GameReserve();
+    return subject;
+}
+
+void Player::Update()
+{
+    for (auto ite = actorList.begin(); ite != actorList.end(); ite++)
+    {
+        (*ite)->Update();
+    }
+    listener->Update();
 }

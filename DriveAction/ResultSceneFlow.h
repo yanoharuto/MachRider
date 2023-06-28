@@ -1,5 +1,5 @@
 #pragma once
-#include "SwitchUI.h"
+#include "SpaceKeyUI.h"
 #include "SceneFlowBase.h"
 #include <string>
 class UIManager;
@@ -25,8 +25,7 @@ public:
     /// </summary>
     void Draw() const override;
 private:
-    UIManager* uiManager;
     //スペースキーの催促
-    SwitchUI* switchUI;
+    SpaceKeyUI* switchUI;
 };
 

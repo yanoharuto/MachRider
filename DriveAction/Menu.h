@@ -27,7 +27,15 @@ public:
     /// </summary>
     /// <returns></returns>
     MenuState GetMenuState();
+    /// <summary>
+    /// メニュー画面を開いているかどうか
+    /// </summary>
+    /// <returns></returns>
     static bool IsMenuOpen();
+    /// <summary>
+    /// メニュー画面を開いている時間を所得
+    /// </summary>
+    /// <returns></returns>
     static double GetOpenMenuTime();
     /// <summary>
     /// UIを描画
@@ -40,16 +48,21 @@ private:
     /// <param name="data"></param>
     /// <param name="handleNum"></param>
     void DrawUI(UIData data,int handleNum);
+    //メニュー画面を開いている時間の計測
     StopWatch* stopWatch;
+    //メニューの背景
+    int backScreen;
+    //背景の明るさ
+    int backScreenBright = 80;
     //メニューの状態
     static MenuState menuState;
     //メニュー画面を開いているか
-    static bool openMenu;
-
+    static bool isOpenMenu;
+    //メニュー画面を開いている間に立っている時間
     static double openMenuTime;
     //Menuの外枠
     UIData cursorUIData;
-
+    //メニューの項目
     UIData uiDatas[3];
     //選択
     int cursolPos = 0;
