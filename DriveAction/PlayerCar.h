@@ -1,5 +1,6 @@
 #pragma once
 #include "Car.h"
+#include "EffectManager.h"
 #include "UserInput.h"
 class SphereCollider;
 
@@ -66,16 +67,27 @@ private:
 	/// </summary>
 	/// <returns></returns>
 	float GetTurboPower();
+	/// <summary>
+	/// エフェクトの位置と方向をセット
+	/// </summary>
+	/// <param name="playEffect"></param>
+	/// <param name="pos"></param>
+	/// <param name="dir"></param>
+	/// <param name="effectKind"></param>
+	void UpdateEffe(int* playEffect,VECTOR pos,VECTOR dir,EffectKind effectKind);
 	//高さ
 	const float setFirstPosY = 6.0f;
 	//走っているときに出るエフェクト
-	int runEffect = -1;
+	int turboEffect = -1;
+	//ぶつかった時のエフェクト
+	int clashEffect = -1;
 	//急加速中
 	bool isTurbo = false;
 	//急加速準備中
 	bool isTurboReserve = false;
 	//加速チャージタイム
 	float turboChargeTime;
+	//ターボ準備で押した左右キーを保存する
 	KeyInputKind turboKey;
 	//ぶつかった時に出てくるエフェクト
 	int stageConflictEffect = -1;

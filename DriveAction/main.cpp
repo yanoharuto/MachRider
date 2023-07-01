@@ -85,8 +85,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			scene = MakeScene(nowSceneType);
 			FadeInFadeOut::FadeIn();
 		}
-		//直前のシーンを記録
-		prevSceneType = nowSceneType;
 	}
 
 	SAFE_UNIQUE_DELETE(uiManager);
@@ -118,15 +116,19 @@ SceneBase* MakeScene(SceneType _NowSceneType)
 		break;
 	case SceneType::TITLE:
 		retScene = new TitleScene;
+		prevSceneType = SceneType::TITLE;
 		break;
 	case SceneType::PLAY:
 		retScene = new PlayScene;
+		prevSceneType = SceneType::PLAY;
 		break;
 	case SceneType::RESULT:
 		retScene = new ResultScene;
+		prevSceneType = SceneType::RESULT;
 		break;
 	default:
 		break;
 	}
+	
 	return retScene;
 }

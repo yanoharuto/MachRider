@@ -22,29 +22,26 @@ WallCollider::~WallCollider()
 /// <returns></returns>
 ConflictExamineResultInfo WallCollider::HitCheck(HitCheckExamineObjectInfo hitCheckInfo)
 {
-    ConflictExamineResultInfo resultInfo;
+    ConflictExamineResultInfo resultInfo;//返り値
     resultInfo.SetObjInfo(object);
     resultInfo.hit = HitSituation::NotHit;
-    VECTOR tempVec;
-    if (hitCheckInfo.pos.x < firstPos.x || hitCheckInfo.pos.x > endPos.x)
+    //速さを足した場合のポジション
+    VECTOR nextPos = VAdd(hitCheckInfo.pos, hitCheckInfo.velocity);
+
+    //範囲外に出ようとしているなら当たっている
+    if (nextPos.x < firstPos.x || nextPos.x > endPos.x)
     {
         resultInfo.hit = HitSituation::Enter;
-        tempVec = VGet(0, 0, 1);
     }
-    else if(hitCheckInfo.pos.z < firstPos.z || hitCheckInfo.pos.z > endPos.z)
+    else if(nextPos.z < firstPos.z || nextPos.z > endPos.z)
     {
         resultInfo.hit = HitSituation::Enter;
-        tempVec = VGet(1, 0, 0);
     }
-    if (resultInfo.hit==HitSituation::Enter)
+    //ぶつかってたらはじく
+    if (resultInfo.hit == HitSituation::Enter)
     {
-        //法線からはじかれる大きさを出す
-        float a = -VDot(VNorm(hitCheckInfo.velocity), tempVec);
-        //はじかれるベクトル
-        tempVec = VSub(hitCheckInfo.velocity, VScale(tempVec, 2 * a));
-        //はじかれ先のポジション
-        resultInfo.pos = VAdd(hitCheckInfo.pos, tempVec);
-        resultInfo.bounceVec = VScale(VNorm(hitCheckInfo.pos), - object->GetBouncePower());
+        resultInfo.bounceVec = VNorm(VScale(nextPos, -1));
+        resultInfo.pos = VAdd(hitCheckInfo.pos, resultInfo.bounceVec);
     }
 
     return resultInfo;

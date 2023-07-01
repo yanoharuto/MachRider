@@ -108,12 +108,15 @@ protected:
 	float accelPower = 0;
 	//最初のY座標
 	float firstPosY = 0;
+
 	// なにもしない時の減速.
 	static const float defaultDecel;
 	// グリップの減速.
 	static const float gripDecel;
 	// 障害物にぶつかったときの減速率.
 	static const float colideDecel;
+	//衝突して吹っ飛ぶ時間を計る
+	Timer* collVecDecelTimer = nullptr;
 	//タイヤ
 	Wheels* wheels;
 	//ぶつかった物体との方向

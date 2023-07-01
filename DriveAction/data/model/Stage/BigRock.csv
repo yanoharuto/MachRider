@@ -9,10 +9,10 @@ data/model/Stage/tree.mv1
 -40
     //modelの当たり半径
     collRadius = 11
-180
+80
     //跳ね返りの大きさ
     bouncePower = 14
-15
+0.3
 //マップの初期位置で使われている番号
         mapTiledNum = 17
 2

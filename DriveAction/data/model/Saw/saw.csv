@@ -12,7 +12,7 @@ data/model/Saw/Saw.mv1
 130
     //跳ね返りの大きさ
     bouncePower = 14
-4
+1.2
 //マップの初期位置で使われている番号
         mapTiledNum = 17
 2

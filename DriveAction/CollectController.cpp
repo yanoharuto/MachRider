@@ -107,7 +107,7 @@ bool CollectController::IsActiveCollect()
 /// プレイヤーが集めなければいけないアイテムの数
 /// </summary>
 /// <returns></returns>
-int CollectController::TotalCollectNum()
+int CollectController::GetTotalCollectNum()
 {
     return totalCollectNum;
 }
@@ -120,7 +120,7 @@ int CollectController::GetRemainingCollectNum()
     return remainingCollectNum;
 }
 /// <summary>
-/// プレイヤーが集めなければいけないアイテムの残っている数
+/// 全てのアイテムを回収し終えたかどうか
 /// </summary>
 /// <returns></returns>
 bool CollectController::IsEndingChallenge()

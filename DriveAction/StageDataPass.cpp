@@ -3,13 +3,12 @@
 #include "ListUtility.h"
 #include "CSVFileLoader.h"
 
-std::string StageDataPass::fileAddres;
+std::string StageDataPass::fileAddres = "-1";
 StageDataPass::StageDataPass()
 {
     auto fileLoader = new CSVFileLoader(allStageAddresFile);//全ステージのデータリストを読み取る
     dataLoader = fileLoader->GetLoadStringData();
     SAFE_DELETE(fileLoader);
-    fileAddres = dataLoader[0];//とりあえず先頭を渡す
 }
 StageDataPass::~StageDataPass()
 {
@@ -20,6 +19,10 @@ StageDataPass::~StageDataPass()
 /// <returns></returns>
 std::string StageDataPass::GetLoadeStageName()const
 {
+    if (fileAddres == "-1")
+    {
+        fileAddres = dataLoader[0];//とりあえず先頭を渡す
+    }
     return fileAddres;
 }
 /// <summary>

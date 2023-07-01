@@ -16,6 +16,7 @@ struct ScoreUI
     bool draw;//描画するかどうか
     NumUI* numUI;//スコア量を描画する
 };
+using enum ResultScore::ScoreKind;
 /// <summary>
 /// ゴール後の演出をする
 /// </summary>
@@ -45,7 +46,6 @@ public:
     /// <returns></returns>
     bool IsEndProcess()const;
 private:
-    
     /// <summary>
     /// 今やるべき処理を所得
     /// </summary>
@@ -64,8 +64,8 @@ private:
     const int backScreenBright = 60;
     //アナウンスの移動量
     const float goalMoveX = 10.0f;
-    //スペースキーを押す合間
-    const float spaceKeyCoolTime = 0.2f;
+    //表示するスコアが変動していく時間
+    const float scoreChangeTime = 0.2f;
     //ゲーム終了時の画面
     int gameEndScreen = -1;
     //スペースキー催促

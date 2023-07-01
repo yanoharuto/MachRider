@@ -59,6 +59,7 @@ void StageObjectController::Draw() const
     {
         (*ite)->Draw();
     }
+    
     MV1DrawModel(floorModelHandle);
     //ƒ‰ƒCƒg‚Ì‰e‹¿‚È‚µ‚Å‹ó‚ð•`‰æ
     SetUseLighting(false);

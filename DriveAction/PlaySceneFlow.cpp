@@ -140,7 +140,9 @@ void PlaySceneFlow::DrawManagers()const
 	if (nowProgress != PlaySceeneProgress::playerGoal)
 	{
 		controllerManager->Draw();
+		conflictManager->DrawCollisionSphere();
 	}
+	
 }
 /// <summary>
 /// シャドウマップを使った描画

@@ -1,8 +1,8 @@
 #pragma once
 
 #include <string>
-
 #include "UIManager.h"
+class NumUI;
 class Timer;
 class CountDown;
 /// <summary>
@@ -13,11 +13,18 @@ class RacePrevProcess
 public:
     RacePrevProcess();
     ~RacePrevProcess();
-    //更新
+    /// <summary>
+    /// カウントダウンの更新
+    /// </summary>
     void Update();
-    //描画
+    /// <summary>
+    /// 遊び方とカウントダウンの描画
+    /// </summary>
     void Draw() const;
-    //終了したら
+    /// <summary>
+    /// 処理が終了したか
+    /// </summary>
+    /// <returns></returns>
     bool IsProccesEnd();
 private:
     //収集物のアイコン
@@ -26,6 +33,8 @@ private:
     UIData manualData;
     //ゲームの目標
     UIData gamePuroseData;
+    //収集アイテムの集める数
+    NumUI* collectItemNum;
     //コマ送り用タイマー
     Timer* frameByFrameTimer;
     //カウントダウン用のタイマー

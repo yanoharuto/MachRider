@@ -62,8 +62,8 @@ namespace UIInit
         pressSpaceKey = 77,
         //収集アイテムのアイコン
         markerAllow = 80,
-        //収集アイテムの目印
-        collectSign = 83,
+        //ゲーム中に集めたアイテムの×
+        resultCollectHang = 83,
         //カウントダウン終了時
         onGameStartCountDownEnd = 86,
         //誉め言葉
@@ -71,9 +71,16 @@ namespace UIInit
         //ゲーム終了時のカウントダウン
         onGameEndCountDownEnd = 92,
         //残りの収集アイテムの数
-        remainingCollectItemNum = 95, 
+        remainingCollectItemNum = 95,
         //残りの収集アイテムについてのフレーズ
-        remainingCollectItemPhrase = 98
+        remainingCollectItemPhrase = 98,
+        //収集アイテムのアイコン
+        collectIcon = 101,
+        //収集アイテムの集める数
+        collectTargetNumberUI = 104,
+        //ステージの収集アイテムの個数の×
+        puroseCollectHang = 107,
+
     };
     /// <summary>
     /// UIの初期化情報　数字は読み込み段数

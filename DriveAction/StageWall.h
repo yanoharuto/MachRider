@@ -14,6 +14,10 @@ public:
     StageWall();
     //当たり判定を消す
     ~StageWall();
+    /// <summary>
+    /// 壁の描画
+    /// </summary>
+    void Draw()const override;
 private:
     //付き飛ばす力
     const float setBouncePower = 50;
@@ -22,8 +26,8 @@ private:
     //行動範囲
     WallCollider* wallCollider;
     //マップの端１
-    VECTOR stageBiggestSize = { -3200,0,-3200 };
+    VECTOR stageBiggestSize = { -3150,0,-2850 };
     //マップの端2
-    VECTOR stageSmallestSize = { 2600,0,2600 };
+    VECTOR stageSmallestSize = { 2850,0,3150 };
 };
 

@@ -44,7 +44,7 @@ public:
     /// プレイヤーが集めなければいけないアイテムの数
     /// </summary>
     /// <returns></returns>
-    static int TotalCollectNum();
+    static int GetTotalCollectNum();
     /// <summary>
     /// 残っているアイテムの数
     /// </summary>

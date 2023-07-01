@@ -3,16 +3,16 @@
 data/model/Stage/well.mv1
     //大きさ
     modelSize = 5
-0.8
+0.5
     //最初のポジション
     firstPosY = 8
--70
+-15
     //modelの当たり半径
     collRadius = 11
-110
+50
     //跳ね返りの大きさ
     bouncePower = 14
-15
+0.3
 //マップの初期位置で使われている番号
         mapTiledNum = 17
 0

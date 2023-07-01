@@ -1,0 +1,18 @@
+﻿ drawX
+600
+ drawY
+700
+ width
+360
+ height
+320
+ xNum
+1
+ yNum
+4
+graphPass
+data/UI/image/StageNames.png
+scale
+9
+frameSpeed
+0

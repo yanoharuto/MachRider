@@ -23,7 +23,7 @@ Coin::Coin(VECTOR firstPos)
 {
     firstPos.y = 0;
     position = VAdd(position,firstPos);
-    collider = new SphereCollider(this);
+    collider = nullptr;
     firstY = position.y;
     SoundPlayer::LoadSound(coinGet);
     EffectManager::LoadEffect(getCollect);
@@ -33,15 +33,22 @@ Coin::Coin(VECTOR firstPos)
 
 Coin::~Coin()
 {
-    ConflictManager::EraceConflictObjInfo(collider);
-    SAFE_DELETE(collider);
+    if (collider != nullptr)
+    {
+        ConflictManager::EraceConflictObjInfo(collider);
+        SAFE_DELETE(collider);
+    }
 }
 /// <summary>
 /// ‚­‚é‚­‚é‰ñ“]
 /// </summary>
 void Coin::Update()
 {
-    objState = active;
+    if (objState == sleep)//‰‚ß‚Ä“®‚­‚Æ‚«“–‚½‚è”»’è‚ğ•t‚¯‚é
+    {
+        collider = new SphereCollider(this);
+        objState = active;
+    }
     //Œü‚«‚ğ•ÏX
     direction = VNorm(OriginalMath::GetYRotateVector(direction, rotateY));
     totalMoveYValue += moveYValue;

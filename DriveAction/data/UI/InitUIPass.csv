@@ -1,99 +1,108 @@
-﻿    //ゲームの目標
-    gamePurose = 2
-data/UI/gamePurose/UIData.csv
-    //カウントダウン
-    countDown = 5
-data/UI/countDown/UIData.csv
-    //コレクトアイテムの残り数などのUI
-    collectItemUI = 8
-data/UI/collectItemUI/collectUIFrame.csv
-    //収集物のスコアの文字
-    collectScore = 11
-data/UI/collectScore/UIData.csv
-    //収集物のスコア
-    collectScoreNum = 14
-data/UI/collectScore/collectScoreNum.csv
-    //ダメージを受けると減少するスコアの文字
-    damageScore = 17
-data/UI/damageScore/UIData.csv
-    //ダメージを受けると減少するスコア
-    damageScoreNum = 20
-data/UI/damageScore/damageScoreNum.csv
+﻿//ゲームの目標
+gamePurose=2
+data/UI/csv/GamePurpose.csv
+//カウントダウン
+countDown=5
+data/UI/csv/countDown.csv
+//コレクトアイテムの残り数などのUI
+collectItemUI=8
+data/UI/csv/collectUIFrame.csv
+//収集物のスコアの文字
+collectScore=11
+data/UI/csv/CollectScoreBonus.csv
+//収集物のスコア
+collectScoreNum=14
+data/UI/csv/collectScoreNum.csv
+//ダメージを受けると減少するスコアの文字
+damageScore=17
+data/UI/csv/NoDamageBonus.csv
+//ダメージを受けると減少するスコア
+damageScoreNum=20
+data/UI/csv/noDamageScoreNum.csv
 最初から配置してあるコレクトアイテムの数
-allCollectItemNum = 23
-data/UI/collectItemUI/allCollectItemNum.csv
-    //操作説明
-    manual = 26
-data/UI/manual/UIData.csv
-    //小数点
-    point = 29
-data/UI/point/UIData.csv
-    //レーダー
-    radar = 32
-data/UI/radar/UIData.csv
-    //タイトルロゴ
-    tilteLogo = 35
-data/UI/titleLogo/UIData.csv
-    //タイマーの枠
-    timerFrame = 38
-data/UI/timerFrame/UIData.csv
-    //残り時間スコアの文字
-    timeScore = 41
-data/UI/timeScore/UIData.csv
-    //残り時間のスコア
-    timeScoreNum = 44
-data/UI/timeScore/timeScoreNum.csv
-    //合計スコアの文字
-    totalScore = 47
-data/UI/totalScore/UIData.csv
-    //合計スコア
-    totalScoreNum = 50
-data/UI/totalScore/totalScoreNum.csv
+allCollectItemNum=23
+data/UI/csv/allCollectItemNum.csv
+//操作説明
+manual=26
+data/UI/csv/Manual.csv
+//小数点
+point=29
+data/UI/csv/Point.csv
+//レーダー
+radar=32
+data/UI/csv/rader.csv
+//タイトルロゴ
+tilteLogo=35
+data/UI/csv/titleLogo.csv
+//タイマーの枠
+timerFrame=38
+data/UI/csv/timerrFrame.csv
+//残り時間スコアの文字
+timeScore=41
+data/UI/csv/timeScore.csv
+//残り時間のスコア
+timeScoreNum=44
+data/UI/csv/timeScoreNum.csv
+//合計スコアの文字
+totalScore=47
+data/UI/csv/score.csv
+//合計スコア
+totalScoreNum=50
+data/UI/csv/scoreNum.csv
 //現在入手しているコレクトアイテム数
 getCollectItemNum=53
-data/UI/collectItemUI/getCollectItemNum.csv
-    //残り時間
-    timeNum = 56
-data/UI/timerFrame/timeNum.csv
-        //メニュー画面の枠
-        menuFrame=59
-data/UI/MENU/menuFrame.csv
-        //プレイ続行
-        play=62
-data/UI/MENU/play.csv
-        //リトライ
-        retry=65
-data/UI/MENU/retryUIData.csv
+data/UI/csv/getCollectItemNum.csv
+//残り時間
+timeNum=56
+data/UI/csv/timeNum.csv
+//メニュー画面の枠
+menuFrame=59
+data/UI/csv/menuFrame.csv
+//プレイ続行
+play=62
+data/UI/csv/play.csv
+//リトライ
+retry=65
+data/UI/csv/retry.csv
 //メニュー画面のカーソル
-        menuCursor = 68
-data/UI/MENU/menuSelectFrame.csv
+menuCursor=68
+data/UI/csv/menuCursor.csv
 //ゲーム終了UI
-        exitUI = 72
-data/UI/MENU/exit.csv
+exitUI=72
+data/UI/csv/exit.csv
 タイトル画面でステージ選択するときに使う
 stageNames
-data/UI/stageName/initUIData.csv
+data/UI/csv/stageName.csv
 ゲームを開始するときにボタンを入力してもらう
 pressSpaceKey
-data/UI/pressSpaceKey/UIData.csv
-        //収集アイテムの矢印
-        collectIcon 
-data/UI/collectIcon/MarkerAllow.csv
-        //収集アイテムの目印
-        collectSign = 80
-data/UI/collectIcon/marker.csv
-        //ゲーム開始時のカウントダウン終了
-        onGameStartCountDownEnd = 83
-data/UI/countDown/startData.csv
-        //誉め言葉
-        PraiseWord = 89
-data/UI/PraiseWord/initUIData.csv
+data/UI/csv/PressSpaceKey.csv
+//収集アイテムの矢印
+collectIcon
+data/UI/csv/collectIcon.csv
+//ゲーム中に集めたアイテムの×
+resultCollectHang=83
+data/UI/collectIcon/resultCollectHang.csv
+//ゲーム開始時のカウントダウン終了
+onGameStartCountDownEnd=86
+data/UI/csv/startCountDown.csv
+//誉め言葉
+PraiseWord=89
+data/UI/csv/PraiseWord.csv
 //ゲーム終了時のカウントダウン
-        onGameEndCountDownEnd = 92
-data/UI/countDown/endData.csv
-        //残りの収集アイテムの数
-        remainingCollectItemNum = 95
-data/UI/collectItemUI/remainingNum.csv
-        //残りの収集アイテムについてのフレーズ
-        remainingCollectItemPhrase = 98
-data/UI/collectItemUI/remainingUI.csv
+onGameEndCountDownEnd=92
+data/UI/csv/countDownEnd.csv
+//残りの収集アイテムの数
+remainingCollectItemNum=95
+data/UI/csv/remainingNum.csv
+//残りの収集アイテムについてのフレーズ
+remainingCollectItemPhrase=98
+data/UI/csv/remainingPhrase.csv
+//収集アイテムのアイコン
+collectIcon=102
+data/UI/csv/collectIcon.csv
+//収集アイテムの目標数
+collectTargetNumberUI=105
+data/UI/csv/collectTargetNumberUI.csv
+//ステージの収集アイテムの個数の×
+puroseCollectHang=108
+data/UI/csv/puroseCollectHang.csv

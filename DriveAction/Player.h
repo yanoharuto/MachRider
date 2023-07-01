@@ -4,7 +4,6 @@
 #include "DxLib.h"
 #include "ActorController.h"
 class SphereCollider;
-class ObjectSubject;
 class ObjectObserver;
 class SoundListener;
 /// <summary>
@@ -32,14 +31,14 @@ public:
     /// </summary>
     void Update()override;
 private:
+    //プレイヤーの車の当たり判定
     SphereCollider* collider;
-    std::shared_ptr<ObjectObserver> subject;
+    //プレイヤーの位置などを教える
+    std::shared_ptr<ObjectObserver> observer;
 
     //音を聞く場所の更新
     SoundListener* listener = nullptr;
-
-    std::shared_ptr <ObjectObserver> observer;
-
+    //ダメージを受けるクールタイム
     const float setDamageCoolTime = 1.5f;
 };
 

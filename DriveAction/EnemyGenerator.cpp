@@ -19,7 +19,7 @@ EnemyGenerator::EnemyGenerator()
 }
 void EnemyGenerator::GetActorControllerVector(ActorControllerManager* controllerManager)
 {
-    int collectGetNum = CollectController::TotalCollectNum() - CollectController::GetRemainingCollectNum();
+    int collectGetNum = CollectController::GetTotalCollectNum() - CollectController::GetRemainingCollectNum();
     
     if (collectNum != collectGetNum && totalCollectNum > collectGetNum)
     {

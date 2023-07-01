@@ -12,7 +12,7 @@ data/model/Stage/MiddleRock.mv1
 120
     //跳ね返りの大きさ
     bouncePower = 14
-15
+0.3
 //マップの初期位置で使われている番号
         mapTiledNum = 17
 1

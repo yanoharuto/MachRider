@@ -12,22 +12,27 @@ Player::Player(VECTOR firstPos,VECTOR direction)
 
     collider = new SphereCollider(*actorList.begin());
     collider->SetCoolTimer(Object::ObjectTag::damageObject, setDamageCoolTime);
-    subject = std::make_shared<ObjectObserver>(new ObjectSubject(*actorList.begin(), collider));
+    observer = std::make_shared<ObjectObserver>(new ObjectSubject(*actorList.begin(), collider));
     listener = new SoundListener(CreatePlayerObserver());
 }
 
 Player::~Player()
 {
-    subject.reset();
+    observer.reset();
     SAFE_DELETE(collider);
     SAFE_DELETE(listener);
 }
-
+/// <summary>
+/// Ô‚ÌˆÊ’u‚Æ‚©‚ğ“n‚·
+/// </summary>
+/// <returns></returns>
 std::weak_ptr<ObjectObserver> Player::CreatePlayerObserver() const
 {
-    return subject;
+    return observer;
 }
-
+/// <summary>
+/// ‰¹‚ğ•·‚­‚½‚ß‚ÉêŠ‚ğXV
+/// </summary>
 void Player::Update()
 {
     for (auto ite = actorList.begin(); ite != actorList.end(); ite++)

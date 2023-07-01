@@ -1,6 +1,6 @@
 ﻿    //modelの相対パス
     assetPass = 2
-/data/model/Stage/StageWall.mv1
+data/model/Stage/wall.mv1
     //大きさ
     modelSize = 5
 1
@@ -12,10 +12,10 @@
 0
     //跳ね返りの大きさ
     bouncePower = 14
-25
+0.2
 //マップの初期位置で使われている番号
         mapTiledNum = 17
-2
+0
  //初期位置の情報が書いてあるファイル名
         firstPosName = 20
 /

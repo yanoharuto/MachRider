@@ -19,6 +19,7 @@ struct ConflictExamineResultInfo
     VECTOR bounceVec = {};
     VECTOR pos = {};
     float radius = 0;//半径
+    float bouncePower = 0;//吹っ飛び力
     /// <summary>
     /// 引数のオブジェクトから情報を作成
     /// </summary>
@@ -28,5 +29,6 @@ struct ConflictExamineResultInfo
     {
         tag = obj->GetTag();
         radius = obj->GetRadius();
+        bouncePower = obj->GetBouncePower();
     }
 };

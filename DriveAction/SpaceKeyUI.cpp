@@ -7,7 +7,7 @@ SpaceKeyUI::SpaceKeyUI(int setX, int setY)
     pressKeyData = UIManager::CreateUIData(pressSpaceKey);
     pressKeyData.x = setX;
     pressKeyData.y = setY;
-    aValue = aSpeed;
+    aValue = lowtestAvalue;//最低値をセット
     isAValueIncrement = true;
 }
 

@@ -6,20 +6,29 @@ class Object
 public:
     enum ObjectTag
     {
+        //プレイヤー
         player,
+        //収集アイテム
         collect,
+        //ダメージ判定
         damageObject,
+        //障害物
         obstacle,
+        //ステージの中
         stage,
-        goal,
-        acelerationFloor,
-        countSystem
+        //加速装置
+        acelerationObject,
     };
+    //オブジェクトの状態
     enum ObjectState
     {
+        //動く前　初期化しただけとか
         sleep,
+        //動いているとき
         active,
+        //動き終わってエフェクトとか音を出す状態
         activeEnd,
+        //動けなくなった
         dead
     };
     /// <summary>

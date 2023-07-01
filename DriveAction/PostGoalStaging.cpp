@@ -20,7 +20,10 @@ PostGoalStaging::PostGoalStaging()
     
     nowProcess = ResultScore::time;
     AddScoreUI(nowProcess);
-    timer = new Timer(spaceKeyCoolTime);
+    AddScoreUI(collect);
+    AddScoreUI(hit);
+    AddScoreUI(total);
+    timer = new Timer(scoreChangeTime);
     gameEndScreen = RaceScreen::GetScreen();
 }
 
@@ -50,7 +53,7 @@ void PostGoalStaging::Update()
             SoundPlayer::Play2DSE(scoreStartSE);
         }
         //スコアの表示を少しずつしていく
-        float larp = timer->GetElaspedTime() / spaceKeyCoolTime;
+        float larp = timer->GetElaspedTime() / timer->GetLimitTime();
         scoreUI[nowProcess].score = static_cast<int>(ResultScore::GetScore(nowProcess) * larp);
         //スコアを表示しきるかボタンを押されたら
         if (UserInput::GetInputState(Space) == Push || timer->IsOverLimitTime())
@@ -98,23 +101,22 @@ bool PostGoalStaging::IsEndProcess() const
 /// <returns></returns>
 void PostGoalStaging::GetNextProcess()
 {
-    using enum ResultScore::ScoreKind;
+    
     switch (nowProcess)
     {
     case time:
-        AddScoreUI(collect);
+
         nowProcess = collect;
         //得点がゼロとかだったら次に
         if (!scoreUI[collect].draw) GetNextProcess();
         break;
-
     case collect:
-        AddScoreUI(hit);
+
         nowProcess = hit;
         if (!scoreUI[hit].draw) GetNextProcess();
         break;
     case hit:
-        AddScoreUI(total);
+
         nowProcess = total;
         break;
     case total:

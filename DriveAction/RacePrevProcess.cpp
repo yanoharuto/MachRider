@@ -4,12 +4,19 @@
 #include "Utility.h"
 #include "Timer.h"
 #include "CountDown.h"
+#include "NumUI.h"
+#include "CollectController.h"
+/// <summary>
+/// レース前の処理やってくれる
+/// </summary>
 RacePrevProcess::RacePrevProcess()
 {
     SoundPlayer::LoadSound(fanfare);
     SoundPlayer::Play2DSE(fanfare);
     gamePuroseData = UIManager::CreateUIData(gamePurose);
-
+    collectIconData = UIManager::CreateUIData(collectIcon);
+    manualData = UIManager::CreateUIData(manual);
+    collectItemNum = new NumUI(collectTargetNumberUI);
     frameByFrameTimer = new Timer(gamePuroseData.frameSpeed);
     fadeValue = MAX1BYTEVALUE;
 }
@@ -20,7 +27,9 @@ RacePrevProcess::~RacePrevProcess()
     SAFE_DELETE(countDownTimer);
     SAFE_DELETE(countDown);
 }
-
+/// <summary>
+/// 遊び方とカウントダウンの描画
+/// </summary>
 void RacePrevProcess::Update()
 {
     fadeValue--;
@@ -38,7 +47,7 @@ void RacePrevProcess::Update()
         {
             countDownTimer = new Timer(startTimerLimit);
             countDown = new CountDown(countDownTimer);
-            manualData = UIManager::CreateUIData(manual);
+            
         }
         else
         {
@@ -48,20 +57,24 @@ void RacePrevProcess::Update()
 
         }
     }
-    
 }
-
+/// <summary>
+/// 遊び方とカウントダウンの描画
+/// </summary>
 void RacePrevProcess::Draw() const
 {
-    if (countDown == nullptr)
+    if (fadeValue > 0)
     {
         //ゲームの目的が見えにくいのでいったん後ろを白で埋める
         int colorValue = MAX1BYTEVALUE;
         SetDrawBlendMode(DX_BLENDMODE_ALPHA, fadeValue);//α値をいじる
         DrawBox(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, GetColor(colorValue, colorValue, colorValue), true);
         SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);//元に戻す
-        int num = iconIncrement % gamePuroseData.dataHandle.size();
-        DrawRotaGraph(gamePuroseData.x, gamePuroseData.y, 1, 0, gamePuroseData.dataHandle[num], true);
+        int num = iconIncrement % collectIconData.dataHandle.size();
+
+        DrawRotaGraph(gamePuroseData.x, gamePuroseData.y, gamePuroseData.size, 0, gamePuroseData.dataHandle[0], true);
+        DrawRotaGraph(collectIconData.x, collectIconData.y, collectIconData.size, 0, collectIconData.dataHandle[num], true);
+        collectItemNum->Draw(CollectController::GetTotalCollectNum());
     }
     else
     {
@@ -73,6 +86,10 @@ void RacePrevProcess::Draw() const
     }
 }
 
+/// <summary>
+/// 処理が終了したか
+/// </summary>
+/// <returns></returns>
 bool RacePrevProcess::IsProccesEnd()
 {
     return proccesEnd;

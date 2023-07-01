@@ -102,15 +102,18 @@ void Car::ReflectsVelocity()
 	//更新する前のポジションを保存
 	prevPos = position;
 	// 力をかけ終わったベロシティの方向にディレクションを調整.
-	if (VSize(velocity) != 0)
+	if (VSize(velocity) > 0.1f)
 	{
 		direction = VNorm(velocity);
 	}
 	//ぶつかった時の衝撃で移動
-	if (VSize(collVec) > 0.1f)
+	if (collVecDecelTimer != nullptr)
 	{
-		position = VAdd(position, collVec);
-		collVec = VScale(collVec, colideDecel);
+		position = VAdd(position, VScale(collVec, collVecDecelTimer->GetRemainingTime()));
+		if (collVecDecelTimer->IsOverLimitTime())
+		{
+			SAFE_DELETE(collVecDecelTimer);
+		}
 	}
 	else //衝撃が無くなったら運転できる
 	{
