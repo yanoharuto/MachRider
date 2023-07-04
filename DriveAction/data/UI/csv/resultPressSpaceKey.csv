@@ -1,18 +1,18 @@
 ﻿ drawX
-192
+1450
  drawY
-510
+940
  width
-280
+730
  height
-320
+96
  xNum
 1
  yNum
 1
 graphPass
-data/UI/image/playManual1.png
+data/UI/image/PressSpaceKey.png
 size
-0.8
+1
 frameSpeed
 0

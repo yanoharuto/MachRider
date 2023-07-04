@@ -5,22 +5,23 @@
 #include "Timer.h"
 #include "NumUI.h"
 #include "CollectController.h"
-#include "ObjectObserver.h"
+#include "HitCountObserver.h"
 #include "EndCountDown.h"
 #include "CollectSign.h"
+#include "UIDrawer.h"
 
 /// <summary>
 /// 遊んでいるときのUI　制限時間とか
 /// </summary>
 /// <param name="setTimer"></param>
 /// <param name="setFirstCoinNum"></param>
-GamePlayUI::GamePlayUI(Timer* setTimer, std::weak_ptr<ObjectObserver> player)
+GamePlayUI::GamePlayUI(Timer* setTimer, std::weak_ptr<HitCountObserver> player)
 {
     //残り時間
     gameTimerUI = new TimerUI(setTimer);
     //ミニマップ
     minimapUI = new MiniMap(player);
-    manualData = UIManager::CreateUIData(manual);
+    
 
     
     //残りの収集アイテムの数と現在取った数
@@ -82,8 +83,6 @@ void GamePlayUI::Update()
 /// </summary>
 void GamePlayUI::Draw()const
 {
-    //操作説明
-    DrawRotaGraph(manualData.x, manualData.y, manualData.size, 0, manualData.dataHandle[0], true);
     if (isDrawGetNum)//収集アイテムを取ってしばらくの間、残りの数を出す
     {
         int safeNum = 0;
@@ -100,12 +99,12 @@ void GamePlayUI::Draw()const
             remainingNumUI->Draw(firstCoinNum - nowGetCoinNum);
             break;
         }
+        //残りの収集アイテムについてのメッセージ
         safeNum %= remainingFraze.dataHandle.size();
-        DrawRotaGraph(remainingFraze.x, remainingFraze.y,remainingFraze.size,0,remainingFraze.dataHandle[safeNum],true);
-        
+        UIDrawer::DrawRotaUI(remainingFraze, safeNum);
     }
     //収集アイテムの数等を表示
-    DrawRotaGraph(slashData.x, slashData.y, slashData.size, 0, slashData.dataHandle[0], true);
+    UIDrawer::DrawRotaUI(slashData);
     firstNumUI->Draw(firstCoinNum);
     getNumUI->Draw(nowGetCoinNum);
     //残り時間

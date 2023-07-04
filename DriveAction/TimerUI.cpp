@@ -5,7 +5,9 @@
 #include "UIManager.h"
 #include "NumUI.h"
 
-
+/// <summary>
+/// Žc‚èŽžŠÔ‚ð•`‰æ‚·‚é
+/// </summary>
 TimerUI::TimerUI(Timer* setTimer)
 {
     timer = setTimer;

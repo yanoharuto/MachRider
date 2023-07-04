@@ -1,18 +1,18 @@
 ﻿ drawX
-1560
+192
  drawY
-420
+510
  width
-800
+280
  height
-100
+320
  xNum
-10
+1
  yNum
 1
 graphPass
-data/UI/image/NumFont.png
+data/UI/image/playManual2.png
 size
-1
+0.8
 frameSpeed
 0

@@ -1,15 +1,11 @@
 #include "ResultScore.h"
 #include "Utility.h"
 #include "Timer.h"
-#include "ObjectObserver.h"
-
-const int ResultScore::coinBonus;
-const int ResultScore::noHitScore;
-const int ResultScore::timeBonus;
-const int ResultScore::damageObjHitDec;
-int ResultScore::collectScore = 0;
-int ResultScore::timeScore = 0;
-bool ResultScore::noHit = false;
+#include "HitCountObserver.h"
+//収集アイテムゲットボーナス
+const int ResultScore::getCollectBonus = 500;
+//残り時間のボーナス
+const int ResultScore::clearTimeBonus = 10;
 
 /// <summary>
 /// スコア所得
@@ -20,17 +16,34 @@ int ResultScore::GetScore(ScoreKind scoreKind)
 {
     switch (scoreKind)
     {
-    case ResultScore::time:
+    case ResultScore::timeBonus:
         return timeScore;
         break;
-    case ResultScore::collect:
+    case ResultScore::collectBonus:
         return collectScore;
         break;
-    case ResultScore::hit:
-        return noHit ? noHitScore : 0;
-        break;
     case ResultScore::total:
-        return timeScore + collectScore + GetScore(hit);
+        return timeScore + collectScore;
+        break;
+    }
+}
+/// <summary>
+/// スコアの倍率を所得
+/// </summary>
+/// <param name="scoreKind"></param>
+/// <returns></returns>
+int ResultScore::GetScoreBonus(ScoreKind scoreKind)
+{
+    switch (scoreKind)
+    {
+    case ResultScore::timeBonus:
+        return clearTimeBonus;
+        break;
+    case ResultScore::collectBonus:
+        return getCollectBonus;
+        break;
+    default:
+        return -1;
         break;
     }
 }
@@ -39,12 +52,11 @@ int ResultScore::GetScore(ScoreKind scoreKind)
 /// </summary>
 /// <param name="timer"></param>
 /// <param name="player"></param>
-void ResultScore::FixScore(Timer* timer, std::weak_ptr<ObjectObserver> player)
+void ResultScore::FixScore(Timer* timer, std::weak_ptr<HitCountObserver> player)
 {
     //制限時間を超過してたら0
-    timeScore = timer->IsOverLimitTime() ? 0 : static_cast<int>(timer->GetElaspedTime() * timeBonus);
+    timeScore = timer->IsOverLimitTime() ? 0 : static_cast<int>(timer->GetElaspedTime() * clearTimeBonus);
     //収集アイテムを取ってたらボーナス
-    collectScore= player.lock()->GetSubjectHitCount(Object::ObjectTag::collect) * coinBonus;
-    //
-    noHit = player.lock()->GetSubjectHitCount(Object::ObjectTag::damageObject) == 0;
+    collectScore= player.lock()->GetSubjectHitCount(Object::ObjectTag::collect) * getCollectBonus;
+ 
 }

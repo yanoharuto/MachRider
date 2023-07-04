@@ -43,10 +43,10 @@ private:
     CountDown* countDown;
     //処理終了したか
     bool proccesEnd = false;
-    //現在のコマ
-    int iconIncrement = 0;
-
+    //収集アイテムアイコンのコマ割り番号
+    int iconGHIndex = 0;
+    //ゲームの目標説明をしている間は周りを白くする
     int fadeValue = 0;
-
+    //スタートのカウントダウンは5秒
     const float startTimerLimit = 5;
 };

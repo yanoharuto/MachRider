@@ -3,7 +3,7 @@
 #include <memory>
 #define SCORE_KIND_NUM 4
 class Timer;
-class ObjectObserver;
+class HitCountObserver;
 
 /// <summary>
 /// 最終的なスコアの保存役
@@ -11,43 +11,43 @@ class ObjectObserver;
 class ResultScore
 {
 public:
+    /// <summary>
+/// 最終的なスコアの保存
+/// </summary>
+    ResultScore() {};
+    ~ResultScore() {};
     enum ScoreKind
     {
-        time = 0,
-        collect = 1,
-        hit = 2,
-        total = 3
+        timeBonus = 0,
+        collectBonus = 1,
+        total = 2
     };
     /// <summary>
     /// スコア所得
     /// </summary>
     /// <param name="scoreKind">どのスコアが欲しいか</param>
     /// <returns></returns>
-    static int GetScore(ScoreKind scoreKind);
+    int GetScore(ScoreKind scoreKind);
+    /// <summary>
+    /// スコアの倍率を所得
+    /// </summary>
+    /// <param name="scoreKind"></param>
+    /// <returns></returns>
+    int GetScoreBonus(ScoreKind scoreKind);
     /// <summary>
     /// スコアを確定させる
     /// </summary>
     /// <param name="timer"></param>
     /// <param name="player"></param>
-    static void FixScore(Timer* timer, std::weak_ptr<ObjectObserver> player);
+    void FixScore(Timer* timer, std::weak_ptr<HitCountObserver> player);
 private:
-
-    /// <summary>
-    /// 最終的なスコアの保存
-    /// </summary>
-    ResultScore() {};
-    ~ResultScore() {};
-    static int timeScore;
-    static int collectScore;
-    static bool noHit;
-    //ダメージ判定のあるオブジェクトに触れたらスコア減少
-    static const int damageObjHitDec = 30;
+    //残り時間のスコア
+    int timeScore = 0;
+    //収集アイテムを集めたスコア
+    int collectScore = 0;
     //残り時間のボーナス
-    static const int timeBonus = 10;
-    //一度も当たらなかった場合のスコア
-    static const int noHitScore = 500;
+    static const int clearTimeBonus;
     //コインはボーナス
-    static const int coinBonus = 500;
-    
+    static const int getCollectBonus;
 };
 

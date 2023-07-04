@@ -7,7 +7,7 @@
 
 ResultSceneFlow::ResultSceneFlow()
 {
-    switchUI = new SpaceKeyUI(1020,900);
+    switchUI = new FlashUI(resultSpaceKey);
 }
 
 ResultSceneFlow::~ResultSceneFlow()

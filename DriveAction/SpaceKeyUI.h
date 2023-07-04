@@ -2,13 +2,17 @@
 
 #include "UIManager.h"
 /// <summary>
-/// spaceKeyの催促
+///　点滅しながら描画するUI
 /// </summary>
-class SpaceKeyUI
+class FlashUI
 {
 public:
-    SpaceKeyUI(int setX,int setY);
-    ~SpaceKeyUI();
+    /// <summary>
+    /// 点滅表示したいUIを引数に渡す
+    /// </summary>
+    /// <param name="uiKind"></param>
+    FlashUI(UIKind uiKind);
+    ~FlashUI();
     /// <summary>
     /// アルファ値の更新
     /// </summary>

@@ -2,13 +2,12 @@
 #include <iostream>
 #include <memory>
 #include <list>
-#include "Utility.h"
-#include "UIManager.h"
+
 class MiniMap;
 class TimerUI;
 class Timer;
 class NumUI;
-class ObjectObserver;
+class HitCountObserver;
 class EndCountDown;
 class Player;
 class EnemyGenerator;
@@ -19,7 +18,7 @@ class CollectSign;
 class GamePlayUI final
 {
 public:
-    GamePlayUI(Timer* setTimer,std::weak_ptr<ObjectObserver> player);
+    GamePlayUI(Timer* setTimer,std::weak_ptr<HitCountObserver> player);
 
     ~GamePlayUI();
     /// <summary>
@@ -41,7 +40,7 @@ private:
     float remainingNumDrawTime = 2.0f;
     //残った収集アイテムの数を表示する時間を計る
     Timer* remainingNumDrawTimer = nullptr;
-    //タイマー
+    //ゲーム残り時間タイマー
     TimerUI* gameTimerUI;
     //ミニマップ
     MiniMap* minimapUI;
@@ -51,8 +50,6 @@ private:
     NumUI* getNumUI;
     //残った収集アイテムの数
     NumUI* remainingNumUI;
-    //操作説明のUI情報
-    UIData manualData;
     //残り収集アイテムについてのフレーズ
     UIData remainingFraze;
     //数字の間に置くスラッシュ
@@ -62,7 +59,7 @@ private:
     //カウントダウン
     EndCountDown* countDown;
     //プレイヤーの位置とか収集アイテムの所得数などを教えてくれる奴
-    std::weak_ptr<ObjectObserver> playerObserver;
+    std::weak_ptr<HitCountObserver> playerObserver;
     //収集アイテムの方向とかを教えてくれる
     CollectSign* cSign;
 };

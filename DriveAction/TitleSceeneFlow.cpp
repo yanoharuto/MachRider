@@ -10,11 +10,12 @@
 #include "TitleDemo.h"
 #include "Timer.h"
 #include "RaceScreen.h"
+#include "UIDrawer.h"
 
 TitleSceeneFlow::TitleSceeneFlow()
 {
     stageSelect = new StageSelect();  
-    spaceKeyUI = new SpaceKeyUI(950,700);
+    spaceKeyUI = new FlashUI(titlePressSpaceKey);
     titleDemo = new TitleDemo();
     
     titleLogoData = UIManager::CreateUIData(tilteLogo);
@@ -61,18 +62,20 @@ void TitleSceeneFlow::Update()
         nextSceneType = SceneType::ESCAPE;
     }
 }
-
+/// <summary>
+/// ステージ選択とかロゴとかの描画
+/// </summary>
 void TitleSceeneFlow::Draw()const
 {
     titleDemo->Draw();
-    DrawRotaGraph(titleLogoData.x, titleLogoData.y, titleLogoData.size, 0, titleLogoData.dataHandle[0], true, false);
+    UIDrawer::DrawRotaUI(titleLogoData, 0, 0,true);
     if (titleState == TitleState::waitSpaceKey)
     {
-        spaceKeyUI->Draw();
+        spaceKeyUI->Draw();//スペースキー待ちUI
     }
     else
     {
-        stageSelect->Draw();
+        stageSelect->Draw();//ステージ選択UI
     }
     screen->ScreenUpdate();
 }

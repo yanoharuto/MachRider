@@ -11,8 +11,8 @@ data/UI/csv/collectUIFrame.csv
 collectScore=11
 data/UI/csv/CollectScoreBonus.csv
 //収集物のスコア
-collectScoreNum=14
-data/UI/csv/collectScoreNum.csv
+collectScoreIcon=14
+data/UI/csv/collectScoreIcon.csv
 //ダメージを受けると減少するスコアの文字
 damageScore=17
 data/UI/csv/NoDamageBonus.csv
@@ -74,8 +74,8 @@ data/UI/csv/exit.csv
 stageNames
 data/UI/csv/stageName.csv
 ゲームを開始するときにボタンを入力してもらう
-pressSpaceKey
-data/UI/csv/PressSpaceKey.csv
+titlePressSpaceKey
+data/UI/csv/titlePressSpaceKey.csv
 //収集アイテムの矢印
 collectIcon
 data/UI/csv/collectIcon.csv
@@ -103,6 +103,12 @@ data/UI/csv/collectIcon.csv
 //収集アイテムの目標数
 collectTargetNumberUI=105
 data/UI/csv/collectTargetNumberUI.csv
-//ステージの収集アイテムの個数の×
-puroseCollectHang=108
-data/UI/csv/puroseCollectHang.csv
+//リザルトスペースキー催促
+resultSpaceKey
+data/UI/csv/resultPressSpaceKey.csv
+//チャージ方法説明マニュアル
+chargeManual=110
+data/UI/csv/chargeManual.csv
+//ターボ説明マニュアル
+turboManual=113
+data/UI/csv/TurboManual.csv

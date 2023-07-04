@@ -13,7 +13,7 @@
 #include "InitActor.h"
 #include "EffectManager.h"
 #include "UIManager.h"
-
+#include "UIDrawer.h"
 //シーンを作るのに必要
 SceneBase* MakeScene(SceneType _NowSceneType);
 
@@ -27,10 +27,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	// 画面の解像度と色ビット深度を設定
 	SetGraphMode(SCREEN_WIDTH, SCREEN_HEIGHT, 32);
-	ChangeWindowMode(true);
 	SetZBufferBitDepth(24);
+	ChangeWindowMode(true);
 	
-
 	// １メートルに相当する値を設定する
 	Set3DSoundOneMetre(16.0f);
 	if (DxLib_Init() == -1)		// ＤＸライブラリ初期化処理
@@ -48,13 +47,14 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	SetDrawScreen(DX_SCREEN_BACK);
 	//今のシーン
 	SceneType nowSceneType = SceneType::TITLE;
-
-	UserInput* userInput = new UserInput();
-	std::unique_ptr <Clock> clock = std::make_unique<Clock>();//時間
-	std::unique_ptr <UIManager> uiManager = std::make_unique<UIManager>();//UI画像を取ってくる
-	std::unique_ptr <InitActor> initActor = std::make_unique<InitActor>();//各actorのパラメータの初期化
-	std::unique_ptr <SoundPlayer> soundPlayer = std::make_unique <SoundPlayer>();//音を流す
-	std::unique_ptr<EffectManager> effectManager = std::make_unique <EffectManager>();//エフェクトの初期化
+	
+	UIDrawer* uiDrawer = new UIDrawer();//画面サイズに合わせて描画できるようにする
+	UserInput* userInput = new UserInput();//ユーザーの入力を所得する
+	Clock* clock = new Clock();//時間
+	UIManager* uiManager = new UIManager();//UI画像を取ってくる
+	InitActor* initActor = new InitActor();//各actorのパラメータの初期化
+	SoundPlayer* soundPlayer = new SoundPlayer();//音を流す
+	EffectManager* effectManager = new EffectManager();//エフェクトの初期化
 	//シーンを生成
 	SceneBase* scene = new TitleScene;
 	FadeInFadeOut::FadeIn();
@@ -87,13 +87,15 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		}
 	}
 
-	SAFE_UNIQUE_DELETE(uiManager);
-	SAFE_UNIQUE_DELETE(initActor);
-	SAFE_UNIQUE_DELETE(soundPlayer);
-	SAFE_UNIQUE_DELETE(effectManager);
-	SAFE_UNIQUE_DELETE(clock);
+	SAFE_DELETE(uiDrawer);
+	SAFE_DELETE(uiManager);
+	SAFE_DELETE(initActor);
+	SAFE_DELETE(soundPlayer);
+	SAFE_DELETE(effectManager);
+	SAFE_DELETE(clock);
 	SAFE_DELETE(userInput);
 	SAFE_DELETE(scene);
+
 	Effect_Finalize();
 
 	DxLib_End();				// ＤＸライブラリ使用の終了処理

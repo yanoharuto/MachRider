@@ -18,6 +18,6 @@ public:
     void DrawUI()const;
 private:
     //カウントダウンの数字を薄く表示
-    const int aValue=170;
+    const int aValue = 130;
 };
 

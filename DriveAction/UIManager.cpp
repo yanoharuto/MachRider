@@ -34,7 +34,9 @@ UIData UIManager::CreateUIData(int kindNum)
     //ˆÊ’u‚Æ‚©•‚Æ‚©•ªŠ„”‚ğ“Ç‚İæ‚é
     data.x = atoi(dataVec[drawX].c_str());
     data.y = atoi(dataVec[drawY].c_str());
+    //‰¡•ªŠ„”
     int divXNum = atoi(dataVec[xNum].c_str());
+    //c•ªŠ„”
     int divYNum = atoi(dataVec[yNum].c_str());
     data.width = atoi(dataVec[width].c_str()) / divXNum;
     data.height = atoi(dataVec[height].c_str()) / divYNum;

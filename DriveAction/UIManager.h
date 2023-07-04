@@ -17,7 +17,7 @@ namespace UIInit
         //収集物のスコアの文字
         collectScore = 11,
         //収集物のスコア
-        collectScoreNum = 14,
+        collectScoreIcon = 14,
         //ダメージを受けると減少するスコアの文字
         damageScore = 17,
         //ダメージを受けると減少するスコア
@@ -58,8 +58,8 @@ namespace UIInit
         exitUI = 71,
         //タイトル画面でステージ選択をするときに使う
         stageName = 74,
-        //スペースキー催促
-        pressSpaceKey = 77,
+        //タイトルスペースキー催促
+        titlePressSpaceKey = 77,
         //収集アイテムのアイコン
         markerAllow = 80,
         //ゲーム中に集めたアイテムの×
@@ -78,9 +78,12 @@ namespace UIInit
         collectIcon = 101,
         //収集アイテムの集める数
         collectTargetNumberUI = 104,
-        //ステージの収集アイテムの個数の×
-        puroseCollectHang = 107,
-
+        //リザルトスペースキー催促
+        resultSpaceKey = 107,
+        //チャージ方法説明マニュアル
+        chargeManual = 110,
+        //ターボ説明マニュアル
+        turboManual = 113,
     };
     /// <summary>
     /// UIの初期化情報　数字は読み込み段数

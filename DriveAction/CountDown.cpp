@@ -2,13 +2,14 @@
 #include "DxLib.h"
 #include "Utility.h"
 #include "SoundPlayer.h"
+#include "UIDrawer.h"
 /// <summary>
 /// カウントダウンのUI
 /// </summary>
-/// <param name="setTimer"></param>
+/// <param name="setTimer">何秒計るか</param>
 CountDown::CountDown(Timer* setTimer)
 {
-	countDownEnd = false;
+	isCountDownEnd = false;
 	countDownUIData = UIManager::CreateUIData(countDownUI);
 	endUI = UIManager::CreateUIData(onGameStartCountDownEnd);
 	timer = setTimer;
@@ -19,26 +20,26 @@ CountDown::~CountDown()
 {
 }
 /// <summary>
-/// カウントダウン更新
+/// タイマーを進ませてUIの数字を変更する
 /// </summary>
 void CountDown::Update()
 {
-	switch (static_cast<int>(timer->GetRemainingTime()))
+	switch (static_cast<int>(timer->GetRemainingTime()))//残りあと何秒
 	{
 	case 0:
-		countDownEnd = true;
+		isCountDownEnd = true;
 		break;
 	case 1:
-		uiNum = 0;
+		uiHIndex = 0;
 		break;
 	case 2:
-		uiNum = 1;
+		uiHIndex = 1;
 		break;
 	case 3:
-		if (!countStart)
+		if (!isPlayedCountSE)//初回はカウントダウンの音を鳴らす
 		{
-			uiNum = 2;
-			countStart = true;
+			uiHIndex = 2;
+			isPlayedCountSE = true;
 			SoundPlayer::Play2DSE(countDown);
 		}
 		break;
@@ -58,19 +59,19 @@ bool CountDown::IsPlayCountDownSound() const
 /// <returns></returns>
 bool CountDown::IsCountDownEnd() const
 {
-	return countDownEnd;
+	return isCountDownEnd;
 }
 /// <summary>
 /// カウントダウンと終了後のUIを描画
 /// </summary>
 void CountDown::DrawUI()const
 {
-	if (countDownEnd)//終了後startとかendとか出す
+	if (isCountDownEnd)//終了後startとかendとか出す
 	{
-		DrawRotaGraph(endUI.x, endUI.y, 1, 0, endUI.dataHandle[0], true);
+		UIDrawer::DrawRotaUI(endUI);
 	}
-	else if(countStart)
+	else if(isPlayedCountSE)
 	{
-		DrawRotaGraph(countDownUIData.x, countDownUIData.y, 1, 0, countDownUIData.dataHandle[uiNum], true);
+		UIDrawer::DrawRotaUI(countDownUIData,uiHIndex);
 	}
 }

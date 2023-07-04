@@ -40,14 +40,8 @@ public:
     /// <summary>
     /// UIを描画
     /// </summary>
-    void Draw();
+    void Draw()const;
 private:
-    /// <summary>
-    /// 引数のUIを描画
-    /// </summary>
-    /// <param name="data"></param>
-    /// <param name="handleNum"></param>
-    void DrawUI(UIData data,int handleNum);
     //メニュー画面を開いている時間の計測
     StopWatch* stopWatch;
     //メニューの背景

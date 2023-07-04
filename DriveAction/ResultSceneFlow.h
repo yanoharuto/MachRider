@@ -26,6 +26,6 @@ public:
     void Draw() const override;
 private:
     //スペースキーの催促
-    SpaceKeyUI* switchUI;
+    FlashUI* switchUI;
 };
 

@@ -4,6 +4,7 @@
 #include "Utility.h"
 #include "StopWatch.h"
 #include "RaceScreen.h"
+#include "UIDrawer.h"
 //メニューの状態
 MenuState Menu::menuState=continueGame;
 //メニューを開いているか
@@ -89,10 +90,18 @@ MenuState Menu::GetMenuState()
 {
     return menuState;
 }
+/// <summary>
+/// メニュー画面を開いているかどうか
+/// </summary>
+/// <returns></returns>
 bool Menu::IsMenuOpen()
 {
     return isOpenMenu;
 }
+/// <summary>
+/// メニュー画面を開いている時間を所得
+/// </summary>
+/// <returns></returns>
 double Menu::GetOpenMenuTime()
 {
     printfDx("MenuTime::%f", openMenuTime);
@@ -101,26 +110,17 @@ double Menu::GetOpenMenuTime()
 /// <summary>
 /// UIを描画
 /// </summary>
-void Menu::Draw()
+void Menu::Draw() const
 {
     if (isOpenMenu)
     {
         SetDrawBright(backScreenBright, backScreenBright, backScreenBright);
         DrawGraph(0, 0, backScreen, false);
         SetDrawBright(MAX1BYTEVALUE, MAX1BYTEVALUE, MAX1BYTEVALUE);
-
-        DrawUI(cursorUIData, 0);
-        DrawUI(uiDatas[continueGame], cursolPos == 0 ? 0 : 1);
-        DrawUI(uiDatas[retry], cursolPos == 1 ? 0 : 1);
-        DrawUI(uiDatas[exitGame], cursolPos == 2 ? 0 : 1);
+        //各UIを描画
+        UIDrawer::DrawRotaUI(cursorUIData);
+        UIDrawer::DrawRotaUI(uiDatas[continueGame], cursolPos == 0 ? 0 : 1);
+        UIDrawer::DrawRotaUI(uiDatas[retry], cursolPos == 1 ? 0 : 1);
+        UIDrawer::DrawRotaUI(uiDatas[exitGame], cursolPos == 2 ? 0 : 1);
     }
-}
-/// <summary>
-/// 引数のUIを描画
-/// </summary>
-/// <param name="data"></param>
-/// <param name="handleNum"></param>
-void Menu::DrawUI(UIData data, int handleNum)
-{
-    DrawRotaGraph(data.x, data.y, data.size, 0, data.dataHandle[handleNum], true, false);
 }

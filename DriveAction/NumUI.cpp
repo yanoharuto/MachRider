@@ -2,7 +2,10 @@
 #include "DxLib.h"
 #include "Utility.h"
 #include "OriginalMath.h"
-
+#include "UIDrawer.h"
+/// <summary>
+/// 数字を描画する
+/// </summary>
 NumUI::NumUI(UIKind kind)
 {
     numData = UIManager::CreateUIData(kind);
@@ -13,7 +16,7 @@ NumUI::~NumUI()
 {
 }
 
-void NumUI::Draw(int num)
+void NumUI::Draw(int num) const
 {
     Draw(numData.x, numData.y, num);
 }
@@ -26,7 +29,7 @@ void NumUI::Draw(int num)
 /// <param name="num">数字</param>
 /// <param name="scale">文字の大きさ</param>
 /// <returns>左端の座標</returns>
-int NumUI::Draw(int x, int y, int num)
+int NumUI::Draw(int x, int y, int num) const
 {
     //桁数
     int digits = static_cast<int>(OriginalMath::GetDigits(num));
@@ -38,7 +41,10 @@ int NumUI::Draw(int x, int y, int num)
         //10のけたで割った時のあまり
         int drawNum = (static_cast<int>(num / pow(TIMER_FONT_NUM, i - 1))) % numData.dataHandle.size();
         //描画
-        int result = DrawRotaGraph(x, y, numData.size, 0, numData.dataHandle[drawNum], true);
+        UIData data = numData;
+        data.x = x;
+        data.y = y;
+        UIDrawer::DrawRotaUI(data,drawNum);
         //位置をずらす
         x += static_cast<int> (numData.size * numData.width);
         //次に描画したい数字の準備
@@ -54,7 +60,7 @@ int NumUI::Draw(int x, int y, int num)
 /// <param name="num">数字</param>
 /// <param name="scale">文字の大きさ</param>
 /// <returns>左端の座標</returns>
-void NumUI::Draw(float num)
+void NumUI::Draw(float num) const
 {
     //整数部分
     int iNum = static_cast<int>(num);
@@ -72,6 +78,10 @@ void NumUI::Draw(float num)
     edge -= static_cast<int> (numData.size * numData.width);
     //小数点
     DrawRotaGraph(edge, numData.y, pointData.size, 0, pointData.dataHandle[0], true);
+    UIData data = pointData;
+    data.x = edge;
+    data.y = numData.y;
+    UIDrawer::DrawRotaUI(data);
 }
 /// <summary>
 /// 一文字の大きさ

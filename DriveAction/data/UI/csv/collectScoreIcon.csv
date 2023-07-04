@@ -1,18 +1,18 @@
 ﻿ drawX
-730
+1150
  drawY
-96
+230
  width
-730
+2720
  height
-96
+559
  xNum
-1
+4
  yNum
 1
 graphPass
-data/UI/image/PressSpaceKey.png
+data/UI/image/CollectIcon.png
 size
-1
+0.11
 frameSpeed
 0

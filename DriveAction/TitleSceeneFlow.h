@@ -5,7 +5,7 @@
 class RaceScreen;
 class StageSelect;
 class StageInitializer;
-class SpaceKeyUI;
+class FlashUI;
 class TitleCamera;
 class TitleDemo;
 class Timer;
@@ -58,7 +58,7 @@ private:
     //ステージの情報
     StageSelect* stageSelect;
     //スペースキーを押してもらうためのUI
-    SpaceKeyUI* spaceKeyUI;
+    FlashUI* spaceKeyUI;
     //タイトルの後ろで走らせる
     TitleDemo* titleDemo;
     //タイトルの状態

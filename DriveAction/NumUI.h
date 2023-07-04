@@ -5,16 +5,33 @@
 
 
 /// <summary>
-/// 数字を描画する
+/// 数字を描画する　横書き
 /// </summary>
 class NumUI
 {
 public:
     NumUI(UIKind kind);
     ~NumUI();
-    void Draw(int num);
-
-    void Draw(float num);
+    /// <summary>
+    /// 整数の描画
+    /// </summary>
+    /// <param name="num"></param>
+    void Draw(int num)const;
+    /// <summary>
+    /// 小数の描画　小数点付き
+    /// </summary>
+    /// <param name="num"></param>
+    void Draw(float num) const;
+    /// <summary>
+    /// 中心座標X
+    /// </summary>
+    /// <returns></returns>
+    int GetX()const { return numData.x; };
+    /// <summary>
+    /// 中心座標Y
+    /// </summary>
+    /// <returns></returns>
+    int GetY()const { return numData.y; };
     /// <summary>
     /// 一文字の大きさ
     /// </summary>
@@ -29,7 +46,7 @@ private:
     /// <param name="num">数字</param>
     /// <param name="scale">文字の大きさ</param>
     /// <returns>左端の座標</returns>
-    int Draw(int x, int y, int num);
+    int Draw(int x, int y, int num)const;
     //数字のデータ
     UIData numData;
     //小数点の画像

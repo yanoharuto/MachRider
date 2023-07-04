@@ -3,18 +3,16 @@
 #include "UIManager.h"
 #include "ResultScore.h"
 class NumUI;
-class SpaceKeyUI;
+class FlashUI;
 class Timer;
-
+class TimerUI;
 /// <summary>
 /// スコアの表示
 /// </summary>
 struct ScoreUI
 {
-    UIData scoreKindData;//スコアの種類を描画する
-    int score;//スコア量
-    bool draw;//描画するかどうか
-    NumUI* numUI;//スコア量を描画する
+    UIData scoreKindData = {};//スコアの種類を描画する
+    int score = 0;//スコア量
 };
 using enum ResultScore::ScoreKind;
 /// <summary>
@@ -26,13 +24,13 @@ public:
     /// <summary>
     /// ゴール後の演出をする
     /// </summary>
-    PostGoalStaging();
+    PostGoalStaging(Timer* timer, std::weak_ptr<HitCountObserver> player);
     /// <summary>
     /// デストラクタ
     /// </summary>
     ~PostGoalStaging();
     /// <summary>
-    /// スコアを徐々に渡す
+    /// スコアの数字を徐々に出していく処理
     /// </summary>
     /// <returns></returns>
     void Update();
@@ -47,33 +45,57 @@ public:
     bool IsEndProcess()const;
 private:
     /// <summary>
-    /// 今やるべき処理を所得
+    /// 今やるべき処理
     /// </summary>
     /// <returns></returns>
-    void GetNextProcess();
+    void UpdateNowProcess();
     /// <summary>
-    /// スコアに関するUIの追加
+    /// スコアに関するUIを所得
     /// </summary>
-    /// <param name="scoreKind">追加するUI</param>
-    void AddScoreUI(ResultScore::ScoreKind scoreKind);
+    /// <param name="kind"></param>
+    /// <returns></returns>
+    ScoreUI GetScoreUI(UIKind kind);
     //処理をすべて行えたら
     bool isEndProcess = false;
     //合計スコアを描画したか
-    bool isDrawTotalScore = false;
+    bool isEndUpdateScore = false;
+    //クリアタイム
+    float clearTime = 0;
     //後ろの画面の明るさを低くする
     const int backScreenBright = 60;
     //アナウンスの移動量
     const float goalMoveX = 10.0f;
     //表示するスコアが変動していく時間
-    const float scoreChangeTime = 0.2f;
+    const float scoreLarpTime = 3.0f;
+    //描画するクリアタイム　スコアに換算していく
+    float drawClearTime = 0;
+    //描画する収集アイテムの数
+    int drawCollectIconNum = 0;
+    //ゲットしたアイテムの数
+    int getCollectNum = 0;
     //ゲーム終了時の画面
     int gameEndScreen = -1;
     //スペースキー催促
-    SpaceKeyUI* switchUI;
-    //各スコアを表示するための配列
-    std::unordered_map<ResultScore::ScoreKind,ScoreUI> scoreUI;
+    FlashUI* switchUI;
+    //合計スコア
+    ScoreUI totalScoreUI;
+    //収集アイテムを集めて得るスコア
+    ScoreUI collectScoreUI;
+    //残り時間ボーナススコア
+    ScoreUI timeScoreUI;
+
+    //収集アイテムのデータ
+    UIData collectData;
+    //クリアタイムを表示する用
+    NumUI* clearTimeUI;
+    //合計スコア表示
+    NumUI* totalScoreNumUI;
     //今何の処理を行っているか
     ResultScore::ScoreKind nowProcess;
     //タイマー
-    Timer* timer;
+    Timer* larpTimer;
+    //スコアの保存
+    ResultScore* resultScore;
+    //スペースキー催促UI
+    FlashUI* pressSpaceKeyUI;
 };

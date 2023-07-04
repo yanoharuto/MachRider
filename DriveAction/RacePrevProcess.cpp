@@ -6,6 +6,8 @@
 #include "CountDown.h"
 #include "NumUI.h"
 #include "CollectController.h"
+#include "UIDrawer.h"
+
 /// <summary>
 /// レース前の処理やってくれる
 /// </summary>
@@ -37,7 +39,7 @@ void RacePrevProcess::Update()
     if (frameByFrameTimer->IsOverLimitTime())
     {
         frameByFrameTimer->Init();
-        iconIncrement++;
+        iconGHIndex++;
     }
     //ゲーム開始音が終わったら
     if (!SoundPlayer::IsPlaySound(fanfare))
@@ -46,15 +48,13 @@ void RacePrevProcess::Update()
         if (countDownTimer == nullptr)
         {
             countDownTimer = new Timer(startTimerLimit);
-            countDown = new CountDown(countDownTimer);
-            
+            countDown = new CountDown(countDownTimer);   
         }
         else
         {
             countDown->Update();
             //タイマーが終了したら処理終了
             proccesEnd = countDownTimer->IsOverLimitTime();
-
         }
     }
 }
@@ -63,26 +63,28 @@ void RacePrevProcess::Update()
 /// </summary>
 void RacePrevProcess::Draw() const
 {
-    if (fadeValue > 0)
+    if (fadeValue > 0)//フェードアウト中なら操作説明と目標を伝える
     {
         //ゲームの目的が見えにくいのでいったん後ろを白で埋める
         int colorValue = MAX1BYTEVALUE;
         SetDrawBlendMode(DX_BLENDMODE_ALPHA, fadeValue);//α値をいじる
         DrawBox(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, GetColor(colorValue, colorValue, colorValue), true);
         SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);//元に戻す
-        int num = iconIncrement % collectIconData.dataHandle.size();
-
-        DrawRotaGraph(gamePuroseData.x, gamePuroseData.y, gamePuroseData.size, 0, gamePuroseData.dataHandle[0], true);
-        DrawRotaGraph(collectIconData.x, collectIconData.y, collectIconData.size, 0, collectIconData.dataHandle[num], true);
+        //目標を説明
+        UIDrawer::DrawRotaUI(gamePuroseData);
+        int num = iconGHIndex % collectIconData.dataHandle.size();
+        UIDrawer::DrawRotaUI(collectIconData,num);
+        //何個集めるか
         collectItemNum->Draw(CollectController::GetTotalCollectNum());
     }
     else
     {
+        //カウントダウンと操作説明を表示
         if (countDown->IsPlayCountDownSound())
         {
             countDown->DrawUI();
         }
-        DrawRotaGraph(manualData.x, manualData.y, manualData.size, 0, manualData.dataHandle[0], true);
+        UIDrawer::DrawRotaUI(manualData);
     }
 }
 
