@@ -1,7 +1,11 @@
 #pragma once
+#include <iostream>
+#include <memory>
 #include <unordered_map>
 #include "UIManager.h"
 #include "ResultScore.h"
+
+class ObjectObserver;
 class NumUI;
 class FlashUI;
 class Timer;
@@ -24,7 +28,7 @@ public:
     /// <summary>
     /// ゴール後の演出をする
     /// </summary>
-    PostGoalStaging(Timer* timer, std::weak_ptr<HitCountObserver> player);
+    PostGoalStaging(Timer* timer, std::weak_ptr<ObjectObserver> player);
     /// <summary>
     /// デストラクタ
     /// </summary>
@@ -55,6 +59,8 @@ private:
     /// <param name="kind"></param>
     /// <returns></returns>
     ScoreUI GetScoreUI(UIKind kind);
+    //終了アナウンス
+    bool isEndFinishAnnounce = false;
     //処理をすべて行えたら
     bool isEndProcess = false;
     //合計スコアを描画したか
@@ -67,10 +73,14 @@ private:
     const float goalMoveX = 10.0f;
     //表示するスコアが変動していく時間
     const float scoreLarpTime = 3.0f;
+    //終了アナウンスに掛かる時間
+    const float finishAnounceTime = 3.0f;
     //描画するクリアタイム　スコアに換算していく
     float drawClearTime = 0;
     //描画する収集アイテムの数
     int drawCollectIconNum = 0;
+    //舞い散る花びら
+    int confettiEffect = -1;
     //ゲットしたアイテムの数
     int getCollectNum = 0;
     //ゲーム終了時の画面
@@ -83,7 +93,8 @@ private:
     ScoreUI collectScoreUI;
     //残り時間ボーナススコア
     ScoreUI timeScoreUI;
-
+    //終わりのアナウンス
+    UIData finishAnnounceData;
     //収集アイテムのデータ
     UIData collectData;
     //クリアタイムを表示する用
@@ -94,8 +105,22 @@ private:
     ResultScore::ScoreKind nowProcess;
     //タイマー
     Timer* larpTimer;
+    //スコア換算処理が始まるまでの時間
+    Timer* startScoreExchangeTimer;
     //スコアの保存
     ResultScore* resultScore;
     //スペースキー催促UI
     FlashUI* pressSpaceKeyUI;
+    struct ScoreColor
+    {
+        int r, g, b;
+    };
+    //総合スコアの色
+    ScoreColor totalScoreColor;
+    //総合スコアデフォルトカラー
+    const ScoreColor bronze = { 123,40,0 };
+    //ちょっと良くなった時の色
+    const ScoreColor silver = { 192,192,192 };
+    //総合スコアがかなり良いときの色
+    const ScoreColor gold = {255, 215, 0};
 };

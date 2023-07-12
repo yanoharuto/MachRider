@@ -112,3 +112,24 @@ data/UI/csv/chargeManual.csv
 //ターボ説明マニュアル
 turboManual=113
 data/UI/csv/TurboManual.csv
+//左ボタン
+leftButton=116
+data/UI/csv/leftButton.csv
+//右のボタン
+rightButton=119
+data/UI/csv/rightButton.csv
+//下ボタン
+downButton=121
+data/UI/csv/downButton.csv
+//ゲーム終了アナウンス
+finishAnnounce=125
+data/UI/csv/finishAnnounce.csv
+//タイトルに戻るボタン
+returnTitleBottonUI=128
+data/UI/csv/titleButton.csv
+        //操作方法の後ろに置いておくシート
+        playManualSheat = 131
+data/UI/csv/playManualSheat.csv
+        //タイトルでステージを決定するときのボタン
+        stageSelectButton=134
+data/UI/csv/stageSelectButton.csv

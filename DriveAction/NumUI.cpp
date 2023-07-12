@@ -10,6 +10,8 @@ NumUI::NumUI(UIKind kind)
 {
     numData = UIManager::CreateUIData(kind);
     pointData = UIManager::CreateUIData(point);
+    pointData.y = numData.y;
+    pointData.size = numData.size;
 }
 
 NumUI::~NumUI()
@@ -77,10 +79,8 @@ void NumUI::Draw(float num) const
     Draw(edge, numData.y, iNum);
     edge -= static_cast<int> (numData.size * numData.width);
     //è¨êîì_
-    DrawRotaGraph(edge, numData.y, pointData.size, 0, pointData.dataHandle[0], true);
     UIData data = pointData;
     data.x = edge;
-    data.y = numData.y;
     UIDrawer::DrawRotaUI(data);
 }
 /// <summary>

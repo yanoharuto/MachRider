@@ -25,6 +25,8 @@ PlayerCar::PlayerCar(VECTOR firstPos,VECTOR setDirection)
 	EffectManager::LoadEffect(EffectInit::carDamage);
 	EffectManager::LoadEffect(EffectInit::turboCourse);
 	EffectManager::LoadEffect(EffectInit::burner);
+	EffectManager::LoadEffect(EffectInit::chargeBurner);
+	EffectManager::LoadEffect(EffectInit::turboBurner);
 	SoundPlayer::LoadSound(playerFlight);
 	SoundPlayer::LoadSound(playerDamage);
 }
@@ -42,31 +44,13 @@ PlayerCar::~PlayerCar()
 	SoundPlayer::StopSound(playerFlight);
 	SoundPlayer::StopSound(playerDamage);
 	//まだエフェクトが出ていたら終了
-	if (turboEffect != -1)
-	{
-		StopEffekseer3DEffect(turboEffect);
-		turboEffect = -2;
-	}
-	if (clashEffect != -1)
-	{
-		StopEffekseer3DEffect(clashEffect);
-		clashEffect = -2;
-	}
-	if (damageEffect != -1)
-	{
-		StopEffekseer3DEffect(damageEffect);
-		damageEffect = -2;
-	}
-	if (turboCourceEffect != -1)
-	{
-		StopEffekseer3DEffect(turboCourceEffect);
-		turboCourceEffect = -2;
-	}
-	if (burnerEffect != -1)
-	{
-		StopEffekseer3DEffect(burnerEffect);
-		burnerEffect = -2;
-	}
+	DeleteEffect(defaultBurnerEffect);
+	DeleteEffect(turboBurnerEffect);
+	DeleteEffect(turboCourceEffect);
+	DeleteEffect(chargeBurnerEffect);
+	DeleteEffect(damageEffect);
+	DeleteEffect(clashEffect);
+	DeleteEffect(windEffect);
 }
 
 /// <summary>
@@ -74,7 +58,6 @@ PlayerCar::~PlayerCar()
 /// </summary>
 void PlayerCar::Update()
 {
-	position.y = firstPosY;
 	//ダメージを受けてたら無敵時間減少していく
 	DamagePostProccess();
 	//速度を更新
@@ -94,7 +77,7 @@ void PlayerCar::Update()
 	{
 		SoundPlayer::Play2DSE(playerFlight);
 	}
-	EffectUpdate();
+	UpdateEffects();
 }
 /// <summary>
 /// ゲームが始まる前の演出とか
@@ -113,10 +96,6 @@ void PlayerCar::ConflictProccess(ConflictExamineResultInfo conflictInfo)
 	if (conflictInfo.tag == damageObject)//ダメージを受けた
 	{
 		DamageReaction(conflictInfo);
-	}
-	if (conflictInfo.tag == stage)
-	{
-
 	}
 	else if (conflictInfo.tag != collect)//ぶつかった
 	{
@@ -179,9 +158,9 @@ void PlayerCar::SetTwistZRota()
 /// <summary>
 /// エフェクトの更新
 /// </summary>
-void PlayerCar::EffectUpdate()
+void PlayerCar::UpdateEffects()
 {
-	if (IsEffekseer3DEffectPlaying(clashEffect) == true)//ぶつかった時のエフェクトを自機に合わせる
+	if (IsEffekseer3DEffectPlaying(clashEffect) == true)//ぶつかった時のエフェクトを自機の位置に合わせる
 	{
 		SetPosPlayingEffekseer3DEffect(clashEffect, position.x, position.y, position.z);
 	}
@@ -190,16 +169,16 @@ void PlayerCar::EffectUpdate()
 	if (isDamage)//ダメージを受けていたら
 	{
 		//機体から出る炎を消す
-		if (burnerEffect != -1)
+		if (defaultBurnerEffect != -1)
 		{
-			StopEffekseer3DEffect(burnerEffect);
-			burnerEffect = -1;
+			StopEffekseer3DEffect(defaultBurnerEffect);
+			defaultBurnerEffect = -1;
 		}
 		//スピード出ていなかったらエフェクトを消す
-		if (turboEffect != -1)
+		if (windEffect != -1)
 		{
-			StopEffekseer3DEffect(turboEffect);
-			turboEffect = -1;
+			StopEffekseer3DEffect(windEffect);
+			windEffect = -1;
 		}
 		//ターボしているときに出る進行方向を出す
 		if (turboCourceEffect != -1)
@@ -213,25 +192,34 @@ void PlayerCar::EffectUpdate()
 	{
 		if (isTurbo)//急加速中に出るエフェクト
 		{
-			UpdateEffe(&turboEffect, VGet(position.x, 0, position.z), VGet(0, degree * RAGE, 0), carWind);
+			UpdateEffect(&windEffect, VGet(position.x, 0, position.z), VGet(0, degree * RAGE, 0), carWind);
+			UpdateEffect(&turboBurnerEffect, VAdd(position, VScale(direction, -radius)), VGet(-twistZRota, degree * RAGE, 0), turboBurner);
 		}
 		else
 		{
-			StopEffekseer3DEffect(turboEffect);
-			turboEffect = -1;
+			StopEffekseer3DEffect(turboBurnerEffect);
+			turboBurnerEffect = -1;
+			StopEffekseer3DEffect(windEffect);
+			windEffect = -1;
 		}
 		//ターボ準備中なら
 		if (isTurboReserve)
 		{
-			UpdateEffe(&turboCourceEffect, VGet(position.x, 0, position.z), VGet(0, degree * RAGE, 0), turboCourse);
+			UpdateEffect(&turboCourceEffect, VGet(position.x, 0, position.z), VGet(0, degree * RAGE, 0), turboCourse);
+			UpdateEffect(&chargeBurnerEffect, VAdd(position, VScale(direction, -radius)), VGet(-twistZRota, degree * RAGE, 0), chargeBurner);
 		}
 		else
 		{
 			StopEffekseer3DEffect(turboCourceEffect);
 			turboCourceEffect = -1;
+			StopEffekseer3DEffect(chargeBurnerEffect);
+			chargeBurnerEffect = -1;
 		}
-		//走っているとき出るエフェクト
-		UpdateEffe(&burnerEffect, VAdd(position, VScale(direction, -radius)), VGet(-twistZRota, degree * RAGE, 0), burner);
+		if (!(isTurbo || isTurboReserve))
+		{
+			//走っているとき出るエフェクト
+			UpdateEffect(&defaultBurnerEffect, VAdd(position, VScale(direction, -radius)), VGet(-twistZRota, degree * RAGE, 0), burner);
+		}
 	}
 	
 }
@@ -248,6 +236,7 @@ void PlayerCar::DamageReaction(const ConflictExamineResultInfo conflictInfo)
 	collVecDecelTimer = new Timer(conflictInfo.bouncePower);
 	position = conflictInfo.pos;
 	position.y = firstPosY;
+	MV1SetPosition(modelHandle, position);
 	if (!isDamage)
 	{
 		//ダメージを受けた時のエフェクトと音
@@ -260,6 +249,12 @@ void PlayerCar::DamageReaction(const ConflictExamineResultInfo conflictInfo)
 		twistZRota = 0.0f;
 		//加速も終了
 		isTurbo = false;
+		isTurboReserve = false;
+		SAFE_DELETE(turboTimer);
+		//後ろの炎も消す
+		DeleteEffect(chargeBurnerEffect);
+		DeleteEffect(turboBurnerEffect);
+		DeleteEffect(defaultBurnerEffect);
 	}
 }
 /// <summary>
@@ -268,23 +263,23 @@ void PlayerCar::DamageReaction(const ConflictExamineResultInfo conflictInfo)
 /// <param name="conflictInfo"></param>
 void PlayerCar::ConflictReaction(const ConflictExamineResultInfo conflictInfo)
 {
-	//ぶつかった時の音とエフェクト
-	int effect = EffectManager::GetPlayEffect3D(EffectInit::carConflict);
-	SetPosPlayingEffekseer3DEffect(effect,position.x,position.y,position.z);
+	//ターボ中
+	if (isTurbo)
+	{
+		//ぶつかった時の音とエフェクト
+		int effect = EffectManager::GetPlayEffect3D(EffectInit::carConflict);
+		SetPosPlayingEffekseer3DEffect(effect, position.x, position.y, position.z);
+	}
 	SoundPlayer::Play3DSE(playerDamage);
-	collVec = conflictInfo.bounceVec;
-	collVec.y = 0;
-	SAFE_DELETE(collVecDecelTimer);
-	collVecDecelTimer = new Timer(conflictInfo.bouncePower);
 	//減速
 	accelPower -= accelPower * colideDecel;
-	//加速も終了
-	isTurbo = false;
+
 	//衝突して移動
 	position = conflictInfo.pos;
 	position.y = firstPosY;
-
 	MV1SetPosition(modelHandle, position);
+	//エフェクトも移動
+	UpdateEffects();
 }
 /// <summary>
 /// ダメージ処理
@@ -306,38 +301,46 @@ void PlayerCar::DamagePostProccess()
 /// <returns></returns>
 float PlayerCar::GetTurboPower()
 {
-	if (UserInput::GetInputState(Left) == Push)
+	//ダメージを受けていたら0
+	if (isDamage)
 	{
-		turboKey = Left;
 		isTurboReserve = false;
+		isTurbo = false;
+		return 0;
 	}
-	else if (UserInput::GetInputState(Right) == Push)
-	{
-		turboKey = Right;
-		isTurboReserve = false;
-	}
-	//一度入力した方向と下方向に入力するとターボ準備完了
-	if (UserInput::GetInputState(turboKey) == Hold && UserInput::GetInputState(Down) == Hold)
-	{
-		isTurboReserve = true;
-	}
-
-	//ターボ準備完了した状態でした方向を離すとターボ
-	if (isTurboReserve)
+	//下方向に入力するとターボ準備完了
+	if (UserInput::GetInputState(Down) == Hold)
 	{
 		turboChargeTime += DELTATIME;
-		if (UserInput::GetInputState(Down) == Detach)
+		//初めてターボ準備中
+		if (!isTurboReserve)
 		{
-			isTurboReserve = false;
+			isTurbo = false;
+			//チャージ中バーナーに変更して終了
+			StopEffekseer3DEffect(defaultBurnerEffect);
+			chargeBurnerEffect = EffectManager::GetPlayEffect3D(chargeBurner);
+			isTurboReserve = true;
+		}
+		return 0;
+	}
+	else if (UserInput::GetInputState(Down) == Detach)//離すとターボ
+	{
+		isTurboReserve = false;
+		
+		turboChargeTime = turboChargeTime > speedParamator.turboTime ? speedParamator.turboTime : turboChargeTime;
+		turboTimer = new Timer(turboChargeTime);
+		//初めて加速するときは
+		if (!isTurbo)
+		{
 			isTurbo = true;
-			turboChargeTime = turboChargeTime > speedParamator.turboTime ? speedParamator.turboTime : turboChargeTime;
-			turboTimer = new Timer(turboChargeTime);
+			StopEffekseer3DEffect(chargeBurnerEffect);
+			turboBurnerEffect = EffectManager::GetPlayEffect3D(turboBurner);
 		}
 	}
-	//ターボ期間中ずっとターボ
+	//ターボ期間中
 	if (isTurbo)
 	{
-		if (!turboTimer->IsOverLimitTime())
+		if (turboTimer != nullptr && !turboTimer->IsOverLimitTime())//加速
 		{
 			return turboTimer->GetRemainingTime() * speedParamator.turboAddSpeed;
 		}
@@ -357,7 +360,7 @@ float PlayerCar::GetTurboPower()
 /// <param name="pos"></param>
 /// <param name="dir"></param>
 /// <param name="effectKind"></param>
-void PlayerCar::UpdateEffe(int* playEffect, VECTOR pos, VECTOR dir, EffectKind effectKind)
+void PlayerCar::UpdateEffect(int* playEffect, VECTOR pos, VECTOR dir, EffectKind effectKind)
 {
 	//エフェクトが出てなかったら出す
 	if (*playEffect == -1 || IsEffekseer3DEffectPlaying(*playEffect))
@@ -373,6 +376,18 @@ void PlayerCar::UpdateEffe(int* playEffect, VECTOR pos, VECTOR dir, EffectKind e
 	else
 	{
 		SetRotationPlayingEffekseer3DEffect(*playEffect, dir.x, dir.y, dir.z); 
+	}
+}
+/// <summary>
+/// エフェクトを消去
+/// </summary>
+/// <param name="effectHandle">消したいエフェクト</param>
+void PlayerCar::DeleteEffect(int effectHandle)
+{
+	if (effectHandle != -1)
+	{
+		StopEffekseer3DEffect(effectHandle);
+		effectHandle = -2;
 	}
 }
 

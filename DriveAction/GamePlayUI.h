@@ -1,24 +1,24 @@
 #pragma once
 #include <iostream>
 #include <memory>
-#include <list>
-
+#include "UIManager.h"
 class MiniMap;
 class TimerUI;
 class Timer;
 class NumUI;
-class HitCountObserver;
+class ObjectObserver;
 class EndCountDown;
 class Player;
 class EnemyGenerator;
 class CollectSign;
+class PlayManual;
 /// <summary>
 /// 遊んでいるときのUI
 /// </summary>
 class GamePlayUI final
 {
 public:
-    GamePlayUI(Timer* setTimer,std::weak_ptr<HitCountObserver> player);
+    GamePlayUI(Timer* setTimer ,std::weak_ptr<ObjectObserver> player);
 
     ~GamePlayUI();
     /// <summary>
@@ -59,7 +59,9 @@ private:
     //カウントダウン
     EndCountDown* countDown;
     //プレイヤーの位置とか収集アイテムの所得数などを教えてくれる奴
-    std::weak_ptr<HitCountObserver> playerObserver;
+    std::weak_ptr<ObjectObserver> playerObserver;
     //収集アイテムの方向とかを教えてくれる
     CollectSign* cSign;
+    //プレイヤーの操作方法
+    PlayManual* playManual;
 };

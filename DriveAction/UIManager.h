@@ -22,6 +22,8 @@ namespace UIInit
         damageScore = 17,
         //ダメージを受けると減少するスコア
         damageScoreNum = 20,
+        //収集アイテムの最初の数についてのUI
+        allCollectItemNum = 23,
         //操作説明
         manual = 26,
         //小数点
@@ -40,8 +42,6 @@ namespace UIInit
         totalScore = 47,
         //合計スコア
         totalScoreNum = 50,
-        //収集アイテムの最初の数についてのUI
-        allCollectItemNum = 23,
         //収集アイテムのもうゲットした数について
         getCollectItemNum = 53,
         //残り時間
@@ -84,7 +84,23 @@ namespace UIInit
         chargeManual = 110,
         //ターボ説明マニュアル
         turboManual = 113,
+        //左ボタン
+        leftButton = 116,
+        //右のボタン
+        rightButton = 119,
+        //下ボタン
+        downButton = 122,
+        //ゲーム終了アナウンス
+        finishAnnounce = 125,
+        //タイトルに戻るボタン
+        returnTitleBottonUI = 128,
+        //操作方法の後ろに置いておくシート
+        playManualSheat = 131,
+        //タイトルでステージを決定するときのボタン
+        stageSelectButton=134
+
     };
+
     /// <summary>
     /// UIの初期化情報　数字は読み込み段数
     /// </summary>
@@ -151,7 +167,7 @@ public:
      //読み込んだ情報
     static std::vector<std::string> initDataVec;
     //読み込んだ画像
-    static std::unordered_map<int,int*> loadGraphs;
+    static std::unordered_map<int,UIData> loadUIDataMap;
     //uiの情報を纏めておいてあるファイル
     const std::string initUIDataPassFile = "data/UI/InitUIPass.csv";
 };

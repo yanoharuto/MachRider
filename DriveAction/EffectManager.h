@@ -31,6 +31,12 @@ namespace EffectInit
         burner = 35,
         //車が速くなる前に出すエフェクト
         turboCourse = 38,
+        //勝利後の紙吹雪
+        confetti = 41,
+        //ターボ前段階のバーナーエフェクト
+        chargeBurner = 44, 
+        //高速移動中のバーナー
+        turboBurner = 47
     };
     enum EffectInitData
     {

@@ -170,7 +170,6 @@
     <ClCompile Include="ActorController.cpp" />
     <ClCompile Include="Actor.cpp" />
     <ClCompile Include="ActorControllerManager.cpp" />
-    <ClCompile Include="ArgumentConflictResultInfo.cpp" />
     <ClCompile Include="AssetManager.cpp" />
     <ClCompile Include="BigRadiusLaser.cpp" />
     <ClCompile Include="BigRadiusLaserController.cpp" />
@@ -207,7 +206,7 @@
     <ClCompile Include="MeshCollider.cpp" />
     <ClCompile Include="NumUI.cpp" />
     <ClCompile Include="Player.cpp" />
-    <ClCompile Include="RaceMenu.cpp" />
+    <ClCompile Include="PlayManual.cpp" />
     <ClCompile Include="RaceScreen.cpp" />
     <ClCompile Include="RankingData.cpp" />
     <ClCompile Include="Rock.cpp" />
@@ -239,6 +238,7 @@
     <ClCompile Include="TimerUI.cpp" />
     <ClCompile Include="TitleCamera.cpp" />
     <ClCompile Include="TitleDemo.cpp" />
+    <ClCompile Include="UIDrawer.cpp" />
     <ClCompile Include="UIManager.cpp" />
     <ClCompile Include="UpDownFlyShipCommander.cpp" />
     <ClCompile Include="UpDownLaserFlyShip.cpp" />
@@ -311,7 +311,7 @@
     <ClInclude Include="NumUI.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="ObjPosAndDir.h" />
-    <ClInclude Include="RaceMenu.h" />
+    <ClInclude Include="PlayManual.h" />
     <ClInclude Include="RaceScreen.h" />
     <ClInclude Include="RankingData.h" />
     <ClInclude Include="Rock.h" />
@@ -350,6 +350,7 @@
     <ClInclude Include="TimerUI.h" />
     <ClInclude Include="TitleCamera.h" />
     <ClInclude Include="TitleDemo.h" />
+    <ClInclude Include="UIDrawer.h" />
     <ClInclude Include="UpDownFlyShipCommander.h" />
     <ClInclude Include="UpDownLaserFlyShip.h" />
     <ClInclude Include="PlaySceneFlow.h" />

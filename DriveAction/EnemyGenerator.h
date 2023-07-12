@@ -23,10 +23,19 @@ public:
     EnemyGenerator();
 
     ~EnemyGenerator() {};
-
-    void GetActorControllerVector(ActorControllerManager* controllerManager);
+    /// <summary>
+    /// 引数のマネージャーに纏めて動かすやつを渡していく
+    /// </summary>
+    /// <param name="controllerManager"></param>
+    void CreateEnemy(ActorControllerManager* controllerManager);
     
 private:
+    /// <summary>
+    /// 敵機を纏めて動かす奴を作成
+    /// </summary>
+    /// <param name="kind"></param>
+    /// <param name="generatePosMap"></param>
+    /// <param name="controllerManager"></param>
     void CreateActorController(InitObjKind kind, std::unordered_map<int, std::vector<VECTOR>> generatePosMap, ActorControllerManager* controllerManager);
     //ステージに配置されるアイテムの最大数
     int totalCollectNum = 0;

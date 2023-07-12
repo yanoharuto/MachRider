@@ -105,24 +105,31 @@ void PlaySceneFlow::Update()
 /// </summary>
 void PlaySceneFlow::Draw()const
 {
+
 	//描画処理
 	switch (nowProgress)
 	{
+		//スタート前のカウントダウン
 	case PlaySceeneProgress::start:
 		UseShadowMapDraw();
+		//エフェクト
 		DrawEffekseer3D();
 		DrawEffekseer2D();
 		racePrevProccess->Draw();
 		screen->ScreenUpdate();
 		break;
+		//遊んでいるとき
 	case PlaySceeneProgress::game:
 		UseShadowMapDraw();
+		//エフェクト
 		DrawEffekseer3D();
 		DrawEffekseer2D();
 		playerUI->Draw();
 		screen->ScreenUpdate();
 		break;
+		//スコアの描画
 	case PlaySceeneProgress::playerGoal:
+
 		postGoalStaging->Draw();
 		break;
 	}
@@ -140,7 +147,7 @@ void PlaySceneFlow::DrawManagers()const
 	if (nowProgress != PlaySceeneProgress::playerGoal)
 	{
 		controllerManager->Draw();
-		conflictManager->DrawCollisionSphere();
+		//conflictManager->DrawCollisionSphere();
 	}
 	
 }
@@ -171,9 +178,8 @@ void PlaySceneFlow::GameUpdate()
 	//ゲーム終了
 	if (gameLimitTimer->IsOverLimitTime() || CollectController::IsEndingChallenge())
 	{
-		ResultScore::FixScore(gameLimitTimer, player);
 		nowProgress = PlaySceeneProgress::playerGoal;		
-		postGoalStaging = new PostGoalStaging();
+		postGoalStaging = new PostGoalStaging(gameLimitTimer,player);
 	}
 }
 /// <summary>

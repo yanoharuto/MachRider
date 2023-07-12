@@ -19,6 +19,8 @@ public:
 private:
     //プレイヤーの位置や向きを取ってくる
     std::weak_ptr<ObjectObserver> playerObserver;
-    //エフェクトを出す
+    //エフェクトハンドル
     int signEffect;
+    //エフェクトのY座標
+    const float addYPos=30;
 };

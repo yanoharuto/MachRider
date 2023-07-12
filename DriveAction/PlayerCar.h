@@ -30,6 +30,7 @@ public:
 	/// </summary>
 	/// <param name="conflictInfo"></param>
 	void ConflictProccess(ConflictExamineResultInfo conflictInfo)override;
+
 private:
 	/// <summary>
 	/// 加速用ベクトルを作る
@@ -47,7 +48,7 @@ private:
 	/// <summary>
 	/// 走っているときのエフェクトを更新
 	/// </summary>
-	void EffectUpdate();
+	void UpdateEffects();
 	/// <summary>
 	/// ダメージを受けた時のリアクション
 	/// </summary>
@@ -74,11 +75,16 @@ private:
 	/// <param name="pos"></param>
 	/// <param name="dir"></param>
 	/// <param name="effectKind"></param>
-	void UpdateEffe(int* playEffect,VECTOR pos,VECTOR dir,EffectKind effectKind);
+	void UpdateEffect(int* playEffect,VECTOR pos,VECTOR dir,EffectKind effectKind);
+	/// <summary>
+	/// エフェクトを消去
+	/// </summary>
+	/// <param name="effectHandle">消したいエフェクト</param>
+	void DeleteEffect(int effectHandle);
 	//高さ
 	const float setFirstPosY = 6.0f;
 	//走っているときに出るエフェクト
-	int turboEffect = -1;
+	int windEffect = -1;
 	//ぶつかった時のエフェクト
 	int clashEffect = -1;
 	//急加速中
@@ -87,16 +93,18 @@ private:
 	bool isTurboReserve = false;
 	//加速チャージタイム
 	float turboChargeTime;
-	//ターボ準備で押した左右キーを保存する
-	KeyInputKind turboKey;
 	//ぶつかった時に出てくるエフェクト
 	int stageConflictEffect = -1;
 	//ダメージを受けた時のエフェクト
 	int damageEffect = -1;
 	//ターボ準備中に出るエフェクト
 	int turboCourceEffect = -1;
-	//後ろの炎
-	int burnerEffect = -1;
+	//通常時の後ろの炎
+	int defaultBurnerEffect = -1;
+	//チャージ中の後ろの炎
+	int chargeBurnerEffect = -1;
+	//加速中の後ろの炎
+	int turboBurnerEffect = -1;
 	//曲がったりするときに傾く速度
 	const float twistZRotaSpeed = 1.7f * RAGE;
 	//最大傾き度

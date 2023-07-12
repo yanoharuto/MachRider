@@ -55,7 +55,7 @@ void ActorControllerManager::Update()
     }
     //さっきの処理でオブジェクトが増やしたアイテムを取ってくる
     damageObjGenerator->MoveControllerList(this);
-    enemyGenerator->GetActorControllerVector(this);
+    enemyGenerator->CreateEnemy(this);
 }
 /// <summary>
 /// ゲーム開始前更新
@@ -66,6 +66,9 @@ void ActorControllerManager::GameReserve()
     {
         (*objIte)->GameReserve();
     }
+    //さっきの処理でオブジェクトが増やしたアイテムを取ってくる
+    damageObjGenerator->MoveControllerList(this);
+    enemyGenerator->CreateEnemy(this);
 }
 /// <summary>
 /// 各アクターの描画

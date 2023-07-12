@@ -23,16 +23,15 @@ StageObjectController::StageObjectController(FirstPositionGetter* firstPosGetter
     param = InitActor::GetActorParamator(skyDome);
     skyDomeModelHandle = param.modelHandle;
     MV1SetScale(skyDomeModelHandle, VGet(param.setModelSize, param.setModelSize, param.setModelSize));
-    //岩を配置する
-    auto rocksFirstPos = firstPosGetter->GetFirstPositionLoad(FirstPositionDataKind::rockPosition);
-    for (int i = 0; i < rocksFirstPos.size(); i++)
-    {
-        for (int j = 0; j < rocksFirstPos[i].size(); j++)
-        {
-            actorList .push_back(new Rock(rocksFirstPos[i][j], i));
-        }
-
-    }
+    ////岩を配置する
+    //auto rocksFirstPos = firstPosGetter->GetFirstPositionLoad(FirstPositionDataKind::rockPosition);
+    //for (int i = 0; i < rocksFirstPos.size(); i++)
+    //{
+    //    for (int j = 0; j < rocksFirstPos[i].size(); j++)
+    //    {
+    //        actorList .push_back(new Rock(rocksFirstPos[i][j], i));
+    //    }
+    //}
     actorList.push_back(new StageWall());
 }
 

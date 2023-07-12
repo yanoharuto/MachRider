@@ -4,7 +4,6 @@
 #include "StageSelect.h"
 #include "SpaceKeyUI.h"
 #include "SoundPlayer.h"
-#include "UIManager.h"
 #include "UserInput.h"
 #include "FadeInFadeOut.h"
 #include "TitleDemo.h"

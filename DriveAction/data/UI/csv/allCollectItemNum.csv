@@ -1,7 +1,7 @@
 ﻿ drawX
-1880
+1900
  drawY
-410
+82
  width
 800
  height
@@ -13,6 +13,6 @@
 graphPass
 data/UI/image/NumFont.png
 size
-1
+0.8
 frameSpeed
 0

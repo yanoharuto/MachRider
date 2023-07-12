@@ -9,7 +9,7 @@ data/model/Saw/Saw.mv1
 10
     //modelの当たり半径
     collRadius = 11
-130
+160
     //跳ね返りの大きさ
     bouncePower = 14
 1.2

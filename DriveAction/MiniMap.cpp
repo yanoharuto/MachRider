@@ -3,6 +3,7 @@
 #include "OriginalMath.h"
 #include "ObjectObserver.h"
 #include "Object.h"
+#include "Utility.h"
 //自機のIconの大きさ
 const int MiniMap::iconSize;
 //ミニマップの画像の横幅
@@ -34,7 +35,12 @@ MiniMap::MiniMap(std::weak_ptr<ObjectObserver> player)
 
 MiniMap::~MiniMap()
 {
-
+    //描画するリストを全消し
+    for (auto itr = markerObserverList.begin(); itr != markerObserverList.end(); itr++)
+    {
+        SAFE_DELETE((*itr));
+    }
+    markerObserverList.clear();
 }
 /// <summary>
 /// 収集アイテムの位置を更新

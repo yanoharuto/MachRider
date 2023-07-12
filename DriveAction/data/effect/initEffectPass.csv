@@ -37,3 +37,12 @@ data/effect/burner.csv
         //車が速くなる前に出すエフェクト
         turboCourse=38
 data/effect/turboSign.csv
+        //勝利後の紙吹雪
+        confetti=41
+data/effect/confetti.csv
+        //ターボ前段階のバーナーエフェクト
+        chargeBurner=44
+data/effect/chargeBurner.csv
+        //高速移動中のバーナー
+        turboBurner = 47
+data/effect/turboBurner.csv

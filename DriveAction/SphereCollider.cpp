@@ -18,9 +18,13 @@ ConflictExamineResultInfo SphereCollider::HitCheck(HitCheckExamineObjectInfo hit
     if (HitChecker::HitCheck(object, hitCheckInfo))
     {
         VECTOR betweenDir = VNorm(VSub(object->GetPos(), hitCheckInfo.pos));//二つのオブジェクトの距離の向き
+        //吹っ飛ぶ方向
         resultInfo.bounceVec = VSub(hitCheckInfo.velocity ,VScale(betweenDir, VDot(hitCheckInfo.velocity, betweenDir) * 2));
+        //吹っ飛んだ位置
         resultInfo.pos = VAdd(hitCheckInfo.pos,resultInfo.bounceVec);
+        //当たったかどうか
         resultInfo.hit = HitSituation::Enter;
+        //残りを設定
         resultInfo.SetObjInfo(object);
     }
     return resultInfo;

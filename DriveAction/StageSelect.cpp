@@ -1,5 +1,7 @@
 #include "StageSelect.h"
 #include "UserInput.h"
+#include "UIDrawer.h"
+#include "Utility.h"
 /// <summary>
 /// ステージごとに必要なアセットのアドレスが
 /// 書いてあるファイルの
@@ -11,6 +13,7 @@ StageSelect::StageSelect()
 {
     stageNum = 0;
     stageNameData = UIManager::CreateUIData(stageName);
+    selectButtonData = UIManager::CreateUIData(stageSelectButton);
 }
 /// <summary>
 /// 遊ぶステージ変更するときに使う
@@ -19,7 +22,7 @@ StageSelect::StageSelect()
 void StageSelect::Update()
 {
     //上下に押したら変更
-    if (UserInput::GetInputState(Up) == Push)
+    if (UserInput::GetInputState(Down) == Push)
     {
         stageNum++;
         if (stageNum >= dataLoader.size())
@@ -27,7 +30,7 @@ void StageSelect::Update()
             stageNum = 0;
         }
     }
-    else if (UserInput::GetInputState(Down) == Push)
+    else if (UserInput::GetInputState(Up) == Push)
     {
         stageNum--;
         if (stageNum < 0)
@@ -35,6 +38,7 @@ void StageSelect::Update()
             stageNum = dataLoader.size() - 1;
         }
     }
+    //選んでいるステージのアドレスを保存
     fileAddres = dataLoader[stageNum];
 }
 /// <summary>
@@ -42,5 +46,19 @@ void StageSelect::Update()
 /// </summary>
 void StageSelect::Draw() const
 {
-    DrawGraph(stageNameData.x, stageNameData.y, stageNameData.dataHandle[stageNum], true);
+    UIData data = stageNameData;
+    for (int i = 0; i < data.dataHandle.size(); i++)
+    {
+        if (i == stageNum)
+        {
+            data.x -= data.width / 2;
+        }
+        else
+        {
+            data.x = stageNameData.x;
+        }
+        UIDrawer::DrawRotaUI(data, i);
+        data.y += data.height;
+    }
+    UIDrawer::DrawRotaUI(selectButtonData);
 }

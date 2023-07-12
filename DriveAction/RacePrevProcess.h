@@ -5,6 +5,7 @@
 class NumUI;
 class Timer;
 class CountDown;
+class PlayManual;
 /// <summary>
 /// レース前の処理やってくれる
 /// </summary>
@@ -30,7 +31,7 @@ private:
     //収集物のアイコン
     UIData collectIconData;
     //操作説明のUI
-    UIData manualData;
+    PlayManual* playManual;
     //ゲームの目標
     UIData gamePuroseData;
     //収集アイテムの集める数

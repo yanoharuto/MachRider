@@ -11,7 +11,7 @@ StageWall::StageWall()
     position = setFirstPos;
     MV1SetPosition(modelHandle, VGet(0, 0, 0));
     MV1SetScale(modelHandle, VGet(modelSize,modelSize,modelSize));
-    wallCollider = new WallCollider(this, stageBiggestSize, stageSmallestSize);
+    wallCollider = new WallCollider(this, stageSmallestSize, stageBiggestSize);
 }
 
 StageWall::~StageWall()

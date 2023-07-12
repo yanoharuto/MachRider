@@ -21,7 +21,7 @@ struct ConflictExamineResultInfo
     float radius = 0;//半径
     float bouncePower = 0;//吹っ飛び力
     /// <summary>
-    /// 引数のオブジェクトから情報を作成
+    /// tagや半径　吹っ飛び力を設定
     /// </summary>
     /// <param name="hit">当たり判定で当たったか</param>
     /// <param name="obj">作りたい情報のオブジェクト</param>

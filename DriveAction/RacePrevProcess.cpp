@@ -7,7 +7,7 @@
 #include "NumUI.h"
 #include "CollectController.h"
 #include "UIDrawer.h"
-
+#include "PlayManual.h"
 /// <summary>
 /// ƒŒ[ƒX‘O‚Ìˆ—‚â‚Á‚Ä‚­‚ê‚é
 /// </summary>
@@ -17,7 +17,7 @@ RacePrevProcess::RacePrevProcess()
     SoundPlayer::Play2DSE(fanfare);
     gamePuroseData = UIManager::CreateUIData(gamePurose);
     collectIconData = UIManager::CreateUIData(collectIcon);
-    manualData = UIManager::CreateUIData(manual);
+    playManual = new PlayManual();
     collectItemNum = new NumUI(collectTargetNumberUI);
     frameByFrameTimer = new Timer(gamePuroseData.frameSpeed);
     fadeValue = MAX1BYTEVALUE;
@@ -84,7 +84,7 @@ void RacePrevProcess::Draw() const
         {
             countDown->DrawUI();
         }
-        UIDrawer::DrawRotaUI(manualData);
+        playManual->Draw();
     }
 }
 

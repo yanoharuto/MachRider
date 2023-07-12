@@ -28,5 +28,7 @@ private:
     int stageNum;
     //選んでいるステージの名前を表示
     UIData stageNameData;
+    //ステージを決定するときのボタンを表示
+    UIData selectButtonData;
 };
 

@@ -1,7 +1,7 @@
 ﻿ drawX
-600
+1620
  drawY
-700
+520
  width
 360
  height
@@ -13,6 +13,6 @@
 graphPass
 data/UI/image/StageNames.png
 scale
-9
+0.8
 frameSpeed
 0

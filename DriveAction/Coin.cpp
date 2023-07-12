@@ -38,6 +38,15 @@ Coin::~Coin()
         ConflictManager::EraceConflictObjInfo(collider);
         SAFE_DELETE(collider);
     }
+    //エフェクト終了
+    if (IsEffekseer3DEffectPlaying(coinAuraEffect) != -1)
+    {
+        StopEffekseer3DEffect(coinAuraEffect);
+    }
+    if (IsEffekseer3DEffectPlaying(coinGetEffect) != -1)
+    {
+        StopEffekseer3DEffect(coinGetEffect);
+    }
 }
 /// <summary>
 /// くるくる回転
@@ -65,10 +74,10 @@ void Coin::Update()
         }
     }
     //コインの出すオーラが途切れたら再開させる
-    if (!IsEffekseer3DEffectPlaying(coinAuraEffect) || coinAuraEffect == -1)
+    if (IsEffekseer3DEffectPlaying(coinAuraEffect) == -1)
     {
         coinAuraEffect = EffectManager::GetPlayEffect3D(collectAura);
-        SetPosPlayingEffekseer3DEffect(coinAuraEffect, position.x, position.y, position.z);
+        SetPosPlayingEffekseer3DEffect(coinAuraEffect, position.x, position.y - radius, position.z);
     }
     ReflectsVelocity();
 }

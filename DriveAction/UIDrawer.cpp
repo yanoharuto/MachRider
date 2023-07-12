@@ -22,6 +22,7 @@
  /// <returns>Ž¸”s‚·‚é‚Æfalse</returns>
 bool UIDrawer::DrawRotaUI(UIData data, int gHIndex, float angle, bool trans)
 {
+    gHIndex = gHIndex % data.dataHandle.size();
    int success = DrawRotaGraph(data.x * widthRaito, data.y * heightRaito, data.size * screenSizeRaito, angle, data.dataHandle[gHIndex], trans);
    return success != -1;
 }

@@ -3,5 +3,5 @@ length,6000
     rockFilePass,data/stageData/stage1/stage_Map_rocks.csv
     challengesListFilePass,data/stageData/stage1/challengeList.csv
     playerPositionFilePass,data/stageData/stage1/stage_Map_player_firstPos.csv
-time,45
+time,75
 scoreRanking,data/stageData/stage1/stageScore.csv

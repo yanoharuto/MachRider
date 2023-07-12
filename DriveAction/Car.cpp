@@ -14,7 +14,7 @@
 // なにもしない時の減速.
 const float Car::defaultDecel = 0.01f;
 // 障害物にぶつかったときの減速率.
-const float Car:: colideDecel = 0.01f;
+const float Car:: colideDecel = 0.08f;
 // グリップの減速.
 const float Car::gripDecel = 0.2f;
 /// <summary>
@@ -109,7 +109,8 @@ void Car::ReflectsVelocity()
 	//ぶつかった時の衝撃で移動
 	if (collVecDecelTimer != nullptr)
 	{
-		position = VAdd(position, VScale(collVec, collVecDecelTimer->GetRemainingTime()));
+		velocity = VScale(collVec, collVecDecelTimer->GetRemainingTime());
+		position = VAdd(position, velocity);
 		if (collVecDecelTimer->IsOverLimitTime())
 		{
 			SAFE_DELETE(collVecDecelTimer);

@@ -35,7 +35,8 @@ void CollectSign::Update()
         }
         //エフェクトはプレイヤーの足元に表示
         VECTOR pos = playerObserver.lock()->GetSubjectPos();
-        SetPosPlayingEffekseer3DEffect(signEffect, pos.x, 0, pos.z);
+        pos.y += addYPos;
+        SetPosPlayingEffekseer3DEffect(signEffect, pos.x, pos.y, pos.z);
         //方向を設定
         float degree = OriginalMath::GetDegreeMisalignment(VGet(1, 0, 0), CollectController::GetBetween(pos));
         if (VCross(VGet(1, 0, 0), CollectController::GetBetween(pos)).y < 0)

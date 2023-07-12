@@ -41,7 +41,7 @@ public:
 	/// 移動する前のポジションを渡す
 	/// </summary>
 	/// <returns></returns>
-	HitCheckExamineObjectInfo GetHitCheckExamineInfo() override;
+	virtual HitCheckExamineObjectInfo GetHitCheckExamineInfo() override;
 
 protected:
 	/// <summary>

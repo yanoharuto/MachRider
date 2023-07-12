@@ -26,8 +26,8 @@ private:
     //行動範囲
     WallCollider* wallCollider;
     //マップの端１
-    VECTOR stageBiggestSize = { -3150,0,-2850 };
+    VECTOR stageBiggestSize = { 2850,0,3150 };
     //マップの端2
-    VECTOR stageSmallestSize = { 2850,0,3150 };
+    VECTOR stageSmallestSize = { -3150,0,-2850 } ;
 };
 
