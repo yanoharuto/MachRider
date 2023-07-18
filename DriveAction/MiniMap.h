@@ -29,12 +29,13 @@ public:
     /// <param name="obserber"></param>
     static void AddMarker(ObjectObserver* obserber);
 private:
+
     /// <summary>
-    /// ゲームの３D マップのサイズに合わせて
+    /// ミニマップの大きさに変換する
     /// </summary>
-    /// <param name="pos"></param>
+    /// <param name="between">中央のアイテムからの距離</param>
     /// <returns></returns>
-    static VECTOR ConvertPosition(VECTOR pos);
+    VECTOR ConvertPosition(VECTOR between);
     //プレイヤーのマーカーの色
     const unsigned int playerColor = GetColor(255,0,0);
     //収集物の色
@@ -44,15 +45,9 @@ private:
     //ミニマップの画像の横幅
     static int mapGraphWidth;
     //ミニマップの画像の縦幅
-    static int mapGraphHeight;
-    //マップの大きさ
-    static const float mapSize;
+    static int mapGraphLength;
     //収集物の位置の縮尺
-    static const float collectBetween;
-    //マップの大きさの係数
-    static float mapSizeCoefficient;
-    //回転度合い
-    float mapRotate = 0;
+    static const float betweenSize;
     //ミニマップ
     static UIData miniMap;
     //マップの中心軸にする

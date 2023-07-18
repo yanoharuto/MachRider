@@ -3,14 +3,14 @@
 #include "DxLib.h"
 StopWatch::StopWatch()
 {
-    tempRunTime = 0;
+    runTime = 0;
     startTime = 0;
     stopFlag = true;
 }
 
 StopWatch::~StopWatch()
 {
-    tempRunTime = 0;
+    runTime = 0;
     startTime = 0;
 }
 
@@ -24,17 +24,17 @@ void StopWatch::Stop()
 {
     if (!stopFlag)
     {
-        tempRunTime += Clock::GetNowGameTime() - startTime;
+        runTime += Clock::GetNowGameTime() - startTime;
     }
     stopFlag = true;
 }
 
 void StopWatch::Reset()
 {
-    tempRunTime = 0;
+    runTime = 0;
 }
 
 double StopWatch::GetRunTime()
 {
-    return tempRunTime + Clock::GetNowGameTime() - startTime;
+    return runTime + Clock::GetNowGameTime() - startTime;
 }

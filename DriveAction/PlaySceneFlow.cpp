@@ -19,6 +19,7 @@
 #include "Menu.h"
 #include "FadeInFadeOut.h"
 #include "CollectController.h"
+#include "ReusableTimer.h"
 /// <summary>
 /// ゲームしているときの流れ
 /// </summary>
@@ -36,7 +37,7 @@ PlaySceneFlow::PlaySceneFlow()
 	//収集アイテムコントローラーを追加
 	controllerManager->AddActorController(new CollectController());
 	//ゲーム終了タイマー
-	gameLimitTimer = new Timer(stageInitializer->GetGameTime());
+	gameLimitTimer = new ReusableTimer(stageInitializer->GetGameTime());
 	//UIを追加
 	playerUI = new GamePlayUI(gameLimitTimer, player);
 	//カメラ
@@ -217,6 +218,6 @@ void PlaySceneFlow::StartUpdate()
 	{
 		nowProgress = PlaySceeneProgress::game;
 		SoundPlayer::Play2DSE(playBGM);
-		gameLimitTimer->Init();
+		gameLimitTimer->Reuse();
 	}
 }

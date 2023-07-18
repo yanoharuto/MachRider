@@ -4,18 +4,17 @@
 #include "ObjectObserver.h"
 #include "Object.h"
 #include "Utility.h"
+#include "UIDrawer.h"
+#include "StageWall.h"
 //自機のIconの大きさ
 const int MiniMap::iconSize;
 //ミニマップの画像の横幅
 int MiniMap::mapGraphWidth;
 //ミニマップの画像の縦幅
-int MiniMap::mapGraphHeight;
-//マップの大きさ
-const float MiniMap::mapSize = 420;
+int MiniMap::mapGraphLength;
 //収集物の位置の縮尺
-const float MiniMap::collectBetween = 0.3f;
-//マップの大きさの係数
-float MiniMap::mapSizeCoefficient = 0;
+const float MiniMap::betweenSize = 0.3f;
+
 //ミニマップに表示する点
 std::list<ObjectObserver*> MiniMap::markerObserverList;
 //ミニマップのデータ
@@ -27,9 +26,8 @@ MiniMap::MiniMap(std::weak_ptr<ObjectObserver> player)
 {
     miniMap = UIManager::CreateUIData(radar);
     
-    GetGraphSize(miniMap.dataHandle[0], &mapGraphWidth, &mapGraphHeight);
-    //マップの大きさを一定にする
-    mapSizeCoefficient = mapSize / mapGraphWidth;
+    GetGraphSize(miniMap.dataHandle[0], &mapGraphWidth, &mapGraphLength);
+
     playerObserver = player;
 }
 
@@ -48,26 +46,25 @@ MiniMap::~MiniMap()
 /// <param name="objInfo"></param>
 void MiniMap::Update()
 {
-    mapRotate = OriginalMath::GetDegreeMisalignment(VGet(1, 0, 0), playerObserver.lock()->GetSubjectDir()) * RAGE;
-    //プレイヤーの車の向きに合わせる
-    mapRotate = VCross(VGet(1, 0, 0), playerObserver.lock()->GetSubjectDir()).y < 0 ? -mapRotate : mapRotate;
-
+    //プレイヤーがマップの中心になるようにする
     VECTOR playerPos = playerObserver.lock()->GetSubjectPos();
     playerPos.y = 0;
+    //今動いている収集アイテムだけマップに反映
     drawPosList.clear();
-    //収集アイテムのリストをマップに反映できるようにする
     for (auto ite = markerObserverList.begin(); ite != markerObserverList.end(); ite++)
     {
         //アクティブなオブジェクトをマップに反映
         if ((*ite)->GetSubjectState() == Object::active)
         {
-            VECTOR pos = VScale(VSub((*ite)->GetSubjectPos(), playerPos), collectBetween);
-            //マップの大きさに入っているなら
-            if (VSize(pos) < mapGraphWidth)
+            VECTOR itePos = (*ite)->GetSubjectPos();
+            VECTOR distance = VSub(itePos, playerPos);
+            distance.y = 0;
+
+            if (VSize(distance) * betweenSize < miniMap.width * miniMap.size)
             {
-                OriginalMath::GetYRotateVector(pos, mapRotate);
-                pos = ConvertPosition(pos);
-                drawPosList.push_back(pos);
+                distance = ConvertPosition(distance);
+                
+                drawPosList.push_back(distance);
             }
         }
     }
@@ -78,7 +75,7 @@ void MiniMap::Update()
 void MiniMap::Draw()const
 {
     //枠描画
-    DrawRotaGraph(miniMap.x, miniMap.y, mapSizeCoefficient, 0, miniMap.dataHandle[0], true);
+    UIDrawer::DrawRotaUI(miniMap);
     //プレイヤーアイコンの描画
     DrawCircle(miniMap.x, miniMap.y, iconSize, playerColor, 1, 1);
     //収集アイテムの描画
@@ -96,11 +93,25 @@ void MiniMap::AddMarker(ObjectObserver* obserber)
 {
     markerObserverList.push_back(obserber);
 }
-
-VECTOR MiniMap::ConvertPosition(VECTOR pos)
+/// <summary>
+/// ミニマップの大きさに変換する
+/// </summary>
+/// <param name="between">中央のアイテムからの距離</param>
+/// <returns></returns>
+VECTOR MiniMap::ConvertPosition(VECTOR between)
 {
+    //マップの中央物の向きとマーカーの位置の角度差
+    float rotate = OriginalMath::GetDegreeMisalignment(between, playerObserver.lock()->GetSubjectDir());
+    //右側か左側か
+    rotate = VCross(between, playerObserver.lock()->GetSubjectDir()).y < 0 ? -rotate : rotate ;
+    //角度分曲がっている行列で距離を曲げる
+    MATRIX pM = MGetRotY(-rotate * RAGE);
+    between = VTransform(VGet(0, 0, -VSize(between)), pM);
+    //ミニマップの大きさに変換
+    float wSize = mapGraphWidth / StageWall::GetStageWidth();
+    float lSize = mapGraphLength / StageWall::GetStageLength();
     VECTOR data;
-    data.x = -pos.x * (mapGraphWidth / 2) / 6000 + miniMap.x;
-    data.y = pos.z * (mapGraphHeight / 2) / 6000 + miniMap.y;
+    data.x = -between.x * wSize + miniMap.x;
+    data.y = between.z * lSize + miniMap.y;
     return data;
 }

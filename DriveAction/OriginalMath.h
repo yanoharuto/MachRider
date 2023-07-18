@@ -23,8 +23,8 @@ public:
     /// <summary>
     /// ランダムな値を返す
     /// </summary>
-    /// <param name="min"></param>
-    /// <param name="max"></param>
+    /// <param name="min">最低値</param>
+    /// <param name="max">最大値</param>
     /// <returns></returns>
     static int GetRandom(int min, int max)
     {
@@ -34,26 +34,26 @@ public:
         return dist(engine);
     }
     /// <summary>
-    /// 引数の度数だけ曲がったベクトルを返す
+    /// 引数の度数だけy軸で曲がったベクトルを返す
     /// </summary>
-    /// <param name="rotateVector"></param>
-    /// <param name="degree"></param>
-    /// <returns></returns>
+    /// <param name="rotateVector">曲げたいベクトル</param>
+    /// <param name="degree">曲げたい角度</param>
+    /// <returns>曲げたベクトル</returns>
     static VECTOR GetYRotateVector(VECTOR rotateVector, float degree)
     {
         //六十度ずつ計算する
-        int num = abs(static_cast<int> (degree)) / 60;
-        float rota = 60 * RAGE;
-        VECTOR tempVec = degree > 0 ? VGet(0, 1, 0) : VGet(0, -1, 0);
-        //60度曲がった奴
-        VECTOR addVec = VScale(VNorm(VCross(rotateVector, tempVec)), rota);
+        int num = abs(static_cast<int> (degree)) / 45;
+        float rota = 45 * RAGE;
+        VECTOR crossY = degree > 0 ? VGet(0, 1, 0) : VGet(0, -1, 0);
+        //60度曲がった奴を足していく
+        VECTOR addVec = VScale(VNorm(VCross(rotateVector, crossY)), rota);
         for (int i = 0; i < num; i++)
         {
             rotateVector = VAdd(rotateVector, addVec);
         }
         //最後にForで回せなかった分を計算
         rota = (degree - num * 60) * RAGE;
-        addVec = VScale(VNorm(VCross(rotateVector, tempVec)), rota);
+        addVec = VScale(VNorm(VCross(rotateVector, crossY)), rota);
         rotateVector = VAdd(rotateVector, addVec);
         return rotateVector;
     }

@@ -28,87 +28,39 @@ ConflictExamineResultInfo WallCollider::HitCheck(HitCheckExamineObjectInfo hitCh
     resultInfo.hit = HitSituation::NotHit;
     //速さを足した場合のポジション
     VECTOR nextPos = VAdd(hitCheckInfo.pos, hitCheckInfo.velocity);
-    VECTOR touchPos = nextPos;
-    VECTOR lineVec = nextPos;
+    //処理終了フラグ
     bool isEndProcess = false;
+    //範囲内に戻るまで処理を行う
     while (!isEndProcess)
     {
         isEndProcess = true;
-        //範囲外に出ようとしているなら当たっている
+        //範囲外に出ようとしているなら押し戻す
         if (nextPos.x - hitCheckInfo.radius < firstPos.x)
         {
             resultInfo.hit = HitSituation::Enter;
-            lineVec = VNorm(VCross(firstPos, VGet(0, -1, 0)));
-            lineVec = VScale(lineVec, endPos.z - firstPos.z);
-            VECTOR OB = VSub(nextPos, firstPos);
-            float hValue = fabsf(VDot(OB, lineVec)) / VSize(lineVec);
-            touchPos = VScale(VNorm(lineVec), hValue);
-
-            VECTOR betweenDir = VNorm(VSub(touchPos, hitCheckInfo.pos));//二つのオブジェクトの距離の向き
-            //吹っ飛ぶ方向
-            resultInfo.bounceVec = VSub(hitCheckInfo.velocity, VScale(betweenDir, VDot(hitCheckInfo.velocity, betweenDir) * 2));
-            //吹っ飛んだ位置
-            resultInfo.pos = VAdd(resultInfo.pos, resultInfo.bounceVec);
-            resultInfo.pos = touchPos;
+            nextPos.x = firstPos.x + hitCheckInfo.radius + 1;
             isEndProcess = false;
         }
         else if (nextPos.x + hitCheckInfo.radius > endPos.x)
         {
             resultInfo.hit = HitSituation::Enter;
-            lineVec = VNorm(VCross(endPos, VGet(0, -1, 0)));
-            lineVec = VScale(lineVec, endPos.z - firstPos.z);
-
-            VECTOR OB = VSub(nextPos, endPos);
-            float hValue = fabsf(VDot(OB, lineVec)) / VSize(lineVec);
-            touchPos = VScale(VNorm(lineVec), hValue);
-
-            VECTOR betweenDir = VNorm(VSub(touchPos, hitCheckInfo.pos));//二つのオブジェクトの距離の向き
-            //吹っ飛ぶ方向
-            resultInfo.bounceVec = VSub(hitCheckInfo.velocity, VScale(betweenDir, VDot(hitCheckInfo.velocity, betweenDir) * 2));
-            //吹っ飛んだ位置
-            resultInfo.pos = VAdd(resultInfo.pos, resultInfo.bounceVec);
-            resultInfo.pos = touchPos;
+            nextPos.x = endPos.x - hitCheckInfo.radius - 1;
             isEndProcess = false;
         }
         else if (nextPos.z - hitCheckInfo.radius < firstPos.z)
         {
             resultInfo.hit = HitSituation::Enter;
-
-            lineVec = VNorm(VCross(firstPos, VGet(0, -1, 0)));
-            lineVec = VScale(lineVec, endPos.x - firstPos.x);
-
-            VECTOR OB = VSub(nextPos, firstPos);
-            float hValue = fabsf(VDot(OB, lineVec)) / VSize(lineVec);
-            touchPos = VScale(VNorm(lineVec), hValue);
-
-            VECTOR betweenDir = VNorm(VSub(touchPos, hitCheckInfo.pos));//二つのオブジェクトの距離の向き
-            //吹っ飛ぶ方向
-            resultInfo.bounceVec = VSub(hitCheckInfo.velocity, VScale(betweenDir, VDot(hitCheckInfo.velocity, betweenDir) * 2));
-            //吹っ飛んだ位置
-            resultInfo.pos = VAdd(resultInfo.pos, resultInfo.bounceVec);
-            resultInfo.pos = touchPos;
+            nextPos.z = firstPos.z + hitCheckInfo.radius + 1;
             isEndProcess = false;
         }
         else if (nextPos.z + hitCheckInfo.radius > endPos.z)
         {
             resultInfo.hit = HitSituation::Enter;
-
-            lineVec = VNorm(VCross(endPos, VGet(0, -1, 0)));
-            lineVec = VScale(lineVec, endPos.x - firstPos.x);
-
-            VECTOR OB = VSub(nextPos, endPos);
-            float hValue = fabsf(VDot(OB, lineVec)) / VSize(lineVec);
-            touchPos = VScale(VNorm(lineVec), hValue);
-
-            VECTOR betweenDir = VNorm(VSub(touchPos, hitCheckInfo.pos));//二つのオブジェクトの距離の向き
-            //吹っ飛ぶ方向
-            resultInfo.bounceVec = VSub(hitCheckInfo.velocity, VScale(betweenDir, VDot(hitCheckInfo.velocity, betweenDir) * 2));
-            //吹っ飛んだ位置
-            resultInfo.pos = VAdd(resultInfo.pos, resultInfo.bounceVec);
-            resultInfo.pos = touchPos;
+            nextPos.z = endPos.z - hitCheckInfo.radius - 1;
             isEndProcess = false;
         }
-        nextPos = resultInfo.pos;
+        //吹っ飛んだ位置
+        resultInfo.pos = nextPos;
     }
     return resultInfo;
 }

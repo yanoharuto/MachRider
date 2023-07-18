@@ -2,6 +2,9 @@
 
 //fps
 #define FLAME 60
+/// <summary>
+/// ゲーム内の時間を更新
+/// </summary>
 class Clock
 {
 public:
@@ -11,14 +14,14 @@ public:
     /// タイマーを更新する
     /// </summary>
     void Update();
-
+    /// <summary>
+    /// 1000m秒を普通の秒数にして渡す
+    /// </summary>
+    /// <returns></returns>
     static double GetNowGameTime();
 private:
-
+    //1000m秒
     double timeD;
-    double openMenuTime;
+    //普通の経過秒数
     static double gameTime;
-    static double totalOpenMenuTime;
-    //メニューを開いた時間
-    static double openStartMenuTime;
 };

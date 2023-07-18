@@ -6,6 +6,7 @@ class NumUI;
 class Timer;
 class CountDown;
 class PlayManual;
+class ReusableTimer;
 /// <summary>
 /// レース前の処理やってくれる
 /// </summary>
@@ -37,7 +38,7 @@ private:
     //収集アイテムの集める数
     NumUI* collectItemNum;
     //コマ送り用タイマー
-    Timer* frameByFrameTimer;
+    ReusableTimer* frameByFrameTimer;
     //カウントダウン用のタイマー
     Timer* countDownTimer;
     //ゲームを始める前のカウントダウン

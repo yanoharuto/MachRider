@@ -3,6 +3,7 @@
 #include "EffekseerForDXLib.h"
 #include "CSVFileLoader.h"
 #include "Utility.h"
+#include "UIDrawer.h"
 //エフェクトのハンドルが入るマップ
 std::unordered_map <EffectKind, int> EffectManager:: effectMap;
 //エフェクトのパスが入る文字列
@@ -42,6 +43,7 @@ void EffectManager::LoadEffect(EffectKind kind)
         const char* effectPass = dataVec[EffectInitData::effectPass].c_str();
 
         float size = atof(dataVec[EffectInitData::effectSize].c_str());
+        size *= UIDrawer::GetScreenRaito();
         //エフェクトの読み込みと大きさをセット
         int effectHandle = LoadEffekseerEffect(effectPass, size);
         effectMap.insert(std::make_pair(kind, effectHandle));

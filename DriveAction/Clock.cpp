@@ -2,9 +2,8 @@
 #include "DxLib.h"
 #include "Utility.h"
 #include "Menu.h"
+//普通の経過秒数
 double Clock::gameTime;
-double Clock::totalOpenMenuTime;
-double Clock::openStartMenuTime;
 Clock::Clock()
 {
     // 現在のカウントを取得する
@@ -32,11 +31,10 @@ void Clock::Update()
     // 現在のカウントを取得する
     timeD =  static_cast<double>(GetNowHiPerformanceCount());
     
-    gameTime = timeD / 1000000 - Menu::GetOpenMenuTime();
-    printfDx("GameTime::%f", gameTime);
+    gameTime = timeD / 1000000;
 }
 
 double Clock::GetNowGameTime()
 {
-    return gameTime;
+    return gameTime - Menu::GetOpenMenuTime();
 }

@@ -12,10 +12,6 @@ public:
     /// <param name="setLimitTime"></param>
     Timer(double limitTime);
     ~Timer();
-    ///<summary>
-    ///時間をリセット
-    ///</summary>
-    void Init();
     /// <summary>
     /// 設定時間を過ぎたか
     /// </summary>
@@ -36,7 +32,7 @@ public:
     /// </summary>
     /// <returns></returns>
     double GetRemainingTime()const;
-private:
+protected:
     //制限時間
     double limitTime = 0;
     //計測開始時間

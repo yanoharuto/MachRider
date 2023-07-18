@@ -11,6 +11,7 @@
 #include "ShadowMap.h"
 #include "EnemyGenerator.h"
 #include "EffekseerForDXLib.h"
+#include "ReusableTimer.h"
 /// <summary>
 /// タイトル画面の裏で車を走らせる
 /// </summary>
@@ -23,7 +24,7 @@ TitleDemo::TitleDemo()
     manager->AddActorController(new StageObjectController(firstPosGetter));
     SAFE_DELETE(firstPosGetter);
 
-    initTimer = new Timer(initTime);
+    initTimer = new ReusableTimer(initTime);
     demoCarController = new DemoCarController({ -3200,0,0 }, { 1,0,0.1 });
     manager->AddActorController(demoCarController);
     demoObserver = demoCarController->CreateCarObserver();
@@ -50,7 +51,7 @@ void TitleDemo::Update()
     Effekseer_Sync3DSetting();
     UpdateEffekseer3D();
     UpdateEffekseer2D();
-    //ある程度進んだらデモを最初からにする
+    //タイマーが切れたらデモを最初からにする
     if (initTimer->IsOverLimitTime())
     {
         if (isAValueIncrement)//フェードアウト
@@ -69,7 +70,7 @@ void TitleDemo::Update()
 
             if (fadeValue < 0)
             {
-                initTimer->Init();
+                initTimer->Reuse();//タイマー再利用
                 isAValueIncrement = true;
             }
         }

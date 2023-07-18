@@ -8,6 +8,7 @@
 #include "CollectController.h"
 #include "UIDrawer.h"
 #include "PlayManual.h"
+#include "ReusableTimer.h"
 /// <summary>
 /// レース前の処理やってくれる
 /// </summary>
@@ -19,7 +20,7 @@ RacePrevProcess::RacePrevProcess()
     collectIconData = UIManager::CreateUIData(collectIcon);
     playManual = new PlayManual();
     collectItemNum = new NumUI(collectTargetNumberUI);
-    frameByFrameTimer = new Timer(gamePuroseData.frameSpeed);
+    frameByFrameTimer = new ReusableTimer(gamePuroseData.frameSpeed);
     fadeValue = MAX1BYTEVALUE;
 }
 
@@ -38,7 +39,7 @@ void RacePrevProcess::Update()
     //描画する画像のコマ送り用　何秒かごとに次のコマに行く
     if (frameByFrameTimer->IsOverLimitTime())
     {
-        frameByFrameTimer->Init();
+        frameByFrameTimer->Reuse();
         iconGHIndex++;
     }
     //ゲーム開始音が終わったら

@@ -2,7 +2,7 @@
 #include <string>
 #include "DamageObject.h"
 #include "EffectManager.h"
-class LineCollider;
+class LaserCollider;
 class ObjectObserver;
 struct InitParam
 {
@@ -50,5 +50,5 @@ protected:
     //レーザーの跡の位置
     VECTOR endPos = {};
     //線状当たり判定
-    LineCollider* collider;
+    LaserCollider* collider;
 };

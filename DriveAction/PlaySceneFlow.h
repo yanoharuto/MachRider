@@ -16,7 +16,7 @@ class ResultScore;
 class RaceScreen;
 class RacePrevProcess;
 class ShadowMap;
-class Timer;
+class ReusableTimer;
 class UIManager;
 class ActorControllerManager;
 class EnemyGenerator;
@@ -92,7 +92,7 @@ private:
     //レース前の処理
     RacePrevProcess* racePrevProccess;
     //ゲーム終了タイマー
-    Timer* gameLimitTimer;
+    ReusableTimer* gameLimitTimer;
     //こいつを回してプレイヤーとか敵を動かす
     ActorControllerManager* controllerManager;
     //シャドウマップ

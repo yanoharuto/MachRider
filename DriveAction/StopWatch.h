@@ -10,6 +10,6 @@ public:
     double GetRunTime();
 private:
     bool stopFlag;
-    double tempRunTime;
+    double runTime;
     double startTime;
 };

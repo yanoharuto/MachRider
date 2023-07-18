@@ -10,7 +10,7 @@
 #include "CollectSign.h"
 #include "UIDrawer.h"
 #include "PlayManual.h"
-
+#include "ReusableTimer.h"
 /// <summary>
 /// 遊んでいるときのUI　制限時間とか
 /// </summary>
@@ -36,7 +36,7 @@ GamePlayUI::GamePlayUI(Timer* setTimer, std::weak_ptr<ObjectObserver> player)
 
     playerObserver = player;
     countDown = new EndCountDown(setTimer);
-    remainingNumDrawTimer = new Timer(remainingNumDrawTime);
+    remainingNumDrawTimer = new ReusableTimer(remainingNumDrawTime);
 
     playManual = new PlayManual();
 }
@@ -66,7 +66,7 @@ void GamePlayUI::Update()
     if (nowGetCoinNum != tempNum)
     {
         isDrawGetNum = true;
-        remainingNumDrawTimer->Init();
+        remainingNumDrawTimer->Reuse();
     }
     //表示しきったらfalseにする
     if (remainingNumDrawTimer->IsOverLimitTime())
@@ -93,19 +93,21 @@ void GamePlayUI::Draw()const
         switch (firstCoinNum - nowGetCoinNum)//残りのアイテムの数に応じて取った時のメッセージを変える
         {
         case 0:
-            safeNum = 2;
             break;
         case 1:
             safeNum = 1;
-            remainingNumUI->Draw(firstCoinNum - nowGetCoinNum);
+            //残りの収集アイテムについてのメッセージ
+            safeNum %= remainingFraze.dataHandle.size();
+            UIDrawer::DrawRotaUI(remainingFraze, safeNum);
             break;
         default:
+            //残りの収集アイテムについてのメッセージ
+            safeNum %= remainingFraze.dataHandle.size();
+            UIDrawer::DrawRotaUI(remainingFraze, safeNum);
             remainingNumUI->Draw(firstCoinNum - nowGetCoinNum);
             break;
         }
-        //残りの収集アイテムについてのメッセージ
-        safeNum %= remainingFraze.dataHandle.size();
-        UIDrawer::DrawRotaUI(remainingFraze, safeNum);
+        
     }
     //収集アイテムの数等を表示
     UIDrawer::DrawRotaUI(slashData);

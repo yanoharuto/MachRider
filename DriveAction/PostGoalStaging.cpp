@@ -19,6 +19,10 @@
 /// </summary>
 PostGoalStaging::PostGoalStaging(Timer* timer, std::weak_ptr<ObjectObserver> player)
 {
+    //スコアを確定
+    resultScore = new ResultScore();
+    resultScore->FixScore(timer, player);
+
     SoundPlayer::StopAllSound();
     SoundPlayer::LoadSound(clap);
     SoundPlayer::LoadSound(scoreEndSE);
@@ -26,9 +30,6 @@ PostGoalStaging::PostGoalStaging(Timer* timer, std::weak_ptr<ObjectObserver> pla
     SoundPlayer::LoadSound(sceneNextSE);
     SoundPlayer::Play2DSE(clap);
 
-    //スコアを確定
-    resultScore = new ResultScore();
-    resultScore->FixScore(timer, player);
     //プレイヤーの所得した収集アイテム
     getCollectNum = player.lock()->GetSubjectHitCount(Object::collect);
     drawCollectIconNum = 0;
@@ -150,10 +151,8 @@ void PostGoalStaging::Draw()const
         if (isEndUpdateScore)pressSpaceKeyUI->Draw();
         
         //総合スコアのUIと数字
-       // SetDrawBright(totalScoreColor.x, totalScoreColor.y, totalScoreColor.z);
         totalScoreNumUI->Draw(totalScoreUI.score);
         UIDrawer::DrawRotaUI(totalScoreUI.scoreKindData);
-       // SetDrawBright(MAX1BYTEVALUE, MAX1BYTEVALUE, MAX1BYTEVALUE);
     }
     //エフェクト
     DrawEffekseer2D();
@@ -198,25 +197,27 @@ void PostGoalStaging::UpdateNowProcess()
 
     case timeBonus:
         
-        if(larpTimer->IsOverLimitTime() || clearTime < 0 &&!isEndUpdateScore)
+        //スコアを換算し終えたか、スペースキーを押したら終了
+        if ((larpTimer->IsOverLimitTime() || clearTime < 0 || UserInput::GetInputState(Space) == Push) && !isEndUpdateScore)
         {
             //タイムボーナスを表示したら終了
             SoundPlayer::StopSound(scoreStartSE);
             timeScoreUI.score = resultScore->GetScore(timeBonus);
             drawClearTime = 0.0000f;
             isEndUpdateScore = true;
-            //花吹雪エフェクト
-            confettiEffect = EffectManager::GetPlayEffect2D(confetti);
-            int effectX = SCREEN_WIDTH / 2;
-            int s = SetPosPlayingEffekseer2DEffect(confettiEffect, effectX, 0, 5);
+            ////花吹雪エフェクト
+            //confettiEffect = EffectManager::GetPlayEffect2D(confetti);
+            //SetPosPlayingEffekseer2DEffect(confettiEffect, SCREEN_WIDTH / 2, SCREEN_HEIGHT, 5);
         }
         //タイマーが動いている間はスコア換算
         else
         {
             //残り時間をスコアに換算
-            float larpValue = static_cast<float>(clearTime * (larpTimer->GetElaspedTime() / larpTimer->GetLimitTime()));
-            timeScoreUI.score = static_cast<float>(larpValue * resultScore->GetScoreBonus(timeBonus));
-            drawClearTime = clearTime - larpValue;
+            float larpValue = (larpTimer->GetElaspedTime() / scoreLarpTime);
+            
+            timeScoreUI.score = static_cast<int>(larpValue * resultScore->GetScore(timeBonus));
+            //描画するクリアタイムを更新
+            drawClearTime = clearTime - static_cast<float>(clearTime * larpValue);
         }
         break;
     default:

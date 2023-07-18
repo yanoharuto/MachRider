@@ -78,7 +78,11 @@ void PlayerCar::Update()
 		SoundPlayer::Play2DSE(playerFlight);
 	}
 	UpdateEffects();
+	//連続してぶつかっているか調べる
+	isSerialConflict = isConflictFlag;
+	isConflictFlag = false;
 }
+
 /// <summary>
 /// ゲームが始まる前の演出とか
 /// </summary>
@@ -160,10 +164,11 @@ void PlayerCar::SetTwistZRota()
 /// </summary>
 void PlayerCar::UpdateEffects()
 {
-	if (IsEffekseer3DEffectPlaying(clashEffect) == true)//ぶつかった時のエフェクトを自機の位置に合わせる
+	if (IsEffekseer3DEffectPlaying(clashEffect) != -1)//ぶつかった時のエフェクトを自機の位置に合わせる
 	{
 		SetPosPlayingEffekseer3DEffect(clashEffect, position.x, position.y, position.z);
 	}
+	//車の向き
 	float degree = OriginalMath::GetDegreeMisalignment(VGet(1, 0, 0), direction);
 	
 	if (isDamage)//ダメージを受けていたら
@@ -263,14 +268,16 @@ void PlayerCar::DamageReaction(const ConflictExamineResultInfo conflictInfo)
 /// <param name="conflictInfo"></param>
 void PlayerCar::ConflictReaction(const ConflictExamineResultInfo conflictInfo)
 {
-	//ターボ中
-	if (isTurbo)
+	//ターボ中で連続衝突していないなら
+	if (isTurbo && !isSerialConflict)
 	{
 		//ぶつかった時の音とエフェクト
-		int effect = EffectManager::GetPlayEffect3D(EffectInit::carConflict);
-		SetPosPlayingEffekseer3DEffect(effect, position.x, position.y, position.z);
+		clashEffect = EffectManager::GetPlayEffect3D(EffectInit::carConflict);
+		SetPosPlayingEffekseer3DEffect(clashEffect, position.x, position.y, position.z);
+		SoundPlayer::Play3DSE(playerDamage); SoundPlayer::Play3DSE(playerDamage);
 	}
-	SoundPlayer::Play3DSE(playerDamage);
+	isConflictFlag = true;
+
 	//減速
 	accelPower -= accelPower * colideDecel;
 

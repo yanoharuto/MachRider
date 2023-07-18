@@ -42,20 +42,22 @@ void StageSelect::Update()
     fileAddres = dataLoader[stageNum];
 }
 /// <summary>
-/// 現在選んでいるステージを表示
+/// ステージ一覧を表示
 /// </summary>
 void StageSelect::Draw() const
 {
     UIData data = stageNameData;
     for (int i = 0; i < data.dataHandle.size(); i++)
     {
-        if (i == stageNum)
+        if (i == stageNum)//現在のステージは大きくちょっとずらして表示
         {
             data.x -= data.width / 2;
+            data.size *= selectSizeCoefficient;
         }
         else
         {
             data.x = stageNameData.x;
+            data.size = stageNameData.size;
         }
         UIDrawer::DrawRotaUI(data, i);
         data.y += data.height;

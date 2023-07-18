@@ -6,7 +6,7 @@
 #include "Utility.h"
 #include "SoundPlayer.h"
 #include "Timer.h"
-#include "LineCollider.h"
+#include "LaserCollider.h"
 #include "ObjectObserver.h"
 //Å‰‚Ì‰ñ“]•ûŒü
 const VECTOR RotatingLasers::firstDir = { 0.0f,0.0f,-1.0f };
@@ -24,7 +24,7 @@ RotatingLasers::RotatingLasers(InitParam setParam, ObjectObserver* setObserver)
     EffectManager::LoadEffect(laserTrack);
     direction = firstDir;
     radius = setParam.radius;
-    collider = new LineCollider(this,setParam.laserRange);
+    collider = new LaserCollider(this,setParam.laserRange);
 
 }
 

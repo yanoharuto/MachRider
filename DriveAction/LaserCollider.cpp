@@ -1,6 +1,7 @@
-#include "LineCollider.h"
+#include "LaserCollider.h"
 #include "HitChecker.h"
-LineCollider::LineCollider(Actor* obj, float setLineRange)
+
+LaserCollider::LaserCollider(Actor* obj, float setLineRange)
     :ConflictProccesor(obj)
 {
     lineRange = setLineRange;
@@ -10,9 +11,10 @@ LineCollider::LineCollider(Actor* obj, float setLineRange)
 /// </summary>
 /// <param name="hitCheckInfo">“–‚½‚Á‚Ä‚­‚é“z‚Ìî•ñ</param>
 /// <returns></returns>
-ConflictExamineResultInfo LineCollider::HitCheck(HitCheckExamineObjectInfo hitCheckInfo)
+ConflictExamineResultInfo LaserCollider::HitCheck(HitCheckExamineObjectInfo hitCheckInfo)
 {
     ConflictExamineResultInfo resultInfo = {};
+    //ƒŒ[ƒU[‚Ìî•ñ
     HitCheckExamineObjectInfo lineInfo;
     lineInfo.SetExamineInfo(object);
     //object‚Ì‚‚³•ªL‚Î‚·

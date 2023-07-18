@@ -3,12 +3,12 @@
 /// <summary>
 /// YÀ•W‚ğ–³‹‚µ‚Ä‚¢‚é‚¯‚Çü•ª‚Ì“–‚½‚è”»’è
 /// </summary>
-class LineCollider :
+class LaserCollider :
     public ConflictProccesor
 {
 public:
     //ü•ª‚Ì’·‚³‚Í‚‚³‚ÆŒW”‚É‚æ‚Á‚ÄŒˆ‚ß‚é
-    LineCollider(Actor* obj,float setLineRange);
+    LaserCollider(Actor* obj,float setLineRange);
 
     /// <summary>
     /// YÀ•W‚ğ–³‹‚µ‚Ä‚¢‚é‚¯‚Çü•ª‚Ì“–‚½‚è”»’è

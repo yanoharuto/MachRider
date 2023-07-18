@@ -91,10 +91,12 @@ private:
 	bool isTurbo = false;
 	//急加速準備中
 	bool isTurboReserve = false;
+	//衝突している最中か調べる
+	bool isConflictFlag = false;
+	//連続衝突
+	bool isSerialConflict = false;
 	//加速チャージタイム
-	float turboChargeTime;
-	//ぶつかった時に出てくるエフェクト
-	int stageConflictEffect = -1;
+	float turboChargeTime = 0;
 	//ダメージを受けた時のエフェクト
 	int damageEffect = -1;
 	//ターボ準備中に出るエフェクト
@@ -114,7 +116,7 @@ private:
 	//totalCosSeedを増加させ続ける量
 	float cosSeed = 0.01f;
 	//upDownSpeedとcosSeedによって変動する
-	float totalCosSeed;
+	float totalCosSeed = 0;
 	//縦に回転する
 	float twistZRota = 0.0f;
 	//ダメージ

@@ -26,6 +26,8 @@ public:
 private:
     //ステージ番号
     int stageNum;
+    //選択しているステージだけ強調表示
+    const float selectSizeCoefficient = 1.4f;
     //選んでいるステージの名前を表示
     UIData stageNameData;
     //ステージを決定するときのボタンを表示

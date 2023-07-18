@@ -43,7 +43,7 @@ public:
     void Draw()const;
 private:
     //メニュー画面を開いている時間の計測
-    StopWatch* stopWatch;
+    float startTime;
     //メニューの背景
     int backScreen;
     //背景の明るさ

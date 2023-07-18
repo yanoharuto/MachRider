@@ -16,13 +16,6 @@ Timer::~Timer()
 {
 }
 /// <summary>
-/// ŠÔ‚ğƒŠƒZƒbƒg
-/// </summary>
-void Timer::Init()
-{
-    startTime = Clock::GetNowGameTime();
-}
-/// <summary>
 /// İ’èŠÔ‚ğ‰ß‚¬‚½‚©
 /// </summary>
 /// <returns>‰ß‚¬‚½‚çTrue</returns>

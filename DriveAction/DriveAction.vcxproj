@@ -201,7 +201,7 @@
     <ClCompile Include="FadeInFadeOut.cpp" />
     <ClCompile Include="InitActor.cpp" />
     <ClCompile Include="LaserFlyShip.cpp" />
-    <ClCompile Include="LineCollider.cpp" />
+    <ClCompile Include="LaserCollider.cpp" />
     <ClCompile Include="LittleRadiusLaser.cpp" />
     <ClCompile Include="MeshCollider.cpp" />
     <ClCompile Include="NumUI.cpp" />
@@ -209,6 +209,7 @@
     <ClCompile Include="PlayManual.cpp" />
     <ClCompile Include="RaceScreen.cpp" />
     <ClCompile Include="RankingData.cpp" />
+    <ClCompile Include="ReusableTimer.cpp" />
     <ClCompile Include="Rock.cpp" />
     <ClCompile Include="Rocket.cpp" />
     <ClCompile Include="RotatingLasers.cpp" />
@@ -305,7 +306,7 @@
     <ClInclude Include="InitObjKind.h" />
     <ClInclude Include="InputDirection.h" />
     <ClInclude Include="LaserFlyShip.h" />
-    <ClInclude Include="LineCollider.h" />
+    <ClInclude Include="LaserCollider.h" />
     <ClInclude Include="LittleRadiusLaser.h" />
     <ClInclude Include="MeshCollider.h" />
     <ClInclude Include="NumUI.h" />
@@ -314,6 +315,7 @@
     <ClInclude Include="PlayManual.h" />
     <ClInclude Include="RaceScreen.h" />
     <ClInclude Include="RankingData.h" />
+    <ClInclude Include="ReusableTimer.h" />
     <ClInclude Include="Rock.h" />
     <ClInclude Include="Rocket.h" />
     <ClInclude Include="RotatingLasers.h" />

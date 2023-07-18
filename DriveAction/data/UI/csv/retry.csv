@@ -1,7 +1,7 @@
 ﻿ drawX
-820
+835
  drawY
-620
+480
  width
 553
  height
@@ -13,6 +13,6 @@
 graphPass
 data/UI/image/Retry.png
 scale
-1
+0.6
 frameSpeed
 1

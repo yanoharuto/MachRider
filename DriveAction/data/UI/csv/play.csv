@@ -1,7 +1,7 @@
 ﻿ drawX
-820
+817
  drawY
-345
+270
  width
 438
  height
@@ -13,6 +13,6 @@
 graphPass
 data/UI/image/Play.png
 scale
-1
+0.6
 frameSpeed
 1

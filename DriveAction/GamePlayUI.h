@@ -12,6 +12,7 @@ class Player;
 class EnemyGenerator;
 class CollectSign;
 class PlayManual;
+class ReusableTimer;
 /// <summary>
 /// 遊んでいるときのUI
 /// </summary>
@@ -39,7 +40,7 @@ private:
     //残りの収集アイテム数を表示する時間
     float remainingNumDrawTime = 2.0f;
     //残った収集アイテムの数を表示する時間を計る
-    Timer* remainingNumDrawTimer = nullptr;
+    ReusableTimer* remainingNumDrawTimer = nullptr;
     //ゲーム残り時間タイマー
     TimerUI* gameTimerUI;
     //ミニマップ

@@ -20,7 +20,7 @@ private:
     //プレイヤーの位置や向きを取ってくる
     std::weak_ptr<ObjectObserver> playerObserver;
     //エフェクトハンドル
-    int signEffect;
+    int signEffect = -1;
     //エフェクトのY座標
-    const float addYPos=30;
+    const float addYPos = 20;
 };

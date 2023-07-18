@@ -2,9 +2,9 @@
 #include "UserInput.h"
 #include "DxLib.h"
 #include "Utility.h"
-#include "StopWatch.h"
 #include "RaceScreen.h"
 #include "UIDrawer.h"
+#include "Clock.h"
 //メニューの状態
 MenuState Menu::menuState=continueGame;
 //メニューを開いているか
@@ -21,13 +21,11 @@ Menu::Menu()
     uiDatas[retry] = UIManager::CreateUIData(retryUI);
     isOpenMenu = false;
     openMenuTime = 0;
-    stopWatch = new StopWatch();
 }
 
 Menu::~Menu()
 {
     openMenuTime = 0;
-    SAFE_DELETE(stopWatch);
 }
 
 void Menu::Update()
@@ -40,27 +38,25 @@ void Menu::Update()
         cursolPos = 0;
         if (isOpenMenu)
         {
-            //開いている時間を計測開始
-            stopWatch->Run();
             backScreen = RaceScreen::GetScreen();
+            //メニュー画面を開いた時間を所得
+            startTime = Clock::GetNowGameTime();
         }
         else
         {
-            //閉じたら計測中断
-            stopWatch->Stop();
+            openMenuTime += Clock::GetNowGameTime() - startTime;
         }
     }
-    else if (UserInput::GetInputState(Input::Space) == Push)
+    //メニューを開いた状態でスペースキーを押したら押した項目を保存
+    else if (UserInput::GetInputState(Input::Space) == Push && isOpenMenu)
     {
-        //メニューを開いた状態でスペースキーを押したら押した項目を保存
         menuState = static_cast<MenuState>(cursolPos);
         isOpenMenu = !(menuState == continueGame);
+        openMenuTime += Clock::GetNowGameTime() - startTime;
     }
     //開いているときに上下に押すと項目を変更
     if (isOpenMenu)
     {
-        //メニュー画面を開いている時間を増やす
-        openMenuTime = stopWatch->GetRunTime();
         if (UserInput::GetInputState(Up)==Push)
         {
             cursolPos--;
@@ -104,7 +100,6 @@ bool Menu::IsMenuOpen()
 /// <returns></returns>
 double Menu::GetOpenMenuTime()
 {
-    printfDx("MenuTime::%f", openMenuTime);
     return openMenuTime;
 }
 /// <summary>

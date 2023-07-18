@@ -3,6 +3,7 @@
 #include "FlyShipCommander.h"
 #include <string>
 class Timer;
+class ReusableTimer;
 /// <summary>
 /// ”šŒ‚‹@
 /// </summary>
@@ -21,7 +22,9 @@ public:
     /// </summary>
     void Update() override;
 private:
-    Timer* bombFallTimer;
+    //”š’e‚ğ—‚Æ‚·ŠÔ
+    ReusableTimer* bombFallTimer;
+    //¶‘¶ŠÔ
     Timer* aliveTimer;
     //‘¬‚³
     static float speed;
