@@ -40,7 +40,9 @@ namespace SoundInit
        //スコアを表示し終わったときに鳴る音
        scoreEndSE=32,
        //次のシーンに行く時の音
-       sceneNextSE=35
+       sceneNextSE=35,
+       //スコア表示したときのファンファーレ
+       gameEndFanfare=38
     };
 }
 using namespace SoundInit;

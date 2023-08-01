@@ -1,9 +1,10 @@
 #include "SphereCollider.h"
-#include "HitChecker.h"
 #include "ConflictManager.h"
+#include "Actor.h"
+#include "HitCheckExamineObjectInfo.h"
 
 SphereCollider::SphereCollider(Actor* obj)
-    :ConflictProccesor(obj)
+    :SphereHitChecker(obj)
 {
 }
 /// <summary>
@@ -15,17 +16,20 @@ ConflictExamineResultInfo SphereCollider::HitCheck(HitCheckExamineObjectInfo hit
 {
     ConflictExamineResultInfo resultInfo = {};
     //当たってたら吹っ飛ぶ方向とかを返す
-    if (HitChecker::HitCheck(object, hitCheckInfo))
+    if (SphereHitChecker::HitCheck(object, hitCheckInfo))
     {
-        VECTOR betweenDir = VNorm(VSub(object->GetPos(), hitCheckInfo.pos));//二つのオブジェクトの距離の向き
+        VECTOR nBetweenDir = VNorm(VSub(object->GetPos(), hitCheckInfo.pos));//二つのオブジェクトの距離の向き
         //吹っ飛ぶ方向
-        resultInfo.bounceVec = VSub(hitCheckInfo.velocity ,VScale(betweenDir, VDot(hitCheckInfo.velocity, betweenDir) * 2));
+        resultInfo.bounceVec = VSub(hitCheckInfo.velocity, VScale(nBetweenDir, VDot(hitCheckInfo.velocity, nBetweenDir) * 2));
         //吹っ飛んだ位置
-        resultInfo.pos = VAdd(hitCheckInfo.pos,resultInfo.bounceVec);
+        resultInfo.pos = VAdd(hitCheckInfo.pos, resultInfo.bounceVec);
         //当たったかどうか
         resultInfo.hit = HitSituation::Enter;
         //残りを設定
         resultInfo.SetObjInfo(object);
+        //当たり判定変更
+        hitCheckInfo.pos = resultInfo.pos;
     }
+
     return resultInfo;
 }

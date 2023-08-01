@@ -1,39 +1,35 @@
 #pragma once
 #include "DxLib.h"
-#include <string>
 #include "Object.h"
-class ObjectSubject;
+/// <summary>
+/// オブジェクトの監視役
+/// </summary>
 class ObjectObserver
 {
 public:
     /// <summary>
-    /// 監視役
+    /// オブジェクトの監視役
     /// </summary>
-    /// <param name="setSubject"></param>
-    ObjectObserver(ObjectSubject* setSubject);
-    ~ObjectObserver();
+    /// <param name="setSubject">監視したいオブジェクト</param>
+    ObjectObserver(Object* setSubject);
+    virtual ~ObjectObserver() {};
     /// <summary>
     /// 監視対象の位置を渡す
     /// </summary>
     /// <returns></returns>
-    VECTOR GetSubjectPos() const;
+    virtual VECTOR GetSubjectPos() const;
     /// <summary>
     /// 監視対象の向き
     /// </summary>
     /// <returns></returns>
-    VECTOR GetSubjectDir() const;
-    /// <summary>
-    /// 監視対象が引数のものに当たった回数を返す
-    /// </summary>
-    /// <param name="objTag"></param>
-    /// <returns></returns>
-    int GetSubjectHitCount(Object::ObjectTag objTag)const;
+    virtual VECTOR GetSubjectDir() const;
     /// <summary>
     /// 監視対象の状態
     /// </summary>
     /// <returns></returns>
-    Object::ObjectState GetSubjectState()const;
-private:
-    ObjectSubject* subject;
+    virtual Object::ObjectState GetSubjectState()const;
+protected:
+    //監視している物
+    Object* subject;
 };
 

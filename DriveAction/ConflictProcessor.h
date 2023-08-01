@@ -1,0 +1,37 @@
+#pragma once
+#include <unordered_map>
+#include <list>
+struct ConflictExamineResultInfo;
+struct HitCheckExamineObjectInfo;
+class Actor;
+class SphereHitChecker;
+/// <summary>
+/// 衝突処理実行役
+/// </summary>
+class  ConflictProcessor
+{
+public:
+    /// <summary>
+    /// 衝突処理実行役
+    /// </summary>
+    /// <param name="obj">実行したい衝突処理があるオブジェクト</param>
+    ConflictProcessor(Actor* const obj);
+
+    virtual ~ConflictProcessor() {};
+    /// <summary>
+    /// 当たり判定の処理を呼び出す
+    /// </summary>
+    /// <param name="resultInfo"></param>
+    virtual void ConflictProcess(ConflictExamineResultInfo resultInfo);
+
+    /// <summary>
+/// 当たり判定で衝突しているか調べるのに必要な情報を渡す
+/// </summary>
+/// <returns></returns>
+    virtual HitCheckExamineObjectInfo GetHitExamineCheckInfo()const;
+protected:
+    /// <summary>
+    /// 当たり判定の持ち主
+    /// </summary>
+    Actor* object = nullptr;
+};

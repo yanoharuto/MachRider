@@ -6,6 +6,9 @@
 #include "FadeInFadeOut.h"
 #include "Clock.h"
 #include "Menu.h"
+/// <summary>
+/// 遊んでいるときのシーン
+/// </summary>
 PlayScene::PlayScene()
     :SceneBase(SceneType::PLAY)
 {
@@ -21,7 +24,10 @@ PlayScene::~PlayScene()
     SAFE_DELETE(sceneFlow);
     SoundPlayer::StopSound(playBGM);
 }
-
+/// <summary>
+/// ゲームを遊ぶ
+/// </summary>
+/// <returns></returns>
 SceneType PlayScene::Update()
 {
     menu->Update();
@@ -44,8 +50,10 @@ SceneType PlayScene::Update()
     }
     return nowSceneType;
 }
-
-void PlayScene::Draw()
+/// <summary>
+/// メニューを開いている時と遊んでいるときで処理が違う
+/// </summary>
+void PlayScene::Draw()const
 {
     if (Menu::IsMenuOpen())
     {

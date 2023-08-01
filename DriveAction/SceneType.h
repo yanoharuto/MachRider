@@ -4,6 +4,6 @@ enum class SceneType
     RELOAD,
     TITLE,
     PLAY,
-    RESULT,
+    EDITOR,
     ESCAPE
 };

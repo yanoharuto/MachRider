@@ -10,7 +10,7 @@ enum class HitSituation
     Exist
 };
 /// <summary>
-/// “–‚½‚è”»’è‚ÌŒ‹‰Ê‚Åo—ˆ‚éî•ñ
+/// “–‚½‚è”»’è‚ÌŒ‹‰Ê “n‚·î•ñ
 /// </summary>
 struct ConflictExamineResultInfo
 {

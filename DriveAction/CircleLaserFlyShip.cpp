@@ -6,16 +6,18 @@
 /// â~èÛÇ…êwå`ÇçÏÇ¡ÇΩîÚçsëD
 /// </summary>
 CircleLaserFlyShip::CircleLaserFlyShip(VECTOR firstPos, VECTOR setDestinationPos)
-    :LaserFlyShip(firstPos, setDestinationPos,ObjectInit::circleLaserShip)
+    :LaserFlyShip(ObjectInit::circleLaserShip)
 {
-    GenerateLaser();
+    position.x = firstPos.x;
+    position.z = firstPos.z;
+    setDestinationPos.y = position.y;
+    direction = VNorm(VSub(setDestinationPos, position));
+    GenerateLaser(DamageObjectGenerator::littleRadLaser);
 }
 
-void CircleLaserFlyShip::GenerateLaser()
-{
-    DamageObjectGenerator::GenerateDamageObject(DamageObjectGenerator::littleRadLaser, sub);
-}
-
+/// <summary>
+/// ï`âÊÇ≈Ç´ÇÈíiäKÇ…Ç»Ç¡ÇΩÇÁactiveÇ…Ç»ÇÈ
+/// </summary>
 void CircleLaserFlyShip::Update()
 {
     objState = active;

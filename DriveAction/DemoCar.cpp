@@ -41,8 +41,6 @@ void DemoCar::Update()
 	UpdateVelocity();
 	//位置の更新
 	ReflectsVelocity();
-	//回転とかを制御
-	ModelSetMatrix();
 	//エフェクトの更新
 	EffectUpdate();
 }

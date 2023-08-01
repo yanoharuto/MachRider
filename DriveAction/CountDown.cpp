@@ -10,6 +10,7 @@
 CountDown::CountDown(Timer* setTimer)
 {
 	isCountDownEnd = false;
+	isPlayedCountSE = false;
 	countDownUIData = UIManager::CreateUIData(countDownUI);
 	endUI = UIManager::CreateUIData(onGameStartCountDownEnd);
 	timer = setTimer;

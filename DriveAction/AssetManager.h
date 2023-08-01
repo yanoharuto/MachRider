@@ -3,14 +3,14 @@
 #include <map>
 
 /// <summary>
-/// アセットの複製とかする用
+/// モデルハンドル供給役
 /// </summary>
 class AssetManager final
 {
 public:
 
     /// <summary>
-    /// modelをロードして複製できるようにする
+    /// modelをロードして渡す
     /// </summary>
     /// <param name="assetPass"></param>
     /// <returns></returns>

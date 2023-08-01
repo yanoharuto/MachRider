@@ -1,6 +1,4 @@
 #include "UserInput.h"
-InputState UserInput::aButtonState;
-InputState UserInput::bButtonState;
 InputState UserInput::keyInputState[KEY_INPUT_KIND_NUM];
 StickValueStruct UserInput::stickValue;
 
@@ -12,6 +10,10 @@ UserInput::UserInput()
     keyInputCode[KeyInputKind::Right] = PAD_INPUT_RIGHT;
     keyInputCode[KeyInputKind::Space] = PAD_INPUT_10;
     keyInputCode[KeyInputKind::EscapeKey] = PAD_INPUT_9;
+    keyInputCode[KeyInputKind::WKey] = PAD_INPUT_8;
+    keyInputCode[KeyInputKind::DKey] = PAD_INPUT_6;
+    keyInputCode[KeyInputKind::SKey] = PAD_INPUT_5;
+    keyInputCode[KeyInputKind::AKey] = PAD_INPUT_4;
 }
 
 void UserInput::Update()
@@ -25,8 +27,6 @@ void UserInput::Update()
     //ゲームパッドの場合のボタン入力を所得
     XINPUT_STATE input;
     GetJoypadXInputState(DX_INPUT_KEY_PAD1, &input);
-    ButtonUpdate(input.Buttons[aButtonNum] != 0, &aButtonState);
-    ButtonUpdate(input.Buttons[bButtonNum] != 0, &bButtonState);
     StickUpdate(input);
 }
 

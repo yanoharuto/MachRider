@@ -1,5 +1,6 @@
 #pragma once
 #include "LaserFlyShip.h"
+#include "EditObjectData.h"
 /// <summary>
 /// 上下に動きながらレーザーを出すやつ
 /// </summary>
@@ -10,17 +11,13 @@ public:
     /// <summary>
     /// 上下に動きながらレーザーを出すやつ
     /// </summary>
-    UpDownLaserFlyShip(VECTOR setPos);
+    UpDownLaserFlyShip(EditArrangementData setPos);
     /// <summary>
     /// 上下に動くよ
     /// </summary>
     void Update() override;
-    /// <summary>
-    /// レーザーを発射
-    /// </summary>
-    void GenerateLaser()override;
 private:
-    //Cosの量
+    //totalMoveValueの増加量
     static const float addMoveValue;
     //上下に動く速度
     static const float updownSpeed;

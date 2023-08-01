@@ -6,7 +6,7 @@ class MiniMap;
 class TimerUI;
 class Timer;
 class NumUI;
-class ObjectObserver;
+class PlayerObserver;
 class EndCountDown;
 class Player;
 class EnemyGenerator;
@@ -19,7 +19,7 @@ class ReusableTimer;
 class GamePlayUI final
 {
 public:
-    GamePlayUI(Timer* setTimer ,std::weak_ptr<ObjectObserver> player);
+    GamePlayUI(Timer* setTimer ,std::weak_ptr<PlayerObserver> player);
 
     ~GamePlayUI();
     /// <summary>
@@ -60,7 +60,7 @@ private:
     //カウントダウン
     EndCountDown* countDown;
     //プレイヤーの位置とか収集アイテムの所得数などを教えてくれる奴
-    std::weak_ptr<ObjectObserver> playerObserver;
+    std::weak_ptr<PlayerObserver> playerObserver;
     //収集アイテムの方向とかを教えてくれる
     CollectSign* cSign;
     //プレイヤーの操作方法

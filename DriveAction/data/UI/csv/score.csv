@@ -1,5 +1,5 @@
 ﻿ drawX
-768
+718
  drawY
 680
  width
@@ -13,6 +13,6 @@
 graphPass
 data/UI/image/Score.png
 size
-0.7
+1
 frameSpeed
 0

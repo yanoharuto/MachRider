@@ -2,7 +2,7 @@
 #include "UIManager.h"
 #include <iostream>
 #include <memory>
-class ObjectObserver;
+class PlayerObserver;
 /// <summary>
 /// 収集アイテムの方向を記すエフェクトを出す
 /// </summary>
@@ -10,7 +10,7 @@ class CollectSign
 {
 public:
 
-    CollectSign(std::weak_ptr<ObjectObserver> player);
+    CollectSign(std::weak_ptr<PlayerObserver> player);
     ~CollectSign();
     /// <summary>
     /// エフェクトの位置と向きを設定
@@ -18,9 +18,9 @@ public:
     void Update();
 private:
     //プレイヤーの位置や向きを取ってくる
-    std::weak_ptr<ObjectObserver> playerObserver;
+    std::weak_ptr<PlayerObserver> playerObserver;
     //エフェクトハンドル
     int signEffect = -1;
     //エフェクトのY座標
-    const float addYPos = 20;
+    const float addYPos = 13;
 };

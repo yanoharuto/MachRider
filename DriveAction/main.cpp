@@ -4,7 +4,7 @@
 #include "SceneBase.h"
 #include "TitleScene.h"
 #include "PlayScene.h"
-#include "ResultScene.h"
+#include "EditorScene.h"
 #include "Utility.h"
 #include "UserInput.h"
 #include "FadeInFadeOut.h"
@@ -124,9 +124,9 @@ SceneBase* MakeScene(SceneType _NowSceneType)
 		retScene = new PlayScene;
 		prevSceneType = SceneType::PLAY;
 		break;
-	case SceneType::RESULT:
-		retScene = new ResultScene;
-		prevSceneType = SceneType::RESULT;
+	case SceneType::EDITOR:
+		retScene = new EditorScene;
+		prevSceneType = SceneType::EDITOR;
 		break;
 	default:
 		break;

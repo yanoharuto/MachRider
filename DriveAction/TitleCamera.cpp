@@ -18,11 +18,11 @@ TitleCamera::TitleCamera(std::shared_ptr<ObjectObserver> target)
 /// </summary>
 void TitleCamera::Update()
 {
-    //カメラの位置　ちょっと離れる
-    VECTOR pos = VAdd(targetObserver.lock()->GetSubjectPos(), VScale(targetObserver.lock()->GetSubjectDir(), targetBetween));
+    //カメラの向く位置
+    VECTOR aimPos = targetObserver.lock()->GetSubjectPos();
     //車の向きから若干ずらしてさらに離れる
     VECTOR between = VScale(OriginalMath::GetYRotateVector(targetObserver.lock()->GetSubjectDir(),cameraRotate),targetBetween);
-    position = VAdd(pos, between);
+    position = VAdd(VAdd(aimPos, VScale(targetObserver.lock()->GetSubjectDir(), targetBetween)), between);
     position.y = posY;
-    SetCameraPositionAndTarget_UpVecY(position, pos);
+    SetCameraPositionAndTarget_UpVecY(position, aimPos);
 }

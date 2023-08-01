@@ -1,10 +1,10 @@
 #pragma once
 #include "UIManager.h"
-#include "StageDataPass.h"
+
 /// <summary>
 /// タイトル画面でステージ選ぶ時に使う
 /// </summary>
-class StageSelect :public StageDataPass
+class StageSelect
 {
 public:
     /// <summary>
@@ -23,6 +23,8 @@ public:
     /// 現在選んでいるステージを表示
     /// </summary>
     void Draw()const;
+
+    int GetStageNum()const;
 private:
     //ステージ番号
     int stageNum;

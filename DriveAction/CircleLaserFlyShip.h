@@ -14,9 +14,8 @@ public:
     /// <param name="setDestinationPos"></param>
     CircleLaserFlyShip(VECTOR firstPos, VECTOR setDestinationPos);
     /// <summary>
-    /// レーザーを発射する
+    /// 描画できる段階になったらactiveになる
     /// </summary>
-    void GenerateLaser() override;
     void Update()override;
 private:
 };

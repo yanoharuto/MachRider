@@ -31,10 +31,13 @@ namespace InitCamera
         //遊んでる時のカメラ
         game = 5,
         //リザルト画面でのカメラ
-        result = 8
+        editor = 8
     };
 }
-class Camera
+/// <summary>
+/// カメラ
+/// </summary>
+class Camera abstract
 {
 public:
     /// <summary>
@@ -73,6 +76,6 @@ protected:
     float cameraSpeed;
     //カメラが見ている範囲角
     static float lookingDeg;
-    //プレイヤーの位置を教えてくれるやつ
+    //見たいものの位置等を教えてくれるやつ
     std::weak_ptr<ObjectObserver> targetObserver;
 };

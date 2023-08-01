@@ -1,8 +1,7 @@
 #include "LaserCollider.h"
-#include "HitChecker.h"
-
+#include "Actor.h"
 LaserCollider::LaserCollider(Actor* obj, float setLineRange)
-    :ConflictProccesor(obj)
+    :SphereHitChecker(obj)
 {
     lineRange = setLineRange;
 }
@@ -23,7 +22,7 @@ ConflictExamineResultInfo LaserCollider::HitCheck(HitCheckExamineObjectInfo hitC
     //ìñÇΩÇ¡ÇƒÇ≠ÇÈìzÇÃçÇÇ≥Ç…çáÇÌÇπÇÈ
     lineInfo.pos.y = hitCheckInfo.pos.y;
 
-    if (HitChecker::HitCheck(lineInfo, hitCheckInfo))
+    if (SphereHitChecker::HitCheck(lineInfo, hitCheckInfo))
     {
         resultInfo.bounceVec = VSub(hitCheckInfo.pos, lineInfo.pos);
         resultInfo.pos = VAdd(hitCheckInfo.pos, resultInfo.bounceVec);

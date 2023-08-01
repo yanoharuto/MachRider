@@ -11,6 +11,9 @@ namespace Input
         Hold,
         Detach
     };
+    /// <summary>
+    /// ボタンの情報
+    /// </summary>
     enum KeyInputKind
     {
         Up = 0,
@@ -18,9 +21,16 @@ namespace Input
         Left = 2,
         Right = 3,
         Space = 4,
-        EscapeKey = 5
+        EscapeKey = 5,
+        WKey = 6,
+        DKey = 7,
+        SKey = 8,
+        AKey = 9
     };
-#define KEY_INPUT_KIND_NUM 6
+#define KEY_INPUT_KIND_NUM 10
+    /// <summary>
+    /// スティック入力の値
+    /// </summary>
     struct StickValueStruct
     {
         short LStickValueX;
@@ -62,9 +72,7 @@ private:
     /// </summary>
     /// <param name="_Input"></param>
     void StickUpdate(XINPUT_STATE _Input);
-
-    static InputState aButtonState;
-    static InputState bButtonState;
+    //ボタンの情報
     static InputState keyInputState[KEY_INPUT_KIND_NUM];
     static StickValueStruct stickValue;
     //Aボタンの割り当て番号

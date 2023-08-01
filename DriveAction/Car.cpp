@@ -24,41 +24,16 @@ const float Car::gripDecel = 0.2f;
 Car::Car(ObjectInit::InitObjKind kind)
 	:Actor(kind)
 {
-	InitParamater(kind);
+	InitSpeedParamater(kind);
 	tag = ObjectTag::player;
 	ReflectsVelocity();
-	ModelSetMatrix();
-	wheels = new Wheels(WheelArgumentCarInfo{ MV1GetMatrix(modelHandle),direction,VSize(velocity) });
+	wheels = new Wheels(WheelArgumentCarInfo{MGetIdent(),direction,VSize(velocity)});
 }
+
 
 Car::~Car()
 {
 	SAFE_DELETE(wheels);
-}
-void Car::Update()
-{
-	//速度を更新
-	UpdateVelocity();
-	//位置の更新
-	ReflectsVelocity();
-	//回転とかを制御
-	ModelSetMatrix();
-	WheelArgumentCarInfo carInfo;
-	carInfo.Init(MV1GetMatrix(modelHandle), direction, VSize(velocity));
-	//タイヤの更新
-	wheels->WheelUpdate(carInfo);
-}
-/// <summary>
-/// ぶつかった時の処理
-/// </summary>
-/// <param name="deltaTime"></param>
-/// <param name="conflictInfo"></param>
-void Car::ConflictProccess(const ConflictExamineResultInfo conflictInfo)
-{
-	if (conflictInfo.tag != damageObject)
-	{
-		ConflictReaction(conflictInfo);
-	}
 }
 
 /// <summary>
@@ -75,7 +50,7 @@ void Car::ConflictReaction(const ConflictExamineResultInfo conflictInfo)
 	//衝突して移動
 	position = conflictInfo.pos;
 	position.y = firstPosY;
-	MV1SetPosition(modelHandle, position);
+	ReflectsVelocity();
 }
 
 
@@ -109,7 +84,7 @@ void Car::ReflectsVelocity()
 	//ぶつかった時の衝撃で移動
 	if (collVecDecelTimer != nullptr)
 	{
-		velocity = VScale(collVec, collVecDecelTimer->GetRemainingTime());
+		velocity = VScale(collVec,static_cast<float>( collVecDecelTimer->GetRemainingTime()));
 		position = VAdd(position, velocity);
 		if (collVecDecelTimer->IsOverLimitTime())
 		{
@@ -156,22 +131,9 @@ VECTOR Car::GetAccelVec()
 	return VScale(direction, accelPower);
 }
 
-void Car::InitParamater(ObjectInit::InitObjKind kind)
+void Car::InitSpeedParamater(ObjectInit::InitObjKind kind)
 {
 	ActorParameter initParam = InitActor::GetActorParamator(kind);
-	//アセットを持ってくる
-	modelHandle = initParam.modelHandle;
-	//ポジション
-	position = {};
-	position.y = initParam.firstPosY;
-	//向き
-	direction = { 1,0,0 };
-	//跳ね返り力
-	bouncePower = initParam.setBouncePow;
-	//半径
-	radius = initParam.setRadius;
-	//modelの大きさ
-	modelSize = initParam.setModelSize;
 	//速さ関連の情報を所得
 	auto loader = new CSVFileLoader(initParam.addData);
 	auto strVec = loader->GetLoadStringData();

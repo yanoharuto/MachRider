@@ -1,7 +1,6 @@
 #pragma once
-#include "StageDataPass.h"
 
-class RankingData:StageDataPass
+class RankingData
 {
 public:
     RankingData();
@@ -13,6 +12,6 @@ public:
     /// <param name="score"></param>
     void UpdateRanking(int score);
 private:
-    std::vector<int> scoreRanking;
+    //std::vector<int> scoreRanking;
     
 };

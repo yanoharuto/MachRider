@@ -21,7 +21,7 @@ public:
     /// Œv‘ªŠÔ
     /// </summary>
     /// <returns></returns>
-    double GetElaspedTime()const;
+    virtual double GetElaspedTime()const;
     /// <summary>
     /// Å‰‚Éİ’è‚µ‚½§ŒÀŠÔ‚ğ“n‚·
     /// </summary>

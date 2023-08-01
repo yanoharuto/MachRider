@@ -1,7 +1,7 @@
 #pragma once
 #include <iostream>
 #include<memory>
-class ObjectObserver;
+class PlayerObserver;
 /// <summary>
 /// 音を聞いているオブジェクトの場所を更新
 /// </summary>
@@ -12,7 +12,7 @@ public:
     /// 音を聞くやつのポインターを貰う
     /// </summary>
     /// <param name="listener"></param>
-     SoundListener(std::weak_ptr<ObjectObserver> listener);
+     SoundListener(std::weak_ptr<PlayerObserver> listener);
      ~SoundListener();
     /// <summary>
     /// リスナーの位置を反映
@@ -21,6 +21,6 @@ public:
 private:
     
     //音を聞いているオブジェクト
-    std::weak_ptr<ObjectObserver> listener;
+    std::weak_ptr<PlayerObserver> listener;
 };
 

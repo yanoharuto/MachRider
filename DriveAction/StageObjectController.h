@@ -14,17 +14,23 @@ public:
     /// <summary>
     /// 初期化
     /// </summary>
-    StageObjectController(FirstPositionGetter* firstPosGetter);
+    StageObjectController();
     ///modelをデリート
     ~StageObjectController() override;
     /// <summary>
     /// コースのモデルを描画
     /// </summary>
     void Draw()const override;
+    /// <summary>
+    /// シーンが切り替えるまではずっといる
+    /// </summary>
+    /// <returns></returns>
+    bool IsAlive()const override;
 private:
-    //コースの外側のmodelのポジション
-    const float rockYPos = 20;
     //地面
     int floorModelHandle;
+    //空
     int skyDomeModelHandle;
+    //壁
+    StageWall* stageWall;
 };

@@ -4,7 +4,6 @@
 #include "DxLib.h"
 #include "Wheels.h"
 
-
 struct ConflictExamineResultInfo;
 struct HitCheckExamineObjectInfo;
 struct ObjInfo;
@@ -19,23 +18,12 @@ class Car abstract :public Actor
 {
 public:
 	/// <summary>
-	/// 初期位置や方角とか
+	/// 車
 	/// </summary>
-	/// <param name="firstPos"></param>
-	/// <param name="firstDir"></param>
-	/// <param name="destinationPos"></param>
-	/// <param name="soundPlayer"></param>
-	Car(ObjectInit::InitObjKind);
+	/// <param name="kind"> 欲しいオブジェクトの種類</param>
+	Car(ObjectInit::InitObjKind kind);
+	
     virtual ~Car();
-	/// <summary>
-    /// 更新（移動処理）
-    /// </summary>
-	virtual void Update();
-	/// <summary>
-	/// 衝突処理
-	/// </summary>
-	/// <param name="conflictInfo">ぶつかったかオブジェクトの情報</param>
-	virtual void ConflictProccess(ConflictExamineResultInfo conflictInfo)override;
 
 	/// <summary>
 	/// 移動する前のポジションを渡す
@@ -66,8 +54,12 @@ protected:
 	/// </summary>
 	/// <returns>進む量</returns>
 	virtual VECTOR GetAccelVec();
-
-	void InitParamater(ObjectInit::InitObjKind kind) override;
+	/// <summary>
+	/// 移動速度などの初期化
+	/// </summary>
+	/// <param name="kind"></param>
+	void InitSpeedParamater(ObjectInit::InitObjKind kind);
+	//スピードのパラメータ
 	struct SpeedParamator
 	{
 		//加速量
@@ -85,6 +77,7 @@ protected:
 		//止まる力
 		float breakPower;
 	};
+	//車の初期化の種類
 	enum CarInitKind
 	{
 		//加速量
@@ -108,7 +101,6 @@ protected:
 	float accelPower = 0;
 	//最初のY座標
 	float firstPosY = 0;
-
 	// なにもしない時の減速.
 	static const float defaultDecel;
 	// グリップの減速.

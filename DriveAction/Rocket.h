@@ -1,15 +1,14 @@
 #pragma once
-#include<string>
-#include "DxLib.h"
 #include "DamageObject.h"
 class SphereCollider;
+class ConflictProcessor;
 /// <summary>
 /// 上から下に落とす爆弾
 /// </summary>
 class Rocket final :public DamageObject
 {
 public:
-    Rocket(ObjectObserver* setObserver);
+    Rocket(std::unique_ptr<ObjectObserver> setObserver);
     ~Rocket() override;
     /// <summary>
     /// 更新
@@ -19,7 +18,7 @@ public:
     /// <summary>
     /// 衝突後の処理
     /// </summary>
-    void ConflictProccess(ConflictExamineResultInfo resultInfo)override;
+    void ConflictProcess(ConflictExamineResultInfo resultInfo)override;
 private:
     //最初の落下速度
     static const float setFallingSpeed;
@@ -35,4 +34,6 @@ private:
     bool onGround = false;
     //当たり判定
     SphereCollider* collider = nullptr;
+    //衝突処理実行役
+    ConflictProcessor* conflictProcessor;
 };

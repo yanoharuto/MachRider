@@ -1,15 +1,15 @@
 //生存時間
         aliveTime = 2
-4
+0
         //移動速度
         moveSpeed = 5
 12
         //何かしら発射する時間
         coolTime = 8
-0.3
+3
         //構成数
         unitNum = 11
-3
+1
         //攻勢ユニット同士の距離
         unitBetween=14
 10

@@ -1,10 +1,10 @@
 #pragma once
-#include "conflictProccesor.h"
+#include "SphereHitChecker.h"
 /// <summary>
 /// ‹…‘Ì“–‚½‚è”»’è
 /// </summary>
 class SphereCollider final:
-    public ConflictProccesor
+    public SphereHitChecker
 {
 public:
     SphereCollider(Actor* obj);
@@ -15,4 +15,3 @@ public:
     /// <returns></returns>
     ConflictExamineResultInfo HitCheck(HitCheckExamineObjectInfo hitCheckInfo)override;
 };
-

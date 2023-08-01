@@ -5,14 +5,14 @@
 #include "Utility.h"
 #include "FirstPositionGetter.h"
 #include "InitActor.h"
-#include "Rock.h"
 #include "StageWall.h"
-
+#include "ModelViewer.h"
 /// <summary>
 /// 初期化
 /// </summary>
 /// <returns></returns>
-StageObjectController::StageObjectController(FirstPositionGetter* firstPosGetter)
+StageObjectController::StageObjectController()
+    :ActorController(ObjectInit::wall)
 {   
     //床の設定
     auto param = InitActor::GetActorParamator(stageFloor);
@@ -23,16 +23,8 @@ StageObjectController::StageObjectController(FirstPositionGetter* firstPosGetter
     param = InitActor::GetActorParamator(skyDome);
     skyDomeModelHandle = param.modelHandle;
     MV1SetScale(skyDomeModelHandle, VGet(param.setModelSize, param.setModelSize, param.setModelSize));
-    ////岩を配置する
-    //auto rocksFirstPos = firstPosGetter->GetFirstPositionLoad(FirstPositionDataKind::rockPosition);
-    //for (int i = 0; i < rocksFirstPos.size(); i++)
-    //{
-    //    for (int j = 0; j < rocksFirstPos[i].size(); j++)
-    //    {
-    //        actorList .push_back(new Rock(rocksFirstPos[i][j], i));
-    //    }
-    //}
-    actorList.push_back(new StageWall());
+    stageWall = new StageWall();
+    viewer = new ModelViewer(wall);
 }
 
 /// <summary>
@@ -41,28 +33,28 @@ StageObjectController::StageObjectController(FirstPositionGetter* firstPosGetter
 /// <returns></returns>
 StageObjectController::~StageObjectController()
 {
-    for (auto ite = actorList.begin(); ite != actorList.end(); ite++)
-    {
-        SAFE_DELETE((*ite));
-    }
-    
+    SAFE_DELETE(stageWall);
+    SAFE_DELETE(viewer);
 }
-
 
 /// <summary>
 /// コースのモデルを描画
 /// </summary>
 void StageObjectController::Draw() const
 {
-    for (auto ite = actorList.begin(); ite != actorList.end(); ite++)
-    {
-        (*ite)->Draw();
-    }
-    
+    //壁と床
+    viewer->Draw(stageWall);
     MV1DrawModel(floorModelHandle);
     //ライトの影響なしで空を描画
     SetUseLighting(false);
     MV1DrawModel(skyDomeModelHandle);
-    
     SetUseLighting(true);
+}
+/// <summary>
+/// シーンが切り替えるまではずっといる
+/// </summary>
+/// <returns></returns>
+bool StageObjectController::IsAlive() const
+{
+    return true;
 }

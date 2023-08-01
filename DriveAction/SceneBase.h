@@ -27,7 +27,7 @@ public:
     /// <summary>
     /// •`‰æ
     /// </summary>
-    virtual void Draw();
+    virtual void Draw() const;
     
 protected:
     //‚±‚ÌƒV[ƒ“‚Ìí—Ş

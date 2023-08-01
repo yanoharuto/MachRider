@@ -1,8 +1,9 @@
 #pragma once
 #include <string>
 #include "Actor.h"
-#include "SphereCollider.h"
-#include "ObjPosAndDir.h"
+#include "EditorObject.h"
+class ConflictProcessor;
+class SphereCollider;
 /// <summary>
 /// 収集アイテム
 /// </summary>
@@ -14,7 +15,7 @@ public:
     /// 初期位置を教えて
     /// </summary>
     /// <param name="firstPos"></param>
-    Coin(VECTOR firstPos);
+    Coin(EditArrangementData arrangementData);
     ~Coin();
     /// <summary>
     /// 更新
@@ -24,12 +25,16 @@ public:
     /// ぶつかった時の処理
     /// </summary>
     /// <param name="conflictInfo"></param>
-    void ConflictProccess(const ConflictExamineResultInfo conflictInfo);
+    void ConflictProcess(const ConflictExamineResultInfo conflictInfo) override;
     /// <summary>
     /// Update関数と同じことをする
     /// </summary>
     void GameReserve()override;
 private:
+    /// <summary>
+    /// 上下に回転しながら移動
+    /// </summary>
+    void MoveAndRotate();
     //毎秒向きがこの値分変化する
     static const float rotateY;
     //縦方向に移動する量
@@ -48,5 +53,6 @@ private:
     int coinGetEffect = -1;
     //コインの出すオーラ
     int coinAuraEffect = -1;
+    //衝突処理実行役
+    ConflictProcessor* conflictProcessor;
 };
-

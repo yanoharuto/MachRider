@@ -12,7 +12,7 @@
 #include "CollectController.h"
 #include "ResultScore.h"
 #include "Rule.h"
-#include "StageInitializer.h"
+#include "StageDataManager.h"
 #include "SoundPlayer.h"
 #include "ShadowMap.h"
 #include "UIManager.h"
@@ -20,6 +20,9 @@
 #include "FadeInFadeOut.h"
 #include "CollectController.h"
 #include "ReusableTimer.h"
+#include "Player.h"
+#include "StageObjectController.h"
+#include "PlayerObserver.h"
 /// <summary>
 /// ゲームしているときの流れ
 /// </summary>
@@ -30,16 +33,14 @@ PlaySceneFlow::PlaySceneFlow()
 	//様々なオブジェクトの更新などをする
 	controllerManager = new ActorControllerManager();
 	//ステージごとの配置などを行う
-	StageInitializer* stageInitializer = new StageInitializer();
-	stageInitializer->Init(controllerManager);
-	player = stageInitializer->GetPlayerObserver();
-	
+	controllerManager->AddActorController(new StageObjectController());
+	//プレイヤーの情報を更新するオブザーバー
+	Player* playerP = new Player();
+	player = playerP->CreatePlayerObserver();
+	controllerManager->AddActorController(std::move(playerP));
 	//収集アイテムコントローラーを追加
 	controllerManager->AddActorController(new CollectController());
-	//ゲーム終了タイマー
-	gameLimitTimer = new ReusableTimer(stageInitializer->GetGameTime());
-	//UIを追加
-	playerUI = new GamePlayUI(gameLimitTimer, player);
+	
 	//カメラ
 	camera = new RaceCamera(player);
 	//影
@@ -52,8 +53,6 @@ PlaySceneFlow::PlaySceneFlow()
 	racePrevProccess = new RacePrevProcess();
 	//描画するたび保存
 	screen = new RaceScreen();
-	
-	SAFE_DELETE(stageInitializer);
 	//書く処理を分ける
 	UpdateFunc[PlaySceneFlow::start] = &PlaySceneFlow::StartUpdate;
 	UpdateFunc[PlaySceneFlow::game] = &PlaySceneFlow::GameUpdate;
@@ -175,9 +174,12 @@ void PlaySceneFlow::GameUpdate()
 	camera->Update();
 	//シャドウマップの範囲を更新
 	shadowMap->SetShadowMapErea();
-
+	if (CollectController::IsEndingMission())
+	{
+		gameLimitTimer->Stop();
+	}
 	//ゲーム終了
-	if (gameLimitTimer->IsOverLimitTime() || CollectController::IsEndingChallenge())
+	if (gameLimitTimer->IsOverLimitTime() || CollectController::IsDestroyAllItem())
 	{
 		nowProgress = PlaySceeneProgress::playerGoal;		
 		postGoalStaging = new PostGoalStaging(gameLimitTimer,player);
@@ -218,6 +220,10 @@ void PlaySceneFlow::StartUpdate()
 	{
 		nowProgress = PlaySceeneProgress::game;
 		SoundPlayer::Play2DSE(playBGM);
-		gameLimitTimer->Reuse();
+		//ゲーム終了タイマー
+		float time = atof(StageDataManager::GetStageData(gameTime).c_str());
+		gameLimitTimer = new ReusableTimer(time);
+		//UIを追加
+		playerUI = new GamePlayUI(gameLimitTimer, player);
 	}
 }

@@ -1,6 +1,5 @@
 #pragma once
 #include "Actor.h"
-#include "ObjectSubject.h"
 /// <summary>
 /// 飛行船
 /// </summary>
@@ -8,11 +7,15 @@ class FlyShip abstract:
     public Actor
 {
 public:
+    /// <summary>
+    /// 何かを発射する敵
+    /// </summary>
+    /// <param name="kind"></param>
     FlyShip(ObjectInit::InitObjKind kind);
-    virtual ~FlyShip();
-    virtual void Update();
+    /// <summary>
+    /// 更新
+    /// </summary>
+    virtual void Update()=0;
 
 protected:
-    //撃ったレーザーの位置などを教える用
-    ObjectSubject* sub;
 };

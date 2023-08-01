@@ -18,15 +18,14 @@ AssetManager::~AssetManager()
     assetMap.clear();
 }
 /// <summary>
-/// 複製したモデルを渡す
+/// モデルを渡す
 /// </summary>
 /// <param name="assetPass"></param>
 /// <returns></returns>
 int AssetManager::Get3DModelAssetHandle(std::string assetPass)
 {
-    if (!assetMap.contains(assetPass))//まだロードしてないならロードする
-    {
-        assetMap.insert(std::make_pair(assetPass, MV1LoadModel(assetPass.c_str())));
-    }
+    //まだロードしてないならロードする
+    assetMap.insert(std::make_pair(assetPass, MV1LoadModel(assetPass.c_str())));
+    
     return assetMap[assetPass];
 }

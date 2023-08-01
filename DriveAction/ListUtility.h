@@ -30,3 +30,34 @@ static std::list<T> ConvertVectorToList(std::vector<T> vector)
     std::list<T> newVec(vector.begin(), vector.end());
     return newVec;
 }
+/// <summary>
+/// —v‘f‚ªVector‚Ì’†‚É–³‚¢‚©’²‚×‚é
+/// </summary>
+/// <typeparam name="T"></typeparam>
+/// <param name="vector"></param>
+/// <param name="element"></param>
+/// <returns></returns>
+template<typename T>
+static std::vector<T*>::iterator FindVector(std::vector<T*>* vector,T* element)
+{
+    for (auto itr = (*vector).begin(); itr != (*vector).end(); itr++)
+    {
+        if ((*itr) == element)
+        {
+            return itr;
+        }
+    }
+    return (*vector).end();
+}
+template<typename T>
+static std::list<T*>::iterator FindList(std::list<T*>* vector, T* element)
+{
+    for (auto itr = (*vector).begin(); itr != (*vector).end(); itr++)
+    {
+        if ((*itr) == element)
+        {
+            return itr;
+        }
+    }
+    return (*vector).end();
+}

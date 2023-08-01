@@ -1,7 +1,9 @@
 #include "StageWall.h"
 #include "AssetManager.h"
 #include "ConflictManager.h"
+//ステージの縦幅
 float StageWall::stageLength;
+//ステージの横幅
 float StageWall::stageWidth;
 /// <summary>
 /// 行動範囲を狭める壁
@@ -11,15 +13,17 @@ StageWall::StageWall()
 {
     tag = ObjectTag::obstacle;
     position = setFirstPos;
-    MV1SetPosition(modelHandle, VGet(0, 0, 0));
+    //当たり判定
     wallCollider = new WallCollider(this, stageSmallestSize, stageBiggestSize);
+    ConflictManager::AddHitChecker(wallCollider);
+
     stageLength = fabsf(stageSmallestSize.z) + fabsf(stageBiggestSize.z);
     stageWidth = fabsf(stageSmallestSize.x) + fabsf(stageBiggestSize.x);
 }
 
 StageWall::~StageWall()
 {
-    ConflictManager::EraceConflictObjInfo(wallCollider);
+    ConflictManager::EraceHitChecker(wallCollider);
 }
 
 /// <summary>

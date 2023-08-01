@@ -1,9 +1,11 @@
 #include "LittleRadiusLaserController.h"
 #include "LittleRadiusLaser.h"
 #include "ObjectObserver.h"
-LittleRadiusLaserController::LittleRadiusLaserController(ObjectSubject* sub)
+/// <summary>
+/// レーザーを照射したオブジェクトを引数にもらう
+/// </summary>
+/// <param name="sub">レーザーを照射したオブジェクト</param>
+void LittleRadiusLaserController::AddObject(std::unique_ptr<ObjectObserver> sub)
 {
-    observer = new ObjectObserver(sub);
-    actorList.push_back(new LittleRadiusLaser(observer));
+    actorList.push_back(new LittleRadiusLaser(std::move(sub)));
 }
-

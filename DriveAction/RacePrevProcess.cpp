@@ -43,7 +43,7 @@ void RacePrevProcess::Update()
         iconGHIndex++;
     }
     //ゲーム開始音が終わったら
-    if (!SoundPlayer::IsPlaySound(fanfare))
+    if (fadeValue < 1)
     {
         //タイマー開始
         if (countDownTimer == nullptr)
@@ -81,10 +81,7 @@ void RacePrevProcess::Draw() const
     else
     {
         //カウントダウンと操作説明を表示
-        if (countDown->IsPlayCountDownSound())
-        {
-            countDown->DrawUI();
-        }
+        countDown->DrawUI();
         playManual->Draw();
     }
 }

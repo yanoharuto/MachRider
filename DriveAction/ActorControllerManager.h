@@ -29,6 +29,12 @@ public:
     /// <param name="actorController"></param>
     void AddActorController(ActorController* actorController);
 private:
+    /// <summary>
+    ///　敵生成処理
+    /// </summary>
+    void GenerateEnemyProcess();
+    //収集アイテムの数
+    int collectNum = 0;
     //actor管理クラスのリスト
     static std::list<ActorController*> actorControllerList;
     //敵が発射してきたりしたアイテムを作成

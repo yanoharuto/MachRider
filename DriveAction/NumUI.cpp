@@ -20,7 +20,7 @@ NumUI::~NumUI()
 
 void NumUI::Draw(int num) const
 {
-    Draw(numData.x, numData.y, num);
+    Draw(numData, num);
 }
 
 /// <summary>
@@ -31,28 +31,25 @@ void NumUI::Draw(int num) const
 /// <param name="num">”š</param>
 /// <param name="scale">•¶š‚Ì‘å‚«‚³</param>
 /// <returns>¶’[‚ÌÀ•W</returns>
-int NumUI::Draw(int x, int y, int num) const
+int NumUI::Draw(UIData data, int num) const
 {
     //Œ…”
     int digits = static_cast<int>(OriginalMath::GetDigits(num));
     //•\¦ˆÊ’u‚ğ‰E’[‚É‚¢‚Á‚½‚ñˆÚ“®
-    x -= static_cast<int> (numData.size * numData.width * digits);
+    data.x -= static_cast<int> (data.size * data.width * digits);
     //Œ…”‚ªƒ[ƒ‚É‚È‚é‚Ü‚Å•`‰æ‚·‚é@“ª‚©‚ç•`‰æ‚·‚é
     for (int i = digits; i > 0; i--)
     {
         //10‚Ì‚¯‚½‚ÅŠ„‚Á‚½‚Ì‚ ‚Ü‚è
         int drawNum = (static_cast<int>(num / pow(TIMER_FONT_NUM, i - 1))) % numData.dataHandle.size();
         //•`‰æ
-        UIData data = numData;
-        data.x = x;
-        data.y = y;
         UIDrawer::DrawRotaUI(data,drawNum);
         //ˆÊ’u‚ğ‚¸‚ç‚·
-        x += static_cast<int> (numData.size * numData.width);
+        data.x += static_cast<int> (data.size * data.width);
         //Ÿ‚É•`‰æ‚µ‚½‚¢”š‚Ì€”õ
         num -= static_cast<int>(drawNum * pow(TIMER_FONT_NUM, i - 1));
     }
-    return x;
+    return data.x;
 }
 /// <summary>
 /// ¬”“_‚à•`‰æ‚µ‚½‚¢—p
@@ -70,18 +67,19 @@ void NumUI::Draw(float num) const
     int decimalNum1 = static_cast<int>((num - iNum) * 10);
     //¬”•”•ª‘æ“ñˆÊ
     int decimalNum2 = static_cast<int>(((num - iNum) * 100 - decimalNum1 * 10));
+    UIData data = numData;
     //•`‰æI—¹‚µ‚½êŠ‚ğedge‚É“n‚·
-    int edge = Draw(numData.x, numData.y, decimalNum2);
-    edge -= static_cast<int> (numData.size * numData.width);
-    edge = Draw(edge, numData.y, decimalNum1);
-    edge -= static_cast<int> (numData.size * numData.width);
+    data.x = Draw(data, decimalNum2);
+    data.x -= static_cast<int> (numData.size * numData.width);
+    data.x = Draw(data, decimalNum1);
+    data.x -= static_cast<int> (numData.size * numData.width);
     //®”•”•ª‚ğ•`‰æ
-    Draw(edge, numData.y, iNum);
-    edge -= static_cast<int> (numData.size * numData.width);
+    Draw(data, iNum);
+    data.x -= static_cast<int> (numData.size * numData.width);
     //¬”“_
-    UIData data = pointData;
-    data.x = edge;
-    UIDrawer::DrawRotaUI(data);
+    UIData pData = pointData;
+    pData.x = data.x;
+    UIDrawer::DrawRotaUI(pData);
 }
 /// <summary>
 /// ˆê•¶š‚Ì‘å‚«‚³

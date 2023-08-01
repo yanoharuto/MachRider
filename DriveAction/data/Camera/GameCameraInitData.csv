@@ -9,10 +9,10 @@
 180
         //描画対象との距離
         targetBetween = 11
-150
+100
         //カメラのY距離
 setYPosition
-40
+30
         //カメラの移動速度
         cameraSpeed = 17
 0.045

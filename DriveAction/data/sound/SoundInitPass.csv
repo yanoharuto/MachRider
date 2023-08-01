@@ -34,3 +34,6 @@ data/sound/scoreEndSE.csv
        //次のシーンに行く時の音
        sceneNextSE
 data/sound/sceneNextSE.csv
+       //スコア表示したときのファンファーレ
+       gameEndFanfare=38
+data/sound/gameEndFanfare.csv

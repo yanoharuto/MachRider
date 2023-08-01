@@ -5,5 +5,5 @@ data/Camera/TitleCameraInitData.csv
         game
 data/Camera/GameCameraInitData.csv
         //リザルト画面でのカメラ
-        result
-data/Camera/ResultCameraInitData.csv
+editor
+data/Camera/EditorCameraInitData.csv

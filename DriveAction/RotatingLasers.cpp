@@ -16,16 +16,15 @@ const VECTOR RotatingLasers::firstDir = { 0.0f,0.0f,-1.0f };
 /// 初期化
 /// </summary>
 /// <param name="setOwner"></param>
-RotatingLasers::RotatingLasers(InitParam setParam, ObjectObserver* setObserver)
-    :DamageObject(setParam.initKind, setObserver)
+RotatingLasers::RotatingLasers(InitParam setParam, std::unique_ptr<ObjectObserver> setObserver)
+    :DamageObject(setParam.initKind, std::move(setObserver))
 {
-    tag = ObjectTag::damageObject;
-    
+    //向きとエフェクト
     EffectManager::LoadEffect(laserTrack);
-    direction = firstDir;
-    radius = setParam.radius;
+    direction = setObserver->GetSubjectDir();
+    //当たり判定
     collider = new LaserCollider(this,setParam.laserRange);
-
+    ConflictManager::AddHitChecker(collider);
 }
 
 RotatingLasers::~RotatingLasers()
@@ -34,17 +33,21 @@ RotatingLasers::~RotatingLasers()
     laserEffect = -2;
     StopEffekseer3DEffect(trackEffect);
     trackEffect = -2;
-    ConflictManager::EraceConflictObjInfo(collider);
+    ConflictManager::EraceHitChecker(collider);
     SAFE_DELETE(collider);
-    SAFE_DELETE(observer);
+    observer.reset();
 }
-
+/// <summary>
+/// レーザーのy軸回転
+/// </summary>
+/// <param name="rotaSpeed"></param>
+/// <param name="laserRange"></param>
 void RotatingLasers::YRotate(float rotaSpeed, float laserRange)
 {
     position = observer->GetSubjectPos();
     //方向変更　エフェクトの向きを変える
     direction = VNorm(OriginalMath::GetYRotateVector(direction, rotaSpeed));
-    effectRota -= rotaSpeed * RAGE;
+    effectRota = OriginalMath::GetDegreeMisalignment(VGet(1, 0, 0), direction) * RAGE;
     //レーザーの終着点
     endPos = VAdd(position, VScale(direction, position.y * laserRange));
     endPos.y = 0;
@@ -55,10 +58,16 @@ void RotatingLasers::YRotate(float rotaSpeed, float laserRange)
     }
     //エフェクトの向きとか場所を修正
     SetPosPlayingEffekseer3DEffect(laserEffect, position.x, position.y, position.z);
-    SetRotationPlayingEffekseer3DEffect(laserEffect, 0, effectRota, 0);
+    if (VCross(VGet(1, 0, 0), direction).y < 0)
+    {
+        SetRotationPlayingEffekseer3DEffect(laserEffect, 0, -effectRota, 0);
+    }
+    else
+    {
+        SetRotationPlayingEffekseer3DEffect(laserEffect, 0, effectRota, 0);
+    }
     //地面にレーザー跡エフェクト
     SetLaserTrack();
-    isDrawShadow = false;
 }
 /// <summary>
 /// レーザーを撃った場所に後を出す

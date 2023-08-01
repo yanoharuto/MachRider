@@ -4,7 +4,6 @@
 SceneBase::SceneBase(SceneType _SceneType)
 {
     nowSceneType = _SceneType;
-
 }
 
 SceneBase::~SceneBase()
@@ -18,11 +17,15 @@ SceneType SceneBase::Update()
     sceneFlow->Update();
     if (sceneFlow->GetIsEndProccess())//ˆ—‚ªI‚í‚Á‚½‚ç
     {
+        //ŽŸ‚ÌƒV[ƒ“‚É”ò‚Ô
         return sceneFlow->GetNextSceneType();
     }
     return nowSceneType;
 }
-void SceneBase::Draw()
+/// <summary>
+/// •`‰æ
+/// </summary>
+void SceneBase::Draw() const
 {
     sceneFlow->Draw();
 }

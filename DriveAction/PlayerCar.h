@@ -2,10 +2,13 @@
 #include "Car.h"
 #include "EffectManager.h"
 #include "UserInput.h"
+#include "EditObjectData.h"
+class PlayerConflictProcessor;
+class SphereHitChecker;
 class SphereCollider;
-
+class Timer;
  /// <summary>
- /// プレイヤー(車)
+ /// プレイヤーが操作する車
  /// </summary>
  class PlayerCar final: public Car
 {
@@ -14,13 +17,14 @@ public:
 	/// コンストラクタ
 	/// </summary>
 	/// <returns></returns>
-	PlayerCar(VECTOR firstPos,VECTOR direction);
+	PlayerCar(EditArrangementData arrangementData);
 	///デストラクタ
     ~PlayerCar()override;
     /// <summary>
     /// 更新（移動処理）
     /// </summary>
 	void Update() override;
+
 	/// <summary>
 	/// ゲームが始まる前の演出とか
 	/// </summary>
@@ -29,8 +33,12 @@ public:
 	/// ぶつかった時の処理
 	/// </summary>
 	/// <param name="conflictInfo"></param>
-	void ConflictProccess(ConflictExamineResultInfo conflictInfo)override;
-
+	void ConflictProcess(ConflictExamineResultInfo conflictInfo)override;
+	/// <summary>
+	/// 機体の傾きを渡す
+	/// </summary>
+	/// <returns></returns>
+	VECTOR GetModelRotateVec();
 private:
 	/// <summary>
 	/// 加速用ベクトルを作る
@@ -38,13 +46,9 @@ private:
 	/// <returns></returns>
 	VECTOR GetAccelVec()override;
 	/// <summary>
-	/// 車を回転させる
-	/// </summary>
-	void ModelSetMatrix() const override;
-	/// <summary>
 	/// 入力するとTwistZRotaが変更する
 	/// </summary>
-	void SetTwistZRota();
+	void RotateUpdate();
 	/// <summary>
 	/// 走っているときのエフェクトを更新
 	/// </summary>
@@ -53,12 +57,12 @@ private:
 	/// ダメージを受けた時のリアクション
 	/// </summary>
 	/// <param name="conflictInfo"></param>
-	void DamageReaction(const ConflictExamineResultInfo conflictInfo);
+	void DamageReaction(ConflictExamineResultInfo conflictInfo);
 	/// <summary>
 	/// ぶつかった時のリアクション
 	/// </summary>
 	/// <param name="conflictInfo"></param>
-	void ConflictReaction(const ConflictExamineResultInfo conflictInfo);
+	void ConflictReaction(ConflictExamineResultInfo conflictInfo);
 	/// <summary>
 	/// ダメージを受けた後の処理。無敵時間復帰など
 	/// </summary>
@@ -92,7 +96,7 @@ private:
 	//急加速準備中
 	bool isTurboReserve = false;
 	//衝突している最中か調べる
-	bool isConflictFlag = false;
+	bool isNowConflict = false;
 	//連続衝突
 	bool isSerialConflict = false;
 	//加速チャージタイム
@@ -123,10 +127,14 @@ private:
 	bool isDamage = false;
 	//ダメージを受けた時の操作不可能時間の合計
 	const float setDamageReactionTime = 1.0f;
-	//ダメージを受けた時に回転する速度
-	const float damageReactionRotaSpeed = 15.0f;
+	//ダメージを受けた時に回転する量
+	const float damageReactionRotaValue = 1080.0f;
 	//無敵時間のタイマー
 	Timer* damageTimer = nullptr;
 	//ターボ時間
 	Timer* turboTimer = nullptr;
+	//衝突処理を呼んでくれる
+	PlayerConflictProcessor* conflictProcessor;
+	//playerCar自身の当たり判定
+	SphereCollider* hitChecker;
 };

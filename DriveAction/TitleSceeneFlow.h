@@ -2,9 +2,10 @@
 #include <string>
 #include "SceneFlowBase.h"
 #include "UIManager.h"
+#include "StageObjectController.h"
 class RaceScreen;
 class StageSelect;
-class StageInitializer;
+class GameManager;
 class FlashUI;
 class TitleCamera;
 class TitleDemo;

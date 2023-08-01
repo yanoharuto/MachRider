@@ -23,5 +23,5 @@ public:
     void Update();
 private:
     //Ô‚ğ³–Ê‚©‚çŒ©‚È‚¢‚æ‚¤‚É‚·‚é‚½‚ß‚¸‚ç‚·Šp“x‚Ì—Ê
-    float cameraRotate = 38.0f;
+    float cameraRotate = 80.0f;
 };

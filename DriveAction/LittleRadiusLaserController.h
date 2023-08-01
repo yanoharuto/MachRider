@@ -1,17 +1,24 @@
 #pragma once
-#include <iostream>
-#include <memory>
-#include "ActorController.h"
-class ObjectSubject;
+#include <vector>
+#include "DamageObjectController.h"
 class ObjectObserver;
 /// <summary>
-/// 小さく回るレーザー
+/// 小さくy軸回転するレーザーの更新役
 /// </summary>
 class LittleRadiusLaserController :
-    public ActorController
+    public DamageObjectController
 {
 public:
-    LittleRadiusLaserController(ObjectSubject* sub);
+    /// <summary>
+/// 小さくy軸回転するレーザーの更新役
+/// </summary>
+    LittleRadiusLaserController()
+        :DamageObjectController(ObjectInit::littleRadiusLaser)
+    {};
+    /// <summary>
+    /// レーザーを照射したオブジェクトを引数にもらう
+    /// </summary>
+    /// <param name="sub">レーザーを照射したオブジェクト</param>
+    void AddObject(std::unique_ptr<ObjectObserver> sub)override;
 private:
-    ObjectObserver* observer;
 };

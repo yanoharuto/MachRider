@@ -6,6 +6,7 @@
 #include "Utility.h"
 #include "InitObjKind.h"
 #include "SphereCollider.h"
+#include "ConflictProcessor.h"
 #include "ObjectObserver.h"
 //—‰º‘¬“x
  const float Rocket::setFallingSpeed = 0.7f;
@@ -13,8 +14,9 @@
  const float Rocket::gravityPower = 0.08f;
  //”R‚¦‚½‚Ì“–‚½‚è”»’è‚Ì‘å‚«‚³
  const float Rocket::setBurnRadius = 42.0f;
-Rocket::Rocket(ObjectObserver* setObserver)
-    :DamageObject(ObjectInit::bomber,setObserver)
+
+Rocket::Rocket(std::unique_ptr<ObjectObserver> setObserver)
+    :DamageObject(ObjectInit::bomber,std::move(setObserver))
 {
     position = observer->GetSubjectPos();
     fallingSpeed = setFallingSpeed;
@@ -23,7 +25,10 @@ Rocket::Rocket(ObjectObserver* setObserver)
     velocity = VGet(0, 0, 0);
     direction = VGet(1, 0, 0);
     onGround = false;
+    //“–‚½‚è”»’è
     collider = new SphereCollider(this);
+    conflictProcessor = new ConflictProcessor(this);
+    ConflictManager::AddConflictProcessor(conflictProcessor, collider);
 }
 /// <summary>
 /// ‹…“–‚½‚è”»’è
@@ -31,9 +36,10 @@ Rocket::Rocket(ObjectObserver* setObserver)
 Rocket::~Rocket()
 {
     StopEffekseer3DEffect(burnEffect);
-    ConflictManager::EraceConflictObjInfo(collider);
+    ConflictManager::EraceConflictProccesor(conflictProcessor,collider);
     SAFE_DELETE(collider);
-    SAFE_DELETE(observer);
+    SAFE_DELETE(conflictProcessor);
+    observer.reset();
 }
 /// <summary>
 /// XV
@@ -68,12 +74,11 @@ void Rocket::Update()
             burnEffect = -1;
         }
     }
-    ReflectsVelocity();
 }
 /// <summary>
 /// Õ“ËŒã‚Ìˆ—
 /// </summary>
-void Rocket::ConflictProccess(ConflictExamineResultInfo resultInfo)
+void Rocket::ConflictProcess(ConflictExamineResultInfo resultInfo)
 {
     if (resultInfo.tag != ObjectTag::damageObject)
     {

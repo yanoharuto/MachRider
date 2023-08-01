@@ -5,8 +5,6 @@
 #include "ActorController.h"
 #include "DxLib.h"
 class Coin;
-class ObjectSubject;
-class ObjectObserver;
 /// <summary>
 /// 収集アイテムの操作
 /// </summary>
@@ -14,7 +12,7 @@ class CollectController final:public ActorController
 {
 public:
     /// <summary>
-    /// コインの設置
+    /// コインを予めNewして最大枚数を保存
     /// </summary>
     CollectController();
     /// <summary>
@@ -51,22 +49,26 @@ public:
     /// <returns></returns>
     static int GetRemainingCollectNum();
     /// <summary>
-    /// プレイヤーが集めなければいけないアイテムの残っている数
+    /// プレイヤーが収集アイテムを集め終えたか
     /// </summary>
     /// <returns></returns>
-    static bool IsEndingChallenge();
+    static bool IsEndingMission();
+    /// <summary>
+    /// 全アイテムが破壊されたか
+    /// </summary>
+    static bool IsDestroyAllItem();
 private:
-
-    /// 位置などを教えるクラスのリスト
-    std::list<ObjectSubject*> subjectList;
     //収集アイテムが生きているか
     static bool isActive;
+    //収集アイテムが全部Deleteされたか
+    static bool isDestroyAll;
     //収集アイテムを取り終わった
-    static bool isChallengeEnd;
+    static bool isMissionEnd;
     //収集アイテムの最大数
     static int totalCollectNum;
     //所得されたアイテムの数
     static int remainingCollectNum;
     /// 現在動いている収集アイテムの位置
     static VECTOR nowActiveCollectItemPos;
+
 };

@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include <memory>
+#include "DxLib.h"
 class Timer;
 class ActorControllerManager;
 class DemoCarController;
@@ -48,4 +49,7 @@ private:
     bool isAValueIncrement = true;
     //èÍñ ïœä∑ín
     float fadeValue;
+
+    const VECTOR demoCarFirstPos = { -3200,0,0 };
+    const VECTOR demoCarFirstDir = { 1,0,0.1f };
 };

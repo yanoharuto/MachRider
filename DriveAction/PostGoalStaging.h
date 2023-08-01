@@ -5,11 +5,12 @@
 #include "UIManager.h"
 #include "ResultScore.h"
 
-class ObjectObserver;
+class PlayerObserver;
 class NumUI;
 class FlashUI;
 class Timer;
 class TimerUI;
+class ScoreNum;
 /// <summary>
 /// スコアの表示
 /// </summary>
@@ -28,7 +29,7 @@ public:
     /// <summary>
     /// ゴール後の演出をする
     /// </summary>
-    PostGoalStaging(Timer* timer, std::weak_ptr<ObjectObserver> player);
+    PostGoalStaging(Timer* timer, std::weak_ptr<PlayerObserver> player);
     /// <summary>
     /// デストラクタ
     /// </summary>
@@ -49,10 +50,17 @@ public:
     bool IsEndProcess()const;
 private:
     /// <summary>
-    /// 今やるべき処理
+    /// クリアタイムのスコア変換
     /// </summary>
-    /// <returns></returns>
-    void UpdateNowProcess();
+    void ConvertTimeScotre();
+    /// <summary>
+    /// 収集アイテムのスコア変換
+    /// </summary>
+    void ConvertCollectScotre();
+    /// <summary>
+    /// ゲーム終了のアナウンスを流すプロセス
+    /// </summary>
+    void EndAnnounceProcess();
     /// <summary>
     /// スコアに関するUIを所得
     /// </summary>
@@ -64,7 +72,7 @@ private:
     //処理をすべて行えたら
     bool isEndProcess = false;
     //合計スコアを描画したか
-    bool isEndUpdateScore = false;
+    bool isEndConvertScore = false;
     //クリアタイム
     float clearTime = 0;
     //後ろの画面の明るさを低くする
@@ -100,27 +108,17 @@ private:
     //クリアタイムを表示する用
     NumUI* clearTimeUI;
     //合計スコア表示
-    NumUI* totalScoreNumUI;
+    ScoreNum* totalScoreNumUI;
     //今何の処理を行っているか
-    ResultScore::ScoreKind nowProcess;
-    //タイマー
-    Timer* larpTimer;
-    //スコア換算処理が始まるまでの時間
-    Timer* startScoreExchangeTimer;
+    ResultScore::ScoreKind nowConvertScore;
+    //スコアを徐々に変換するためのタイマー
+    Timer* larpConvertScoreTimer;
+    //ゴールアナウンスが表示されきるまでの時間を計測する
+    Timer* larpMoveAnnounceTimer;
     //スコアの保存
     ResultScore* resultScore;
     //スペースキー催促UI
     FlashUI* pressSpaceKeyUI;
-    struct ScoreColor
-    {
-        int r, g, b;
-    };
-    //総合スコアの色
-    ScoreColor totalScoreColor;
-    //総合スコアデフォルトカラー
-    const ScoreColor bronze = { 123,40,0 };
-    //ちょっと良くなった時の色
-    const ScoreColor silver = { 192,192,192 };
-    //総合スコアがかなり良いときの色
-    const ScoreColor gold = {255, 215, 0};
+    //拍手効果音
+    bool clapSEH = false;
 };

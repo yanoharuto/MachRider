@@ -1,14 +1,15 @@
 #pragma once
 #include <list>
-
-class ObjectSubject;
-class DamageObject;
-class ActorController;
+#include <unordered_map>
+#include <memory>
+#include <iostream>
+class ObjectObserver;
+class DamageObjectController;
 class ActorControllerManager;
 /// <summary>
 /// 投擲アイテムなどのダメージがあるオブジェクトを生成する
 /// </summary>
-class DamageObjectGenerator
+class DamageObjectGenerator final
 {
 public:
     /// <summary>
@@ -23,7 +24,7 @@ public:
     /// <summary>
     /// デフォルトコンストラクタ
     /// </summary>
-    DamageObjectGenerator();
+    DamageObjectGenerator(ActorControllerManager* const controllerManager);
     ~DamageObjectGenerator();
     /// <summary>
     /// ダメージを与えるオブジェクトを生成
@@ -31,13 +32,9 @@ public:
     /// <param name="itemTag"></param>
     /// <param name="sub">発射した人の情報を渡す</param>
     /// <returns></returns>
-    static void GenerateDamageObject(DamageObjectKind itemTag,ObjectSubject* sub);
-    /// <summary>
-    /// 生成されたオブジェクトをcontrollerManagerに追加
-    /// </summary>
-    /// <param name="controllerManager"></param>
-    void MoveControllerList(ActorControllerManager* controllerManager);
+    static void GenerateDamageObject(DamageObjectKind itemTag, std::unique_ptr<ObjectObserver> sub);
 private:
     //作成したコントローラークラス。GetControllerListが呼ばれると初期化される
-    static std::list<ActorController*> createDamageObject;
+    static std::unordered_map<DamageObjectKind, DamageObjectController*> controllerVec;
+    
 };

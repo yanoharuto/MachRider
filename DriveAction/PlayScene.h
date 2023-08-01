@@ -2,7 +2,7 @@
 #include "SceneBase.h"
 class Menu;
 /// <summary>
-/// 
+/// ゲームを遊ぶシーン
 /// </summary>
 class PlayScene final:
     public SceneBase
@@ -10,9 +10,16 @@ class PlayScene final:
 public:
     PlayScene();
     ~PlayScene() override;
-    //メニューを開いてやり直したりする場合がある
+    /// <summary>
+    /// ゲームを遊ぶ
+    /// </summary>
+    /// <returns></returns>
     SceneType Update() override;
-    void Draw()override;
+    /// <summary>
+    /// メニューを開いている時と遊んでいるときで処理が違う
+    /// </summary>
+    void Draw()const override;
 private:
+    //一時停止したりリトライする用
     Menu* menu;
 };

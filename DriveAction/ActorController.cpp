@@ -1,15 +1,10 @@
 #include "ActorController.h"
 #include "Actor.h"
+#include "ModelViewer.h"
 #include "Utility.h"
-ActorController::ActorController()
-{
-}
-
-ActorController::ActorController(Actor* actor)
-{
-    actorList.push_back(actor);
-}
-
+/// <summary>
+/// デリート
+/// </summary>
 ActorController::~ActorController()
 {
     for (auto ite = actorList.begin(); ite != actorList.end(); ite++)
@@ -17,8 +12,11 @@ ActorController::~ActorController()
         SAFE_DELETE(*ite);
     }
     actorList.clear();
+    SAFE_DELETE(viewer);
 }
-
+/// <summary>
+/// 更新
+/// </summary>
 void ActorController::Update()
 {
     for (auto ite = actorList.begin(); ite != actorList.end(); ite++)
@@ -26,7 +24,9 @@ void ActorController::Update()
         (*ite)->Update();
     }
 }
-
+/// <summary>
+/// ゲーム開始準備処理
+/// </summary>
 void ActorController::GameReserve()
 {
     for (auto ite = actorList.begin(); ite != actorList.end(); ite++)
@@ -34,17 +34,27 @@ void ActorController::GameReserve()
         (*ite)->GameReserve();
     }
 }
-
+/// <summary>
+/// 描画処理
+/// </summary>
 void ActorController::Draw() const
 {
-    for (auto ite = actorList.begin(); ite != actorList.end(); ite++)
+    if (viewer != nullptr)
     {
-        (*ite)->Draw();
+        for (auto ite = actorList.begin(); ite != actorList.end(); ite++)
+        {
+            viewer->Draw((*ite));
+        }
     }
 }
-
+/// <summary>
+/// 役割を終えてたらfalse
+/// </summary>
+/// <returns></returns>
 bool ActorController::IsAlive() const
 {
+    //中身がなかったら死んでる
+    if (actorList.empty())return false;
     //死んでないならtrueを返す
     for (auto ite = actorList.begin(); ite != actorList.end(); ite++)
     {

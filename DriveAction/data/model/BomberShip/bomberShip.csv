@@ -6,7 +6,7 @@ data/model/BomberShip/PrototypeZero.mv1
 0.7
     //最初のポジション
     firstPosY = 8
-500
+700
     //modelの当たり半径
     collRadius = 11
 0

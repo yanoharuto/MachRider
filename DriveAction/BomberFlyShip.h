@@ -1,6 +1,7 @@
 #pragma once
 #include "FlyShip.h"
-#include "FlyShipCommander.h"
+#include "FlyShipController.h"
+#include "EditObjectData.h"
 #include <string>
 class Timer;
 class ReusableTimer;
@@ -16,7 +17,7 @@ public:
     /// </summary>
     /// <param name="setFirstPos">出現位置</param>
     /// <param name="setDestinationPos">目的地</param>
-    BomberFlyShip(VECTOR setFirstPos, VECTOR setDestinationPos,FlyShipInit::InitFlyShipParamator initParam);
+    BomberFlyShip(EditArrangementData data,FlyShipInit::InitFlyShipParamator initParam);
     /// <summary>
     /// 爆弾を落としながら進む
     /// </summary>
@@ -24,9 +25,5 @@ public:
 private:
     //爆弾を落とす時間
     ReusableTimer* bombFallTimer;
-    //生存時間
-    Timer* aliveTimer;
-    //速さ
-    static float speed;
 };
 

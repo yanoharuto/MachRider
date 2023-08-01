@@ -9,7 +9,7 @@
 180
         //描画対象との距離
         targetBetween = 11
-50
+45
         //カメラのY位置
         setYPosition = 14
 20

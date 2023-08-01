@@ -7,9 +7,6 @@ class ObjectObserver;
 struct InitParam
 {
     ObjectInit::InitObjKind initKind;
-    float laserSize;
-    float trackSize;
-    float radius;
     float laserRange;
 };
 /// <summary>
@@ -23,10 +20,10 @@ public:
     /// </summary>
     /// <param name="carInfo"></param>
     /// <param name="timer"></param>
-    RotatingLasers(InitParam setParam, ObjectObserver* setObserver);
+    RotatingLasers(InitParam setParam, std::unique_ptr<ObjectObserver> setObserver);
     ~RotatingLasers()override;
     /// <summary>
-    /// レーザーの回転
+    /// レーザーのy軸回転
     /// </summary>
     /// <param name="rotaSpeed"></param>
     /// <param name="laserRange"></param>
@@ -36,13 +33,12 @@ public:
     /// </summary>
     void SetLaserTrack();
 protected:
+    //レーザーの種類
     EffectInit::EffectKind laserKind;
     //エフェクトハンドル
     int laserEffect = -1;
     //焼き後
     int trackEffect = -1;
-    //エフェクトのシャドウになるカプセルを描画したか
-    bool isDrawShadow = false;
     //エフェクトの回転角（ラジアン）
     float effectRota;
     //最初の回転方向
@@ -51,4 +47,5 @@ protected:
     VECTOR endPos = {};
     //線状当たり判定
     LaserCollider* collider;
+    float radius = 20.0f;
 };

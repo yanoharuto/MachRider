@@ -3,26 +3,33 @@
 #include "OriginalMath.h"
 #include "SphereCollider.h"
 #include "Utility.h"
-Saw::Saw()
-    
+#include "ConflictManager.h"
+/// <summary>
+/// âÒì]ÇÃÇ±Ç¨ÇË
+/// </summary>
+/// <param name="arrangementData"></param>
+Saw::Saw(EditArrangementData arrangementData)
+    :Actor(saw)
 {
-}
-
-Saw::Saw(VECTOR pos)
-    :Actor(ObjectInit::saw)
-{
-    pos.y = position.y;
-    position = pos;
+    position.x = arrangementData.posX;
+    position.z = arrangementData.posZ;
     collider = new SphereCollider(this);
+    ConflictManager::AddHitChecker(collider);
     tag = damageObject;
+    direction = VGet(arrangementData.dirX, 0, arrangementData.dirZ);
 }
-
+/// <summary>
+/// ìñÇΩÇËîªíËè¡ãé
+/// </summary>
 Saw::~Saw()
 {
+    ConflictManager::EraceHitChecker(collider);
     SAFE_DELETE(collider);
 }
-
+/// <summary>
+/// âÒì]Ç∑ÇÈ
+/// </summary>
 void Saw::Update()
 {
-    direction = OriginalMath::GetYRotateVector(direction,addRotate);
+    direction = VNorm(OriginalMath::GetYRotateVector(direction,addRotate));
 }

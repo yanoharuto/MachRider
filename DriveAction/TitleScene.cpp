@@ -4,9 +4,11 @@
 #include "SoundPlayer.h"
 #include "TitleSceeneFlow.h"
 #include "FadeInFadeOut.h"
+/// <summary>
+/// ƒ^ƒCƒgƒ‹
+/// </summary>
 TitleScene::TitleScene()
     :SceneBase(SceneType::TITLE)
 {
     sceneFlow = new TitleSceeneFlow();
-    SoundPlayer::LoadSound(titleBGM);
 }

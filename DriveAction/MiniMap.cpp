@@ -1,7 +1,6 @@
 #include "MiniMap.h"
 #include "UIManager.h"
 #include "OriginalMath.h"
-#include "ObjectObserver.h"
 #include "Object.h"
 #include "Utility.h"
 #include "UIDrawer.h"
@@ -12,11 +11,9 @@ const int MiniMap::iconSize;
 int MiniMap::mapGraphWidth;
 //ミニマップの画像の縦幅
 int MiniMap::mapGraphLength;
-//収集物の位置の縮尺
-const float MiniMap::betweenSize = 0.3f;
 
 //ミニマップに表示する点
-std::list<ObjectObserver*> MiniMap::markerObserverList;
+std::list<std::unique_ptr<ObjectObserver>> MiniMap::markerObserverList;
 //ミニマップのデータ
 UIData MiniMap::miniMap;
 /// <summary>
@@ -29,6 +26,8 @@ MiniMap::MiniMap(std::weak_ptr<ObjectObserver> player)
     GetGraphSize(miniMap.dataHandle[0], &mapGraphWidth, &mapGraphLength);
 
     playerObserver = player;
+
+    betweenSize = mapGraphWidth / StageWall::GetStageWidth() * betweenSize;
 }
 
 MiniMap::~MiniMap()
@@ -36,7 +35,7 @@ MiniMap::~MiniMap()
     //描画するリストを全消し
     for (auto itr = markerObserverList.begin(); itr != markerObserverList.end(); itr++)
     {
-        SAFE_DELETE((*itr));
+        (*itr).reset();
     }
     markerObserverList.clear();
 }
@@ -59,8 +58,8 @@ void MiniMap::Update()
             VECTOR itePos = (*ite)->GetSubjectPos();
             VECTOR distance = VSub(itePos, playerPos);
             distance.y = 0;
-
-            if (VSize(distance) * betweenSize < miniMap.width * miniMap.size)
+            //距離がマップに反映可能な大きさなら
+            if (VSize(distance) * betweenSize < miniMap.width / 2 * miniMap.size)
             {
                 distance = ConvertPosition(distance);
                 
@@ -89,9 +88,9 @@ void MiniMap::Draw()const
 /// マップに反映させたいアイテムの追加
 /// </summary>
 /// <param name="obserber"></param>
-void MiniMap::AddMarker(ObjectObserver* obserber)
+void MiniMap::AddMarker(std::unique_ptr<ObjectObserver> obserber)
 {
-    markerObserverList.push_back(obserber);
+    markerObserverList.push_back(std::move(obserber));
 }
 /// <summary>
 /// ミニマップの大きさに変換する
@@ -108,10 +107,8 @@ VECTOR MiniMap::ConvertPosition(VECTOR between)
     MATRIX pM = MGetRotY(-rotate * RAGE);
     between = VTransform(VGet(0, 0, -VSize(between)), pM);
     //ミニマップの大きさに変換
-    float wSize = mapGraphWidth / StageWall::GetStageWidth();
-    float lSize = mapGraphLength / StageWall::GetStageLength();
     VECTOR data;
-    data.x = -between.x * wSize + miniMap.x;
-    data.y = between.z * lSize + miniMap.y;
+    data.x = -between.x * betweenSize + miniMap.x;
+    data.y = between.z * betweenSize + miniMap.y;
     return data;
 }

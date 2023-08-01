@@ -41,20 +41,32 @@ public:
     /// <returns>曲げたベクトル</returns>
     static VECTOR GetYRotateVector(VECTOR rotateVector, float degree)
     {
-        //六十度ずつ計算する
-        int num = abs(static_cast<int> (degree)) / 45;
-        float rota = 45 * RAGE;
-        VECTOR crossY = degree > 0 ? VGet(0, 1, 0) : VGet(0, -1, 0);
-        //60度曲がった奴を足していく
-        VECTOR addVec = VScale(VNorm(VCross(rotateVector, crossY)), rota);
-        for (int i = 0; i < num; i++)
-        {
-            rotateVector = VAdd(rotateVector, addVec);
-        }
-        //最後にForで回せなかった分を計算
-        rota = (degree - num * 60) * RAGE;
-        addVec = VScale(VNorm(VCross(rotateVector, crossY)), rota);
-        rotateVector = VAdd(rotateVector, addVec);
+        MATRIX pM = MGetRotY(degree * RAGE);
+        rotateVector = VTransform(rotateVector, pM);
+        return rotateVector;
+    }
+    /// <summary>
+    /// 引数の度数だけx軸で曲がったベクトルを返す
+    /// </summary>
+    /// <param name="rotateVector">曲げたいベクトル</param>
+    /// <param name="degree">曲げたい角度</param>
+    /// <returns>曲げたベクトル</returns>
+    static VECTOR GetXRotateVector(VECTOR rotateVector, float degree)
+    {
+        MATRIX pM = MGetRotX(degree * RAGE);
+        rotateVector = VTransform(rotateVector, pM);
+        return rotateVector;
+    }
+    /// <summary>
+    /// 引数の度数だけz軸で曲がったベクトルを返す
+    /// </summary>
+    /// <param name="rotateVector">曲げたいベクトル</param>
+    /// <param name="degree">曲げたい角度</param>
+    /// <returns>曲げたベクトル</returns>
+    static VECTOR GetZRotateVector(VECTOR rotateVector, float degree)
+    {
+        MATRIX pM = MGetRotZ(degree * RAGE);
+        rotateVector = VTransform(rotateVector, pM);
         return rotateVector;
     }
     /// <summary>

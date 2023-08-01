@@ -1,11 +1,11 @@
 #include "SoundListener.h"
-#include "ObjectObserver.h"
+#include "PlayerObserver.h"
 #include "Utility.h"
 /// <summary>
 /// 音を聞くやつのポインターを貰う
 /// </summary>
 /// <param name="listener"></param>
-SoundListener::SoundListener(std::weak_ptr<ObjectObserver> setListener)
+SoundListener::SoundListener(std::weak_ptr<PlayerObserver> setListener)
 {
     listener = setListener;
 }

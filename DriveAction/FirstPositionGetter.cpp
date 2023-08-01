@@ -1,101 +1,58 @@
 #include "FirstPositionGetter.h"
 #include "CSVFileLoader.h"
 #include "Utility.h"
-#include "StageDataPass.h"
-//ステージの横幅
-int FirstPositionGetter::stageWidth;
-//ステージの縦幅
-int FirstPositionGetter::stageLength;
-
-FirstPositionGetter::FirstPositionGetter()
-{
-    //収集アイテムと敵の位置を保存
-    auto fileLoader = new CSVFileLoader(LoadStageData(challengesListFilePass));
-    challengeVec = fileLoader->GetLoadStringData();
-    SAFE_DELETE(fileLoader);
-    //ステージの横幅縦幅を設定
-    stageWidth = atoi(LoadStageData(width).c_str());
-    stageLength = atoi(LoadStageData(length).c_str());
-
-    using enum FirstPositionDataKind;
-    //各オブジェクトの初期位置
-    positionDataPassMap.insert(std::make_pair(playerPosition, LoadStageData(playerPositionFilePass)));
-    positionDataPassMap.insert(std::make_pair(rockPosition, LoadStageData(rockFilePass)));
-}
-
-FirstPositionGetter::~FirstPositionGetter()
-{
-}
 /// <summary>
 /// 初期位置を渡す
 /// </summary>
 /// <param name="dataKind"></param>
 /// <returns></returns>
-std::unordered_map<int, std::vector<VECTOR>> FirstPositionGetter::GetFirstPositionLoad(FirstPositionDataKind dataKind)
+std::vector<EditArrangementData> FirstPositionGetter::GetInitData(Object::ObjectTag tag)
 {
-    using enum FirstPositionDataKind;
-    std::unordered_map<int, std::vector<VECTOR>> map;
-    switch (dataKind)
+    std::vector<EditArrangementData> initData;
+    using enum Object::ObjectTag;
+    switch (tag)
     {
-    case playerPosition:
-        CSVConvertPosition(&map,positionDataPassMap[playerPosition]);
+    case player:
+        initData = CSVConvertFirstData(StageDataManager::GetStageData(playerPositionFilePass));
         break;
-    case rockPosition:
-        CSVConvertPosition(&map,positionDataPassMap[rockPosition]);
+    case damageObject:
+        initData = CSVConvertFirstData(StageDataManager::GetStageData(enemyFilePass));
+        break;
+    case collect:
+        initData = CSVConvertFirstData(StageDataManager::GetStageData(collectFilePass));
         break;
     }
-    return map;
+    return initData;
 }
 /// <summary>
-/// 収集アイテムと敵の位置データ
+/// CSVファイルからステージに配置するための情報を所得
 /// </summary>
-/// <returns></returns>
-std::vector<ChallengeData> FirstPositionGetter::GetChallengeData()
-{
-    std::vector<ChallengeData> challengeDataVec;//こっちに移す
-    for (int i = 0; i < challengeVec.size(); i++)
-    {
-        auto fileLoader = new CSVFileLoader(challengeVec[i]);
-        auto passData = fileLoader->GetLoadStringData();
-        SAFE_DELETE(fileLoader);
-        ChallengeData challengeData;
-        CSVConvertPosition(&challengeData.collectPos,passData[collectPositionFilePass]);//収集アイテムの位置
-        CSVConvertPosition(&challengeData.enemyPos,passData[enemyPositionFilePass]);//敵のアイテムの位置
-
-        challengeDataVec.push_back(challengeData);
-    }
-    return challengeDataVec;
-}
-/// <summary>
-/// CSVファイルから引数のmapのkeyの場所を変換
-/// </summary>
-/// <param name="map"></param>
 /// <param name="fileName"></param>
-void FirstPositionGetter::CSVConvertPosition(std::unordered_map<int, std::vector<VECTOR>>* map, std::string fileName)
+std::vector<EditArrangementData> FirstPositionGetter::CSVConvertFirstData(std::string fileName)
 {
+    //初期化文字列リストを取ってくる
     CSVFileLoader* csv = new CSVFileLoader(fileName);
-    std::vector<std::string> positionData;
-    positionData = csv->GetLoadStringData();
-    //列の数を数える
-    int lineCount = csv->GetLineCount();
+    auto initStrDataVec = csv->GetLoadStringData();
+    
+    //データの種類と列の多さからオブジェクトの数を計算
+    int objCount = csv->GetLineCount() / EDIT_ARRANGEMENT_DATA_KIND_NUM;
 
-    //行の数を数える
-    int sideLine = positionData.size() / lineCount;
-    //セルの数だけ検索して初期位置をリスト化
-    for (int i = 0; i < lineCount; i++)
+    //戻り値
+    std::vector<EditArrangementData> dataVec;
+    
+    for (int i = 0; i < objCount; i++)
     {
-        for (int j = 0; j < sideLine; j++)
-        {
-            int num = std::atof(positionData[i * sideLine + j].c_str());
-            //-1以外の数字が入力されていたらマップを更新
-            if (num != -1)
-            {
-                VECTOR pos;
-                pos.x = j * stageWidth / lineCount - stageWidth / 2;
-                pos.z = i * stageLength / sideLine - stageLength / 2;
-                (*map)[num].push_back(pos);
-            }
-        }
+        int groupNum = i * EDIT_ARRANGEMENT_DATA_KIND_NUM;
+        //配置初期化情報
+        EditArrangementData initData = {};
+        initData.objKind= atoi(initStrDataVec[groupNum + EditArrangementDataKind::objectKindNum].c_str());
+        initData.missionNum = atoi(initStrDataVec[groupNum + EditArrangementDataKind::missionTurnNum].c_str());
+        initData.posX = static_cast<float>(atof(initStrDataVec[groupNum + EditArrangementDataKind::positionX].c_str()));
+        initData.posZ = static_cast<float>(atof(initStrDataVec[groupNum + EditArrangementDataKind::positionZ].c_str()));
+        initData.dirX = static_cast<float>(atof(initStrDataVec[groupNum + EditArrangementDataKind::directionX].c_str()));
+        initData.dirZ = static_cast<float>(atof(initStrDataVec[groupNum + EditArrangementDataKind::directionZ].c_str()));
+        dataVec.push_back(initData);
     }
     SAFE_DELETE(csv);
+    return dataVec;
 }

@@ -1,10 +1,10 @@
 #pragma once
-#include "ConflictProccesor.h"
+#include "SphereHitChecker.h"
 /// <summary>
 /// ステージの外に出ないようにする壁
 /// </summary>
 class WallCollider :
-    public ConflictProccesor
+    public SphereHitChecker
 {
 public:
     /// <summary>

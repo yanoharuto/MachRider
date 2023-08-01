@@ -81,7 +81,7 @@
     <ClCompile Include="PlayScene.cpp">
       <Filter>ソース ファイル\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="ResultScene.cpp">
+    <ClCompile Include="EditorScene.cpp">
       <Filter>ソース ファイル\Scene</Filter>
     </ClCompile>
     <ClCompile Include="TitleScene.cpp">
@@ -108,9 +108,6 @@
     <ClCompile Include="Wheels.cpp">
       <Filter>ソース ファイル\Object</Filter>
     </ClCompile>
-    <ClCompile Include="StageInitializer.cpp">
-      <Filter>ソース ファイル\Manager</Filter>
-    </ClCompile>
     <ClCompile Include="TitleSceeneFlow.cpp">
       <Filter>ソース ファイル\Scene</Filter>
     </ClCompile>
@@ -126,7 +123,7 @@
     <ClCompile Include="CountDown.cpp">
       <Filter>ソース ファイル\UI</Filter>
     </ClCompile>
-    <ClCompile Include="ResultSceneFlow.cpp">
+    <ClCompile Include="EditorSceneFlow.cpp">
       <Filter>ソース ファイル\Scene</Filter>
     </ClCompile>
     <ClCompile Include="SpaceKeyUI.cpp">
@@ -141,7 +138,7 @@
     <ClCompile Include="ConflictManager.cpp">
       <Filter>ソース ファイル\ConflictCheck</Filter>
     </ClCompile>
-    <ClCompile Include="HitChecker.cpp">
+    <ClCompile Include="SphereHitChecker.cpp">
       <Filter>ソース ファイル\ConflictCheck</Filter>
     </ClCompile>
     <ClCompile Include="DamageObject.cpp">
@@ -149,9 +146,6 @@
     </ClCompile>
     <ClCompile Include="PostGoalStaging.cpp">
       <Filter>ソース ファイル\UI</Filter>
-    </ClCompile>
-    <ClCompile Include="CreatePosAndDirData.cpp">
-      <Filter>ソース ファイル\DataCreate</Filter>
     </ClCompile>
     <ClCompile Include="VectorDataCreator.cpp">
       <Filter>ソース ファイル\DataCreate</Filter>
@@ -204,13 +198,10 @@
     <ClCompile Include="EnemyGenerator.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="ConflictProccesor.cpp">
+    <ClCompile Include="ConflictProcessor.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="SphereCollider.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="MeshCollider.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="ShadowMap.cpp">
@@ -246,9 +237,6 @@
     <ClCompile Include="CSVFileLoader.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Rock.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="WallCollider.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -273,9 +261,6 @@
     <ClCompile Include="Actor.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="ObjectSubject.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="ObjectObserver.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -291,16 +276,16 @@
     <ClCompile Include="FirstPositionGetter.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="FlyShipCommander.cpp">
+    <ClCompile Include="FlyShipController.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="StopWatch.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="CircleFlyshipCommander.cpp">
+    <ClCompile Include="CircleFlyshipContorller.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="UpDownFlyShipCommander.cpp">
+    <ClCompile Include="UpDownFlyShipController.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="ActorController.cpp">
@@ -336,7 +321,7 @@
     <ClCompile Include="TitleDemo.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="StageDataPass.cpp">
+    <ClCompile Include="StageDataManager.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="EndCountDown.cpp">
@@ -354,6 +339,63 @@
     <ClCompile Include="ReusableTimer.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="StageDataEditor.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="EditorObject.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerDataEditor.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="CollectItemDataEditor.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyDataEditor.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="EditorCamera.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="EditorModelViewer.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="ModelViewer.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Object.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerViewer.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="CircleFlyShipViewer.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="ScoreNum.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="BomberFlyShipController.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="SawController.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="DamageObjectController.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="MoveSaw.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="MoveSawController.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerConflictProcessor.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerObserver.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PlayerCar.h">
@@ -365,7 +407,7 @@
     <ClInclude Include="PlayScene.h">
       <Filter>ヘッダー ファイル\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="ResultScene.h">
+    <ClInclude Include="EditorScene.h">
       <Filter>ヘッダー ファイル\Scene</Filter>
     </ClInclude>
     <ClInclude Include="SceneBase.h">
@@ -386,7 +428,7 @@
     <ClInclude Include="Car.h">
       <Filter>ヘッダー ファイル\Object</Filter>
     </ClInclude>
-    <ClInclude Include="HitChecker.h">
+    <ClInclude Include="SphereHitChecker.h">
       <Filter>ヘッダー ファイル\Other</Filter>
     </ClInclude>
     <ClInclude Include="Timer.h">
@@ -400,9 +442,6 @@
     </ClInclude>
     <ClInclude Include="Wheels.h">
       <Filter>ヘッダー ファイル\Object</Filter>
-    </ClInclude>
-    <ClInclude Include="StageInitializer.h">
-      <Filter>ヘッダー ファイル\Manager</Filter>
     </ClInclude>
     <ClInclude Include="StageSelect.h">
       <Filter>ヘッダー ファイル</Filter>
@@ -461,7 +500,7 @@
     <ClInclude Include="GamePlayUI.h">
       <Filter>ヘッダー ファイル\UI</Filter>
     </ClInclude>
-    <ClInclude Include="ResultSceneFlow.h">
+    <ClInclude Include="EditorSceneFlow.h">
       <Filter>ヘッダー ファイル\Scene</Filter>
     </ClInclude>
     <ClInclude Include="SpaceKeyUI.h">
@@ -488,13 +527,7 @@
     <ClInclude Include="ConflictManager.h">
       <Filter>ヘッダー ファイル\ConflictCheck</Filter>
     </ClInclude>
-    <ClInclude Include="CreatePosAndDirData.h">
-      <Filter>ヘッダー ファイル\DataCreate</Filter>
-    </ClInclude>
     <ClInclude Include="FadeMode.h">
-      <Filter>ヘッダー ファイル\StructAndEnum</Filter>
-    </ClInclude>
-    <ClInclude Include="InputDirection.h">
       <Filter>ヘッダー ファイル\StructAndEnum</Filter>
     </ClInclude>
     <ClInclude Include="HandleDirection.h">
@@ -536,9 +569,6 @@
     <ClInclude Include="FlyShipKind.h">
       <Filter>ヘッダー ファイル\StructAndEnum</Filter>
     </ClInclude>
-    <ClInclude Include="FlyShipArgumentInfo.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="RotatingLasers.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
@@ -554,16 +584,10 @@
     <ClInclude Include="EnemyGenerator.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="ArgumentConflictResultInfo.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="ConflictProccesor.h">
+    <ClInclude Include="ConflictProcessor.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="SphereCollider.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="MeshCollider.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="ShadowMap.h">
@@ -599,9 +623,6 @@
     <ClInclude Include="CSVFileLoader.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Rock.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="FirstPositionGetter.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
@@ -623,9 +644,6 @@
     <ClInclude Include="InitObjKind.h">
       <Filter>ヘッダー ファイル\StructAndEnum</Filter>
     </ClInclude>
-    <ClInclude Include="ObjectSubject.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="ObjectObserver.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
@@ -635,16 +653,16 @@
     <ClInclude Include="Menu.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="FlyShipCommander.h">
+    <ClInclude Include="FlyShipController.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="StopWatch.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="CircleFlyshipCommander.h">
+    <ClInclude Include="CircleFlyshipController.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="UpDownFlyShipCommander.h">
+    <ClInclude Include="UpDownFlyShipController.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="ActorController.h">
@@ -677,7 +695,7 @@
     <ClInclude Include="TitleDemo.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="StageDataPass.h">
+    <ClInclude Include="StageDataManager.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="EndCountDown.h">
@@ -693,6 +711,63 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="ReusableTimer.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="StageDataEditor.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="EditorObject.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="EditObjectData.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerDataEditor.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="CollectItemDataEditor.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyDataEditor.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="EditorCamera.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="EditorModelViewer.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="ModelViewer.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerViewer.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="CircleFlyShipViewer.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="ScoreNum.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="BomberFlyShipController.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="SawController.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="DamageObjectController.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="MoveSaw.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="MoveSawController.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerConflictProcessor.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerObserver.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

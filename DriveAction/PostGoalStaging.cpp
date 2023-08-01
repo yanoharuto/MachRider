@@ -8,16 +8,16 @@
 #include "NumUI.h"
 #include "Timer.h"
 #include "RaceScreen.h"
-#include "ObjectObserver.h"
+#include "PlayerObserver.h"
 #include "Object.h"
 #include "UIDrawer.h"
 #include "EffectManager.h"
 #include "EffekseerForDXLib.h"
-
+#include "ScoreNum.h"
 /// <summary>
 /// ゴール後の演出をする
 /// </summary>
-PostGoalStaging::PostGoalStaging(Timer* timer, std::weak_ptr<ObjectObserver> player)
+PostGoalStaging::PostGoalStaging(Timer* timer, std::weak_ptr<PlayerObserver> player)
 {
     //スコアを確定
     resultScore = new ResultScore();
@@ -28,13 +28,14 @@ PostGoalStaging::PostGoalStaging(Timer* timer, std::weak_ptr<ObjectObserver> pla
     SoundPlayer::LoadSound(scoreEndSE);
     SoundPlayer::LoadSound(scoreStartSE);
     SoundPlayer::LoadSound(sceneNextSE);
-    SoundPlayer::Play2DSE(clap);
+    SoundPlayer::LoadSound(gameEndFanfare);
+    
 
     //プレイヤーの所得した収集アイテム
-    getCollectNum = player.lock()->GetSubjectHitCount(Object::collect);
+    getCollectNum = 0;
     drawCollectIconNum = 0;
     //最初の処理
-    nowProcess = collectBonus;
+    nowConvertScore = timeBonus;
     //タイムボーナス
     timeScoreUI = GetScoreUI(timeScore);
     //収集アイテムボーナス
@@ -42,7 +43,7 @@ PostGoalStaging::PostGoalStaging(Timer* timer, std::weak_ptr<ObjectObserver> pla
     collectData = UIManager::CreateUIData(collectScoreIcon);
     //合計スコア
     totalScoreUI = GetScoreUI(totalScore);
-    totalScoreNumUI = new NumUI(totalScoreNum);
+    totalScoreNumUI = new ScoreNum();
     //ゲーム終了時画面
     gameEndScreen = RaceScreen::GetScreen();
     //スペースキー催促
@@ -51,21 +52,20 @@ PostGoalStaging::PostGoalStaging(Timer* timer, std::weak_ptr<ObjectObserver> pla
     clearTime = static_cast<float>(timer->GetRemainingTime());
     drawClearTime = clearTime;
     clearTimeUI = new NumUI(timeScoreNum);
-    //ゲーム終了
+    //ゲーム終了アナウンス
     finishAnnounceData = UIManager::CreateUIData(finishAnnounce);
     finishAnnounceData.x = SCREEN_WIDTH;
-    startScoreExchangeTimer = new Timer(finishAnounceTime);
-    //総合スコアの色
-    totalScoreColor = bronze;
+    larpMoveAnnounceTimer = new Timer(finishAnounceTime);
+    //花吹雪
     EffectManager::LoadEffect(confetti);
 }
 
 PostGoalStaging::~PostGoalStaging()
 {
-    SAFE_DELETE(larpTimer);
+    SAFE_DELETE(larpConvertScoreTimer);
     SAFE_DELETE(clearTimeUI);
     SAFE_DELETE(pressSpaceKeyUI);
-    SAFE_DELETE(startScoreExchangeTimer);
+    SAFE_DELETE(larpMoveAnnounceTimer);
     SAFE_DELETE(totalScoreNumUI);
     SAFE_DELETE(resultScore);
     StopEffekseer2DEffect(confettiEffect);
@@ -79,20 +79,9 @@ void PostGoalStaging::Update()
 {
     if (!isEndFinishAnnounce)//終了アナウンスを出す
     {
-        if (startScoreExchangeTimer->IsOverLimitTime())
-        {
-            isEndFinishAnnounce = true;
-        }
-        else//移動させる
-        {
-            float larpTime = startScoreExchangeTimer->GetElaspedTime() / finishAnounceTime;
-            //総数移動距離
-            int graphWidth = finishAnnounceData.width / finishAnnounceData.dataHandle.size() * finishAnnounceData.size;
-            int moveBetween = (SCREEN_WIDTH + graphWidth) * UIDrawer::GetScreenRaito();
-            finishAnnounceData.x = SCREEN_WIDTH * UIDrawer::GetScreenRaito() - static_cast<int>(larpTime * (moveBetween));
-        }
+        EndAnnounceProcess();
     }
-    else if (isEndUpdateScore)//加算処理終了後は加算音を消す
+    else if (isEndConvertScore)//加算処理終了後は加算音を消す
     {
         SoundPlayer::StopSound(scoreEndSE);
 
@@ -104,15 +93,23 @@ void PostGoalStaging::Update()
             isEndProcess = true;
         }
     }
-    //スコア加算中はずっと鳴る
-    else if (!SoundPlayer::IsPlaySound(scoreStartSE))
-    {
-        SoundPlayer::Play2DSE(scoreStartSE);
-    }
     else
     {
-        //今やるべき処理を更新
-        UpdateNowProcess();
+        //スコア加算中はずっと鳴る
+        if (!SoundPlayer::IsPlaySound(scoreStartSE))
+        {
+            SoundPlayer::Play2DSE(scoreStartSE);
+        }
+        //各スコアを総合スコアに変換
+        switch (nowConvertScore)
+        {
+        case timeBonus:
+            ConvertTimeScotre();
+            break;
+        case collectBonus:
+            ConvertCollectScotre();
+            break;
+        }
     }
 }
 
@@ -129,7 +126,7 @@ void PostGoalStaging::Draw()const
     //終了アナウンス
     if (!isEndFinishAnnounce) 
     {
-        int safeNum = static_cast<int>(startScoreExchangeTimer->GetElaspedTime()) % finishAnnounceData.dataHandle.size();
+        int safeNum = static_cast<int>(larpMoveAnnounceTimer->GetElaspedTime()) % finishAnnounceData.dataHandle.size();
         UIDrawer::DrawRotaUI(finishAnnounceData,safeNum);
     }
     else
@@ -143,17 +140,17 @@ void PostGoalStaging::Draw()const
             icon.x += static_cast<int>(collectData.width * UIDrawer::GetScreenRaito() * icon.size * i);//右にずらしていく
             UIDrawer::DrawRotaUI(icon);
         }
-        //クリアタイムを少しずつ総合スコアに移し替え
+        //クリアタイムの描画
         UIDrawer::DrawRotaUI(timeScoreUI.scoreKindData);
         clearTimeUI->Draw(drawClearTime);
 
-        //全処理が終わったらスペースキー催促
-        if (isEndUpdateScore)pressSpaceKeyUI->Draw();
-        
+
         //総合スコアのUIと数字
         totalScoreNumUI->Draw(totalScoreUI.score);
         UIDrawer::DrawRotaUI(totalScoreUI.scoreKindData);
     }
+    //全スコア変換処理が終わったらスペースキー催促
+    if (isEndConvertScore)pressSpaceKeyUI->Draw();
     //エフェクト
     DrawEffekseer2D();
 }
@@ -166,65 +163,86 @@ bool PostGoalStaging::IsEndProcess() const
     return isEndProcess;
 }
 /// <summary>
-/// 今やるべき処理を更新
+/// クリアタイムのスコア変換
 /// </summary>
-/// <returns></returns>
-void PostGoalStaging::UpdateNowProcess()
+void PostGoalStaging::ConvertTimeScotre()
 {
-    switch (nowProcess)
+    //スコアを換算し終えたか、スペースキーを押したら終了
+    if ((larpConvertScoreTimer->IsOverLimitTime() || clearTime < 0 || UserInput::GetInputState(Space) == Push))
     {
-    case collectBonus:
+        //次の処理
+        nowConvertScore = collectBonus;
+        //タイムボーナスを表示したら終了
+        SoundPlayer::StopSound(scoreStartSE);
+        timeScoreUI.score = resultScore->GetScore(timeBonus);
+        drawClearTime = 0.0000f;
+    }
+    //タイマーが動いている間はスコア換算
+    else
+    {
+        //残り時間をスコアに換算
+        float larpValue = static_cast<float>(larpConvertScoreTimer->GetElaspedTime() / scoreLarpTime);
 
-        if (!SoundPlayer::IsPlaySound(scoreEndSE))
+        timeScoreUI.score = static_cast<int>(larpValue * resultScore->GetScore(timeBonus));
+        //描画するクリアタイムを更新
+        drawClearTime = clearTime - static_cast<float>(clearTime * larpValue);
+    }
+    //各スコアを合計
+    totalScoreUI.score = collectScoreUI.score + timeScoreUI.score;
+}
+/// <summary>
+/// 収集アイテムのスコア変換
+/// </summary>
+void PostGoalStaging::ConvertCollectScotre()
+{
+    if (!SoundPlayer::IsPlaySound(scoreEndSE))
+    {
+        //描画したアイテムの数が獲得したアイテムの数と同じ以上にになったら
+        if (drawCollectIconNum >= getCollectNum && !isEndConvertScore)
         {
-            //描画したアイテムの数が獲得したアイテムの数と同じ以上にになったら
-            if (drawCollectIconNum >= getCollectNum)
-            {
-                collectScoreUI.score = resultScore->GetScore(collectBonus);
-                //次の処理
-                nowProcess = timeBonus;
-                larpTimer = new Timer(scoreLarpTime);
-                
-
-                break;
-            }
-            //収集アイテムを一個ずつ配置
+            collectScoreUI.score = resultScore->GetScore(collectBonus);
+            
+            isEndConvertScore = true;
+            ////花吹雪エフェクト
+            confettiEffect = EffectManager::GetPlayEffect2D(confetti);
+            SetPosPlayingEffekseer2DEffect(confettiEffect, SCREEN_WIDTH / 2, SCREEN_HEIGHT, 5);
+            //ファンファーレ
+            SoundPlayer::Play2DSE(gameEndFanfare);
+        }
+        else
+        {        //収集アイテムを一個ずつ配置
             SoundPlayer::Play2DSE(scoreEndSE);
             drawCollectIconNum++;
             collectScoreUI.score = resultScore->GetScoreBonus(collectBonus) * drawCollectIconNum;
         }
-        break;
-
-    case timeBonus:
-        
-        //スコアを換算し終えたか、スペースキーを押したら終了
-        if ((larpTimer->IsOverLimitTime() || clearTime < 0 || UserInput::GetInputState(Space) == Push) && !isEndUpdateScore)
-        {
-            //タイムボーナスを表示したら終了
-            SoundPlayer::StopSound(scoreStartSE);
-            timeScoreUI.score = resultScore->GetScore(timeBonus);
-            drawClearTime = 0.0000f;
-            isEndUpdateScore = true;
-            ////花吹雪エフェクト
-            //confettiEffect = EffectManager::GetPlayEffect2D(confetti);
-            //SetPosPlayingEffekseer2DEffect(confettiEffect, SCREEN_WIDTH / 2, SCREEN_HEIGHT, 5);
-        }
-        //タイマーが動いている間はスコア換算
-        else
-        {
-            //残り時間をスコアに換算
-            float larpValue = (larpTimer->GetElaspedTime() / scoreLarpTime);
-            
-            timeScoreUI.score = static_cast<int>(larpValue * resultScore->GetScore(timeBonus));
-            //描画するクリアタイムを更新
-            drawClearTime = clearTime - static_cast<float>(clearTime * larpValue);
-        }
-        break;
-    default:
-        break;
     }
     //各スコアを合計
     totalScoreUI.score = collectScoreUI.score + timeScoreUI.score;
+}
+/// <summary>
+/// ゲーム終了のアナウンスを流すプロセス
+/// </summary>
+void PostGoalStaging::EndAnnounceProcess()
+{
+    if (!clapSEH)
+    {
+        SoundPlayer::Play2DSE(clap);
+        clapSEH = true;
+    }
+    //larp移動が終了したら
+    if (larpMoveAnnounceTimer->IsOverLimitTime())
+    {
+        isEndFinishAnnounce = true;
+        larpConvertScoreTimer = new Timer(scoreLarpTime);
+    }
+    else//移動させる
+    {
+        float larpTime = static_cast<float>(larpMoveAnnounceTimer->GetElaspedTime() / finishAnounceTime);
+        //総数移動距離
+        float graphWidth = finishAnnounceData.width / finishAnnounceData.dataHandle.size() * finishAnnounceData.size;
+        float moveBetween = (SCREEN_WIDTH + graphWidth) * UIDrawer::GetScreenRaito();
+        finishAnnounceData.x = SCREEN_WIDTH * UIDrawer::GetScreenRaito() - static_cast<int>(larpTime * (moveBetween));
+    }
 }
 /// <summary>
 /// スコアに関するUIを所得

@@ -1,6 +1,7 @@
 #pragma once
 #include "DxLib.h"
-
+#include "InitObjKind.h"
+class ModelViewer;
 class Object
 {
 public:
@@ -32,17 +33,28 @@ public:
         dead
     };
     /// <summary>
-    /// コンストラクタ
+    /// オブジェクトの種類を渡して
     /// </summary>
-    /// <returns></returns>
-    Object()
-    {
-    };
+    /// <param name="kind"></param>
+    Object(ObjectInit::InitObjKind kind);
+    /// <summary>
+    /// デフォルトコンストラクタ
+    /// </summary>
+    Object() {};
     /// <summary>
     /// デストラクタ
     /// </summary>
     /// <returns></returns>
-    virtual ~Object() {};
+    virtual ~Object();
+    /// <summary>
+    /// 更新
+    /// </summary>
+    virtual void Update() {};
+    /// <summary>
+    /// 速度所得
+    // </summary>
+    /// <returns></returns>
+    VECTOR GetVelocity() { return velocity; };
 
     /// <summary>
     /// 現在動けるかどうか
@@ -59,6 +71,10 @@ public:
     VECTOR GetPos()const
     {
         return position;
+    };
+    float GetModelSize()const
+    {
+        return modelSize;
     };
     /// <summary>
     /// objectの半径
@@ -91,6 +107,15 @@ public:
     };
 
 protected:
+    /// <summary>
+    /// コンストラクタで呼ばれる処理
+    /// </summary>
+    virtual void InitParamater(ObjectInit::InitObjKind kind);
+    /// <summary>
+    /// 位置や向きをVelocityに合わせて更新する
+    /// </summary>
+    virtual void ReflectsVelocity();
+    
     //半径
     float radius = 0;
     //跳ね返す力
@@ -103,4 +128,8 @@ protected:
     VECTOR direction = {1,0,0};
     //場所
     VECTOR position = {};
+    //速度
+    VECTOR velocity;
+    //modelのサイズ
+    float modelSize = 1;
 };

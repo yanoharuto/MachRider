@@ -1,15 +1,9 @@
 ﻿//プレイヤー機
     player
 data/model/Player/iceBrades.csv
-    //小さい岩
-    littleRock
-data/model/Stage/LittleRock.csv
-    //中くらいの岩
-    middleRock
-data/model/Stage/MiddleRock.csv
-    //大きい岩
-    bigRock
-data/model/Stage/BigRock.csv
+    //移動丸鋸
+moveSaw
+data/model/Saw/moveSaw.csv
     //回転丸鋸
     saw
 data/model/Saw/saw.csv

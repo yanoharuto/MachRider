@@ -1,6 +1,6 @@
 #pragma once
 #include "FlyShip.h"
-
+#include "DamageObjectGenerator.h"
 /// <summary>
 /// レーザーを出す飛行船
 /// </summary>
@@ -13,11 +13,11 @@ public:
     /// </summary>
     /// <param name="firstPos"></param>
     /// <param name="setDestinationPos"></param>
-    LaserFlyShip(VECTOR firstPos, VECTOR setDestinationPos,ObjectInit::InitObjKind kind);
+    LaserFlyShip(ObjectInit::InitObjKind kind);
     /// <summary>
     /// レーザーを照射
     /// </summary>
-    virtual void GenerateLaser() = 0;
+    virtual void GenerateLaser(DamageObjectGenerator::DamageObjectKind kind);
 protected:
     //初期位置Y
     float firstPosY;

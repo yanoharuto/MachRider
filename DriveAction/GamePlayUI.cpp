@@ -5,7 +5,7 @@
 #include "Timer.h"
 #include "NumUI.h"
 #include "CollectController.h"
-#include "ObjectObserver.h"
+#include "PlayerObserver.h"
 #include "EndCountDown.h"
 #include "CollectSign.h"
 #include "UIDrawer.h"
@@ -16,7 +16,7 @@
 /// </summary>
 /// <param name="setTimer"></param>
 /// <param name="setFirstCoinNum"></param>
-GamePlayUI::GamePlayUI(Timer* setTimer, std::weak_ptr<ObjectObserver> player)
+GamePlayUI::GamePlayUI(Timer* setTimer, std::weak_ptr<PlayerObserver> player)
 {
     //残り時間
     gameTimerUI = new TimerUI(setTimer);
@@ -61,7 +61,7 @@ GamePlayUI::~GamePlayUI()
 void GamePlayUI::Update()
 {
     int tempNum = nowGetCoinNum;
-    nowGetCoinNum = playerObserver.lock()->GetSubjectHitCount(Object::ObjectTag::collect);
+//    nowGetCoinNum = playerObserver.lock()->GetSubjectHitCount(Object::ObjectTag::collect);
     //ゲットしたアイテムの数が増えたらUIを表示
     if (nowGetCoinNum != tempNum)
     {

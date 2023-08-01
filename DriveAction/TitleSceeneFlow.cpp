@@ -10,9 +10,12 @@
 #include "Timer.h"
 #include "RaceScreen.h"
 #include "UIDrawer.h"
-
+/// <summary>
+/// タイトルシーンの処理の流れ
+/// </summary>
 TitleSceeneFlow::TitleSceeneFlow()
 {
+    SoundPlayer::LoadSound(titleBGM);
     stageSelect = new StageSelect();  
     spaceKeyUI = new FlashUI(titlePressSpaceKey);
     titleDemo = new TitleDemo();
@@ -28,9 +31,12 @@ TitleSceeneFlow::~TitleSceeneFlow()
     SAFE_DELETE(spaceKeyUI);
     SAFE_DELETE(titleDemo);
 }
-
+/// <summary>
+/// 更新
+/// </summary>
 void TitleSceeneFlow::Update()
 {
+    //車が勝手に動いたりする
     titleDemo->Update();
 
     //BGM長しっぱ
@@ -42,13 +48,13 @@ void TitleSceeneFlow::Update()
     switch (titleState)
     {
     case TitleSceeneFlow::TitleState::waitSpaceKey:
-        WaitPressSpaceKey();
+        WaitPressSpaceKey();//スペースキー待ち
         break;
     case TitleSceeneFlow::TitleState::stageSelect:
-        SelectStageProcess();
+        SelectStageProcess();//ステージ選択
         break;
     case TitleSceeneFlow::TitleState::processEnd:
-        EndTitleProcess();
+        EndTitleProcess();//処理終了
         break;
     default:
         break;
@@ -59,6 +65,11 @@ void TitleSceeneFlow::Update()
     {
         isEndProccess = true;
         nextSceneType = SceneType::ESCAPE;
+    }
+    else if (UserInput::GetInputState(WKey) == Push)
+    {
+        isEndProccess = true;
+        nextSceneType = SceneType::EDITOR;
     }
 }
 /// <summary>

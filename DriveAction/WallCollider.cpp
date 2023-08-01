@@ -1,4 +1,5 @@
 #include "WallCollider.h"
+#include "Actor.h"
 /// <summary>
 /// ステージの外に出ないようにする壁
 /// </summary>
@@ -6,7 +7,7 @@
 /// <param name="setFirstPos">これ以上の値になったら跳ね返す</param>
 /// <param name="setEndPos">これ以下の値になったら跳ね返す</param>
 WallCollider::WallCollider(Actor* owner,VECTOR setFirstPos, VECTOR setEndPos)
-    :ConflictProccesor(owner)
+    :SphereHitChecker(owner)
 {
     firstPos = setFirstPos;
     endPos = setEndPos;

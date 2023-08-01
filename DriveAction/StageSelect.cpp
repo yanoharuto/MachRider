@@ -2,6 +2,7 @@
 #include "UserInput.h"
 #include "UIDrawer.h"
 #include "Utility.h"
+#include "StageDataManager.h"
 /// <summary>
 /// ステージごとに必要なアセットのアドレスが
 /// 書いてあるファイルの
@@ -9,7 +10,6 @@
 /// </summary>
 /// <returns></returns>
 StageSelect::StageSelect()
-    :StageDataPass()
 {
     stageNum = 0;
     stageNameData = UIManager::CreateUIData(stageName);
@@ -25,7 +25,8 @@ void StageSelect::Update()
     if (UserInput::GetInputState(Down) == Push)
     {
         stageNum++;
-        if (stageNum >= dataLoader.size())
+        //ステージ数の限界に来たら0に
+        if (stageNum >= StageDataManager::GetStageTotalNumber())
         {
             stageNum = 0;
         }
@@ -33,13 +34,17 @@ void StageSelect::Update()
     else if (UserInput::GetInputState(Up) == Push)
     {
         stageNum--;
+        //ステージ数の最低に来たら最大値に
         if (stageNum < 0)
         {
-            stageNum = dataLoader.size() - 1;
+            stageNum = StageDataManager::GetStageTotalNumber() - 1;
         }
     }
-    //選んでいるステージのアドレスを保存
-    fileAddres = dataLoader[stageNum];
+    //スペースキーを押したらステージ番号を確定
+    else if (UserInput::GetInputState(Space) == Push)
+    {
+        StageDataManager::ChangeStageData(this);
+    }
 }
 /// <summary>
 /// ステージ一覧を表示
@@ -63,4 +68,9 @@ void StageSelect::Draw() const
         data.y += data.height;
     }
     UIDrawer::DrawRotaUI(selectButtonData);
+}
+
+int StageSelect::GetStageNum()const
+{
+    return stageNum;
 }

@@ -1,11 +1,11 @@
 #include "ResultScore.h"
 #include "Utility.h"
 #include "Timer.h"
-#include "ObjectObserver.h"
+#include "PlayerObserver.h"
 //収集アイテムゲットボーナス
 const int ResultScore::getCollectBonus = 500;
 //残り時間のボーナス
-const int ResultScore::clearTimeBonus = 10;
+const int ResultScore::clearTimeBonus = 50;
 
 /// <summary>
 /// スコア所得
@@ -52,11 +52,11 @@ int ResultScore::GetScoreBonus(ScoreKind scoreKind)
 /// </summary>
 /// <param name="timer"></param>
 /// <param name="player"></param>
-void ResultScore::FixScore(Timer* timer, std::weak_ptr<ObjectObserver> player)
+void ResultScore::FixScore(Timer* timer, std::weak_ptr<PlayerObserver> player)
 {
     //制限時間を超過してたら0
     timeScore = timer->IsOverLimitTime() ? 0 : static_cast<int>(timer->GetElaspedTime() * clearTimeBonus);
     //収集アイテムを取ってたらボーナス
-    collectScore= player.lock()->GetSubjectHitCount(Object::ObjectTag::collect) * getCollectBonus;
+    //collectScore= player.lock()->GetSubjectHitCount(Object::ObjectTag::collect) * getCollectBonus;
  
 }

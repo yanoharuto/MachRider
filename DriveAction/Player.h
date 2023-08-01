@@ -1,45 +1,56 @@
 #pragma once
 #include <iostream>
-#include<memory>
-#include "DxLib.h"
+#include <memory>
 #include "ActorController.h"
 class SphereCollider;
-class ObjectObserver;
+class PlayerObserver;
 class SoundListener;
+class PlayerViewer;
+class PlayerCar;
 /// <summary>
-/// プレイヤーの車やアイテムの処理を呼び出す
+/// プレイヤーの車の管理
 /// </summary>
 class Player final:
     public ActorController
 {
 public:
     /// <summary>
-    /// コンストラクタ
+    /// プレイヤーの車の管理
     /// </summary>
-    /// <param name="circuitData"></param>
-    /// <param name="firstPos"></param>
-    /// <param name="firstDir"></param>
-    Player(VECTOR firstPos,VECTOR direction);
+    Player();
+    /// <summary>
+    /// 車とLisnerのDelete
+    /// </summary>
     ~Player();
     /// <summary>
     /// 車の位置とかを渡す
     /// </summary>
     /// <returns></returns>
-    std::weak_ptr<ObjectObserver> CreatePlayerObserver() const;
+    std::weak_ptr<PlayerObserver> CreatePlayerObserver() const;
     /// <summary>
     /// 音を聞くために場所を更新
     /// </summary>
     void Update()override;
+    /// <summary>
+    /// 描画
+    /// </summary>
+    void Draw() const override;
+    /// <summary>
+    /// プレイヤーはゲーム終了まで動く
+    /// </summary>
+    /// <returns></returns>
+    bool IsAlive()const override { return true; };
 private:
     //プレイヤーの車の当たり判定
     SphereCollider* collider;
-    //プレイヤーの位置などを教える
-    std::shared_ptr<ObjectObserver> observer;
-
+    //操作する車
+    PlayerCar* car;
+    //描画に使う
+    PlayerViewer* playerViewer;
     //音を聞く場所の更新
     SoundListener* listener = nullptr;
     //ダメージを受けるクールタイム
-    const float setDamageCoolTime = 1.5f;
+    const float setDamageCoolTime = 0.1f;
 };
 
 /// <summary>

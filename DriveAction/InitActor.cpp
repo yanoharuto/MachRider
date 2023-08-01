@@ -26,12 +26,14 @@ InitActor::~InitActor()
 /// </summary>
 /// <param name="obj"></param>
 /// <returns></returns>
-ActorParameter InitActor::GetActorParamator(InitObjKind obj)
+ActorParameter InitActor::GetActorParamator(InitObjKind kind)
 {
-    auto initData = GetActorParametorString(obj);
+    auto initData = GetActorParametorString(kind);
     ActorParameter initParam = {};
+    //文字列コンテナから初期化データ所得
     initParam.GetExtractParamator(initData);
-    auto dataPass = GetActorInitPassData(obj);
+    auto dataPass = GetActorInitPassData(kind);
+    //model所得
     initParam.modelHandle = AssetManager::Get3DModelAssetHandle(dataPass.modelPass);
     initParam.addData = dataPass.addData;
     return initParam;

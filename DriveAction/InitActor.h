@@ -45,7 +45,7 @@ namespace ObjectInit
         //追加情報のPass
         std::string addData;
         /// <summary>
-        /// 引数から抽出
+        /// 引数から初期化データ抽出
         /// </summary>
         /// <param name="paramatorString"></param>
         /// <returns></returns>
@@ -59,7 +59,7 @@ namespace ObjectInit
             
         }
         /// <summary>
-        /// 引数から抽出
+        /// 引数から初期化データ抽出
         /// </summary>
         /// <param name="paramatorString"></param>
         /// <returns></returns>

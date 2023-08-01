@@ -1,6 +1,6 @@
 #pragma once
 #include "DxLib.h"
-#include "InputDirection.h"
+
 #include "HandleDirection.h"
 #include <string>
 /// <summary>

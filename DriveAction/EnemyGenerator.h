@@ -1,13 +1,14 @@
 #pragma once
-#include <string>
 #include <vector>
 #include <unordered_map>
 #include "InitActor.h"
-#include <iostream>
-#include <memory>
 #include "DxLib.h"
+#include "EditObjectData.h"
 #include "InitObjKind.h"
-#include "FirstPositionGetter.h"
+class UpDownFlyShipController;
+class CircleFlyShipController;
+class BomberFlyShipController;
+class SawController;
 class ActorController;
 class ActorControllerManager;
 using namespace ObjectInit;
@@ -18,29 +19,17 @@ class EnemyGenerator
 {
 public:
     /// <summary>
-/// 敵機の初期化する
-/// </summary>
-    EnemyGenerator();
+    /// 敵機の初期化する
+    /// </summary>
+    EnemyGenerator(ActorControllerManager* controllerManager);
 
     ~EnemyGenerator() {};
-    /// <summary>
-    /// 引数のマネージャーに纏めて動かすやつを渡していく
-    /// </summary>
-    /// <param name="controllerManager"></param>
-    void CreateEnemy(ActorControllerManager* controllerManager);
     
+    void GenerateEnemys(int collectNum);
 private:
-    /// <summary>
-    /// 敵機を纏めて動かす奴を作成
-    /// </summary>
-    /// <param name="kind"></param>
-    /// <param name="generatePosMap"></param>
-    /// <param name="controllerManager"></param>
-    void CreateActorController(InitObjKind kind, std::unordered_map<int, std::vector<VECTOR>> generatePosMap, ActorControllerManager* controllerManager);
-    //ステージに配置されるアイテムの最大数
-    int totalCollectNum = 0;
-    //何番目の収集アイテムか
-    int collectNum = -1;
+    std::vector<EditArrangementData> GetNowEnemyEditData(InitObjKind kind, int collectNum);
+    
     //敵の位置まとめ
-    std::vector<InitStage::ChallengeData> challengeDataVec;
+    std::vector<EditArrangementData> editDataVec;
+    std::unordered_map<InitObjKind,ActorController*> enemyMap;
 };

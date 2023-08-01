@@ -1,16 +1,22 @@
 #pragma once
 #include "RotatingLasers.h"
 class ObjectObserver;
-
+/// <summary>
+/// y²‰ñ“]‚·‚éƒŒ[ƒU[
+/// </summary>
 class BigRadiusLaser:public RotatingLasers
 {
 public:
-    BigRadiusLaser(ObjectObserver* setObserver);
+    /// <summary>
+    /// y²‰ñ“]‚·‚é”¼Œa‚ª‘å‚«‚¢ƒŒ[ƒU[
+    /// </summary>
+    /// <param name="setObserver"></param>
+    BigRadiusLaser(std::unique_ptr<ObjectObserver> setObserver);
 
     /// <summary>
-/// ‰ñ“]‚³‚¹‚é
-/// </summary>
-/// <param name="deltaTime"></param>
+    /// y²‰ñ“]‚³‚¹‚é
+    /// </summary>
+    /// <param name="deltaTime"></param>
     void Update()override;
 
 private:

@@ -6,7 +6,6 @@
 #include "Utility.h"
 #include "FirstPositionGetter.h"
 #include "TitleCamera.h"
-#include "ObjectSubject.h"
 #include "CollectController.h"
 #include "ShadowMap.h"
 #include "EnemyGenerator.h"
@@ -17,15 +16,13 @@
 /// </summary>
 TitleDemo::TitleDemo()
 {
-    
+    //車とか収集アイテムなど動かす
     manager = new ActorControllerManager();
-    FirstPositionGetter* firstPosGetter = new FirstPositionGetter();
     manager->AddActorController(new CollectController());
-    manager->AddActorController(new StageObjectController(firstPosGetter));
-    SAFE_DELETE(firstPosGetter);
-
+    manager->AddActorController(new StageObjectController());
     initTimer = new ReusableTimer(initTime);
-    demoCarController = new DemoCarController({ -3200,0,0 }, { 1,0,0.1 });
+    demoCarController = new DemoCarController(demoCarFirstPos, demoCarFirstDir);
+
     manager->AddActorController(demoCarController);
     demoObserver = demoCarController->CreateCarObserver();
     shadowMap = new ShadowMap(demoObserver);
@@ -92,7 +89,7 @@ void TitleDemo::Draw() const
     
     if (initTimer->IsOverLimitTime())
     {
-        SetDrawBlendMode(DX_BLENDMODE_ALPHA, fadeValue);//α値をいじる
+        SetDrawBlendMode(DX_BLENDMODE_ALPHA, static_cast<int> (fadeValue));//α値をいじる
         int colorValue = MAX1BYTEVALUE;
         DrawBox(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, GetColor(colorValue, colorValue, colorValue), true);
         SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);//元に戻す

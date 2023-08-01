@@ -6,7 +6,7 @@ data/model/Player/IceBlades.mv1
 0.13
     //最初のポジション
     firstPosY = 8
-6
+2
     //modelの当たり半径
     collRadius = 11
 3

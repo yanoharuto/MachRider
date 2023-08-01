@@ -5,8 +5,8 @@
 #include <list>
 #include "DxLib.h"
 #include "UIManager.h"
+#include "ObjectObserver.h"
 
-class ObjectObserver;
 /// <summary>
 /// プレイヤーを中心に近くにアイテムがあるか調べさせる
 /// </summary>
@@ -27,7 +27,7 @@ public:
     /// マップに反映させたいアイテムの追加
     /// </summary>
     /// <param name="obserber"></param>
-    static void AddMarker(ObjectObserver* obserber);
+    static void AddMarker(std::unique_ptr<ObjectObserver> obserber);
 private:
 
     /// <summary>
@@ -47,13 +47,13 @@ private:
     //ミニマップの画像の縦幅
     static int mapGraphLength;
     //収集物の位置の縮尺
-    static const float betweenSize;
+    float betweenSize = 0.25f;
     //ミニマップ
     static UIData miniMap;
     //マップの中心軸にする
     std::weak_ptr<ObjectObserver> playerObserver;
     //マーカーの位置を更新するためのリスト
-    static std::list<ObjectObserver*> markerObserverList;
+    static std::list<std::unique_ptr<ObjectObserver>> markerObserverList;
     //描画位置のリスト
     std::list<VECTOR> drawPosList;
 };

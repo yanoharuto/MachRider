@@ -3,7 +3,7 @@
 #include <memory>
 #define SCORE_KIND_NUM 4
 class Timer;
-class ObjectObserver;
+class PlayerObserver;
 
 /// <summary>
 /// 最終的なスコアの保存役
@@ -39,7 +39,7 @@ public:
     /// </summary>
     /// <param name="timer"></param>
     /// <param name="player"></param>
-    void FixScore(Timer* timer, std::weak_ptr<ObjectObserver> player);
+    void FixScore(Timer* timer, std::weak_ptr<PlayerObserver> player);
 private:
     //残り時間のスコア
     int timeScore = 0;

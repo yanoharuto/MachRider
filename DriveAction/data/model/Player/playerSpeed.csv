@@ -1,15 +1,15 @@
 ﻿//加速量
 acceleSpeed = 2
-5
+7
 //最低速度
 lowestSpeed = 5
 2.7
 //最高速度
 maxSpeed = 8
-14
+9
 //急加速速度
 turboSpeed = 11
-2.5
+2.6
 //急加速時間
 turboTime = 14
 1.8

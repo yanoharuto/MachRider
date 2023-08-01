@@ -22,5 +22,19 @@ public:
     /// </summary>
     /// <param name="limitTime"></param>
     void ResetLimitTime(double setLimitTime);
+    /// <summary>
+    /// タイマー停止
+    /// </summary>
+    void Stop();
+    /// <summary>
+    /// 残り時間
+    /// </summary>
+    /// <returns></returns>
+    double GetElaspedTime() const override;
+private:
+    //停止中か
+    bool stopFlag = false;
+    //停止したときの残り時間
+    double stopTime;
 };
 

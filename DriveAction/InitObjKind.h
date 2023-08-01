@@ -8,35 +8,31 @@ namespace ObjectInit
     {
         //プレイヤー機
         player = 2,
-        //小さい岩
-        littleRock = 5,
-        //中くらいの岩
-        middleRock = 8,
         //大きい岩
-        bigRock = 11,
+        moveSaw = 5,
         //回転丸鋸
-        saw = 14,
+        saw = 8,
         //爆撃機
-        bomberShip = 17,
+        bomberShip = 11,
         //爆弾
-        bomber = 20,
+        bomber = 14,
         //上下にレーザー撃つ飛行船
-        upDownLaserShip = 23,
+        upDownLaserShip = 17,
         //円状に並ぶ機体
-        circleLaserShip = 26,
+        circleLaserShip = 20,
         //小回りレーザー
-        littleRadiusLaser = 29,
+        littleRadiusLaser = 23,
         //大回りレーザー
-        bigRadiusLaser = 32,
+        bigRadiusLaser = 26,
         //タイヤ
-        wheel = 35,
+        wheel = 29,
         //コイン
-        collect = 38,
+        collect = 32,
         //床
-        stageFloor = 41,
+        stageFloor = 35,
         //スカイドーム
-        skyDome = 44,
+        skyDome = 38,
         //ステージの外に出ないようにする壁
-        wall = 47
+        wall = 41
     };
 }

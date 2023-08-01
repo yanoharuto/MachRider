@@ -3,6 +3,7 @@
 #include "DamageObjectGenerator.h"
 #include "Utility.h"
 #include "DxLib.h"
+#include "CollectController.h"
 #include "EnemyGenerator.h"
 //actor管理クラスのリスト
 std::list<ActorController*> ActorControllerManager::actorControllerList;
@@ -12,7 +13,9 @@ std::list<ActorController*> ActorControllerManager::actorControllerList;
 ActorControllerManager::ActorControllerManager()
 {
     actorControllerList.clear();
-    enemyGenerator = new EnemyGenerator();
+    enemyGenerator = new EnemyGenerator(this);
+    damageObjGenerator = new DamageObjectGenerator(this);
+    enemyGenerator->GenerateEnemys(0);
 }
 
 ActorControllerManager::~ActorControllerManager()
@@ -28,47 +31,25 @@ ActorControllerManager::~ActorControllerManager()
 /// </summary>
 void ActorControllerManager::Update()
 {
-    //イテレーター
-    auto objIte = actorControllerList.begin();
-    //消去していいやつリスト
-    std::list<ActorController*> brokenList;
-    //更新する必要が無くなったら消去
-    while (objIte != actorControllerList.end())
+    //敵生成処理
+    GenerateEnemyProcess();
+    //更新する
+    for (auto objIte = actorControllerList.begin(); objIte != actorControllerList.end(); objIte++)
     {
         (*objIte)->Update();
-        //もう存在していなかったら更新終了
-        if (!(*objIte)->IsAlive()) 
-        {
-            brokenList.push_back((*objIte));
-
-            objIte = actorControllerList.erase(objIte);//eraseは消したイテレーターの次の奴を返す
-        }
-        else
-        {
-            ++objIte;//消す条件に合わなかったら次に
-        }
     }
-    //消していいやつ消す
-    for (auto ite = brokenList.begin(); ite != brokenList.end(); ite++)
-    {
-        SAFE_DELETE(*ite);
-    }
-    //さっきの処理でオブジェクトが増やしたアイテムを取ってくる
-    damageObjGenerator->MoveControllerList(this);
-    enemyGenerator->CreateEnemy(this);
 }
 /// <summary>
 /// ゲーム開始前更新
 /// </summary>
 void ActorControllerManager::GameReserve()
 {
+    //敵生成処理
+    GenerateEnemyProcess();
     for (auto objIte = actorControllerList.begin(); objIte != actorControllerList.end(); objIte++)
     {
         (*objIte)->GameReserve();
     }
-    //さっきの処理でオブジェクトが増やしたアイテムを取ってくる
-    damageObjGenerator->MoveControllerList(this);
-    enemyGenerator->CreateEnemy(this);
 }
 /// <summary>
 /// 各アクターの描画
@@ -89,5 +70,18 @@ void ActorControllerManager::AddActorController(ActorController* actorController
     if (actorController != nullptr)
     {
         actorControllerList.push_back(actorController);
+    }
+}
+
+/// <summary>
+///　敵生成処理
+/// </summary>
+void ActorControllerManager::GenerateEnemyProcess()
+{
+    int nowGetCollectNum = CollectController::GetTotalCollectNum() - CollectController::GetRemainingCollectNum();
+    if (nowGetCollectNum != collectNum)
+    {
+        collectNum = nowGetCollectNum;
+        enemyGenerator->GenerateEnemys(collectNum);
     }
 }

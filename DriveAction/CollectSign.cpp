@@ -1,7 +1,7 @@
 #include "CollectSign.h"
 #include "UIManager.h"
 #include "CollectController.h"
-#include "ObjectObserver.h"
+#include "PlayerObserver.h"
 #include "DxLib.h"
 #include "OriginalMath.h"
 #include "EffectManager.h"
@@ -11,7 +11,7 @@
 /// <summary>
 /// 収集アイテムの方向を記すエフェクトを出す
 /// </summary>
-CollectSign::CollectSign(std::weak_ptr<ObjectObserver> player)
+CollectSign::CollectSign(std::weak_ptr<PlayerObserver> player)
 {
     playerObserver = player;
     EffectManager::LoadEffect(compass);
@@ -27,6 +27,7 @@ CollectSign::~CollectSign()
 /// </summary>
 void CollectSign::Update()
 {
+    //今収集アイテムが動いているか
     if (CollectController::IsActiveCollect())
     {
         //エフェクトが止まってたらもう一度再生
@@ -38,7 +39,7 @@ void CollectSign::Update()
         VECTOR pos = playerObserver.lock()->GetSubjectPos();
         pos.y += addYPos;
         SetPosPlayingEffekseer3DEffect(signEffect, pos.x, pos.y, pos.z);
-        //方向を設定
+        //方向を収集アイテムの方向に設定
         float degree = OriginalMath::GetDegreeMisalignment(VGet(1, 0, 0), CollectController::GetBetween(pos));
         if (VCross(VGet(1, 0, 0), CollectController::GetBetween(pos)).y < 0)
         {
@@ -51,6 +52,7 @@ void CollectSign::Update()
     }
     else
     {
+        //動いてない間は停止
         StopEffekseer3DEffect(signEffect);
     }
 }

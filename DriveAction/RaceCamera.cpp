@@ -28,6 +28,6 @@ void RaceCamera::Update()
     //カメラの狙ってる座標
     VECTOR aimPos = VAdd(position, VScale(direction, targetBetween));
 
-    //位置を確定
+    //位置と向きを確定
     SetCameraPositionAndTarget_UpVecY(position, aimPos);
 }

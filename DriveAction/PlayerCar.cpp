@@ -9,16 +9,26 @@
 #include "ConflictManager.h"
 #include "AssetManager.h"
 #include "SphereCollider.h"
-
-PlayerCar::PlayerCar(VECTOR firstPos,VECTOR setDirection)
+#include "PlayerViewer.h"
+#include "Timer.h"
+#include "PlayerConflictProcessor.h"
+#include "ConflictManager.h"
+#include "SphereCollider.h"
+/// <summary>
+/// プレイヤーが操作する車
+/// </summary>
+/// <param name="firstPos"></param>
+/// <param name="setDirection"></param>
+PlayerCar::PlayerCar(EditArrangementData arrangementData)
 	:Car(ObjectInit::player)
 {
 	//初期位置設定
 	firstPosY = position.y;
-	position = firstPos;
+	position.x = arrangementData.posX;
+	position.z = arrangementData.posZ;
 	position.y = firstPosY;
 	prevPos = position;
-	direction = setDirection;
+	direction = VGet(arrangementData.dirX,0,arrangementData.dirZ);
 	//エフェクトを読み込ませる
 	EffectManager::LoadEffect(EffectInit::carConflict);
 	EffectManager::LoadEffect(EffectInit::carWind);
@@ -29,6 +39,10 @@ PlayerCar::PlayerCar(VECTOR firstPos,VECTOR setDirection)
 	EffectManager::LoadEffect(EffectInit::turboBurner);
 	SoundPlayer::LoadSound(playerFlight);
 	SoundPlayer::LoadSound(playerDamage);
+	//衝突処理呼び役
+	conflictProcessor = new PlayerConflictProcessor(this);
+	hitChecker = new SphereCollider(this);
+	ConflictManager::AddConflictProcessor(conflictProcessor,hitChecker);
 }
 
 /// <summary>
@@ -40,7 +54,11 @@ PlayerCar::~PlayerCar()
 	SAFE_DELETE(wheels);
 	SAFE_DELETE(damageTimer);
 	SAFE_DELETE(turboTimer);
-	
+	//当たり判定消去
+	ConflictManager::EraceConflictProccesor(conflictProcessor, hitChecker);
+	SAFE_DELETE(conflictProcessor);
+	SAFE_DELETE(hitChecker);
+	//音消す
 	SoundPlayer::StopSound(playerFlight);
 	SoundPlayer::StopSound(playerDamage);
 	//まだエフェクトが出ていたら終了
@@ -57,30 +75,23 @@ PlayerCar::~PlayerCar()
 /// 更新
 /// </summary>
 void PlayerCar::Update()
-{
+{	
+	//機体を傾ける
+	RotateUpdate();
 	//ダメージを受けてたら無敵時間減少していく
 	DamagePostProccess();
 	//速度を更新
 	UpdateVelocity();
 	//位置の更新
 	ReflectsVelocity();
-	//回転とかを制御
-	ModelSetMatrix();
 	//タイヤの更新
 	WheelArgumentCarInfo carInfo;
-	carInfo.Init(MV1GetMatrix(modelHandle), direction, VSize(velocity));
+	carInfo.Init(MGetTranslate(position), direction, VSize(velocity));
 	wheels->WheelUpdate(carInfo);
-	//機体を傾ける
-	SetTwistZRota();
-	//空を飛んでいるときの音をループ再生
-	if (!SoundPlayer::IsPlaySound(playerFlight))
-	{
-		SoundPlayer::Play2DSE(playerFlight);
-	}
 	UpdateEffects();
-	//連続してぶつかっているか調べる
-	isSerialConflict = isConflictFlag;
-	isConflictFlag = false;
+	//連続してぶつかっていたらSerialがtrueになったまま
+	isSerialConflict = isNowConflict;
+	isNowConflict = false;
 }
 
 /// <summary>
@@ -95,16 +106,36 @@ void PlayerCar::GameReserve()
 /// ぶつかった時の処理
 /// </summary>
 /// <param name="conflictInfo"></param>
-void PlayerCar::ConflictProccess(ConflictExamineResultInfo conflictInfo)
+void PlayerCar::ConflictProcess(ConflictExamineResultInfo conflictInfo)
 {
-	if (conflictInfo.tag == damageObject)//ダメージを受けた
+	if (conflictInfo.hit == HitSituation::Enter)
 	{
-		DamageReaction(conflictInfo);
+		if (conflictInfo.tag == damageObject)//ダメージを受けた
+		{
+			DamageReaction(conflictInfo);
+		}
+		else if (conflictInfo.tag != collect)//ぶつかった
+		{
+			ConflictReaction(conflictInfo);
+		}
 	}
-	else if (conflictInfo.tag != collect)//ぶつかった
+}
+/// <summary>
+/// 機体の傾きを渡す
+/// </summary>
+/// <returns></returns>
+VECTOR PlayerCar::GetModelRotateVec()
+{
+	//y軸回転
+	float rotaY = 0;
+	//ダメージを受けていたらぐるぐる回転
+	if (isDamage)
 	{
-		ConflictReaction(conflictInfo);
+		rotaY = damageTimer->GetElaspedTime() / setDamageReactionTime;
+		rotaY *= damageReactionRotaValue;
 	}
+
+	return VGet(0,rotaY,twistZRota);
 }
 /// <summary>
 /// 加速用ベクトルを作る
@@ -142,7 +173,7 @@ VECTOR PlayerCar::GetAccelVec()
 /// <summary>
 /// 入力すると機体が傾く
 /// </summary>
-void PlayerCar::SetTwistZRota()
+void PlayerCar::RotateUpdate()
 {
 	//右か左か押してたら機体を傾ける
 	if (UserInput::GetInputState(Right) == Hold)
@@ -158,6 +189,7 @@ void PlayerCar::SetTwistZRota()
 	{
 		twistZRota -= twistZRota * twistZRotaSpeed;
 	}
+
 }
 /// <summary>
 /// エフェクトの更新
@@ -232,16 +264,17 @@ void PlayerCar::UpdateEffects()
 /// ダメージを与えた時のリアクション
 /// </summary>
 /// <param name="conflictInfo"></param>
-void PlayerCar::DamageReaction(const ConflictExamineResultInfo conflictInfo)
+void PlayerCar::DamageReaction(ConflictExamineResultInfo conflictInfo)
 {
 	//位置と吹っ飛びベクトルを取ってくる
 	collVec = conflictInfo.bounceVec;
 	collVec.y = 0;
 	SAFE_DELETE(collVecDecelTimer);
+	conflictInfo.bouncePower = conflictInfo.bouncePower > VSize(velocity) ? VSize(velocity) : conflictInfo.bouncePower;
 	collVecDecelTimer = new Timer(conflictInfo.bouncePower);
 	position = conflictInfo.pos;
 	position.y = firstPosY;
-	MV1SetPosition(modelHandle, position);
+	
 	if (!isDamage)
 	{
 		//ダメージを受けた時のエフェクトと音
@@ -266,7 +299,7 @@ void PlayerCar::DamageReaction(const ConflictExamineResultInfo conflictInfo)
 /// 衝突時のリアクション
 /// </summary>
 /// <param name="conflictInfo"></param>
-void PlayerCar::ConflictReaction(const ConflictExamineResultInfo conflictInfo)
+void PlayerCar::ConflictReaction(ConflictExamineResultInfo conflictInfo)
 {
 	//ターボ中で連続衝突していないなら
 	if (isTurbo && !isSerialConflict)
@@ -274,9 +307,9 @@ void PlayerCar::ConflictReaction(const ConflictExamineResultInfo conflictInfo)
 		//ぶつかった時の音とエフェクト
 		clashEffect = EffectManager::GetPlayEffect3D(EffectInit::carConflict);
 		SetPosPlayingEffekseer3DEffect(clashEffect, position.x, position.y, position.z);
-		SoundPlayer::Play3DSE(playerDamage); SoundPlayer::Play3DSE(playerDamage);
+		SoundPlayer::Play3DSE(playerDamage); 
 	}
-	isConflictFlag = true;
+	isNowConflict = true;
 
 	//減速
 	accelPower -= accelPower * colideDecel;
@@ -284,7 +317,7 @@ void PlayerCar::ConflictReaction(const ConflictExamineResultInfo conflictInfo)
 	//衝突して移動
 	position = conflictInfo.pos;
 	position.y = firstPosY;
-	MV1SetPosition(modelHandle, position);
+	
 	//エフェクトも移動
 	UpdateEffects();
 }
@@ -293,6 +326,7 @@ void PlayerCar::ConflictReaction(const ConflictExamineResultInfo conflictInfo)
 /// </summary>
 void PlayerCar::DamagePostProccess()
 {
+	//ダメージを受けたら回転する
 	if (isDamage)
 	{
 		if (damageTimer->IsOverLimitTime())
@@ -342,6 +376,7 @@ float PlayerCar::GetTurboPower()
 			isTurbo = true;
 			StopEffekseer3DEffect(chargeBurnerEffect);
 			turboBurnerEffect = EffectManager::GetPlayEffect3D(turboBurner);
+			SoundPlayer::Play3DSE(playerFlight);
 		}
 	}
 	//ターボ期間中
@@ -396,26 +431,4 @@ void PlayerCar::DeleteEffect(int effectHandle)
 		StopEffekseer3DEffect(effectHandle);
 		effectHandle = -2;
 	}
-}
-
-
-/// <summary>
-/// 機体を回転させる
-/// </summary>
-void PlayerCar::ModelSetMatrix() const
-{
-	float rota = 0;
-	//ダメージを受けたら回転する
-	if (isDamage)
-	{
-		rota = damageTimer->GetElaspedTime() / setDamageReactionTime * 100;
-		rota *= damageReactionRotaSpeed;
-	}
-	// 向きに合わせて回転.
-	MV1SetRotationZYAxis(modelHandle, direction, VGet(0.0f, 1.0f, 0.0f), twistZRota);
-	// モデルに向いてほしい方向に回転.
-	MATRIX tmpMat = MV1GetMatrix(modelHandle);
-	MATRIX rotYMat = MGetRotY((180.0f + rota) * RAGE);
-	tmpMat = MMult(tmpMat, rotYMat);
-	MV1SetRotationMatrix(modelHandle, tmpMat);
 }

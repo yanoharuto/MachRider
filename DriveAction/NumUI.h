@@ -16,7 +16,7 @@ public:
     /// 整数の描画
     /// </summary>
     /// <param name="num"></param>
-    void Draw(int num)const;
+    virtual void Draw(int num)const;
     /// <summary>
     /// 小数の描画　小数点付き
     /// </summary>
@@ -37,16 +37,16 @@ public:
     /// </summary>
     /// <returns></returns>
     int GetNumWidthSize();
-private:
+protected:
     /// <summary>
-    /// 数字を描画したい時用
+    /// 数字の描画
     /// </summary>
     /// <param name="x">一番右端</param>
     /// <param name="y">Y座標</param>
     /// <param name="num">数字</param>
     /// <param name="scale">文字の大きさ</param>
     /// <returns>左端の座標</returns>
-    int Draw(int x, int y, int num)const;
+    int Draw(UIData data, int num)const;
     //数字のデータ
     UIData numData;
     //小数点の画像

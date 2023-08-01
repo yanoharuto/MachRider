@@ -5,7 +5,7 @@
 #include "SceneFlowBase.h"
 
 #define PlaySceneProccess 4
-class ObjectObserver;
+class PlayerObserver;
 class AssetManager;
 class ConflictManager;
 class EffectManager;
@@ -20,6 +20,7 @@ class ReusableTimer;
 class UIManager;
 class ActorControllerManager;
 class EnemyGenerator;
+class PlaySceneFlow;
 /// <summary>
 /// どういう順番で処理を行うか決める
 /// </summary>
@@ -100,5 +101,5 @@ private:
     //レース中の描画した物を保存する
     RaceScreen* screen;
     //プレイヤーの位置や向いている方向を教えてくれる
-    std::weak_ptr<ObjectObserver> player;
+    std::weak_ptr<PlayerObserver> player;
 };
