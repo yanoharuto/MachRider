@@ -28,15 +28,41 @@ InitActor::~InitActor()
 /// <returns></returns>
 ActorParameter InitActor::GetActorParamator(InitObjKind kind)
 {
+    //初期化情報文字列コンテナ
     auto initData = GetActorParametorString(kind);
     ActorParameter initParam = {};
-    //文字列コンテナから初期化データ所得
-    initParam.GetExtractParamator(initData);
-    auto dataPass = GetActorInitPassData(kind);
-    //model所得
-    initParam.modelHandle = AssetManager::Get3DModelAssetHandle(dataPass.modelPass);
-    initParam.addData = dataPass.addData;
+    char* end;
+    //各情報をString型からfloat型に置き換え
+    initParam.firstPosY = strtof(initData[InitObjParamator::firstPosY].c_str(), &end);
+    initParam.setBouncePow = strtof(initData[InitObjParamator::bouncePower].c_str(), &end);
+    initParam.setRadius = strtof(initData[InitObjParamator::collRadius].c_str(), &end);
     return initParam;
+}
+/// <summary>
+/// 引数の種類の描画モデルを渡す
+/// </summary>
+/// <param name="kind"></param>
+/// <returns></returns>
+int InitActor::GetModelHandle(InitObjKind kind)
+{
+    //描画モデル
+    int modelHandle = AssetManager::Get3DModelAssetHandle(GetActorInitPassData(kind).modelPass);
+    char* end;
+    //modelの大きさを変更
+    float modelScale = strtof(GetActorParametorString(kind)[InitObjParamator::modelSize].c_str(), &end);
+    MV1SetScale(modelHandle, VGet(modelScale, modelScale, modelScale));
+    return modelHandle;
+}
+/// <summary>
+/// 追加情報文字列ベクターを渡す
+/// </summary>
+/// <param name="obj"></param>
+/// <returns></returns>
+std::string InitActor::GetAddDataPass(InitObjKind kind)
+{
+    //各オブジェクト毎に必要な追加データ
+    auto dataPass = GetActorInitPassData(kind);
+    return dataPass.addData;
 }
 /// <summary>
 /// 各アクターの位置を記すタイル番号を出す

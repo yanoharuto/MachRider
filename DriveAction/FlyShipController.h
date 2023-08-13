@@ -11,6 +11,7 @@ namespace FlyShipInit
     /// </summary>
     struct InitFlyShipParamator
     {
+        //‘å‚«‚³‚Æ‚©model‚ÌƒpƒX‚Æ‚©“–‚½‚è”»’è‚Ì‘å‚«‚³‚Æ‚©
         ActorParameter actorParam;
         //¶‘¶ŠÔ
         float setAliveTime;
@@ -60,7 +61,7 @@ protected:
     /// <param name="kind">‰Šú‰»‚µ‚½‚¢FlyShip‚Ìí—Ş</param>
     /// <returns></returns>
     FlyShipInit::InitFlyShipParamator GetInitData(ObjectInit::InitObjKind kind);
-
-    FlyShipInit::InitFlyShipParamator param;
+    //‰Šú‰»î•ñ
+    FlyShipInit::InitFlyShipParamator param = {};;
 };
 

@@ -8,8 +8,18 @@ UpDownFlyShipController::UpDownFlyShipController()
     viewer = new ModelViewer(upDownLaserShip);
 }
 
-void UpDownFlyShipController::AddObject(EditArrangementData editData)
+void UpDownFlyShipController::AddObject(std::vector<EditArrangementData> editData)
 {
-    FlyShip* flyShip = new UpDownLaserFlyShip(editData);
-    actorList.push_back(flyShip);
+    if (!editData.empty())
+    {
+        for (int i = 0; i < editData.size(); i++)
+        {
+            //“¯‚¶Ží—Þ‚È‚ç’Ç‰Á
+            if (editData[i].objKind == controllObjKind)
+            {
+                FlyShip* flyShip = new UpDownLaserFlyShip(editData[i]);
+                actorList.push_back(flyShip);
+            }
+        }
+    }
 }

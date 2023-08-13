@@ -69,22 +69,22 @@ void EditorObject::ReflectInput()
         //ƒJƒƒ‰‚ÌŒü‚«‚É‡‚í‚¹‚ÄˆÚ“®
         VECTOR cameraDir = EditorCamera::GetNormDirection();
 
-        if (UserInput::GetInputState(Left) == Hold)
+        if (UserInput::GetInputState(Left) == Hold)//¶ˆÚ“®
         {
             cameraDir = VCross(cameraDir, VGet(0, 1, 0));
             position = VAdd(position, VScale(cameraDir, moveSpeed));
         }
-        else if (UserInput::GetInputState(Right) == Hold)
+        else if (UserInput::GetInputState(Right) == Hold)//‰EˆÚ“®
         {
             cameraDir = VCross(cameraDir, VGet(0, -1, 0));
             position = VAdd(position, VScale(cameraDir, moveSpeed));
         }
-        if (UserInput::GetInputState(Up) == Hold)
+        if (UserInput::GetInputState(Up) == Hold)//‘OˆÚ“®
         {
             cameraDir = VScale(cameraDir, moveSpeed);
             position = VAdd(position, VScale(cameraDir, moveSpeed));
         }
-        else if (UserInput::GetInputState(Down) == Hold)
+        else if (UserInput::GetInputState(Down) == Hold)//Œã‚ëˆÚ“®
         {
             cameraDir = VScale(cameraDir, -moveSpeed);
             position = VAdd(position, VScale(cameraDir, moveSpeed));

@@ -72,10 +72,6 @@ public:
     {
         return position;
     };
-    float GetModelSize()const
-    {
-        return modelSize;
-    };
     /// <summary>
     /// objectの半径
     /// </summary>
@@ -129,7 +125,5 @@ protected:
     //場所
     VECTOR position = {};
     //速度
-    VECTOR velocity;
-    //modelのサイズ
-    float modelSize = 1;
+    VECTOR velocity = {};
 };

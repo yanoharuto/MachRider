@@ -15,12 +15,12 @@ public:
     /// 描画
     /// </summary>
     /// <param name="drawObj">位置とか大きさとか教えてももらう</param>
-    virtual void Draw(Object* drawObj) const;
+    virtual void Draw(Object* const drawObj) const;
 protected:
     /// <summary>
     /// 描画モデルの行列をセット
     /// </summary>
-    virtual void ModelSetMatrix(Object* drawObj) const;
+    virtual void ModelSetMatrix(Object* const drawObj) const;
     //描画モデル
     int modelHandle;
 };

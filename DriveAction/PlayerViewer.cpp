@@ -23,9 +23,7 @@ void PlayerViewer::Draw(PlayerCar* drawObj) const
     ModelSetMatrix(drawObj);
     // ３Dモデルのポジション設定
     MV1SetPosition(modelHandle, drawObj->GetPos());
-    float mSize = drawObj->GetModelSize();
-    //サイズ変更
-    MV1SetScale(modelHandle, VGet(mSize, mSize, mSize));
+
     MV1DrawModel(modelHandle);
     //行列を元に戻す
     MV1SetRotationMatrix(modelHandle, tmpMat);

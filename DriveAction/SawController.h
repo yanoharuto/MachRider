@@ -16,5 +16,6 @@ public:
 /// </summary>
 /// <param name="editData">’Ç‰Á‚·‚éˆÊ’u‚È‚Ç‚Ìî•ñ</param>
     void AddObject(std::vector<EditArrangementData> editData)override;
+    void Update()override;
 };
 

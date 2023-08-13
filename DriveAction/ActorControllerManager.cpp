@@ -5,6 +5,12 @@
 #include "DxLib.h"
 #include "CollectController.h"
 #include "EnemyGenerator.h"
+#include "CircleFlyShipController.h"
+#include "UpDownFlyShipController.h"
+#include "MoveSawController.h"
+#include "BomberFlyShipController.h"
+#include "SawController.h"
+
 //actor管理クラスのリスト
 std::list<ActorController*> ActorControllerManager::actorControllerList;
 /// <summary>
@@ -13,9 +19,17 @@ std::list<ActorController*> ActorControllerManager::actorControllerList;
 ActorControllerManager::ActorControllerManager()
 {
     actorControllerList.clear();
-    enemyGenerator = new EnemyGenerator(this);
+    enemyGenerator = new EnemyGenerator();
     damageObjGenerator = new DamageObjectGenerator(this);
-    enemyGenerator->GenerateEnemys(0);
+    AddActorController(new SawController());
+    AddActorController(new MoveSawController());
+    AddActorController(new CircleFlyShipController());
+    AddActorController(new BomberFlyShipController());
+    AddActorController(new UpDownFlyShipController());
+    for (auto ctrItr = actorControllerList.begin(); ctrItr != actorControllerList.end(); ctrItr++)
+    {
+        enemyGenerator->GenerateEnemys(0,*ctrItr);
+    }
 }
 
 ActorControllerManager::~ActorControllerManager()
@@ -78,10 +92,16 @@ void ActorControllerManager::AddActorController(ActorController* actorController
 /// </summary>
 void ActorControllerManager::GenerateEnemyProcess()
 {
+    //収集アイテムを取られた数
     int nowGetCollectNum = CollectController::GetTotalCollectNum() - CollectController::GetRemainingCollectNum();
+    //取られた数が更新されたら
     if (nowGetCollectNum != collectNum)
     {
-        collectNum = nowGetCollectNum;
-        enemyGenerator->GenerateEnemys(collectNum);
+        //敵生成クラスに追加する必要がある事を教える
+        for (auto ctrItr = actorControllerList.begin(); ctrItr != actorControllerList.end(); ctrItr++)
+        {
+            collectNum = nowGetCollectNum;
+            enemyGenerator->GenerateEnemys(collectNum,*ctrItr);
+        }
     }
 }

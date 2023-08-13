@@ -15,14 +15,11 @@ StageObjectController::StageObjectController()
     :ActorController(ObjectInit::wall)
 {   
     //è∞ÇÃê›íË
+    floorModelHandle = InitActor::GetModelHandle(stageFloor);
     auto param = InitActor::GetActorParamator(stageFloor);
-    floorModelHandle = param.modelHandle;
-    MV1SetScale(floorModelHandle, VGet(param.setModelSize, param.setModelSize, param.setModelSize));
     MV1SetPosition(floorModelHandle, VGet(0, param.firstPosY, 0));
     //skyDomeÇÃê›íË
-    param = InitActor::GetActorParamator(skyDome);
-    skyDomeModelHandle = param.modelHandle;
-    MV1SetScale(skyDomeModelHandle, VGet(param.setModelSize, param.setModelSize, param.setModelSize));
+    skyDomeModelHandle = InitActor::GetModelHandle(skyDome);
     stageWall = new StageWall();
     viewer = new ModelViewer(wall);
 }

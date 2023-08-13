@@ -5,7 +5,7 @@
 #include "SphereHitChecker.h"
 //当たった結果を反映させるクラスのマップ
 std::unordered_map<ConflictProcessor*,SphereHitChecker*> ConflictManager::processorKeyMap;
-
+//conflictProcessor持ちの当たり判定か調べるためのマップ
 std::unordered_map<SphereHitChecker*, ConflictProcessor*> ConflictManager::hitCheckerKeyMap;
 //当たっているか調べるクラスのリスト
 std::list<SphereHitChecker*> ConflictManager::hitCheckList;
@@ -29,7 +29,7 @@ ConflictManager::~ConflictManager()
 /// 当たり判定追加
 /// </summary>
 /// <param name="hitChecker"></param>
-void ConflictManager::AddHitChecker(SphereHitChecker* hitChecker)
+void ConflictManager::AddHitChecker(SphereHitChecker* const hitChecker)
 {
     hitCheckList.push_back(hitChecker);
 }
@@ -37,10 +37,11 @@ void ConflictManager::AddHitChecker(SphereHitChecker* hitChecker)
 /// 当たり判定消去
 /// </summary>
 /// <param name="hitChecker"></param>
-void ConflictManager::EraceHitChecker(SphereHitChecker* hitChecker)
+void ConflictManager::EraceHitChecker(SphereHitChecker* const hitChecker)
 {
     if(!hitCheckList.empty())
     {
+        //消したい当たり判定があるなら
         auto procceesor = std::find(hitCheckList.begin(), hitCheckList.end(), hitChecker);
         if (procceesor != hitCheckList.end())
         {
@@ -54,7 +55,7 @@ void ConflictManager::EraceHitChecker(SphereHitChecker* hitChecker)
 /// </summary>
 /// <param name="conflictProccesor">呼びたいやつ</param>
 /// <param name="hitChecker">呼びたいやつの当たり判定</param>
-void ConflictManager::AddConflictProcessor(ConflictProcessor* conflictProcessor, SphereHitChecker* hitChecker)
+void ConflictManager::AddConflictProcessor(ConflictProcessor* const conflictProcessor, SphereHitChecker* const hitChecker)
 {
     processorKeyMap.insert(std::make_pair(conflictProcessor, hitChecker));
     hitCheckerKeyMap.insert(std::make_pair(hitChecker, conflictProcessor));
@@ -66,7 +67,7 @@ void ConflictManager::AddConflictProcessor(ConflictProcessor* conflictProcessor,
 /// </summary>
 /// <param name="conflictProccesor">呼ばなくていいように</param>
 /// /// <param name="hitChecker">当たり判定も消す</param>
-void ConflictManager::EraceConflictProccesor(ConflictProcessor* conflictProcessor, SphereHitChecker* hitChecker)
+void ConflictManager::EraceConflictProccesor(ConflictProcessor* const conflictProcessor, SphereHitChecker* const hitChecker)
 {
     if (!processorKeyMap.empty())
     {
@@ -79,7 +80,7 @@ void ConflictManager::EraceConflictProccesor(ConflictProcessor* conflictProcesso
                 break;
             }
         }
-        //当たり判定の方を消す
+        //当たり判定がKeyのmapから削除
         for (auto mapItr = hitCheckerKeyMap.begin(); mapItr != hitCheckerKeyMap.end(); mapItr++)
         {
             if ((*mapItr).first == hitChecker)
@@ -88,6 +89,7 @@ void ConflictManager::EraceConflictProccesor(ConflictProcessor* conflictProcesso
                 break;
             }
         }
+        //当たり判定削除
         EraceHitChecker(hitChecker);
     }
 }
@@ -108,7 +110,7 @@ void ConflictManager::DrawCollisionSphere()
 /// <param name="conflictProccesor">衝突処理実行役</param>
 /// <param name="hitChecker">当たり判定</param>
 /// <returns>衝突結果</returns>
-ConflictExamineResultInfo ConflictManager::GetConflictResultInfo(ConflictProcessor* conflictProccesor, SphereHitChecker* hitChecker)
+ConflictExamineResultInfo ConflictManager::GetConflictResultInfo(ConflictProcessor* const conflictProccesor, SphereHitChecker* const hitChecker)
 {
     HitCheckExamineObjectInfo examineInfo = conflictProccesor->GetHitExamineCheckInfo();
     //引数のオブジェクトそのものと当たってたらスルー もう動いてなくてもぶつかっているか調べない
@@ -127,12 +129,15 @@ ConflictExamineResultInfo ConflictManager::GetConflictResultInfo(ConflictProcess
 /// </summary>
 void ConflictManager::Update()
 {
+    
     //衝突処理実行役
     for (auto processorItr = processorKeyMap.begin(); processorItr != processorKeyMap.end(); processorItr++)
     {
+        int a = 0;
         //当たり判定調査役
         for (auto hitCheckItr = hitCheckList.begin(); hitCheckItr != hitCheckList.end(); hitCheckItr++)
         {
+            a++;
             //当たり判定結果
             ConflictExamineResultInfo resultInfo = GetConflictResultInfo((*processorItr).first, *hitCheckItr);
             //当たったのが衝突処理実行役の当たり判定なら

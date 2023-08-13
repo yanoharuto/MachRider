@@ -52,7 +52,7 @@ PlayerCar::PlayerCar(EditArrangementData arrangementData)
 PlayerCar::~PlayerCar()
 {
 	SAFE_DELETE(wheels);
-	SAFE_DELETE(damageTimer);
+	SAFE_DELETE(bounceTimer);
 	SAFE_DELETE(turboTimer);
 	//当たり判定消去
 	ConflictManager::EraceConflictProccesor(conflictProcessor, hitChecker);
@@ -95,14 +95,6 @@ void PlayerCar::Update()
 }
 
 /// <summary>
-/// ゲームが始まる前の演出とか
-/// </summary>
-void PlayerCar::GameReserve()
-{
-	totalCosSeed += cosSeed;
-	position.y = firstPosY + cosf(totalCosSeed) * upDownSpeed;
-}
-/// <summary>
 /// ぶつかった時の処理
 /// </summary>
 /// <param name="conflictInfo"></param>
@@ -131,11 +123,20 @@ VECTOR PlayerCar::GetModelRotateVec()
 	//ダメージを受けていたらぐるぐる回転
 	if (isDamage)
 	{
-		rotaY = damageTimer->GetElaspedTime() / setDamageReactionTime;
+		rotaY = bounceTimer->GetElaspedTime() / setDamageReactionTime;
 		rotaY *= damageReactionRotaValue;
 	}
 
 	return VGet(0,rotaY,twistZRota);
+}
+
+/// <summary>
+/// 収集アイテムにぶつかった回数
+/// </summary>
+/// <returns></returns>
+int PlayerCar::GetCollectCount()
+{
+	return conflictProcessor->GetCollectNum();
 }
 /// <summary>
 /// 加速用ベクトルを作る
@@ -267,11 +268,12 @@ void PlayerCar::UpdateEffects()
 void PlayerCar::DamageReaction(ConflictExamineResultInfo conflictInfo)
 {
 	//位置と吹っ飛びベクトルを取ってくる
-	collVec = conflictInfo.bounceVec;
-	collVec.y = 0;
-	SAFE_DELETE(collVecDecelTimer);
-	conflictInfo.bouncePower = conflictInfo.bouncePower > VSize(velocity) ? VSize(velocity) : conflictInfo.bouncePower;
-	collVecDecelTimer = new Timer(conflictInfo.bouncePower);
+	conflictVec = VScale(conflictInfo.bounceVec,conflictInfo.bouncePower);
+	conflictVec.y = 0;
+	SAFE_DELETE(bounceTimer);
+	//吹っ飛ぶ時間
+	bounceTimer = new Timer(setDamageReactionTime);
+	
 	position = conflictInfo.pos;
 	position.y = firstPosY;
 	
@@ -282,8 +284,6 @@ void PlayerCar::DamageReaction(ConflictExamineResultInfo conflictInfo)
 		SetPosPlayingEffekseer3DEffect(damageEffect, position.x, position.y, position.z);
 		SoundPlayer::Play3DSE(playerDamage);
 		isDamage = true;
-		//無敵時間セット
-		damageTimer = new Timer(setDamageReactionTime);
 		twistZRota = 0.0f;
 		//加速も終了
 		isTurbo = false;
@@ -326,13 +326,14 @@ void PlayerCar::ConflictReaction(ConflictExamineResultInfo conflictInfo)
 /// </summary>
 void PlayerCar::DamagePostProccess()
 {
-	//ダメージを受けたら回転する
+	//ダメージを受けたら
 	if (isDamage)
 	{
-		if (damageTimer->IsOverLimitTime())
+		//ダメージタイマーが切れるまで無敵
+		if (bounceTimer->IsOverLimitTime())
 		{
 			isDamage = false;
-			SAFE_DELETE(damageTimer);
+			SAFE_DELETE(bounceTimer);
 		}
 	}
 }

@@ -31,6 +31,4 @@ protected:
     void ModelSetMatrix(VECTOR dir) const;
     //選択されているならちょっと位置が高くなる
     const int selectPosY = 75;
-    //modelのサイズ
-    float mSize = 0;
 };

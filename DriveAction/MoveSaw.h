@@ -1,7 +1,8 @@
 #pragma once
 #include "Saw.h"
-
+#include "EditObjectData.h"
 class ReusableTimer;
+class SphereCollider;
 /// <summary>
 /// ˆÚ“®‚·‚é‰ñ“]‚Ì‚±‚¬‚è
 /// </summary>
@@ -25,12 +26,7 @@ private:
         //ˆÚ“®ŠÔ
         moveTime=3
     };
-    //Å‰‚ÌŒü‚«
-    VECTOR firstDir;
     //ˆÚ“®ŠÔ
     ReusableTimer* moveLarpTimer;   
-    //ˆÚ“®‘¬“x
-    int speed = 0;
-    
 };
 

@@ -6,6 +6,6 @@ class UpDownFlyShipController :
 {
 public:
     UpDownFlyShipController();
-    void AddObject(EditArrangementData editData);
+    void AddObject(std::vector<EditArrangementData> editData)override;
 };
 

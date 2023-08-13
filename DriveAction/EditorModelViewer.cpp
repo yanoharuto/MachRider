@@ -8,8 +8,6 @@
 EditorModelViewer::EditorModelViewer(ObjectInit::InitObjKind kind)
     :ModelViewer(kind)
 {
-    ActorParameter initParam = InitActor::GetActorParamator(kind);
-    mSize = initParam.setModelSize;
 }
 /// <summary>
 /// 引数の場所に描画
@@ -23,8 +21,6 @@ void EditorModelViewer::Draw(EditArrangementData data) const
     ModelSetMatrix(VGet(data.dirX,0,data.dirZ));
     // ３Dモデルのポジション設定
     MV1SetPosition(modelHandle, VGet(data.posX,0,data.posZ));
-    //サイズ変更
-    MV1SetScale(modelHandle, VGet(mSize, mSize, mSize));
     MV1DrawModel(modelHandle);
 }
 /// <summary>
@@ -39,8 +35,6 @@ void EditorModelViewer::SelectDraw(EditArrangementData data) const
     ModelSetMatrix(VGet(data.dirX, 0, data.dirZ));
     // ３Dモデルのポジション設定
     MV1SetPosition(modelHandle, VGet(data.posX, selectPosY, data.posZ));
-    //サイズ変更
-    MV1SetScale(modelHandle, VGet(mSize, mSize, mSize));
     MV1DrawModel(modelHandle);
 }
 /// <summary>

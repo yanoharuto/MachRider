@@ -227,7 +227,7 @@
     <ClCompile Include="RaceScreen.cpp" />
     <ClCompile Include="RankingData.cpp" />
     <ClCompile Include="ReusableTimer.cpp" />
-    <ClCompile Include="Rocket.cpp" />
+    <ClCompile Include="Bomber.cpp" />
     <ClCompile Include="RotatingLasers.cpp" />
     <ClCompile Include="Saw.cpp" />
     <ClCompile Include="SceneBase.cpp" />
@@ -344,7 +344,7 @@
     <ClInclude Include="RaceScreen.h" />
     <ClInclude Include="RankingData.h" />
     <ClInclude Include="ReusableTimer.h" />
-    <ClInclude Include="Rocket.h" />
+    <ClInclude Include="Bomber.h" />
     <ClInclude Include="RotatingLasers.h" />
     <ClInclude Include="Rule.h" />
     <ClInclude Include="SceneFlowBase.h" />

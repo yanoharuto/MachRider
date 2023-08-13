@@ -57,6 +57,6 @@ void ResultScore::FixScore(Timer* timer, std::weak_ptr<PlayerObserver> player)
     //制限時間を超過してたら0
     timeScore = timer->IsOverLimitTime() ? 0 : static_cast<int>(timer->GetElaspedTime() * clearTimeBonus);
     //収集アイテムを取ってたらボーナス
-    //collectScore= player.lock()->GetSubjectHitCount(Object::ObjectTag::collect) * getCollectBonus;
+    collectScore= player.lock()->GetCollectCount() * getCollectBonus;
  
 }

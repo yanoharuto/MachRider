@@ -2,6 +2,10 @@
 #include "Actor.h"
 #include "HitCheckExamineObjectInfo.h"
 #include "DxLib.h"
+/// <summary>
+/// 当たり判定の持ち主をください
+/// </summary>
+/// <param name="obj"></param>
 SphereHitChecker::SphereHitChecker(Actor* const obj)
 {
     object = obj;
@@ -46,17 +50,24 @@ bool SphereHitChecker::HitCheck(const HitCheckExamineObjectInfo objAInfo, const 
 {
     return HitCheckProcess(objAInfo, objBInfo);
 }
+/// <summary>
+/// 当たり判定で衝突しているか調べるのに必要な情報を渡す
+/// </summary>
+/// <returns></returns>
 HitCheckExamineObjectInfo SphereHitChecker::GetHitExamineCheckInfo() const
 {
-
     HitCheckExamineObjectInfo info;
     info.SetExamineInfo(object);
     info.velocity = object->GetVelocity();
     return info;
 }
+/// <summary>
+/// 今もう動いていない状態か
+/// </summary>
+/// <returns></returns>
 bool SphereHitChecker::IsDead()
 {
-    return object->GetObjectState() == (Object::dead || Object::activeEnd);
+    return (object->GetObjectState() == Object::dead || object->GetObjectState() == Object::activeEnd);
 }
 /// <summary>
 /// 当たったかどうか調べるときの共通処理

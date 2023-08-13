@@ -15,16 +15,6 @@ ActorController::~ActorController()
     SAFE_DELETE(viewer);
 }
 /// <summary>
-/// 更新
-/// </summary>
-void ActorController::Update()
-{
-    for (auto ite = actorList.begin(); ite != actorList.end(); ite++)
-    {
-        (*ite)->Update();
-    }
-}
-/// <summary>
 /// ゲーム開始準備処理
 /// </summary>
 void ActorController::GameReserve()
@@ -34,6 +24,19 @@ void ActorController::GameReserve()
         (*ite)->GameReserve();
     }
 }
+
+/// <summary>
+/// 更新
+/// </summary>
+void ActorController::Update()
+{
+    for (auto ite = actorList.begin(); ite != actorList.end(); ite++)
+    {
+        //各actorの更新
+        (*ite)->Update();
+    }
+}
+
 /// <summary>
 /// 描画処理
 /// </summary>
@@ -43,6 +46,7 @@ void ActorController::Draw() const
     {
         for (auto ite = actorList.begin(); ite != actorList.end(); ite++)
         {
+            //Viewerに渡して描画してもらう
             viewer->Draw((*ite));
         }
     }

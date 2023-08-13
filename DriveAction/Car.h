@@ -108,11 +108,11 @@ protected:
 	// 障害物にぶつかったときの減速率.
 	static const float colideDecel;
 	//衝突して吹っ飛ぶ時間を計る
-	Timer* collVecDecelTimer = nullptr;
+	Timer* bounceTimer = nullptr;
 	//タイヤ
 	Wheels* wheels;
 	//ぶつかった物体との方向
-	VECTOR collVec = {};
+	VECTOR conflictVec = {};
 	//ひとつ前のポジション
 	VECTOR prevPos = {};
 };

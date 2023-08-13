@@ -3,5 +3,5 @@ length,6000
     rockFilePass,data/stageData/stage3/enemyData.csv
     challengesListFilePass,data/stageData/stage3/collectData.csv
     playerPositionFilePass,data/stageData/stage3/playerData.csv
-time,100
+time,55
 scoreRanking,data/stageData/stage3/stageScore.csv

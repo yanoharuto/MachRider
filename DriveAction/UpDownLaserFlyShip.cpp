@@ -24,7 +24,5 @@ void UpDownLaserFlyShip::Update()
     //è„â∫Ç…à⁄ìÆ
     objState = active;
     totalMoveValue += addMoveValue;
-    position.y += cosf(totalMoveValue) * updownSpeed;
-    //velocityÇîΩâf
-    ReflectsVelocity();
+    position.y = cosf(totalMoveValue) * updownSpeed + firstPosY;
 }

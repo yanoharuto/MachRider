@@ -5,6 +5,7 @@
 #include "InitObjKind.h"
 using namespace ObjectInit;
 class SphereCollider;
+class ConflictProcessor;
 /// <summary>
 /// 障害物　（丸のこ）
 /// </summary>
@@ -18,21 +19,35 @@ public:
     /// <param name="arrangementData">編集データ</param>
     Saw(EditArrangementData arrangementData);
     /// <summary>
+    /// 継承するならこっち
+    /// </summary>
+    Saw(ObjectInit::InitObjKind kind, EditArrangementData arrangementData);
+    /// <summary>
     /// 当たり判定消去
     /// </summary>
-    ~Saw()override;
+    ~Saw();
     /// <summary>
     /// 回転させる
     /// </summary>
     /// <param name="deltaTime"></param>
     void Update() override;
+    /// <summary>
+    /// 衝突処理実行 playerにぶつかったら破壊
+    /// </summary>
+    void ConflictProcess(const ConflictExamineResultInfo conflictInfo) override;
+    
 protected:
+    /// <summary>
+    /// 共通初期化処理
+    /// </summary>
+    /// <param name="arrangementData"></param>
+    void Init(EditArrangementData arrangementData);
     //回転量
-    const float addRotate = 20.0f;
-    //はじき返す力
-    const float setBouncePower = 4.0f;
-    //厚み
-    const float thickness = 5.0f;
+    static const float addRotate;
     //当たり判定
     SphereCollider* collider;
+    //衝突処理実行役
+    ConflictProcessor* conflictProcessor;
+    //破壊爆破エフェクト
+    int breakExplosionEffect = -1;
 };

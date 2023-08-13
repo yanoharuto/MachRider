@@ -67,6 +67,14 @@ private:
     /// <param name="kind"></param>
     /// <returns></returns>
     ScoreUI GetScoreUI(UIKind kind);
+    /// <summary>
+    /// 残り時間スコアの描画
+    /// </summary>
+    void TimeScoreDraw() const;
+    /// <summary>
+    /// 収集アイテムスコアの描画
+    /// </summary>
+    void CollectScoreDraw() const;
     //終了アナウンス
     bool isEndFinishAnnounce = false;
     //処理をすべて行えたら
@@ -120,5 +128,5 @@ private:
     //スペースキー催促UI
     FlashUI* pressSpaceKeyUI;
     //拍手効果音
-    bool clapSEH = false;
+    bool isSoundClapSE = false;
 };

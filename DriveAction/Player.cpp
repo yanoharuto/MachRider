@@ -15,6 +15,7 @@ Player::Player()
 {
     auto editData = FirstPositionGetter::GetInitData(Object::player);
     car = new PlayerCar(editData[0]);
+    playerObserver = std::make_shared<PlayerObserver>(car);
     listener = new SoundListener(CreatePlayerObserver());
     //プレイヤー描画役
     playerViewer = new PlayerViewer();
@@ -34,7 +35,7 @@ Player::~Player()
 /// <returns></returns>
 std::weak_ptr<PlayerObserver> Player::CreatePlayerObserver() const
 {
-    return std::make_shared<PlayerObserver>(car);
+    return playerObserver;
 }
 /// <summary>
 /// 音を聞くために場所を更新

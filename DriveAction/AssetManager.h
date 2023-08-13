@@ -13,7 +13,7 @@ public:
     /// modelをロードして渡す
     /// </summary>
     /// <param name="assetPass"></param>
-    /// <returns></returns>
+    /// <returns>すでにロードしてたら複製</returns>
     static int Get3DModelAssetHandle(std::string assetPass);
 private :
     AssetManager();

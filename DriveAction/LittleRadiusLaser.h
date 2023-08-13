@@ -17,6 +17,7 @@ public:
     /// </summary>
     void Update()override;
 private:
+
     /// ‰ñ“]‘¬“x
     static const float rotaSpeed;
     

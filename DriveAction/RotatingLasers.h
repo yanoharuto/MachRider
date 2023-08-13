@@ -4,9 +4,11 @@
 #include "EffectManager.h"
 class LaserCollider;
 class ObjectObserver;
+//レーザーの初期化に必要
 struct InitParam
 {
     ObjectInit::InitObjKind initKind;
+    //高さ1に対するレーザーの射程
     float laserRange;
 };
 /// <summary>
@@ -41,8 +43,6 @@ protected:
     int trackEffect = -1;
     //エフェクトの回転角（ラジアン）
     float effectRota;
-    //最初の回転方向
-    static const VECTOR firstDir;
     //レーザーの跡の位置
     VECTOR endPos = {};
     //線状当たり判定

@@ -12,7 +12,7 @@
 EnemyDataEditor::EnemyDataEditor()
     :StageDataEditor("enemyData.csv")
 {
-    nowEditEne = new EditorObject(kind);
+    nowEditEne = new EditorObject(nowEditKind);
     //各エネミーの描画担当役
     using enum ObjectInit::InitObjKind;
     eneViewerMap.insert(std::make_pair(saw, new EditorModelViewer(saw)));
@@ -60,41 +60,11 @@ void EnemyDataEditor::Update()
     }
     else //編集中
     {
-        //移動回転
-        nowEditEne->Update();
-        //編集終了
-        if (UserInput::GetInputState(Space) == Push)
-        {
-            //編集したタイミングのミッション数を記録
-            auto saveData = nowEditEne->GetEditObjectData();
-            saveData.missionNum = missionNum;
-            //過去のアイテムを選択していたら
-            if (!isEndEdit && selectEditedEneNum != -1)
-            {
-                //過去のアイテムを再納品
-                editDataVec[selectEditedEneNum] = saveData;
-                selectEditedEneNum = -1;
-            }
-            else
-            {
-                //編集終了コンテナに納品
-                editDataVec.push_back(saveData);
-            }
-            isEndEdit = true;
-        }
-        //破棄
-        else if (UserInput::GetInputState(DKey) == Push)
-        {
-            if (selectEditedEneNum != -1)//昔編集したものを削除
-            {
-                EraceEndEditData(selectEditedEneNum);
-                selectEditedEneNum = -1;
-            }
-            isEndEdit = true;
-        }
+        EditSelectEnemy();
     }
     //カメラに見るべきオブジェクトを伝える
     nowEditObjData = nowEditEne->GetEditObjectData();
+    //エフェクトの位置などを更新
     UpdateEffect();
 }
 /// <summary>
@@ -102,11 +72,12 @@ void EnemyDataEditor::Update()
 /// </summary>
 void EnemyDataEditor::DrawAllEditedObject() const
 {
-    if (!editDataVec.empty())
+    if (!editDataVec.empty())//コンテナ内のオブジェクト全て描画
     {
         int size = editDataVec.size();
         for (int i = 0; i < size; i++)
         {
+            //描画するオブジェクトの種類
             auto drawKind = static_cast<ObjectInit::InitObjKind>(editDataVec[i].objKind);
             eneViewerMap.find(drawKind)->second->Draw(editDataVec[i]);
         }
@@ -117,7 +88,8 @@ void EnemyDataEditor::DrawAllEditedObject() const
 /// </summary>
 void EnemyDataEditor::DrawNowEditObject() const
 {
-    eneViewerMap.find(kind)->second->SelectDraw(nowEditEne->GetEditObjectData());
+    //今編集しているエネミーの描画担当役に描画してもらう
+    eneViewerMap.find(nowEditKind)->second->SelectDraw(nowEditEne->GetEditObjectData());
 }
 /// <summary>
 /// 文字を描画
@@ -142,55 +114,55 @@ void EnemyDataEditor::SelectEnemy()
     SelectEditedEnemy();
 
     using enum ObjectInit::InitObjKind;
-    ObjectInit::InitObjKind prevKind = kind;
+    ObjectInit::InitObjKind prevKind = nowEditKind;
     auto nowEditData = nowEditEne->GetEditObjectData();
     //左右キーで種類変更
     if (UserInput::GetInputState(Right) == Push)
     {
-        switch (kind)
+        switch (nowEditKind)
         {
         case saw:
-            kind = moveSaw;
+            nowEditKind = moveSaw;
             break;
         case upDownLaserShip:
-            kind = saw;
+            nowEditKind = saw;
             break;
         case circleLaserShip:
-            kind = upDownLaserShip;
+            nowEditKind = upDownLaserShip;
             break;
         case bomberShip:
-            kind = circleLaserShip;
+            nowEditKind = circleLaserShip;
             break;
         case moveSaw:
-            kind = bomberShip;
+            nowEditKind = bomberShip;
             break;
         }
     }
     else if (UserInput::GetInputState(Left) == Push)
     {
-        switch (kind)
+        switch (nowEditKind)
         {
         case saw:
-            kind = upDownLaserShip;
+            nowEditKind = upDownLaserShip;
             break;
         case upDownLaserShip:
-            kind = circleLaserShip;
+            nowEditKind = circleLaserShip;
             break;
         case circleLaserShip:
-            kind = bomberShip;
+            nowEditKind = bomberShip;
             break;
         case bomberShip:
-            kind = moveSaw;
+            nowEditKind = moveSaw;
             break;
         case moveSaw:
-            kind = saw;
+            nowEditKind = saw;
         }
     }
     //配置されたり種類を変更されたらmodelを変更する
-    if (kind != prevKind)
+    if (nowEditKind != prevKind)
     {
         SAFE_DELETE(nowEditEne);
-        nowEditData.objKind = kind;
+        nowEditData.objKind = nowEditKind;
         nowEditEne = new EditorObject(nowEditData);
     }
 }
@@ -218,7 +190,7 @@ void EnemyDataEditor::SelectEditedEnemy()
             }
             //過去に編集したエネミーを所得
             auto editedData = editDataVec[selectEditedEneNum];
-            kind = static_cast<ObjectInit::InitObjKind>(editedData.objKind);
+            nowEditKind = static_cast<ObjectInit::InitObjKind>(editedData.objKind);
             //出てくるタイミングも同じにする
             missionNum = editedData.missionNum;
             missionNum = missionNum > collectNum ? collectNum : missionNum;
@@ -229,5 +201,44 @@ void EnemyDataEditor::SelectEditedEnemy()
         {
             selectEditedEneNum = -1;
         }
+    }
+}
+
+/// <summary>
+/// 選択したエネミーの編集
+/// </summary>
+void EnemyDataEditor::EditSelectEnemy()
+{
+    //移動回転
+    nowEditEne->Update();
+    //編集終了
+    if (UserInput::GetInputState(Space) == Push)
+    {
+        //編集したタイミングのミッション数を記録
+        auto saveData = nowEditEne->GetEditObjectData();
+        saveData.missionNum = missionNum;
+        //過去のアイテムを選択していたら
+        if (!isEndEdit && selectEditedEneNum != -1)
+        {
+            //過去のアイテムを再納品
+            editDataVec[selectEditedEneNum] = saveData;
+            selectEditedEneNum = -1;
+        }
+        else
+        {
+            //編集終了コンテナに納品
+            editDataVec.push_back(saveData);
+        }
+        isEndEdit = true;
+    }
+    //破棄して終了
+    else if (UserInput::GetInputState(DKey) == Push)
+    {
+        if (selectEditedEneNum != -1)//昔編集したものを削除
+        {
+            EraceEndEditData(selectEditedEneNum);
+            selectEditedEneNum = -1;
+        }
+        isEndEdit = true;
     }
 }

@@ -61,7 +61,8 @@ GamePlayUI::~GamePlayUI()
 void GamePlayUI::Update()
 {
     int tempNum = nowGetCoinNum;
-//    nowGetCoinNum = playerObserver.lock()->GetSubjectHitCount(Object::ObjectTag::collect);
+    //収集アイテムの数
+    nowGetCoinNum = playerObserver.lock()->GetCollectCount();
     //ゲットしたアイテムの数が増えたらUIを表示
     if (nowGetCoinNum != tempNum)
     {

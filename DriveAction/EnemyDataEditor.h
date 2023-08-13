@@ -38,7 +38,10 @@ private:
     /// 編集する過去のエネミーを選択
     /// </summary>
     void SelectEditedEnemy();
-    
+    /// <summary>
+    /// 選択したエネミーの編集
+    /// </summary>
+    void EditSelectEnemy();
     /// <summary>
     /// 各エネミーの描画担当役
     /// </summary>
@@ -50,7 +53,7 @@ private:
     /// <summary>
     /// 編集したいエネミーの種類
     /// </summary>
-    ObjectInit::InitObjKind kind = ObjectInit::saw;
+    ObjectInit::InitObjKind nowEditKind = ObjectInit::saw;
     //エディターの名前の位置
     const int drawStrY = 800;
     //エディターの色

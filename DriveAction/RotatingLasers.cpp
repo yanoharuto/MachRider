@@ -8,9 +8,6 @@
 #include "Timer.h"
 #include "LaserCollider.h"
 #include "ObjectObserver.h"
-//最初の回転方向
-const VECTOR RotatingLasers::firstDir = { 0.0f,0.0f,-1.0f };
-
 
 /// <summary>
 /// 初期化
@@ -21,7 +18,7 @@ RotatingLasers::RotatingLasers(InitParam setParam, std::unique_ptr<ObjectObserve
 {
     //向きとエフェクト
     EffectManager::LoadEffect(laserTrack);
-    direction = setObserver->GetSubjectDir();
+    direction = observer->GetSubjectDir();
     //当たり判定
     collider = new LaserCollider(this,setParam.laserRange);
     ConflictManager::AddHitChecker(collider);

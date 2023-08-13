@@ -147,7 +147,6 @@ void PlaySceneFlow::DrawManagers()const
 	if (nowProgress != PlaySceeneProgress::playerGoal)
 	{
 		controllerManager->Draw();
-		//conflictManager->DrawCollisionSphere();
 	}
 	
 }
@@ -161,7 +160,6 @@ void PlaySceneFlow::UseShadowMapDraw()const
 	shadowMap->DrawEnd();
 	DrawManagers();
 	shadowMap->Use();
-
 }
 /// <summary>
 /// 遊んでいるときの処理

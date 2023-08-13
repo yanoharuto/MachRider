@@ -3,16 +3,16 @@
 data/model/Saw/Saw.mv1
     //大きさ
     modelSize = 5
-3
+1.5
     //最初のポジション
     firstPosY = 8
-10
+5
     //modelの当たり半径
     collRadius = 11
-160
+80
     //跳ね返りの大きさ
     bouncePower = 14
-1.2
+1.4
 //マップの初期位置で使われている番号
         mapTiledNum = 17
 2

@@ -26,10 +26,6 @@ public:
 	void Update() override;
 
 	/// <summary>
-	/// ゲームが始まる前の演出とか
-	/// </summary>
-	void GameReserve() override;
-	/// <summary>
 	/// ぶつかった時の処理
 	/// </summary>
 	/// <param name="conflictInfo"></param>
@@ -39,6 +35,11 @@ public:
 	/// </summary>
 	/// <returns></returns>
 	VECTOR GetModelRotateVec();
+	/// <summary>
+	/// 収集アイテムにぶつかった回数
+	/// </summary>
+	/// <returns></returns>
+	int GetCollectCount();
 private:
 	/// <summary>
 	/// 加速用ベクトルを作る
@@ -115,22 +116,17 @@ private:
 	const float twistZRotaSpeed = 1.7f * RAGE;
 	//最大傾き度
 	const float twistZMaxRota = 27.0f * RAGE;
-	//上下に移動する速度
-	float upDownSpeed = 2.05f;
-	//totalCosSeedを増加させ続ける量
-	float cosSeed = 0.01f;
-	//upDownSpeedとcosSeedによって変動する
-	float totalCosSeed = 0;
+	//y軸回転
+	float rotaY = 0;
 	//縦に回転する
 	float twistZRota = 0.0f;
 	//ダメージ
 	bool isDamage = false;
 	//ダメージを受けた時の操作不可能時間の合計
-	const float setDamageReactionTime = 1.0f;
+	const float setDamageReactionTime = 0.8f;
 	//ダメージを受けた時に回転する量
-	const float damageReactionRotaValue = 1080.0f;
-	//無敵時間のタイマー
-	Timer* damageTimer = nullptr;
+	const float damageReactionRotaValue = 540.0f;
+
 	//ターボ時間
 	Timer* turboTimer = nullptr;
 	//衝突処理を呼んでくれる

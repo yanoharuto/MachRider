@@ -127,11 +127,11 @@ void Wheels::AllSetWheelMatrix()
 /// <summary>
 /// 回転するための半径を返す
 /// </summary>
-/// <param name="firstWheelRota"></param>
+/// <param name="firstWheelRota">各タイヤの最初の角度</param>
 /// <returns></returns>
 float Wheels::GetRotationRadius(const float firstWheelRota)
 {
-
+	//ある程度タイヤが曲がっていたら曲がり始める
 	if (fabsf(wheelDriveRota) > rotaCalculationLine)
 	{
 		//タイヤの角度をタンジェントに

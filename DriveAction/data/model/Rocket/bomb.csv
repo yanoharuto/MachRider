@@ -3,16 +3,16 @@
 data/model/Rocket/Rocket04_Grey.mv1
     //大きさ
     modelSize = 5
-3.5
+4
     //最初のポジション
     firstPosY = 8
 0
     //modelの当たり半径
     collRadius = 11
-25
+40
     //跳ね返りの大きさ
     bouncePower = 14
-2
+0.6
 //マップの初期位置で使われている番号
         mapTiledNum = 17
 0

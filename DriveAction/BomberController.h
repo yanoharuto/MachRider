@@ -19,6 +19,10 @@ public:
     /// </summary>
     /// <param name="sub">爆弾を投下したオブジェクト</param>
     void AddObject(std::unique_ptr<ObjectObserver> sub)override;
+    /// <summary>
+    /// 爆弾を落下させる
+    /// </summary>
+    void Update()override;
 private:
    
 };

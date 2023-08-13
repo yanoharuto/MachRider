@@ -34,43 +34,10 @@ namespace ObjectInit
     {
         //初期高度
         float firstPosY;
-        //modelの大きさ
-        float setModelSize;
         //当たり判定の大きさ
         float setRadius;
         //跳ね返り力
         float setBouncePow;
-        //描画モデル
-        int modelHandle;
-        //追加情報のPass
-        std::string addData;
-        /// <summary>
-        /// 引数から初期化データ抽出
-        /// </summary>
-        /// <param name="paramatorString"></param>
-        /// <returns></returns>
-        void GetExtractParamator(std::vector <const char*> paramatorString)
-        {
-            char* end;
-            firstPosY = strtof(paramatorString[InitObjParamator::firstPosY], &end);
-            setModelSize = strtof(paramatorString[InitObjParamator::modelSize], &end);
-            setBouncePow = strtof(paramatorString[InitObjParamator::bouncePower], &end);
-            setRadius = strtof(paramatorString[InitObjParamator::collRadius], &end);
-            
-        }
-        /// <summary>
-        /// 引数から初期化データ抽出
-        /// </summary>
-        /// <param name="paramatorString"></param>
-        /// <returns></returns>
-        void GetExtractParamator(std::vector<std::string> paramatorString)
-        {
-            char* end;
-            firstPosY = strtof(paramatorString[InitObjParamator::firstPosY].c_str(), &end);
-            setModelSize = strtof(paramatorString[InitObjParamator::modelSize].c_str(), &end);
-            setBouncePow = strtof(paramatorString[InitObjParamator::bouncePower].c_str(), &end);
-            setRadius = strtof(paramatorString[InitObjParamator::collRadius].c_str(), &end);
-        }
     };
     /// <summary>
     /// 初期化するのに必要なデータ先纏め
@@ -116,6 +83,18 @@ public:
     /// <param name="obj"></param>
     /// <returns></returns>
     static ActorParameter GetActorParamator(InitObjKind obj);
+    /// <summary>
+    /// 引数の種類の描画モデルを渡す
+    /// </summary>
+    /// <param name="obj"></param>
+    /// <returns></returns>
+    static int GetModelHandle (InitObjKind obj);
+    /// <summary>
+    /// 追加情報文字列ベクターを渡す
+    /// </summary>
+    /// <param name="obj"></param>
+    /// <returns></returns>
+    static std::string GetAddDataPass (InitObjKind obj);
     /// <summary>
     /// 初期位置の番号を返す
     /// </summary>

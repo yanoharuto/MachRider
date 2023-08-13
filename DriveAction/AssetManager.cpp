@@ -21,11 +21,14 @@ AssetManager::~AssetManager()
 /// モデルを渡す
 /// </summary>
 /// <param name="assetPass"></param>
-/// <returns></returns>
+/// <returns>すでにロードしてたら複製</returns>
 int AssetManager::Get3DModelAssetHandle(std::string assetPass)
 {
+    if (assetMap.contains(assetPass))//すでに追加ロードされていたら複製
+    {
+        return MV1DuplicateModel(assetMap[assetPass]);
+    }
     //まだロードしてないならロードする
     assetMap.insert(std::make_pair(assetPass, MV1LoadModel(assetPass.c_str())));
-    
     return assetMap[assetPass];
 }

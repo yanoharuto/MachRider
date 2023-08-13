@@ -31,9 +31,5 @@ void LittleRadiusLaser::Update()
         }
         //y軸回転
         YRotate(rotaSpeed, initParam.laserRange);
-        //position = observer->GetSubjectPos();
-        ////エフェクトの向きとか場所を修正
-        //SetPosPlayingEffekseer3DEffect(laserEffect, position.x, position.y, position.z);
-        //SetLaserTrack();
     }
 }

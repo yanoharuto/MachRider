@@ -43,8 +43,8 @@ Car::~Car()
 /// <param name="conflictObjRad"></param>
 void Car::ConflictReaction(const ConflictExamineResultInfo conflictInfo)
 {
-	collVec = conflictInfo.bounceVec;
-	collVec.y = 0;
+	conflictVec = conflictInfo.bounceVec;
+	conflictVec.y = 0;
 	//減速
 	accelPower -= accelPower * colideDecel;
 	//衝突して移動
@@ -81,15 +81,12 @@ void Car::ReflectsVelocity()
 	{
 		direction = VNorm(velocity);
 	}
-	//ぶつかった時の衝撃で移動
-	if (collVecDecelTimer != nullptr)
+	//ぶつかった時の衝撃影響タイマーがNewされているなら
+	if (bounceTimer != nullptr)
 	{
-		velocity = VScale(collVec,static_cast<float>( collVecDecelTimer->GetRemainingTime()));
+		//ぶつかった時の衝撃で移動
+		velocity = VScale(conflictVec, static_cast<float>(bounceTimer->GetRemainingTime() / bounceTimer->GetLimitTime()));
 		position = VAdd(position, velocity);
-		if (collVecDecelTimer->IsOverLimitTime())
-		{
-			SAFE_DELETE(collVecDecelTimer);
-		}
 	}
 	else //衝撃が無くなったら運転できる
 	{
@@ -130,12 +127,14 @@ VECTOR Car::GetAccelVec()
 	//加速ベクトルを生成
 	return VScale(direction, accelPower);
 }
-
+/// <summary>
+/// 移動速度などの初期化
+/// </summary>
+/// <param name="kind"></param>
 void Car::InitSpeedParamater(ObjectInit::InitObjKind kind)
 {
-	ActorParameter initParam = InitActor::GetActorParamator(kind);
 	//速さ関連の情報を所得
-	auto loader = new CSVFileLoader(initParam.addData);
+	auto loader = new CSVFileLoader(InitActor::GetAddDataPass(kind));
 	auto strVec = loader->GetLoadStringData();
 	speedParamator.acceleSpeed = atof(strVec[acceleSpeed].c_str());
 	speedParamator.lowestSpeed = atof(strVec[lowestSpeed].c_str());

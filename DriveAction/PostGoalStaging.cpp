@@ -32,7 +32,7 @@ PostGoalStaging::PostGoalStaging(Timer* timer, std::weak_ptr<PlayerObserver> pla
     
 
     //プレイヤーの所得した収集アイテム
-    getCollectNum = 0;
+    getCollectNum = player.lock()->GetCollectCount();
     drawCollectIconNum = 0;
     //最初の処理
     nowConvertScore = timeBonus;
@@ -72,7 +72,6 @@ PostGoalStaging::~PostGoalStaging()
 }
 /// <summary>
 /// スコアの数字を徐々に出していく処理
-/// 
 /// </summary>
 /// <returns></returns>
 void PostGoalStaging::Update()
@@ -95,11 +94,6 @@ void PostGoalStaging::Update()
     }
     else
     {
-        //スコア加算中はずっと鳴る
-        if (!SoundPlayer::IsPlaySound(scoreStartSE))
-        {
-            SoundPlayer::Play2DSE(scoreStartSE);
-        }
         //各スコアを総合スコアに変換
         switch (nowConvertScore)
         {
@@ -131,19 +125,8 @@ void PostGoalStaging::Draw()const
     }
     else
     {
-        //収集アイテムスコアのUI
-        UIDrawer::DrawRotaUI(collectScoreUI.scoreKindData);
-        //所得したアイテムを少しずつ描画
-        for (int i = 1; i <= drawCollectIconNum; i++)
-        {
-            UIData icon = collectData;
-            icon.x += static_cast<int>(collectData.width * UIDrawer::GetScreenRaito() * icon.size * i);//右にずらしていく
-            UIDrawer::DrawRotaUI(icon);
-        }
-        //クリアタイムの描画
-        UIDrawer::DrawRotaUI(timeScoreUI.scoreKindData);
-        clearTimeUI->Draw(drawClearTime);
-
+        CollectScoreDraw();
+        TimeScoreDraw();
 
         //総合スコアのUIと数字
         totalScoreNumUI->Draw(totalScoreUI.score);
@@ -167,25 +150,33 @@ bool PostGoalStaging::IsEndProcess() const
 /// </summary>
 void PostGoalStaging::ConvertTimeScotre()
 {
-    //スコアを換算し終えたか、スペースキーを押したら終了
-    if ((larpConvertScoreTimer->IsOverLimitTime() || clearTime < 0 || UserInput::GetInputState(Space) == Push))
+    if (!SoundPlayer::IsPlaySound(sceneNextSE))
     {
-        //次の処理
-        nowConvertScore = collectBonus;
-        //タイムボーナスを表示したら終了
-        SoundPlayer::StopSound(scoreStartSE);
-        timeScoreUI.score = resultScore->GetScore(timeBonus);
-        drawClearTime = 0.0000f;
-    }
-    //タイマーが動いている間はスコア換算
-    else
-    {
-        //残り時間をスコアに換算
-        float larpValue = static_cast<float>(larpConvertScoreTimer->GetElaspedTime() / scoreLarpTime);
+        //スコアを換算し終えたか、スペースキーを押したら終了
+        if ((larpConvertScoreTimer->IsOverLimitTime() || clearTime < 0 || UserInput::GetInputState(Space) == Push))
+        {
+            //次の処理
+            nowConvertScore = collectBonus;
+                //タイムボーナスを表示したら終了
+                SoundPlayer::StopSound(scoreStartSE);
+                timeScoreUI.score = resultScore->GetScore(timeBonus);
+                drawClearTime = 0.0000f;
+        }
+        //タイマーが動いている間はスコア換算
+        else
+        {
+            //残り時間をスコアに換算
+            float larpValue = static_cast<float>(larpConvertScoreTimer->GetElaspedTime() / scoreLarpTime);
 
-        timeScoreUI.score = static_cast<int>(larpValue * resultScore->GetScore(timeBonus));
-        //描画するクリアタイムを更新
-        drawClearTime = clearTime - static_cast<float>(clearTime * larpValue);
+            timeScoreUI.score = static_cast<int>(larpValue * resultScore->GetScore(timeBonus));
+            //描画するクリアタイムを更新
+            drawClearTime = clearTime - static_cast<float>(clearTime * larpValue);
+            //スコア加算中はずっと鳴る
+            if (!SoundPlayer::IsPlaySound(scoreStartSE))
+            {
+                SoundPlayer::Play2DSE(scoreStartSE);
+            }
+        }
     }
     //各スコアを合計
     totalScoreUI.score = collectScoreUI.score + timeScoreUI.score;
@@ -224,16 +215,17 @@ void PostGoalStaging::ConvertCollectScotre()
 /// </summary>
 void PostGoalStaging::EndAnnounceProcess()
 {
-    if (!clapSEH)
+    if (!isSoundClapSE)
     {
         SoundPlayer::Play2DSE(clap);
-        clapSEH = true;
+        isSoundClapSE = true;
     }
     //larp移動が終了したら
     if (larpMoveAnnounceTimer->IsOverLimitTime())
     {
         isEndFinishAnnounce = true;
         larpConvertScoreTimer = new Timer(scoreLarpTime);
+        SoundPlayer::Play2DSE(sceneNextSE);
     }
     else//移動させる
     {
@@ -255,4 +247,28 @@ ScoreUI PostGoalStaging::GetScoreUI(UIKind kind)
     ui.scoreKindData = UIManager::CreateUIData(kind);
     ui.score = 0;
     return ui;
+}
+/// <summary>
+/// 残り時間スコアの描画
+/// </summary>
+void PostGoalStaging::TimeScoreDraw() const
+{
+    //クリアタイムの描画
+    UIDrawer::DrawRotaUI(timeScoreUI.scoreKindData);
+    clearTimeUI->Draw(drawClearTime);
+}
+/// <summary>
+/// 収集アイテムスコアの描画
+/// </summary>
+void PostGoalStaging::CollectScoreDraw() const
+{
+    //収集アイテムスコアのUI
+    UIDrawer::DrawRotaUI(collectScoreUI.scoreKindData);
+    //所得したアイテムを少しずつ描画
+    for (int i = 1; i <= drawCollectIconNum; i++)
+    {
+        UIData icon = collectData;
+        icon.x += static_cast<int>(collectData.width * UIDrawer::GetScreenRaito() * icon.size * i);//右にずらしていく
+        UIDrawer::DrawRotaUI(icon);
+    }
 }

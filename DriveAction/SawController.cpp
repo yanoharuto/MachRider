@@ -1,6 +1,7 @@
 #include "SawController.h"
 #include "ModelViewer.h"
 #include "Saw.h"
+#include "Utility.h"
 /// <summary>
 /// プレイヤーをはじき飛ばす丸鋸
 /// </summary>
@@ -25,5 +26,26 @@ void SawController::AddObject(std::vector<EditArrangementData> editData)
                 actorList.push_back(new Saw(editData[i]));
             }
         }
+    }
+}
+
+void SawController::Update()
+{
+    //破棄するリスト
+    std::list<std::list<Actor*>::iterator> brokenList;
+    //更新
+    for (auto ite = actorList.begin(); ite != actorList.end(); ite++)
+    {
+        (*ite)->Update();
+        if ((*ite)->GetObjectState() == Object::dead)//爆破終了後は破棄
+        {
+            brokenList.push_back(ite);
+            SAFE_DELETE(*ite);
+        }
+    }
+    //actorListから削除
+    for (auto ite = brokenList.begin(); ite != brokenList.end(); ite++)
+    {
+        actorList.erase(*(ite));
     }
 }

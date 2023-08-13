@@ -27,8 +27,6 @@ void CircleFlyShipViewer::Draw(EditArrangementData data) const
         ModelSetMatrix(VGet(data.dirX, 0, data.dirZ));
         // ３Dモデルのポジション設定
         MV1SetPosition(modelHandle, VAdd(dataPos,VScale(dataDir,uniBetween)));
-        //サイズ変更
-        MV1SetScale(modelHandle, VGet(mSize, mSize, mSize));
         MV1DrawModel(modelHandle);
     }
 }
@@ -49,8 +47,6 @@ void CircleFlyShipViewer::SelectDraw(EditArrangementData data) const
         ModelSetMatrix(VGet(data.dirX, 0, data.dirZ));
         // ３Dモデルのポジション設定
         MV1SetPosition(modelHandle, VAdd(dataPos, VScale(dataDir, uniBetween)));
-        //サイズ変更
-        MV1SetScale(modelHandle, VGet(mSize, mSize, mSize));
         MV1DrawModel(modelHandle);
     }
 }
@@ -62,7 +58,7 @@ void CircleFlyShipViewer::Init()
     //配置に必要な情報
     using namespace FlyShipInit;
     //FlyShip用のデータをロード
-    CSVFileLoader* addDataLoader = new CSVFileLoader(InitActor::GetActorParamator(circleLaserShip).addData);
+    CSVFileLoader* addDataLoader = new CSVFileLoader(InitActor::GetAddDataPass(circleLaserShip));
     auto addData = addDataLoader->GetLoadCharData();
     uniNum = atof(addData[unitNum]);
     uniBetween = atof(addData[unitBetween]);

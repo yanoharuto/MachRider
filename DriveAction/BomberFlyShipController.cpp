@@ -1,8 +1,10 @@
 #include "BomberFlyShipController.h"
 #include "BomberFlyShip.h"
+#include "ModelViewer.h"
 BomberFlyShipController::BomberFlyShipController()
     :FlyShipController(bomberShip)
 {
+    viewer = new ModelViewer(bomberShip);
 }
 
 void BomberFlyShipController::AddObject(std::vector<EditArrangementData> editData)
@@ -18,5 +20,4 @@ void BomberFlyShipController::AddObject(std::vector<EditArrangementData> editDat
             }
         }
     }
-    
 }

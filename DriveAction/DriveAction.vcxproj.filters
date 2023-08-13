@@ -165,7 +165,7 @@
     <ClCompile Include="GimmickObject.cpp">
       <Filter>ソース ファイル\Object</Filter>
     </ClCompile>
-    <ClCompile Include="Rocket.cpp">
+    <ClCompile Include="Bomber.cpp">
       <Filter>ソース ファイル\Item</Filter>
     </ClCompile>
     <ClCompile Include="SoundPlayer.cpp">
@@ -515,7 +515,7 @@
     <ClInclude Include="DamageObject.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Rocket.h">
+    <ClInclude Include="Bomber.h">
       <Filter>ヘッダー ファイル\Item</Filter>
     </ClInclude>
     <ClInclude Include="Effect.h">

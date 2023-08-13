@@ -51,6 +51,7 @@ private:
     SoundListener* listener = nullptr;
     //ダメージを受けるクールタイム
     const float setDamageCoolTime = 0.1f;
+    std::shared_ptr<PlayerObserver> playerObserver;
 };
 
 /// <summary>

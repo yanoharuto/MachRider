@@ -17,6 +17,7 @@ Object::~Object()
 /// </summary>
 void Object::InitParamater(ObjectInit::InitObjKind kind)
 {
+    //初期化したい情報を所得
     ActorParameter initParam = InitActor::GetActorParamator(kind);
     //ポジション
     position.y = initParam.firstPosY;
@@ -26,8 +27,6 @@ void Object::InitParamater(ObjectInit::InitObjKind kind)
     bouncePower = initParam.setBouncePow;
     //半径
     radius = initParam.setRadius;
-    //modelの大きさ
-    modelSize = initParam.setModelSize;
 }
 /// <summary>
 /// 位置や向きをVelocityに合わせて更新する
