@@ -37,3 +37,6 @@ data/sound/sceneNextSE.csv
        //スコア表示したときのファンファーレ
        gameEndFanfare=38
 data/sound/gameEndFanfare.csv
+        //プレイヤーがチャージしたときの音
+        playerCharge = 41
+data/sound/playerCharge.csv

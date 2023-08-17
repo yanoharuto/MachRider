@@ -11,6 +11,9 @@ public:
     /// 収集アイテムの編集クラス
     /// </summary>
     CollectItemDataEditor();
+    /// <summary>
+/// 位置をCSVに移してデリート
+/// </summary>
     ~CollectItemDataEditor();
     /// <summary>
     /// 更新

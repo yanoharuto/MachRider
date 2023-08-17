@@ -1,7 +1,5 @@
 #pragma once
 #include "DxLib.h"
-
-#include "HandleDirection.h"
 #include <string>
 /// <summary>
 /// ƒ^ƒCƒ„ˆê‚Âˆê‚Â‚ª‚Á‚Ä‚¢‚éî•ñ

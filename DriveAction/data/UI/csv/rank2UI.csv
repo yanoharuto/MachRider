@@ -1,18 +1,18 @@
 ﻿ drawX
-960
+420
  drawY
-515
+640
  width
-718
+800
  height
-186
+100
  xNum
-1
+10
  yNum
 1
 graphPass
-data/UI/image/Hang.png
+data/UI/image/NumFont.png
 size
-1
+0.8
 frameSpeed
-0.06
+0

@@ -108,7 +108,7 @@
     <ClCompile Include="Wheels.cpp">
       <Filter>ソース ファイル\Object</Filter>
     </ClCompile>
-    <ClCompile Include="TitleSceeneFlow.cpp">
+    <ClCompile Include="TitleSceneFlow.cpp">
       <Filter>ソース ファイル\Scene</Filter>
     </ClCompile>
     <ClCompile Include="PlaySceneFlow.cpp">
@@ -174,9 +174,6 @@
     <ClCompile Include="StageSelect.cpp">
       <Filter>ソース ファイル\Other</Filter>
     </ClCompile>
-    <ClCompile Include="SceneFlowBase.cpp">
-      <Filter>ソース ファイル\Scene</Filter>
-    </ClCompile>
     <ClCompile Include="ResultScore.cpp">
       <Filter>ソース ファイル\Other</Filter>
     </ClCompile>
@@ -222,7 +219,7 @@
     <ClCompile Include="CircleLaserFlyShip.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Coin.cpp">
+    <ClCompile Include="CollectItem.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="CollectController.cpp">
@@ -244,9 +241,6 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="RaceScreen.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="RankingData.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="InitActor.cpp">
@@ -396,6 +390,12 @@
     <ClCompile Include="PlayerObserver.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="TitleHiScore.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="TitleRanking.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PlayerCar.h">
@@ -449,11 +449,8 @@
     <ClInclude Include="PlaySceneFlow.h">
       <Filter>ヘッダー ファイル\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="TitleSceeneFlow.h">
+    <ClInclude Include="TitleSceneFlow.h">
       <Filter>ヘッダー ファイル\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="CircuitDataStruct.h">
-      <Filter>ヘッダー ファイル\StructAndEnum</Filter>
     </ClInclude>
     <ClInclude Include="ConflictExamineResultInfo.h">
       <Filter>ヘッダー ファイル\StructAndEnum</Filter>
@@ -475,15 +472,6 @@
     </ClInclude>
     <ClInclude Include="ResultScore.h">
       <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="NeighborhoodInfo.h">
-      <Filter>ヘッダー ファイル\StructAndEnum</Filter>
-    </ClInclude>
-    <ClInclude Include="PlaySceeneProgressEnum.h">
-      <Filter>ヘッダー ファイル\StructAndEnum</Filter>
-    </ClInclude>
-    <ClInclude Include="CarNeighborhoodExamineInfo.h">
-      <Filter>ヘッダー ファイル\StructAndEnum</Filter>
     </ClInclude>
     <ClInclude Include="OriginalMath.h">
       <Filter>ヘッダー ファイル\Other</Filter>
@@ -527,20 +515,11 @@
     <ClInclude Include="ConflictManager.h">
       <Filter>ヘッダー ファイル\ConflictCheck</Filter>
     </ClInclude>
-    <ClInclude Include="FadeMode.h">
-      <Filter>ヘッダー ファイル\StructAndEnum</Filter>
-    </ClInclude>
-    <ClInclude Include="HandleDirection.h">
-      <Filter>ヘッダー ファイル\StructAndEnum</Filter>
-    </ClInclude>
     <ClInclude Include="VectorDataCreator.h">
       <Filter>ヘッダー ファイル\DataCreate</Filter>
     </ClInclude>
     <ClInclude Include="Player.h">
       <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="ObjPosAndDir.h">
-      <Filter>ヘッダー ファイル\StructAndEnum</Filter>
     </ClInclude>
     <ClInclude Include="AssetManager.h">
       <Filter>ヘッダー ファイル</Filter>
@@ -557,17 +536,11 @@
     <ClInclude Include="Rule.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="CarModelEnum.h">
-      <Filter>ヘッダー ファイル\StructAndEnum</Filter>
-    </ClInclude>
     <ClInclude Include="CarParamater.h">
       <Filter>ヘッダー ファイル\StructAndEnum</Filter>
     </ClInclude>
     <ClInclude Include="FlyShip.h">
       <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="FlyShipKind.h">
-      <Filter>ヘッダー ファイル\StructAndEnum</Filter>
     </ClInclude>
     <ClInclude Include="RotatingLasers.h">
       <Filter>ヘッダー ファイル</Filter>
@@ -608,7 +581,7 @@
     <ClInclude Include="CircleLaserFlyShip.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Coin.h">
+    <ClInclude Include="CollectItem.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="CollectController.h">
@@ -633,9 +606,6 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="RaceScreen.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="RankingData.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="InitActor.h">
@@ -768,6 +738,12 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="PlayerObserver.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="TitleHiScore.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="TitleRanking.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

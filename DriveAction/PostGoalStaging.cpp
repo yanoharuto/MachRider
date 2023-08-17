@@ -20,8 +20,7 @@
 PostGoalStaging::PostGoalStaging(Timer* timer, std::weak_ptr<PlayerObserver> player)
 {
     //スコアを確定
-    resultScore = new ResultScore();
-    resultScore->FixScore(timer, player);
+    resultScore = new ResultScore(timer, player);
 
     SoundPlayer::StopAllSound();
     SoundPlayer::LoadSound(clap);
@@ -38,12 +37,15 @@ PostGoalStaging::PostGoalStaging(Timer* timer, std::weak_ptr<PlayerObserver> pla
     nowConvertScore = timeBonus;
     //タイムボーナス
     timeScoreUI = GetScoreUI(timeScore);
+    
     //収集アイテムボーナス
     collectScoreUI = GetScoreUI(collectScore);
     collectData = UIManager::CreateUIData(collectScoreIcon);
     //合計スコア
     totalScoreUI = GetScoreUI(totalScore);
     totalScoreNumUI = new ScoreNum();
+    //ハイスコア更新UI
+    hiScoreUI = UIManager::CreateUIData(PraiseWord);
     //ゲーム終了時画面
     gameEndScreen = RaceScreen::GetScreen();
     //スペースキー催促
@@ -123,17 +125,25 @@ void PostGoalStaging::Draw()const
         int safeNum = static_cast<int>(larpMoveAnnounceTimer->GetElaspedTime()) % finishAnnounceData.dataHandle.size();
         UIDrawer::DrawRotaUI(finishAnnounceData,safeNum);
     }
-    else
+    else//各スコアの描画
     {
         CollectScoreDraw();
         TimeScoreDraw();
-
+        UIDrawer::DrawRotaUI(totalScoreUI.scoreKindData);
         //総合スコアのUIと数字
         totalScoreNumUI->Draw(totalScoreUI.score);
-        UIDrawer::DrawRotaUI(totalScoreUI.scoreKindData);
     }
     //全スコア変換処理が終わったらスペースキー催促
-    if (isEndConvertScore)pressSpaceKeyUI->Draw();
+    if (isEndConvertScore)
+    {
+        pressSpaceKeyUI->Draw();
+        //前回のハイスコアより大きかったら
+        if (resultScore->IsUpdateHiScore())
+        {
+            //ハイスコア更新の文字
+            UIDrawer::DrawRotaUI(hiScoreUI);
+        }
+    }
     //エフェクト
     DrawEffekseer2D();
 }
@@ -189,10 +199,10 @@ void PostGoalStaging::ConvertCollectScotre()
     if (!SoundPlayer::IsPlaySound(scoreEndSE))
     {
         //描画したアイテムの数が獲得したアイテムの数と同じ以上にになったら
-        if (drawCollectIconNum >= getCollectNum && !isEndConvertScore)
+        if (UserInput::GetInputState(Space) == Push || (drawCollectIconNum >= getCollectNum && !isEndConvertScore))
         {
             collectScoreUI.score = resultScore->GetScore(collectBonus);
-            
+            drawCollectIconNum = getCollectNum;
             isEndConvertScore = true;
             ////花吹雪エフェクト
             confettiEffect = EffectManager::GetPlayEffect2D(confetti);

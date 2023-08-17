@@ -6,8 +6,6 @@
 
 struct ConflictExamineResultInfo;
 struct HitCheckExamineObjectInfo;
-struct ObjInfo;
-struct InputInfo;
 class Timer;
 class Wheels;
 
@@ -76,6 +74,8 @@ protected:
 		float gripPower;
 		//止まる力
 		float breakPower;
+		//急加速に必要な時間
+		float turboChargeTime;
 	};
 	//車の初期化の種類
 	enum CarInitKind
@@ -93,7 +93,9 @@ protected:
 		//曲がる力
 		gripPower = 17,
 		//止まる力
-		breakePower = 20
+		breakePower = 20,
+		//急加速に必要な時間
+		turboChargeTime = 23
 	};
 	//車のパラメーター
 	SpeedParamator speedParamator;

@@ -1,5 +1,10 @@
 #include "LaserCollider.h"
 #include "Actor.h"
+/// <summary>
+/// Y²‰ñ“]‚·‚éƒŒ[ƒU[‚Ì“–‚½‚è”»’è
+/// </summary>
+/// <param name="obj"></param>
+/// <param name="setLineRange">‚‚³‚ª1‚É‘Î‚·‚é’ê•Ó‚Ì’·‚³</param>
 LaserCollider::LaserCollider(Actor* obj, float setLineRange)
     :SphereHitChecker(obj)
 {

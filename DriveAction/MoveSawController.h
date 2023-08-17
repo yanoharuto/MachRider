@@ -16,7 +16,9 @@ public:
     /// </summary>
     /// <param name="editData"></param>
     void AddObject(std::vector<EditArrangementData> editData)override;
-
+    /// <summary>
+    /// 更新。　破壊されたら破棄
+    /// </summary>
     void Update()override;
 };
 

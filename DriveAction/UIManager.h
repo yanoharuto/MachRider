@@ -9,96 +9,107 @@ namespace UIInit
     enum UIKind
     {
         //ゲームの目標
-        gamePurose = 2,
-        //カウントダウン
-        countDownUI = 5,
-        //コレクトアイテムの残り数などのUI
-        collectItemUI = 8,
-        //収集物のスコアの文字
-        collectScore = 11,
-        //収集物のスコア
-        collectScoreIcon = 14,
-        //ダメージを受けると減少するスコアの文字
-        damageScore = 17,
-        //ダメージを受けると減少するスコア
-        damageScoreNum = 20,
-        //収集アイテムの最初の数についてのUI
-        allCollectItemNum = 23,
-        //操作説明
-        manual = 26,
-        //小数点
-        point = 29,
-        //レーダー
-        radar = 32,
-        //タイトルロゴ
-        tilteLogo = 35,
-        //タイマーの枠
-        timerFrame = 38,
-        //残り時間スコアの文字
-        timeScore = 41,
-        //残り時間のスコア
-        timeScoreNum = 44,
-        //合計スコアの文字
-        totalScore = 47,
-        //合計スコア
-        totalScoreNum = 50,
-        //収集アイテムのもうゲットした数について
-        getCollectItemNum = 53,
-        //残り時間
-        timeNum = 56,
-        //メニュー画面の枠
-        menuFrame = 59,
-        //プレイ続行
-        playUI = 62,
-        //リトライ
-        retryUI = 65,
-        //メニュー画面のカーソル
-        menuCursor = 68,
-        //ゲーム終了UI
-        exitUI = 71,
-        //タイトル画面でステージ選択をするときに使う
-        stageName = 74,
-        //タイトルスペースキー催促
-        titlePressSpaceKey = 77,
-        //収集アイテムのアイコン
-        markerAllow = 80,
-        //ゲーム中に集めたアイテムの×
-        resultCollectHang = 83,
-        //カウントダウン終了時
-        onGameStartCountDownEnd = 86,
-        //誉め言葉
-        PraiseWord = 89,
-        //ゲーム終了時のカウントダウン
-        onGameEndCountDownEnd = 92,
-        //残りの収集アイテムの数
-        remainingCollectItemNum = 95,
-        //残りの収集アイテムについてのフレーズ
-        remainingCollectItemPhrase = 98,
-        //収集アイテムのアイコン
-        collectIcon = 101,
-        //収集アイテムの集める数
-        collectTargetNumberUI = 104,
-        //リザルトスペースキー催促
-        resultSpaceKey = 107,
-        //チャージ方法説明マニュアル
-        chargeManual = 110,
-        //ターボ説明マニュアル
-        turboManual = 113,
-        //左ボタン
-        leftButton = 116,
-        //右のボタン
-        rightButton = 119,
-        //下ボタン
-        downButton = 122,
-        //ゲーム終了アナウンス
-        finishAnnounce = 125,
-        //タイトルに戻るボタン
-        returnTitleBottonUI = 128,
-        //操作方法の後ろに置いておくシート
-        playManualSheat = 131,
-        //タイトルでステージを決定するときのボタン
-        stageSelectButton=134
-
+gamePurose = 2,
+//カウントダウン
+countDownUI = 5,
+//コレクトアイテムの残り数などのUI
+collectItemUI = 8,
+//収集物のスコアの文字
+collectScore = 11,
+//収集物のスコア
+collectScoreIcon = 14,
+//ダメージを受けると減少するスコアの文字
+damageScore = 17,
+//ダメージを受けると減少するスコア
+damageScoreNum = 20,
+//収集アイテムの最初の数についてのUI
+allCollectItemNum = 23,
+//操作説明
+manual = 26,
+//小数点
+point = 29,
+//レーダー
+radar = 32,
+//タイトルロゴ
+tilteLogo = 35,
+//タイマーの枠
+timerFrame = 38,
+//残り時間スコアの文字
+timeScore = 41,
+//残り時間のスコア
+timeScoreNum = 44,
+//合計スコアの文字
+totalScore = 47,
+//合計スコア
+totalScoreNum = 50,
+//収集アイテムのもうゲットした数について
+getCollectItemNum = 53,
+//残り時間
+timeNum = 56,
+//メニュー画面の枠
+menuFrame = 59,
+//プレイ続行
+playUI = 62,
+//リトライ
+retryUI = 65,
+//メニュー画面のカーソル
+menuCursor = 68,
+//ゲーム終了UI
+exitUI = 71,
+//タイトル画面でステージ選択をするときに使う
+stageName = 74,
+//タイトルスペースキー催促
+titlePressSpaceKey = 77,
+//タイトル画面に表示するハイスコア
+titleHiScore = 80,
+//タイトル画面に表示するハイスコア数字
+titleHiScoreNum = 83,
+//カウントダウン終了時
+onGameStartCountDownEnd = 86,
+//誉め言葉
+PraiseWord = 89,
+//ゲーム終了時のカウントダウン
+onGameEndCountDownEnd = 92,
+//残りの収集アイテムの数
+remainingCollectItemNum = 95,
+//残りの収集アイテムについてのフレーズ
+remainingCollectItemPhrase = 98,
+//収集アイテムのアイコン
+collectIcon = 101,
+//収集アイテムの集める数
+collectTargetNumberUI = 104,
+//リザルトスペースキー催促
+resultSpaceKey = 107,
+//チャージ方法説明マニュアル
+chargeManual = 110,
+//ターボ説明マニュアル
+turboManual = 113,
+//左ボタン
+leftButton = 116,
+//右のボタン
+rightButton = 119,
+//下ボタン
+downButton = 122,
+//ゲーム終了アナウンス
+finishAnnounce = 125,
+//タイトルに戻るボタン
+returnTitleBottonUI = 128,
+//操作方法の後ろに置いておくシート
+playManualSheat = 131,
+//タイトルでステージを決定するときのボタン
+stageSelectButton = 134,
+//パッドで遊ぶ場合の下ボタン
+xDownButton = 137,
+//そのステージで二番目にいいスコア
+titleSecondScoreNum = 140,
+//そのステージで3番目にいいスコア
+titleThirdScoreNum = 143,
+//ランキングの１
+rank1 = 146,
+//ランキングの２
+rank2 = 149,
+//ランキングの３
+rank3 = 152, 
     };
 
     /// <summary>
@@ -159,9 +170,17 @@ public:
     /// <returns></returns>
     UIManager();
     ~UIManager();
-    //UI情報
+    /// <summary>
+    /// UIを所得
+    /// </summary>
+    /// <param name="uiKind">所得したいUI</param>
+    /// <returns></returns>
     static UIData CreateUIData(UIKind uiKind);
-    //UI情報
+    /// <summary>
+/// UIを所得
+/// </summary>
+/// <param name="uiKind">所得したいUI</param>
+/// <returns></returns>
     static UIData CreateUIData(int kindNum);
  private:
      //読み込んだ情報

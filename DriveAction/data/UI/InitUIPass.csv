@@ -76,12 +76,12 @@ data/UI/csv/stageName.csv
 ゲームを開始するときにボタンを入力してもらう
 titlePressSpaceKey
 data/UI/csv/titlePressSpaceKey.csv
-//収集アイテムの矢印
-collectIcon
-data/UI/csv/collectIcon.csv
-//ゲーム中に集めたアイテムの×
-resultCollectHang=83
-data/UI/collectIcon/resultCollectHang.csv
+タイトル画面に表示するハイスコア
+titleScore
+data/UI/csv/titleScoreUI.csv
+//タイトル画面に表示するスコアの数字
+titleScoreNum
+data/UI/csv/titleScoreNum.csv
 //ゲーム開始時のカウントダウン終了
 onGameStartCountDownEnd=86
 data/UI/csv/startCountDown.csv
@@ -133,3 +133,21 @@ data/UI/csv/playManualSheat.csv
         //タイトルでステージを決定するときのボタン
         stageSelectButton=134
 data/UI/csv/stageSelectButton.csv
+//パッドで遊ぶ場合の下ボタン
+        xDownButton = 137
+data/UI/csv/xDownButton.csv
+        //そのステージで二番目にいいスコア
+        titleSecondScoreNum=140
+data/UI/csv/titleSecondScoreNum.csv
+        //そのステージで3番目にいいスコア
+        titleThirdScoreNum=143
+data/UI/csv/titleThirdScoreNum.csv
+//ランキングの１
+rank1 = 146
+data/UI/csv/rank1UI.csv
+//ランキングの２
+rank2 = 149
+data/UI/csv/rank2UI.csv
+//ランキングの３
+rank3 = 152
+data/UI/csv/rank3UI.csv

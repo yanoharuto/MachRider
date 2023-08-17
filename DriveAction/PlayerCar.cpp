@@ -37,7 +37,9 @@ PlayerCar::PlayerCar(EditArrangementData arrangementData)
 	EffectManager::LoadEffect(EffectInit::burner);
 	EffectManager::LoadEffect(EffectInit::chargeBurner);
 	EffectManager::LoadEffect(EffectInit::turboBurner);
+	//音を読み込ませる
 	SoundPlayer::LoadSound(playerFlight);
+	SoundPlayer::LoadSound(playerCharge);
 	SoundPlayer::LoadSound(playerDamage);
 	//衝突処理呼び役
 	conflictProcessor = new PlayerConflictProcessor(this);
@@ -144,32 +146,14 @@ int PlayerCar::GetCollectCount()
 /// <returns></returns>
 VECTOR PlayerCar::GetAccelVec()
 {
-	//ブレーキした
-	if (UserInput::GetInputState(Down) == InputState::Hold)
-	{
-		accelPower -= accelPower * speedParamator.breakPower;
-	}
-	else if(!isDamage) //ダメージを受けていなくてブレーキしてないなら加速
-	{
-		float nextPower = accelPower + speedParamator.acceleSpeed;//加速後の速度
-		//上限を越したらmaxSpeedに
-		accelPower = nextPower > speedParamator.maxSpeed ? speedParamator.maxSpeed : nextPower;
-	}
-	//左右に曲がろうとしていたら減速
-	if (UserInput::GetInputState(Left) == InputState::Hold && UserInput::GetInputState(Right) == InputState::Hold)
-	{
-		//左右に曲がろうとしたら減速する
-		accelPower -= accelPower * gripDecel;
-	}
-	//最低速度
-	if (accelPower < speedParamator.lowestSpeed)
-	{
-		accelPower = speedParamator.lowestSpeed;
-	}
+	VECTOR accelVec = Car::GetAccelVec();
 	//ダメージを受けていなかったらターボ
-	float power = isDamage ? accelPower : accelPower + GetTurboPower();
+	if (!isDamage)
+	{
+		accelVec = VAdd(accelVec, VScale(direction, GetTurboPower()));
+	}
 	//加速ベクトルを生成
-	return VScale(direction, power);
+	return accelVec;
 }
 /// <summary>
 /// 入力すると機体が傾く
@@ -190,7 +174,6 @@ void PlayerCar::RotateUpdate()
 	{
 		twistZRota -= twistZRota * twistZRotaSpeed;
 	}
-
 }
 /// <summary>
 /// エフェクトの更新
@@ -343,54 +326,60 @@ void PlayerCar::DamagePostProccess()
 /// <returns></returns>
 float PlayerCar::GetTurboPower()
 {
-	//ダメージを受けていたら0
-	if (isDamage)
+	//ジョイパッドだったら対応ボタンを変更
+	InputState turboInput = UserInput::GetInputState(Down);
+	if (GetJoypadNum() != 0)
 	{
-		isTurboReserve = false;
-		isTurbo = false;
-		return 0;
+		turboInput = UserInput::GetInputState(Space);
 	}
 	//下方向に入力するとターボ準備完了
-	if (UserInput::GetInputState(Down) == Hold)
+	if (turboInput == Hold && ! isTurbo)
 	{
 		turboChargeTime += DELTATIME;
 		//初めてターボ準備中
 		if (!isTurboReserve)
 		{
-			isTurbo = false;
 			//チャージ中バーナーに変更して終了
 			StopEffekseer3DEffect(defaultBurnerEffect);
 			chargeBurnerEffect = EffectManager::GetPlayEffect3D(chargeBurner);
 			isTurboReserve = true;
+			SoundPlayer::Play3DSE(playerCharge);
 		}
 		return 0;
 	}
-	else if (UserInput::GetInputState(Down) == Detach)//離すとターボ
-	{
-		isTurboReserve = false;
-		
-		turboChargeTime = turboChargeTime > speedParamator.turboTime ? speedParamator.turboTime : turboChargeTime;
-		turboTimer = new Timer(turboChargeTime);
-		//初めて加速するときは
-		if (!isTurbo)
+	//離したらチャージ終了
+	else 
+	{	
+		if (turboInput)
 		{
-			isTurbo = true;
-			StopEffekseer3DEffect(chargeBurnerEffect);
-			turboBurnerEffect = EffectManager::GetPlayEffect3D(turboBurner);
-			SoundPlayer::Play3DSE(playerFlight);
+			//十分にチャージ出来たらターボに入る
+			if (!isTurbo && turboChargeTime > speedParamator.turboChargeTime)
+			{
+				//このタイマーの間急加速
+				turboTimer = new Timer(speedParamator.turboTime);
+				isTurbo = true;
+				//加速するときはエフェクトと音が発生
+				StopEffekseer3DEffect(chargeBurnerEffect);
+				turboBurnerEffect = EffectManager::GetPlayEffect3D(turboBurner);
+				SoundPlayer::Play3DSE(playerFlight);
+			}
+			isTurboReserve = false;
+			turboChargeTime = 0;
+			SoundPlayer::StopSound(playerCharge);
 		}
 	}
 	//ターボ期間中
 	if (isTurbo)
 	{
-		if (turboTimer != nullptr && !turboTimer->IsOverLimitTime())//加速
+		//加速
+		if (turboTimer != nullptr && !turboTimer->IsOverLimitTime())
 		{
+			//加速量を渡す
 			return turboTimer->GetRemainingTime() * speedParamator.turboAddSpeed;
 		}
 		else//終了後
 		{
 			isTurbo = false;
-			turboChargeTime = 0;
 			SAFE_DELETE(turboTimer);
 		}
 	}

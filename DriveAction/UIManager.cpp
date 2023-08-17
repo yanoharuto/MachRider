@@ -22,12 +22,20 @@ UIManager::~UIManager()
         }
     }
 }
-
+/// <summary>
+/// UI‚ğŠ“¾
+/// </summary>
+/// <param name="uiKind">Š“¾‚µ‚½‚¢UI</param>
+/// <returns></returns>
 UIData UIManager::CreateUIData(UIKind uiKind)
 {
     return CreateUIData(static_cast<int>(uiKind));
 }
-
+/// <summary>
+/// UI‚ğŠ“¾
+/// </summary>
+/// <param name="uiKind">Š“¾‚µ‚½‚¢UI</param>
+/// <returns></returns>
 UIData UIManager::CreateUIData(int kindNum)
 {
     UIData data;

@@ -2,10 +2,13 @@
 #include "DxLib.h"
 #include "Utility.h"
 #include "RaceScreen.h"
-
+//画面が移り変わる値。高いほど白くなる
 int FadeInFadeOut::fadeValue = 0;
+//画面が移り変わる速度
 const int FadeInFadeOut::fadeSpeed = 10;
+//後ろの背景
 int FadeInFadeOut::backScreen = -1;
+
 FadeInFadeOut::FadeInFadeOut()
 {
 }
@@ -20,7 +23,12 @@ FadeInFadeOut::~FadeInFadeOut()
 void FadeInFadeOut::FadeIn()
 {
 	fadeValue = MAX1BYTEVALUE;
-	backScreen = -1;
+	//切り替え前の画像が残ってたら消去
+	if (backScreen != -1)
+	{
+		DeleteGraph(backScreen);
+	}
+	//風景が見えるようになるまで
 	while (fadeValue > 0)
 	{
 		fadeValue -= fadeSpeed;//α値と色のRGB増加

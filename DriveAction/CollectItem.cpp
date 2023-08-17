@@ -1,4 +1,4 @@
-#include "Coin.h"
+#include "CollectItem.h"
 #include "AssetManager.h"
 #include "OriginalMath.h"
 #include "Utility.h"

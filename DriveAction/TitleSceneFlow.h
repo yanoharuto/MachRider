@@ -10,14 +10,21 @@ class FlashUI;
 class TitleCamera;
 class TitleDemo;
 class Timer;
+class TitleRanking;
 /// <summary>
 /// タイトルシーンの処理の流れ
 /// </summary>
-class TitleSceeneFlow :public SceneFlowBase
+class TitleSceneFlow :public SceneFlowBase
 {
 public:
-    TitleSceeneFlow();
-    ~TitleSceeneFlow()override;
+    /// <summary>
+    /// 車とかフェードインフェードアウトクラスの確保
+    /// </summary>
+    TitleSceneFlow();
+    /// <summary>
+    /// 車とかフェードインフェードアウトクラスのDelete
+    /// </summary>
+    ~TitleSceneFlow()override;
     /// <summary>
     /// 更新
     /// </summary>
@@ -42,7 +49,8 @@ private:
     /// <summary>
     /// スペースキーを押したらtitleStateを変更
     /// </summary>
-    /// <param name="changedState">タイトルシーンを変更する先</param>
+    /// <param name="c
+    /// edState">タイトルシーンを変更する先</param>
     void OnPressSpaceKeyProcess(TitleState changedState);
     /// <summary>
     /// スペースキーを押すのを待つ
@@ -66,6 +74,8 @@ private:
     TitleState titleState;
     //描画した状態を保存する
     RaceScreen* screen;
-    //タイトルロゴの
+    //タイトルロゴ
     UIData titleLogoData;
+    //タイトル画面に表示するハイスコア
+    TitleRanking* titleScore;
 };

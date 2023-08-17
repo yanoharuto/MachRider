@@ -1,4 +1,4 @@
-#include "TitleSceeneFlow.h"
+#include "TitleSceneFlow.h"
 #include "Utility.h"
 #include "DxLib.h"
 #include "StageSelect.h"
@@ -10,31 +10,35 @@
 #include "Timer.h"
 #include "RaceScreen.h"
 #include "UIDrawer.h"
+#include "TitleRanking.h"
 /// <summary>
-/// タイトルシーンの処理の流れ
+/// 車とかフェードインフェードアウトクラスの確保
 /// </summary>
-TitleSceeneFlow::TitleSceeneFlow()
+TitleSceneFlow::TitleSceneFlow()
 {
     SoundPlayer::LoadSound(titleBGM);
     stageSelect = new StageSelect();  
     spaceKeyUI = new FlashUI(titlePressSpaceKey);
     titleDemo = new TitleDemo();
-    
+    titleScore = new TitleRanking();
     titleLogoData = UIManager::CreateUIData(tilteLogo);
     
     SoundPlayer::LoadSound(sceneNextSE);
 }
-
-TitleSceeneFlow::~TitleSceeneFlow()
+/// <summary>
+/// 車とかフェードインフェードアウトクラスのDelete
+/// </summary>
+TitleSceneFlow::~TitleSceneFlow()
 {
     SAFE_DELETE(stageSelect);
     SAFE_DELETE(spaceKeyUI);
     SAFE_DELETE(titleDemo);
+    SAFE_DELETE(titleScore);
 }
 /// <summary>
 /// 更新
 /// </summary>
-void TitleSceeneFlow::Update()
+void TitleSceneFlow::Update()
 {
     //車が勝手に動いたりする
     titleDemo->Update();
@@ -47,13 +51,13 @@ void TitleSceeneFlow::Update()
     //状況によってやるべき処理を変更
     switch (titleState)
     {
-    case TitleSceeneFlow::TitleState::waitSpaceKey:
+    case TitleSceneFlow::TitleState::waitSpaceKey:
         WaitPressSpaceKey();//スペースキー待ち
         break;
-    case TitleSceeneFlow::TitleState::stageSelect:
+    case TitleSceneFlow::TitleState::stageSelect:
         SelectStageProcess();//ステージ選択
         break;
-    case TitleSceeneFlow::TitleState::processEnd:
+    case TitleSceneFlow::TitleState::processEnd:
         EndTitleProcess();//処理終了
         break;
     default:
@@ -75,7 +79,7 @@ void TitleSceeneFlow::Update()
 /// <summary>
 /// ステージ選択とかロゴとかの描画
 /// </summary>
-void TitleSceeneFlow::Draw()const
+void TitleSceneFlow::Draw()const
 {
     titleDemo->Draw();
     UIDrawer::DrawRotaUI(titleLogoData, 0, 0,true);
@@ -86,6 +90,7 @@ void TitleSceeneFlow::Draw()const
     else
     {
         stageSelect->Draw();//ステージ選択UI
+        titleScore->Draw();
     }
     screen->ScreenUpdate();
 }
@@ -93,7 +98,7 @@ void TitleSceeneFlow::Draw()const
 /// スペースキーを押したらtitleStateを変更
 /// </summary>
 /// <param name="changedState">変更先の状態</param>
-void TitleSceeneFlow::OnPressSpaceKeyProcess(TitleState changedState)
+void TitleSceneFlow::OnPressSpaceKeyProcess(TitleState changedState)
 {
     if (UserInput::GetInputState(Space) == Push)
     {
@@ -104,7 +109,7 @@ void TitleSceeneFlow::OnPressSpaceKeyProcess(TitleState changedState)
 /// <summary>
 /// スペースキーを押すのを待つ
 /// </summary>
-void TitleSceeneFlow::WaitPressSpaceKey()
+void TitleSceneFlow::WaitPressSpaceKey()
 {
     spaceKeyUI->Update();
     OnPressSpaceKeyProcess(TitleState::stageSelect);
@@ -112,7 +117,7 @@ void TitleSceeneFlow::WaitPressSpaceKey()
 /// <summary>
 /// ステージ選択処理
 /// </summary>
-void TitleSceeneFlow::SelectStageProcess()
+void TitleSceneFlow::SelectStageProcess()
 {
     stageSelect->Update();
     OnPressSpaceKeyProcess(TitleState::processEnd);
@@ -120,7 +125,7 @@ void TitleSceeneFlow::SelectStageProcess()
 /// <summary>
 /// タイトルシーン終了処理
 /// </summary>
-void TitleSceeneFlow::EndTitleProcess()
+void TitleSceneFlow::EndTitleProcess()
 {
     SoundPlayer::StopSound(titleBGM);
     isEndProccess = true;

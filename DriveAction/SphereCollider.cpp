@@ -2,7 +2,9 @@
 #include "ConflictManager.h"
 #include "Actor.h"
 #include "HitCheckExamineObjectInfo.h"
-
+/// <summary>
+/// ‹…‘Ì“–‚½‚è”»’è
+/// </summary>
 SphereCollider::SphereCollider(Actor* obj)
     :SphereHitChecker(obj)
 {

@@ -2,7 +2,7 @@
 #include "DxLib.h"
 #include "Utility.h"
 #include "SoundPlayer.h"
-#include "TitleSceeneFlow.h"
+#include "TitleSceneFlow.h"
 #include "FadeInFadeOut.h"
 /// <summary>
 /// ƒ^ƒCƒgƒ‹
@@ -10,5 +10,5 @@
 TitleScene::TitleScene()
     :SceneBase(SceneType::TITLE)
 {
-    sceneFlow = new TitleSceeneFlow();
+    sceneFlow = new TitleSceneFlow();
 }

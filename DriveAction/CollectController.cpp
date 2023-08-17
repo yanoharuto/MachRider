@@ -2,7 +2,7 @@
 #include <memory>
 #include "CollectController.h"
 #include "FirstPositionGetter.h"
-#include "Coin.h"
+#include "CollectItem.h"
 #include "MiniMap.h"
 #include "ObjectObserver.h"
 #include "OriginalMath.h"

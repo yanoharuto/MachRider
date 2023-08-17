@@ -2,10 +2,18 @@
 #include "Utility.h"
 #include "Timer.h"
 #include "PlayerObserver.h"
+#include "StageDataManager.h"
 //収集アイテムゲットボーナス
 const int ResultScore::getCollectBonus = 500;
 //残り時間のボーナス
 const int ResultScore::clearTimeBonus = 50;
+/// <summary>
+/// 最終的なスコアの保存
+/// </summary>
+ResultScore::ResultScore(Timer* timer, std::weak_ptr<PlayerObserver> player)
+{
+    FixScore(timer, player);
+}
 
 /// <summary>
 /// スコア所得
@@ -55,8 +63,19 @@ int ResultScore::GetScoreBonus(ScoreKind scoreKind)
 void ResultScore::FixScore(Timer* timer, std::weak_ptr<PlayerObserver> player)
 {
     //制限時間を超過してたら0
-    timeScore = timer->IsOverLimitTime() ? 0 : static_cast<int>(timer->GetElaspedTime() * clearTimeBonus);
+    timeScore = timer->IsOverLimitTime() ? 0 : static_cast<int>(timer->GetRemainingTime() * clearTimeBonus);
     //収集アイテムを取ってたらボーナス
     collectScore= player.lock()->GetCollectCount() * getCollectBonus;
- 
+    //↑二つが過去のハイスコアより多かったらTrue
+    isUpdateHiScore = timeScore + collectScore > StageDataManager::GetScoreBorder().highScore;
+    //スコアの更新
+    StageDataManager::SaveHiScore(timeScore + collectScore);
+}
+/// <summary>
+/// ハイスコアが更新されたか
+/// </summary>
+/// <returns>ハイスコアが更新されていたらTrue</returns>
+bool ResultScore::IsUpdateHiScore()
+{
+    return isUpdateHiScore;
 }

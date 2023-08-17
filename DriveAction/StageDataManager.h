@@ -18,14 +18,35 @@ namespace InitStage
     //スコアの階級
     enum StageScore
     {
-        firstScore,
+        //一番目にいいスコア
+        goldScore,
+        //二番目にいいスコア
+        silverScore,
+        //三番目にいいスコア
+        bronzeScore,
+        //遊んだ中で最高スコア
+        highScore,
+        //二番目にいいスコア
         secondScore,
+        //3番目にいいスコア
         thirdScore
     };
+    /// <summary>
+    /// スコアの階級
+    /// </summary>
     struct  ScoreBorder
     {
-        int first;
+        //一番目にいいスコア
+        int gold;
+        //二番目にいいスコア
+        int silver;
+        //三番目にいいスコア
+        int bronze;
+        //遊んだ中で最高スコア
+        int highScore;
+        //二番目にいいスコア
         int second;
+        //3番目にいいスコア
         int third;
     };
 }
@@ -68,8 +89,15 @@ public:
     /// </summary>
     /// <returns></returns>
     static int GetStageLength() { return stageLength; };
-
+    /// <summary>
+    /// 遊ぶステージのスコアのボーダーラインを返す
+    /// </summary>
+    /// <returns></returns>
     static ScoreBorder GetScoreBorder();
+    /// <summary>
+    /// 遊ぶステージのハイスコアを更新
+    /// </summary>
+    static void SaveHiScore(int score);
 private:
     /// <summary>
     /// 初期化
@@ -77,8 +105,8 @@ private:
     static void InitStageData();
     //ステージの一覧的な奴
     static const std::string allStageAddresFile;
-    //ステージのパスを読み取る
-    static std::vector<std::string> dataLoader;
+    //ステージのデータ
+    static std::vector<std::string> dataVector;
     //各ステージのデータのパス
     static std::string fileAddres;
     //幅

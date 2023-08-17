@@ -124,26 +124,24 @@ ConflictExamineResultInfo ConflictManager::GetConflictResultInfo(ConflictProcess
     }
     return ConflictExamineResultInfo{};
 }
+
 /// <summary>
 /// 当たり判定をする
 /// </summary>
 void ConflictManager::Update()
 {
-    
     //衝突処理実行役
     for (auto processorItr = processorKeyMap.begin(); processorItr != processorKeyMap.end(); processorItr++)
     {
-        int a = 0;
         //当たり判定調査役
         for (auto hitCheckItr = hitCheckList.begin(); hitCheckItr != hitCheckList.end(); hitCheckItr++)
         {
-            a++;
             //当たり判定結果
             ConflictExamineResultInfo resultInfo = GetConflictResultInfo((*processorItr).first, *hitCheckItr);
-            //当たったのが衝突処理実行役の当たり判定なら
+            //衝突処理実行役同士の衝突なら
             if (hitCheckerKeyMap.contains(*hitCheckItr))
             {
-                //衝突処理実行
+                //こっちにも当たり判定処理実行
                 hitCheckerKeyMap[*hitCheckItr]->ConflictProcess(GetConflictResultInfo(hitCheckerKeyMap[*hitCheckItr], processorKeyMap[(*processorItr).first]));
             }
             //衝突処理実行

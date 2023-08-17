@@ -2,7 +2,7 @@
 #include "DxLib.h"
 #include "Utility.h"
 #include "Menu.h"
-//•’Ê‚ÌŒo‰ß•b”
+//Œo‰ß•b”
 double Clock::gameTime;
 Clock::Clock()
 {
@@ -33,7 +33,10 @@ void Clock::Update()
     
     gameTime = timeD / 1000000;
 }
-
+/// <summary>
+/// ƒQ[ƒ€‚ÌŒo‰ßŠÔ‚ğ1000m•b‚É‚µ‚Ä“n‚·
+/// </summary>
+/// <returns></returns>
 double Clock::GetNowGameTime()
 {
     return gameTime - Menu::GetOpenMenuTime();

@@ -15,7 +15,7 @@ public:
     /// </summary>
     void Update();
     /// <summary>
-    /// 1000m•b‚ğ•’Ê‚Ì•b”‚É‚µ‚Ä“n‚·
+    /// ƒQ[ƒ€‚ÌŒo‰ßŠÔ‚ğ1000m•b‚É‚µ‚Ä“n‚·
     /// </summary>
     /// <returns></returns>
     static double GetNowGameTime();

@@ -1,5 +1,4 @@
 #pragma once
-#include "FadeMode.h"
 /// <summary>
 /// 場面の切り替えをするよ
 /// </summary>
@@ -14,9 +13,7 @@ public:
     /// フェードアウトの更新
     /// </summary>
     static void FadeOut();
-
 private:
-
     /// <summary>
     /// アウト中なら白くなる　インなら周りのモデルとかが見える
     /// </summary>

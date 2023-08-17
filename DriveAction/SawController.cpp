@@ -28,7 +28,9 @@ void SawController::AddObject(std::vector<EditArrangementData> editData)
         }
     }
 }
-
+/// <summary>
+/// 更新。　破壊されたら破棄
+/// </summary>
 void SawController::Update()
 {
     //破棄するリスト

@@ -80,7 +80,7 @@ void Bomber::ConflictProcess(ConflictExamineResultInfo resultInfo)
         float positionY = position.y - radius;
         SetPosPlayingEffekseer3DEffect(burnEffect, position.x, positionY, position.z);
         //“–‚½‚Á‚½‚Ì‚ªƒvƒŒƒCƒ„[‚¾‚Á‚½‚ç“–‚½‚è”»’èÁ¸
-        if (resultInfo.tag != player)
+        if (resultInfo.tag == player)
         {
             objState = activeEnd;
         }

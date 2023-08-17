@@ -3,9 +3,9 @@
 #include "HitCheckExamineObjectInfo.h"
 #include "DxLib.h"
 /// <summary>
-/// 当たり判定の持ち主をください
+/// 球形当たり判定
 /// </summary>
-/// <param name="obj"></param>
+/// <param name="obj">当たり判定の持ち主をください</param>
 SphereHitChecker::SphereHitChecker(Actor* const obj)
 {
     object = obj;
@@ -64,7 +64,7 @@ HitCheckExamineObjectInfo SphereHitChecker::GetHitExamineCheckInfo() const
 /// <summary>
 /// 今もう動いていない状態か
 /// </summary>
-/// <returns></returns>
+/// <returns>動いていないならTrue</returns>
 bool SphereHitChecker::IsDead()
 {
     return (object->GetObjectState() == Object::dead || object->GetObjectState() == Object::activeEnd);

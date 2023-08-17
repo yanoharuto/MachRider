@@ -16,7 +16,9 @@ CollectSign::CollectSign(std::weak_ptr<PlayerObserver> player)
     playerObserver = player;
     EffectManager::LoadEffect(compass);
 }
-
+/// <summary>
+/// エフェクト終了
+/// </summary>
 CollectSign::~CollectSign()
 {
     StopEffekseer3DEffect(signEffect);

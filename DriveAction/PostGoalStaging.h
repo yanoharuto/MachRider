@@ -109,6 +109,8 @@ private:
     ScoreUI collectScoreUI;
     //残り時間ボーナススコア
     ScoreUI timeScoreUI;
+    //ハイスコアの更新
+    UIData hiScoreUI;
     //終わりのアナウンス
     UIData finishAnnounceData;
     //収集アイテムのデータ

@@ -4,7 +4,6 @@
 #include <list>
 #include "ActorController.h"
 #include "DxLib.h"
-class Coin;
 /// <summary>
 /// 収集アイテムの操作
 /// </summary>

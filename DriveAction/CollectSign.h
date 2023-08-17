@@ -11,6 +11,9 @@ class CollectSign
 public:
 
     CollectSign(std::weak_ptr<PlayerObserver> player);
+    /// <summary>
+    /// エフェクト終了
+    /// </summary>
     ~CollectSign();
     /// <summary>
     /// エフェクトの位置と向きを設定

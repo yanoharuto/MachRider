@@ -7,6 +7,9 @@ class SphereCollider final:
     public SphereHitChecker
 {
 public:
+    /// <summary>
+/// ‹…‘Ì“–‚½‚è”»’è
+/// </summary>
     SphereCollider(Actor* obj);
     /// <summary>
     /// ‚Á”ò‚Ô•ûŒü‚Æ‚©‚ğ•Ô‚·

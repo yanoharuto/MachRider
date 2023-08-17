@@ -1,18 +1,18 @@
 ﻿ drawX
-960
+500
  drawY
-415
+430
  width
-240
+400
  height
-240
+64
  xNum
 1
  yNum
 1
 graphPass
-data/UI/image/Hang.png
+data/UI/image/HighScore.png
 size
-0.7
+1
 frameSpeed
 0

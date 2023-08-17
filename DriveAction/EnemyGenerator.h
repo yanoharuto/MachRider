@@ -25,18 +25,18 @@ public:
 
     ~EnemyGenerator() {};
     /// <summary>
-    /// エネミーを生成
+    /// 敵コントローラーに位置情報を教えて追加する
     /// </summary>
-    /// <param name="collectNum">今プレイヤーは何個目の収集アイテムを取ったか</param>
+    /// <param name="collectNum">プレイヤーが収集したアイテム数</param>
+    /// <param name="addObjController">敵コントローラー</param>
     void GenerateEnemys(int collectNum,ActorController* const addObjController);
 private:
     /// <summary>
-    /// エネミーの配置情報を所得
+    /// エネミーの配置情報を渡す
     /// </summary>
-    /// <param name="kind">どの種類か</param>
-    /// <param name="collectNum">何番目の収集アイテムの時か</param>
-    /// <returns>kindのエネミーの配置情報</returns>
-    std::vector<EditArrangementData> GetNowEnemyEditData(int collectNum);
+    /// <param name="collectNum">今の収集アイテムの所得数</param>
+    /// <returns>エネミーの配置情報</returns>
+    std::vector<EditArrangementData> GetNowEnemyEditData(int getCollectNum);
     
     //敵の位置まとめ
     std::vector<EditArrangementData> editDataVec;

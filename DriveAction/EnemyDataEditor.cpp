@@ -21,7 +21,9 @@ EnemyDataEditor::EnemyDataEditor()
     eneViewerMap.insert(std::make_pair(bomberShip, new EditorModelViewer(bomberShip)));
     eneViewerMap.insert(std::make_pair(moveSaw, new EditorModelViewer(moveSaw)));
 }
-
+/// <summary>
+/// ‘‚«‚İ‚ÆDelete
+/// </summary>
 EnemyDataEditor::~EnemyDataEditor()
 {
     int size = editDataVec.size();

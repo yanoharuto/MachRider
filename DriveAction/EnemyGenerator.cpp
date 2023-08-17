@@ -13,19 +13,19 @@ EnemyGenerator::EnemyGenerator()
     editDataVec = FirstPositionGetter::GetInitData(Object::damageObject);
 }
 /// <summary>
-/// エネミーを生成
+/// 敵コントローラーに位置情報を教えて追加する
 /// </summary>
-/// <param name="collectNum">今プレイヤーは何個目の収集アイテムを取ったか</param>
+/// <param name="collectNum">プレイヤーが収集したアイテム数</param>
+/// <param name="addObjController">敵コントローラー</param>
 void EnemyGenerator::GenerateEnemys(int collectNum, ActorController* const addObjController)
 {
     addObjController->AddObject(GetNowEnemyEditData(collectNum));
 }
 /// <summary>
-/// エネミーの配置情報を所得
+/// エネミーの配置情報を渡す
 /// </summary>
-/// <param name="kind">どの種類か</param>
-/// <param name="collectNum">何番目の収集アイテムの時か</param>
-/// <returns>kindのエネミーの配置情報</returns>
+/// <param name="collectNum">今の収集アイテムの所得数</param>
+/// <returns>エネミーの配置情報</returns>
 std::vector<EditArrangementData> EnemyGenerator::GetNowEnemyEditData(int collectNum)
 {
     std::vector<EditArrangementData> editData;

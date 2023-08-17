@@ -40,11 +40,8 @@ void StageSelect::Update()
             stageNum = StageDataManager::GetStageTotalNumber() - 1;
         }
     }
-    //スペースキーを押したらステージ番号を確定
-    else if (UserInput::GetInputState(Space) == Push)
-    {
-        StageDataManager::ChangeStageData(this);
-    }
+    //変更したことを伝える
+    StageDataManager::ChangeStageData(this);
 }
 /// <summary>
 /// ステージ一覧を表示
@@ -69,7 +66,10 @@ void StageSelect::Draw() const
     }
     UIDrawer::DrawRotaUI(selectButtonData);
 }
-
+/// <summary>
+/// ステージの番号
+/// </summary>
+/// <returns></returns>
 int StageSelect::GetStageNum()const
 {
     return stageNum;

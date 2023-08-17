@@ -12,7 +12,7 @@ public:
     /// <summary>
     /// ‹…“¯m‚Ì“–‚½‚è”»’è‚ğs‚¤
     /// </summary>
-    /// <param name="obj"></param>
+    /// <param name="obj">“–‚½‚è”»’è‚Ì‚¿å</param>
     SphereHitChecker(Actor* const obj);
     ~SphereHitChecker();
     /// <summary>

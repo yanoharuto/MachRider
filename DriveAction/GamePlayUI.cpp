@@ -37,7 +37,7 @@ GamePlayUI::GamePlayUI(Timer* setTimer, std::weak_ptr<PlayerObserver> player)
     playerObserver = player;
     countDown = new EndCountDown(setTimer);
     remainingNumDrawTimer = new ReusableTimer(remainingNumDrawTime);
-
+    //‘€ì•û–@
     playManual = new PlayManual();
 }
 

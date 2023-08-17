@@ -28,16 +28,7 @@ namespace Input
         AKey = 9
     };
 #define KEY_INPUT_KIND_NUM 10
-    /// <summary>
-    /// スティック入力の値
-    /// </summary>
-    struct StickValueStruct
-    {
-        short LStickValueX;
-        short LStickValueY;
-        short RStickValueX;
-        short RStickValueY;
-    };
+#define SHORT_VALUE 12767
 }
 using namespace Input;
 class UserInput
@@ -56,9 +47,10 @@ public:
     /// <returns></returns>
     static InputState GetInputState(KeyInputKind inputKind);
     /// <summary>
-    /// スティックの入力状況所得
+    /// ゲームパッドで遊んでいるか
     /// </summary>
-    static StickValueStruct GetStickValue();
+    /// <returns>遊んでいたらTrue</returns>
+    static bool IsInputPad() { return isInputPad; };
 private:
     /// <summary>
     /// ボタンの入力更新
@@ -68,17 +60,20 @@ private:
     /// <param name="_Button">更新したいボタン</param>
     void ButtonUpdate(bool inputJudge,InputState* _Button);
     /// <summary>
-    /// Stickの入力更新
+    /// ボタンの入力更新
     /// </summary>
-    /// <param name="_Input"></param>
-    void StickUpdate(XINPUT_STATE _Input);
+    void ButtonUpdate();
     //ボタンの情報
     static InputState keyInputState[KEY_INPUT_KIND_NUM];
-    static StickValueStruct stickValue;
+    //パッドの情報
+    static XINPUT_STATE xInput;
     //Aボタンの割り当て番号
     const int aButtonNum = 12;
     //Bボタンの割り当て番号
     const int bButtonNum = 13;
+    //ゲームパッドで入力するか
+    static bool isInputPad;
+    //対応しているボタンの一覧
     int keyInputCode[KEY_INPUT_KIND_NUM];
 };
 

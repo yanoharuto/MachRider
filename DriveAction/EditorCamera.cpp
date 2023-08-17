@@ -2,6 +2,7 @@
 #include "UserInput.h"
 #include "OriginalMath.h"
 #include "StageDataEditor.h"
+//‹¤—L‚·‚éŒü‚«
 VECTOR EditorCamera::staticDir;
 /// <summary>
 /// Editor‰æ–Ê‚ÌƒJƒƒ‰
@@ -36,7 +37,7 @@ void EditorCamera::Update()
     staticDir = direction;
 }
 /// <summary>
-/// Œü‚«
+/// ƒJƒƒ‰‚ÌŒü‚«
 /// </summary>
 /// <returns></returns>
 VECTOR EditorCamera::GetNormDirection()

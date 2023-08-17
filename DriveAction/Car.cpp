@@ -100,8 +100,14 @@ void Car::ReflectsVelocity()
 /// <returns>進む量</returns>
 VECTOR Car::GetAccelVec()
 {
+	//ジョイパッドだったらブレーキの対応ボタンを変更
+	InputState breakInput = UserInput::GetInputState(Down);
+	if (UserInput::IsInputPad())
+	{
+		breakInput = UserInput::GetInputState(Space);
+	}
 	//ブレーキした
-	if (UserInput::GetInputState(Down) == InputState::Hold)
+	if (breakInput == InputState::Hold)
 	{
 		accelPower -= accelPower * speedParamator.breakPower;
 	}
@@ -143,6 +149,7 @@ void Car::InitSpeedParamater(ObjectInit::InitObjKind kind)
 	speedParamator.turboTime = atof(strVec[turboTime].c_str());
 	speedParamator.gripPower = atof(strVec[gripPower].c_str());
 	speedParamator.breakPower = atof(strVec[breakePower].c_str());
+	speedParamator.turboChargeTime = atof(strVec[turboChargeTime].c_str());
 }
 
 /// <summary>

@@ -7,7 +7,13 @@ class EnemyDataEditor :
     public StageDataEditor
 {
 public:
+    /// <summary>
+/// 敵の編集クラス
+/// </summary>
     EnemyDataEditor();
+    /// <summary>
+    /// 書き込みとDelete
+    /// </summary>
     ~EnemyDataEditor();
     /// <summary>
     /// 更新

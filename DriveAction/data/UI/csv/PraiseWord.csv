@@ -1,18 +1,18 @@
 ﻿ drawX
-0
+1780
  drawY
-0
+540
  width
-504
+420
  height
-216
+420
  xNum
 1
  yNum
-4
-graphPass
-data/UI/image/startData.csv
-scale
 1
+graphPass
+data/UI/image/NewRecord.png
+scale
+0.5
 frameSpeed
 0

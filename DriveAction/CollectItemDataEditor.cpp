@@ -12,7 +12,9 @@ CollectItemDataEditor::CollectItemDataEditor()
     nowEditCollect = new EditorObject(ObjectInit::collect);
     viewer = new EditorModelViewer(ObjectInit::collect);
 }
-
+/// <summary>
+/// 位置をCSVに移してデリート
+/// </summary>
 CollectItemDataEditor::~CollectItemDataEditor()
 {
     for (int i = 0; i < editDataVec.size(); i++)

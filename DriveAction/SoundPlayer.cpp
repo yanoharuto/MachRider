@@ -24,11 +24,9 @@ SoundPlayer::~SoundPlayer()
         success = DeleteSoundMem((*soundHandleMap.begin()).second);
     }
 }
-
 /// <summary>
 /// 全ての音を止める
 /// </summary>
-/// <param name="soundFileName"></param>
 void SoundPlayer::StopAllSound()
 {
     for (auto ite = soundHandleMap.begin(); ite != soundHandleMap.end(); ite++)
@@ -36,8 +34,10 @@ void SoundPlayer::StopAllSound()
         StopSound((*ite).first);
     }
 }
-
-
+/// <summary>
+/// 効果音を鳴らす
+/// </summary>
+/// <param name="kind">音の種類</param>
 void SoundPlayer::Play2DSE(SoundKind kind)
 {
     if (soundHandleMap.contains(kind))
@@ -46,7 +46,11 @@ void SoundPlayer::Play2DSE(SoundKind kind)
         PlaySoundMem(handleKey, DX_PLAYTYPE_BACK);
     }
 }
-
+/// <summary>
+/// 3d空間での音を鳴らす
+/// </summary>
+/// <param name="pos">なっている音の位置</param>
+/// <param name="kind">音の種類</param>
 void SoundPlayer::Play3DSE(SoundKind kind)
 {
     if (soundHandleMap.contains(kind))
@@ -55,8 +59,11 @@ void SoundPlayer::Play3DSE(SoundKind kind)
         PlaySoundMem(handleKey, DX_PLAYTYPE_BACK);
     }
 }
-
-
+/// <summary>
+/// 鳴らしたい音の位置を変える
+/// </summary>
+/// <param name="pos">なっている音の位置</param>
+/// <param name="kind">音の種類</param>
 void SoundPlayer::SetPosition3DSound(VECTOR pos, SoundKind kind)
 {
     if (soundHandleMap.contains(kind))
@@ -65,7 +72,10 @@ void SoundPlayer::SetPosition3DSound(VECTOR pos, SoundKind kind)
         Set3DPositionSoundMem(pos, handleKey);
     }
 }
-
+/// <summary>
+/// 全ての音を止める
+/// </summary>
+/// <param name="soundFileName"></param>
 void SoundPlayer::PlayBGM(SoundKind kind)
 {
     if (soundHandleMap.contains(kind))
@@ -74,7 +84,10 @@ void SoundPlayer::PlayBGM(SoundKind kind)
         PlaySoundMem(handleKey, DX_PLAYTYPE_LOOP);
     }
 }
-
+/// <summary>
+/// 音を止める
+/// </summary>
+/// <param name="kind">音の種類</param>
 void SoundPlayer::StopSound(SoundKind kind)
 {
     if (soundHandleMap.contains(kind))
@@ -86,7 +99,10 @@ void SoundPlayer::StopSound(SoundKind kind)
         }
     }
 }
-
+/// <summary>
+/// 音をロードして使いまわせるようにする
+/// </summary>
+/// <param name="kind">音の種類</param>
 void SoundPlayer::LoadSound(SoundKind kind)
 {
     if (!soundHandleMap.contains(kind))
@@ -103,7 +119,10 @@ void SoundPlayer::LoadSound(SoundKind kind)
         SAFE_DELETE(initDataLoader);
     }
 }
-
+/// <summary>
+/// ３Dの音をロードして使いまわせるようにする
+/// </summary>
+/// <param name="kind">音の種類</param>
 void SoundPlayer::Load3DSound(SoundKind kind)
 {
     if (!soundHandleMap.contains(kind))
@@ -117,7 +136,11 @@ void SoundPlayer::Load3DSound(SoundKind kind)
         SAFE_DELETE(initDataLoader);
     }
 }
-
+/// <summary>
+/// その音が鳴ってるかどうか調べる
+/// </summary>
+/// <param name="kind">音の種類</param>>
+/// <returns>なってたらTrue</returns>
 bool SoundPlayer::IsPlaySound(SoundKind kind)
 {
     //1ならなってる-1なってない

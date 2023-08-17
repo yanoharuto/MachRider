@@ -2,6 +2,11 @@
 #include "EffectManager.h"
 #include "EffekseerForDXLib.h"
 #include "Utility.h"
+/// <summary>
+/// 位置などの初期化とエフェクトのロード
+/// </summary>
+/// <param name="setPos">初期位置</param>
+/// <param name="setDir">初期向き</param>
 DemoCar::DemoCar(VECTOR setPos, VECTOR setDir)
     :Car(ObjectInit::player)
 {
@@ -12,13 +17,13 @@ DemoCar::DemoCar(VECTOR setPos, VECTOR setDir)
 	prevPos = position;
 	direction = setDir;
 	firstDir = setDir;
-	EffectManager::LoadEffect(EffectInit::carConflict);
 	EffectManager::LoadEffect(EffectInit::carWind);
-	EffectManager::LoadEffect(EffectInit::carDamage);
-	speedParamator.acceleSpeed = 2;
-	speedParamator.maxSpeed = 7;
+	speedParamator.acceleSpeed = setAcceleSpeed;
+	speedParamator.maxSpeed = setMaxSpeed;
 }
-
+/// <summary>
+/// タイヤとエフェクト削除
+/// </summary>
 DemoCar::~DemoCar()
 {
 	SAFE_DELETE(wheels);
@@ -29,12 +34,16 @@ DemoCar::~DemoCar()
 		runEffect = -1;
 	}
 }
-
+/// <summary>
+/// 初期位置に戻す
+/// </summary>
 void DemoCar::InitPosition()
 {
 	position = firstPos;
 }
-
+/// <summary>
+/// 更新
+/// </summary>
 void DemoCar::Update()
 {
 	//速度を更新
@@ -44,7 +53,9 @@ void DemoCar::Update()
 	//エフェクトの更新
 	EffectUpdate();
 }
-
+/// <summary>
+/// エフェクトの更新
+/// </summary>
 void DemoCar::EffectUpdate()
 {
 	float degree = OriginalMath::GetDegreeMisalignment(VGet(1, 0, 0), direction);
@@ -65,7 +76,10 @@ void DemoCar::EffectUpdate()
 		SetRotationPlayingEffekseer3DEffect(runEffect, 0, degree * RAGE, 0);
 	}
 }
-
+/// <summary>
+/// 走る速さベクトルの所得
+/// </summary>
+/// <returns></returns>
 VECTOR DemoCar::GetAccelVec()
 {
 	// 加速処理.

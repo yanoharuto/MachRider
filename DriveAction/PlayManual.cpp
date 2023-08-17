@@ -1,5 +1,6 @@
 #include "PlayManual.h"
 #include "UIDrawer.h"
+//操作方法UI
 PlayManual::PlayManual()
 {
     playManualData = UIManager::CreateUIData(manual);
@@ -7,7 +8,8 @@ PlayManual::PlayManual()
 	UIKind nowUIKind = manual;
 	leftBUI.data = UIManager::CreateUIData(leftButton);
 	rightBUI.data = UIManager::CreateUIData(rightButton);
-	downBUI.data = UIManager::CreateUIData(downButton);
+	//ジョイパッドならUI変更
+	downBUI.data = UIManager::CreateUIData((UserInput::IsInputPad()) ? xDownButton : downButton);
 }
 
 PlayManual::~PlayManual()
@@ -21,11 +23,11 @@ void PlayManual::Update()
 	//ボタン入力状況
 	leftBUI.push = UserInput::GetInputState(Left) == Hold;
 	rightBUI.push = UserInput::GetInputState(Right) == Hold;
-	downBUI.push = UserInput::GetInputState(Down) == Hold;
+	downBUI.push = UserInput::GetInputState((UserInput::IsInputPad()) ? Space : Down) == Hold;
 
 	UIKind nextUIKind = manual;
 	//下方向に入力するとターボ準備完了
-	if (UserInput::GetInputState(Down) == Hold)
+	if (downBUI.push)
 	{
 		nextUIKind = turboManual;
 	}

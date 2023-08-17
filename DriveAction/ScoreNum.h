@@ -1,21 +1,28 @@
 #pragma once
 #include "NumUI.h"
 #include "DxLib.h"
+#include "UIManager.h"
 /// <summary>
 /// 合計スコアの表示
 /// </summary>
 class ScoreNum :
-    public NumUI
+    private NumUI
 {
 public:
+    /// <summary>
+    /// 合計スコアを表示する
+    /// </summary>
     ScoreNum();
     ~ScoreNum();
     /// <summary>
     /// スコアによって大きさ変更
     /// </summary>
-    /// <param name="num"></param>
+    /// <param name="num">合計score</param>
     void Draw(int num)const override;
+
 private:
+    //前回のハイスコア
+    int prevHiScore = 0;
     //上手にクリアしたときのスコアのライン
     int first = 0;
     //普通にクリアしたときのスコアのライン
@@ -28,10 +35,15 @@ private:
     float thirdBorderFontSize = 0.85f;
     //thirdより下のスコアになった時の文字のフォント
     float thirdUnderFontSize = 0.8f;
-
+    //ハイスコアの表記
+    UIData hiScoreUI;
+    //一番いいスコアの色
     VECTOR firstColor = VGet(255,215,0);
-    VECTOR secondColor = VGet(192,192,192);
+    //ちょっといいときの色
     VECTOR thirdColor = VGet(196,112,34);
-    VECTOR thirdUnderColor = VGet(176,92,14);
+    //二番目にいい時の色
+    VECTOR secondColor = VGet(192, 192, 192);
+    //最初になっているスコアの色
+    VECTOR thirdUnderColor = VGet(100,100,100);
 };
 

@@ -7,6 +7,9 @@
 class PlayManual
 {
 public:
+    /// <summary>
+    /// ‰æ‘œ‚ğ“Ç‚İ‚Ş
+    /// </summary>
     PlayManual();
     ~PlayManual();
     /// <summary>

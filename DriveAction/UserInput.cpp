@@ -1,9 +1,13 @@
 #include "UserInput.h"
+//入力情報
 InputState UserInput::keyInputState[KEY_INPUT_KIND_NUM];
-StickValueStruct UserInput::stickValue;
-
+//パッドの情報
+XINPUT_STATE UserInput::xInput;
+bool UserInput::isInputPad;
 UserInput::UserInput()
 {
+    //ゲームパッド入力ならTrue
+    isInputPad = GetJoypadNum() != 0;
     keyInputCode[KeyInputKind::Up] = PAD_INPUT_UP;
     keyInputCode[KeyInputKind::Down] = PAD_INPUT_DOWN;
     keyInputCode[KeyInputKind::Left] = PAD_INPUT_LEFT;
@@ -15,31 +19,38 @@ UserInput::UserInput()
     keyInputCode[KeyInputKind::SKey] = PAD_INPUT_5;
     keyInputCode[KeyInputKind::AKey] = PAD_INPUT_4;
 }
-
+/// <summary>
+/// 入力状況更新
+/// </summary>
 void UserInput::Update()
 {
-    //現在入力されたボタンを所得
-    int inputKey = GetJoypadInputState(DX_INPUT_KEY);
-    for (int i = 0; i < KEY_INPUT_KIND_NUM; i++)
+    if (isInputPad)
     {
-        ButtonUpdate(inputKey & keyInputCode[i], &keyInputState[i]);
+        ButtonUpdate();
     }
-    //ゲームパッドの場合のボタン入力を所得
-    XINPUT_STATE input;
-    GetJoypadXInputState(DX_INPUT_KEY_PAD1, &input);
-    StickUpdate(input);
+    else//パッド操作
+    {
+        //現在入力されたボタンを所得
+        int inputKey = GetJoypadInputState(DX_INPUT_KEY);
+        for (int i = 0; i < KEY_INPUT_KIND_NUM; i++)
+        {
+            ButtonUpdate(inputKey & keyInputCode[i], &keyInputState[i]);
+        }
+    }
+    //ゲームパッド入力ならTrue
+    isInputPad = GetJoypadNum() != 0;
 }
 
-
+/// <summary>
+/// ボタンの入力情報
+/// </summary>
+/// <param name="inputKind"></param>
+/// <returns></returns>
 InputState UserInput::GetInputState(KeyInputKind inputKind)
 {
     return keyInputState[inputKind];
 }
 
-StickValueStruct UserInput::GetStickValue()
-{
-    return stickValue;
-}
 /// <summary>
 /// ボタンの入力状況を所得
 /// </summary>
@@ -88,13 +99,17 @@ void UserInput::ButtonUpdate(bool inputJudge, InputState* _Button)
     }
 }
 /// <summary>
-/// Stickの入力更新
+/// ボタンの入力更新
 /// </summary>
-/// <param name="_Input"></param>
-void UserInput::StickUpdate(XINPUT_STATE _Input)
+void UserInput::ButtonUpdate()
 {
-    stickValue.LStickValueX = _Input.ThumbLX;
-    stickValue.LStickValueY = _Input.ThumbLY;
-    stickValue.RStickValueX = _Input.ThumbRX;
-    stickValue.RStickValueY = _Input.ThumbRY;
+    //ゲームパッドの場合のボタン入力を所得
+    GetJoypadXInputState(DX_INPUT_KEY_PAD1, &xInput);
+
+    ButtonUpdate(xInput.ThumbLY > SHORT_VALUE - 1, &keyInputState[Up]);
+    ButtonUpdate(xInput.ThumbLY < -SHORT_VALUE, &keyInputState[Down]);
+    ButtonUpdate(xInput.ThumbLX > SHORT_VALUE - 1, &keyInputState[Right]);
+    ButtonUpdate(xInput.ThumbLX < -SHORT_VALUE, &keyInputState[Left]);
+    ButtonUpdate(xInput.Buttons[XINPUT_BUTTON_B] == 1, &keyInputState[Space]);
+    ButtonUpdate(xInput.Buttons[XINPUT_BUTTON_BACK] == 1, &keyInputState[EscapeKey]);   
 }

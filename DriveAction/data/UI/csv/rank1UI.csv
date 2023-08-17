@@ -1,18 +1,18 @@
 ﻿ drawX
-0
+420
  drawY
-0
+540
  width
-180
+800
  height
-180
+100
  xNum
-1
+10
  yNum
 1
 graphPass
-data/UI/image/Marker.png
+data/UI/image/NumFont.png
 size
-1
+0.8
 frameSpeed
 0

@@ -15,7 +15,9 @@ public:
     /// <returns></returns>
     static VECTOR GetNormDirection();
 private:
+    //‰ñ“]‘¬“x
     const float rotaSpeed = 3.0f;
+    //‹¤—L‚·‚éŒü‚«
     static VECTOR staticDir;
 };
 

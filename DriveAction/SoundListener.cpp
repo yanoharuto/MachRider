@@ -9,8 +9,12 @@ SoundListener::SoundListener(std::weak_ptr<PlayerObserver> setListener)
 {
     listener = setListener;
 }
+/// <summary>
+/// リスナーをリセット
+/// </summary>
 SoundListener::~SoundListener()
 {
+    listener.reset();
 }
 /// <summary>
 /// リスナーの位置を反映
