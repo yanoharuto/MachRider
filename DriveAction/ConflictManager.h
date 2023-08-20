@@ -14,6 +14,9 @@ public:
     /// 当たり判定を纏めてするための奴
     /// </summary>
     ConflictManager();
+    /// <summary>
+    /// 当たり判定登録Map全消し
+    /// </summary>
     ~ConflictManager();
     /// <summary>
     /// 当たり判定追加
@@ -32,9 +35,10 @@ public:
     /// <param name="hitChecker">conflictProcessorの当たり判定</param>
     static void AddConflictProcessor(ConflictProcessor* const conflictProccesor,SphereHitChecker* const hitChecker);
     /// <summary>
-    /// 衝突処理を呼ばなくていいようにする
+    /// 衝突処理実行役を削除
     /// </summary>
-    /// <param name="conflictProccesor">呼ばなくていいように</param>
+    /// <param name="conflictProccesor">消したい衝突処理実行役</param>
+    /// /// <param name="hitChecker">当たり判定も消す</param>
     static void EraceConflictProccesor(ConflictProcessor* const conflictProccesor, SphereHitChecker* const hitChecker);
     /// <summary>
     /// デバッグ用球を出す

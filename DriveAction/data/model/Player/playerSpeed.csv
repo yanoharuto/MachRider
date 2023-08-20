@@ -6,10 +6,10 @@ lowestSpeed = 5
 1.8
 //最高速度
 maxSpeed = 8
-9
+10
 //急加速速度
 turboSpeed = 11
-7
+8.5
 //急加速時間
 turboTime = 14
 1.4

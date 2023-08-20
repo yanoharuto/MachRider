@@ -40,67 +40,69 @@ namespace ObjectInit
         float setBouncePow;
     };
     /// <summary>
-    /// 初期化するのに必要なデータ先纏め
+    /// 初期化するのに必要なデータのパス
     /// </summary>
     struct InitDataPass
     {
-        //modelのPass
+        //描画モデルのファイルのパス
         std::string modelPass;
-        //追加情報のPass
+        //追加情報のファイルのパス
         std::string addData;
         /// <summary>
         /// 引数から抽出
         /// </summary>
-        /// <param name="paramatorString"></param>
-        void GetExtractParamator(std::vector<std::string> paramatorString)
+        /// <param name="pathStr"></param>
+        void GetExtractParamator(std::vector<std::string> pathStr)
         {
-            modelPass = paramatorString[InitObjParamator::assetPass];
-            addData = paramatorString[InitObjParamator::addDataPass];
+            modelPass = pathStr[InitObjParamator::assetPass];
+            addData = pathStr[InitObjParamator::addDataPass];
         }
         /// <summary>
         /// 引数から抽出
         /// </summary>
-        /// <param name="paramatorString"></param>
-        void GetExtractParamator(std::vector <const char*> paramatorString)
+        /// <param name="pathStr"></param>
+        void GetExtractParamator(std::vector <const char*> pathStr)
         {
-            modelPass = paramatorString[InitObjParamator::assetPass];
-            addData = paramatorString[InitObjParamator::addDataPass];
+            modelPass = pathStr[InitObjParamator::assetPass];
+            addData = pathStr[InitObjParamator::addDataPass];
         }
     };
 }
+class AssetManager;
 using namespace ObjectInit;
 /// <summary>
 /// actorの初期化をする
 /// </summary>
-class InitActor
+class InitActor final
 {
 public:
+    /// <summary>
+    /// 全てのactorの初期化をするためのパスが入ったファイルを読み込む
+    /// </summary>
     InitActor();
+    /// <summary>
+    /// 描画モデル管理担当の解放
+    /// </summary>
     ~InitActor();
     /// <summary>
     /// 初期化に必要な情報を所得
     /// </summary>
-    /// <param name="obj"></param>
-    /// <returns></returns>
+    /// <param name="obj">初期化したいオブジェクト</param>
+    /// <returns>初期化に必要な情報</returns>
     static ActorParameter GetActorParamator(InitObjKind obj);
     /// <summary>
-    /// 引数の種類の描画モデルを渡す
+    /// 引数の種類の描画モデルハンドルを渡す
     /// </summary>
-    /// <param name="obj"></param>
-    /// <returns></returns>
+    /// <param name="kind">取り出したい描画モデル</param>
+    /// <returns>描画モデルハンドル</returns>
     static int GetModelHandle (InitObjKind obj);
     /// <summary>
-    /// 追加情報文字列ベクターを渡す
+    /// 追加情報の入ったファイルまでのパスを渡す
     /// </summary>
-    /// <param name="obj"></param>
-    /// <returns></returns>
+    /// <param name="obj">追加情報が欲しいオブジェクト</param>
+    /// <returns>追加情報の入ったファイルまでのパス</returns>
     static std::string GetAddDataPass (InitObjKind obj);
-    /// <summary>
-    /// 初期位置の番号を返す
-    /// </summary>
-    /// <param name="obj"></param>
-    /// <returns></returns>
-    static int GetActorTileNum(InitObjKind obj);
+
 private:
     /// <summary>
     /// 初期化に必要な色々なパスを所得
@@ -109,13 +111,15 @@ private:
     /// <returns></returns>
     static InitDataPass GetActorInitPassData(InitObjKind obj);
     /// <summary>
-    /// 初期化文字列を所得
+    /// 初期化したいパラメータを文字列で所得
     /// </summary>
-    /// <param name="obj"></param>
-    /// <returns></returns>
+    /// <param name="obj">初期化したいオブジェクト</param>
+    /// <returns>初期化したいパラメータの文字列</returns>
     static std::vector<std::string> GetActorParametorString(InitObjKind obj);
     //initActorFileNameの先のファイルから所得したデータをまとめたVector
     static std::vector<std::string> objectInitDataPassVec;
     //初期化するパスを纏めているファイルの名前
     static std::string initActorFileName; 
+    //描画モデルハンドル所得役
+    static AssetManager* assetManager;
 };

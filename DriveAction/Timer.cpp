@@ -3,9 +3,9 @@
 #include "Utility.h"
 #include "Clock.h"
 /// <summary>
-/// 制限時間とかを計測する
+/// 制限時間等を計測する
 /// </summary>
-/// <param name="setLimitTime"></param>
+/// <param name="setLimitTime">計測したい時間</param>
 Timer::Timer(double setLimitTime)
 {
     limitTime = setLimitTime;
@@ -26,7 +26,7 @@ bool Timer::IsOverLimitTime()const
 /// <summary>
 /// 経過時間
 /// </summary>
-/// <returns></returns>
+/// <returns>何秒経ったか</returns>
 double Timer::GetElaspedTime()const
 {    
     double nowTime = Clock::GetNowGameTime();
@@ -36,7 +36,7 @@ double Timer::GetElaspedTime()const
 /// <summary>
 /// タイマーに設定された時間
 /// </summary>
-/// <returns></returns>
+/// <returns>タイマーに設定された時間</returns>
 double Timer::GetLimitTime() const
 {
     return limitTime;
@@ -44,7 +44,7 @@ double Timer::GetLimitTime() const
 /// <summary>
 /// 残り時間を所得
 /// </summary>
-/// <returns></returns>
+/// <returns>あと何秒時間が残っているか</returns>
 double Timer::GetRemainingTime() const
 {
     return limitTime - GetElaspedTime();

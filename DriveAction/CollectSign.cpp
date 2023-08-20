@@ -22,7 +22,6 @@ CollectSign::CollectSign(std::weak_ptr<PlayerObserver> player)
 CollectSign::~CollectSign()
 {
     StopEffekseer3DEffect(signEffect);
-    
 }
 /// <summary>
 /// エフェクトの位置と向きを設定

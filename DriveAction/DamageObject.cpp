@@ -11,7 +11,10 @@ DamageObject::DamageObject(ObjectInit::InitObjKind kind, std::unique_ptr<ObjectO
     observer = std::move(setObserver);
     tag = damageObject;
 }
-
+/// <summary>
+/// 発射したオブジェクトのユニークポインタの開放
+/// </summary>
 DamageObject::~DamageObject()
 {
+    observer.reset();
 }

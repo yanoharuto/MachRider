@@ -76,11 +76,11 @@ void DemoCar::EffectUpdate()
 		SetRotationPlayingEffekseer3DEffect(runEffect, 0, degree * RAGE, 0);
 	}
 }
-/// <summary>
+/// <summary>/
 /// ‘–‚é‘¬‚³ƒxƒNƒgƒ‹‚ÌŠ“¾
 /// </summary>
 /// <returns></returns>
-VECTOR DemoCar::GetAccelVec()
+void DemoCar::UpdateAccelPower()
 {
 	// ‰Á‘¬ˆ—.
 	accelPower += speedParamator.acceleSpeed;
@@ -88,5 +88,4 @@ VECTOR DemoCar::GetAccelVec()
 	{
 		accelPower = speedParamator.maxSpeed;
 	}
-	return VScale(direction, accelPower);
 }

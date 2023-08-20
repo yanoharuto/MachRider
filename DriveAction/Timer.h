@@ -7,9 +7,9 @@ class Timer
 {
 public:
     /// <summary>
-    /// 制限時間とかを計測する
+    /// 制限時間等を計測する
     /// </summary>
-    /// <param name="setLimitTime"></param>
+    /// <param name="setLimitTime">計測したい時間</param>
     Timer(double limitTime);
     ~Timer();
     /// <summary>
@@ -18,19 +18,19 @@ public:
     /// <returns>過ぎたらTrue</returns>
     bool IsOverLimitTime()const;
     /// <summary>
-    /// 計測時間
+    /// 経過時間
     /// </summary>
-    /// <returns></returns>
+    /// <returns>何秒経ったか</returns>
     virtual double GetElaspedTime()const;
     /// <summary>
-    /// 最初に設定した制限時間を渡す
+    /// タイマーに設定された時間
     /// </summary>
-    /// <returns></returns>
+    /// <returns>タイマーに設定された時間</returns>
     double GetLimitTime()const;
     /// <summary>
-    /// 残り時間
+    /// 残り時間を所得
     /// </summary>
-    /// <returns></returns>
+    /// <returns>あと何秒時間が残っているか</returns>
     double GetRemainingTime()const;
 protected:
     //制限時間

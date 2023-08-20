@@ -107,12 +107,16 @@ void StageDataManager::SaveHiScore(int hiScore)
     {
         updateString = std::to_string(score.highScore) + colon + std::to_string(score.second) + colon + std::to_string(hiScore) + colon;
     }
-    std::ofstream writing_file;
-    std::string filePass = GetStageData(stageScoreFilePass);
-    // ファイルを開いて
-    writing_file.open(filePass, std::ios::out);
-    //スコアの更新
-    writing_file << borderString + updateString << std::endl;
+    //スコア更新有りなら書き込む
+    if(!updateString.empty())
+    {
+        std::ofstream writing_file;
+        std::string filePass = GetStageData(stageScoreFilePass);
+        // ファイルを開いて
+        writing_file.open(filePass, std::ios::out);
+        //スコアの更新
+        writing_file << borderString + updateString << std::endl;
+    }
 }
 /// <summary>
 /// 初期化

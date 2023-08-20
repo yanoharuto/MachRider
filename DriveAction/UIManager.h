@@ -183,8 +183,8 @@ public:
 /// <returns></returns>
     static UIData CreateUIData(int kindNum);
  private:
-     //読み込んだ情報
-    static std::vector<std::string> initDataVec;
+     //全てのUIのパス
+    static std::vector<std::string> uiPathVec;
     //読み込んだ画像
     static std::unordered_map<int,UIData> loadUIDataMap;
     //uiの情報を纏めておいてあるファイル

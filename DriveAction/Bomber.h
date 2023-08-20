@@ -41,5 +41,5 @@ private:
     //“–‚½‚è”»’è
     SphereCollider* collider = nullptr;
     //Õ“Ëˆ—Às–ğ
-    ConflictProcessor* conflictProcessor;
+    ConflictProcessor* conflictProcessor = nullptr;
 };

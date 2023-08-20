@@ -39,23 +39,20 @@ protected:
 	/// <summary>
 	/// 進む方向と速さを更新する
 	/// </summary>
-	/// <param name"deltaTime">経過時間</param>
-	/// <param name="accelVec">次の更新までに進む方向と速さ</param>
-	void UpdateVelocity();
+	virtual void UpdateVelocity();
 	/// <summary>
 	/// modelの描画場所を更新
 	/// </summary>
 	void ReflectsVelocity() override;
-
 	/// <summary>
 	/// このフレームの間に進む量を出す
 	/// </summary>
 	/// <returns>進む量</returns>
-	virtual VECTOR GetAccelVec();
+	virtual void UpdateAccelPower();
 	/// <summary>
 	/// 移動速度などの初期化
 	/// </summary>
-	/// <param name="kind"></param>
+	/// <param name="kind">この車の種類</param>
 	void InitSpeedParamater(ObjectInit::InitObjKind kind);
 	//スピードのパラメータ
 	struct SpeedParamator

@@ -52,11 +52,11 @@ class SoundPlayer
 {
 public:
     /// <summary>
-    /// 音を出すやつ
+    /// 全音のパスを把握
     /// </summary>
     SoundPlayer();
     /// <summary>
-    /// 音を全部止めて消す
+    /// 音を全部止めて解放
     /// </summary>
     ~SoundPlayer();
     /// <summary>

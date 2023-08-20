@@ -45,7 +45,7 @@ private:
 	/// 加速用ベクトルを作る
 	/// </summary>
 	/// <returns></returns>
-	VECTOR GetAccelVec()override;
+	void UpdateVelocity()override;
 	/// <summary>
 	/// 入力するとTwistZRotaが変更する
 	/// </summary>

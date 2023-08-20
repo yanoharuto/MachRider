@@ -34,7 +34,7 @@ private:
     /// 走る速さベクトルの所得
     /// </summary>
     /// <returns></returns>
-    VECTOR GetAccelVec()override;
+    void UpdateAccelPower()override;
     //走るエフェクト
     int runEffect = -1;
     //初期位置

@@ -31,9 +31,15 @@ namespace Input
 #define SHORT_VALUE 12767
 }
 using namespace Input;
+/// <summary>
+/// ユーザーが入力した情報
+/// </summary>
 class UserInput
 {
 public:
+    /// <summary>
+/// 入力したキーがどれか分かるように準備
+/// </summary>
     UserInput();
     ~UserInput() {};
     /// <summary>
@@ -53,16 +59,15 @@ public:
     static bool IsInputPad() { return isInputPad; };
 private:
     /// <summary>
-    /// ボタンの入力更新
+    /// キーボードボタンの入力更新
     /// </summary>
-    /// <param name="_Input">入力状況</param>
-    /// <param name="_Num">ボタンの割り当て番号</param>
+    /// <param name="_Input">入力状況</param>    
     /// <param name="_Button">更新したいボタン</param>
-    void ButtonUpdate(bool inputJudge,InputState* _Button);
+    void UpdateButton(bool inputJudge,InputState* _Button);
     /// <summary>
-    /// ボタンの入力更新
+    /// ゲームパッドの入力更新
     /// </summary>
-    void ButtonUpdate();
+    void UpdateGamePadButton();
     //ボタンの情報
     static InputState keyInputState[KEY_INPUT_KIND_NUM];
     //パッドの情報

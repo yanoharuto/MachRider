@@ -18,7 +18,9 @@ public:
     /// <param name="kind"></param>
     /// <param name="setObserver"></param>
     DamageObject(ObjectInit::InitObjKind kind, std::unique_ptr<ObjectObserver> setObserver);
-
+    /// <summary>
+    /// 発射したオブジェクトのユニークポインタの開放
+    /// </summary>
     virtual ~DamageObject();
 protected:
     /// <summary>

@@ -5,7 +5,7 @@
 std::map<SoundKind, int> SoundPlayer::soundHandleMap;
 std::vector <std::string> SoundPlayer::initFilePassData;
 /// <summary>
-/// 音を出すやつ
+/// 全音のパスを把握
 /// </summary>
 SoundPlayer::SoundPlayer()
 {
@@ -14,7 +14,7 @@ SoundPlayer::SoundPlayer()
     SAFE_DELETE(initDataLoader);
 }
 /// <summary>
-/// デストラクタ
+/// 音を全部止めて解放
 /// </summary>
 SoundPlayer::~SoundPlayer()
 {

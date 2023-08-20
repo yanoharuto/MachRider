@@ -9,17 +9,9 @@ const int FadeInFadeOut::fadeSpeed = 10;
 //後ろの背景
 int FadeInFadeOut::backScreen = -1;
 
-FadeInFadeOut::FadeInFadeOut()
-{
-}
-
-FadeInFadeOut::~FadeInFadeOut()
-{
-}
 /// <summary>
 /// フェードイン
 /// </summary>
-/// <param name="deltaTime"></param>
 void FadeInFadeOut::FadeIn()
 {
 	fadeValue = MAX1BYTEVALUE;
@@ -38,7 +30,6 @@ void FadeInFadeOut::FadeIn()
 /// <summary>
 /// だんだん白くなる
 /// </summary>
-/// <param name="deltaTime"></param>
 void FadeInFadeOut::FadeOut()
 {
 	fadeValue = 0;

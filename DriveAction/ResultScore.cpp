@@ -8,8 +8,10 @@ const int ResultScore::getCollectBonus = 500;
 //残り時間のボーナス
 const int ResultScore::clearTimeBonus = 50;
 /// <summary>
-/// 最終的なスコアの保存
+/// ゲームクリアしたときのスコアを計算する
 /// </summary>
+/// <param name="timer">クリアタイム</param>
+/// <param name="player">クリアしたプレイヤーの情報通達役</param>
 ResultScore::ResultScore(Timer* timer, std::weak_ptr<PlayerObserver> player)
 {
     FixScore(timer, player);
@@ -18,8 +20,8 @@ ResultScore::ResultScore(Timer* timer, std::weak_ptr<PlayerObserver> player)
 /// <summary>
 /// スコア所得
 /// </summary>
-/// <param name="scoreKind">どのスコアが欲しいか</param>
-/// <returns></returns>
+/// <param name="scoreKind">欲しいスコアの種類</param>
+/// <returns>引数のスコア量</returns>
 int ResultScore::GetScore(ScoreKind scoreKind)
 {
     switch (scoreKind)
@@ -38,8 +40,8 @@ int ResultScore::GetScore(ScoreKind scoreKind)
 /// <summary>
 /// スコアの倍率を所得
 /// </summary>
-/// <param name="scoreKind"></param>
-/// <returns></returns>
+/// <param name="scoreKind">欲しいスコアの種類</param>
+/// <returns>引数のスコアの倍率</returns>
 int ResultScore::GetScoreBonus(ScoreKind scoreKind)
 {
     switch (scoreKind)
@@ -58,9 +60,9 @@ int ResultScore::GetScoreBonus(ScoreKind scoreKind)
 /// <summary>
 /// スコアを確定させる
 /// </summary>
-/// <param name="timer"></param>
-/// <param name="player"></param>
-void ResultScore::FixScore(Timer* timer, std::weak_ptr<PlayerObserver> player)
+/// <param name="timer">クリアタイム所得</param>
+/// <param name="player">プレイヤーの所得した収集アイテムを調べる</param>
+void ResultScore::FixScore(Timer* const timer, std::weak_ptr<PlayerObserver> player)
 {
     //制限時間を超過してたら0
     timeScore = timer->IsOverLimitTime() ? 0 : static_cast<int>(timer->GetRemainingTime() * clearTimeBonus);

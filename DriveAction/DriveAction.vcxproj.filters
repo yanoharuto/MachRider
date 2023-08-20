@@ -67,9 +67,6 @@
     <Filter Include="ソース ファイル\DataCreate">
       <UniqueIdentifier>{beb78013-cb70-4f43-890e-89347d2a22e0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Loader">
-      <UniqueIdentifier>{43866282-d834-46d9-921c-4ce1e384f969}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PlayerCar.cpp">

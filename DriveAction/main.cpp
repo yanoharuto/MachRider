@@ -14,11 +14,13 @@
 #include "EffectManager.h"
 #include "UIManager.h"
 #include "UIDrawer.h"
+
 //シーンを作るのに必要
 SceneBase* MakeScene(SceneType _NowSceneType);
 
 //ひとつ前のシーン
 SceneType prevSceneType = SceneType::TITLE;
+
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
 	// DirectX11を使用するようにする。(DirectX9も可、一部機能不可)

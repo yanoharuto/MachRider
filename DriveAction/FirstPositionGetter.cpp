@@ -4,12 +4,13 @@
 /// <summary>
 /// 初期位置を渡す
 /// </summary>
-/// <param name="dataKind"></param>
-/// <returns></returns>
+/// <param name="dataKind">オブジェクトの種類によって読み込む情報を変更する</param>
+/// <returns>そのオブジェクトの位置</returns>
 std::vector<EditArrangementData> FirstPositionGetter::GetInitData(Object::ObjectTag tag)
 {
     std::vector<EditArrangementData> initData;
     using enum Object::ObjectTag;
+
     switch (tag)
     {
     case player:
@@ -54,5 +55,6 @@ std::vector<EditArrangementData> FirstPositionGetter::CSVConvertFirstData(std::s
         dataVec.push_back(initData);
     }
     SAFE_DELETE(csv);
+
     return dataVec;
 }

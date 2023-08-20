@@ -18,10 +18,13 @@
 Bomber::Bomber(std::unique_ptr<ObjectObserver> setObserver)
     :DamageObject(ObjectInit::bomber,std::move(setObserver))
 {
+    //落下位置は発射したキャラの位置に準拠
     position = observer->GetSubjectPos();
+    //初速をセット
     fallingSpeed = setFallingSpeed;
-    tag = ObjectTag::damageObject;
+    //エフェクト
     EffectManager::LoadEffect(bombExplosion);
+    //向きと速度
     velocity = VGet(0, 0, 0);
     direction = VGet(1, 0, 0);
     //当たり判定

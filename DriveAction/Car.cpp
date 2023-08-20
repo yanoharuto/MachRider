@@ -61,7 +61,9 @@ void Car::ConflictReaction(const ConflictExamineResultInfo conflictInfo)
 /// <param name="accelVec">次の更新までに進む方向と速さ</param>
 void Car::UpdateVelocity()
 {
-	const VECTOR accelVec = GetAccelVec();//速度を取ってくる
+	UpdateAccelPower();
+	//加速量
+	VECTOR accelVec = VScale(direction, accelPower);
 	//タイヤの向きから進行方向を取る
 	float theta = wheels->GetMoveDirTheta(VSize(accelVec));
 	theta *= speedParamator.gripPower - (accelPower - speedParamator.lowestSpeed) / speedParamator.maxSpeed * speedParamator.gripPower;
@@ -98,7 +100,7 @@ void Car::ReflectsVelocity()
 /// このフレームの間に進む量を出す
 /// </summary>
 /// <returns>進む量</returns>
-VECTOR Car::GetAccelVec()
+void Car::UpdateAccelPower()
 {
 	//ジョイパッドだったらブレーキの対応ボタンを変更
 	InputState breakInput = UserInput::GetInputState(Down);
@@ -130,8 +132,6 @@ VECTOR Car::GetAccelVec()
 	{
 		accelPower = speedParamator.lowestSpeed;
 	}
-	//加速ベクトルを生成
-	return VScale(direction, accelPower);
 }
 /// <summary>
 /// 移動速度などの初期化

@@ -144,16 +144,24 @@ int PlayerCar::GetCollectCount()
 /// 加速用ベクトルを作る
 /// </summary>
 /// <returns></returns>
-VECTOR PlayerCar::GetAccelVec()
+void PlayerCar::UpdateVelocity()
 {
-	VECTOR accelVec = Car::GetAccelVec();
+	Car::UpdateAccelPower();
+
+	//加速量
+	VECTOR accelVec = VScale(direction, accelPower);
+
 	//ダメージを受けていなかったらターボ
 	if (!isDamage)
 	{
 		accelVec = VAdd(accelVec, VScale(direction, GetTurboPower()));
 	}
-	//加速ベクトルを生成
-	return accelVec;
+	//タイヤの向きから進行方向を取る
+	float theta = wheels->GetMoveDirTheta(VSize(accelVec));
+	theta *= speedParamator.gripPower - (accelPower - speedParamator.lowestSpeed) / speedParamator.maxSpeed * speedParamator.gripPower;
+	velocity = VTransform(accelVec, MGetRotY(theta));
+	// 上下方向にいかないようにベロシティを整える.
+	velocity = VGet(velocity.x, 0, velocity.z);
 }
 /// <summary>
 /// 入力すると機体が傾く

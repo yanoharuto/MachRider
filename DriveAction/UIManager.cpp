@@ -2,25 +2,34 @@
 #include "CSVFileLoader.h"
 #include "Utility.h"
 #include "DxLib.h"
-std::vector<std::string> UIManager::initDataVec;
+//全てのUIのパス
+std::vector<std::string> UIManager::uiPathVec;
+//UI画像の情報
 std::unordered_map<int, UIData> UIManager::loadUIDataMap;
+/// <summary>
+/// 全てのUI画像のパスをuiPathVecに渡す
+/// </summary>
 UIManager::UIManager()
 {
     CSVFileLoader* initDataFile = new CSVFileLoader(initUIDataPassFile);
-    initDataVec = initDataFile->GetLoadStringData();
+    uiPathVec = initDataFile->GetLoadStringData();
     SAFE_DELETE(initDataFile);
 }
-
+/// <summary>
+/// 各UIに使っている画像を消去
+/// </summary>
 UIManager::~UIManager()
 {
     for (auto itr = loadUIDataMap.begin(); itr != loadUIDataMap.end(); itr++)
     {
+        //分割読み込み画像を消去
         auto graphs = ((*itr).second).dataHandle;
         for (int i = 0; i < graphs.size(); i++)
         {
             DeleteGraph(graphs[i]);
         }
     }
+    loadUIDataMap.clear();
 }
 /// <summary>
 /// UIを所得
@@ -46,7 +55,7 @@ UIData UIManager::CreateUIData(int kindNum)
     else
     {
         //データ読み取り
-        CSVFileLoader* initDataFile = new CSVFileLoader(initDataVec[kindNum]);
+        CSVFileLoader* initDataFile = new CSVFileLoader(uiPathVec[kindNum]);
         std::vector<std::string> dataVec = initDataFile->GetLoadStringData();
         //位置とか幅とか分割数を読み取る
         data.x = atoi(dataVec[drawX].c_str());

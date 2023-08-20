@@ -22,10 +22,13 @@ SphereHitChecker::~SphereHitChecker()
 /// <returns>当たったらTrue</returns>
 bool SphereHitChecker::HitCheck(Object* const objA, Object* const objB)
 {
+    //１引数の当たり判定情報
     HitCheckExamineObjectInfo aInfo;
     aInfo.SetExamineInfo(objA);
+    //2引数の当たり判定情報
     HitCheckExamineObjectInfo bInfo;
     bInfo.SetExamineInfo(objB);
+    //当たり判定調査
     return HitCheckProcess(aInfo, bInfo);
 }
 /// <summary>
@@ -38,6 +41,7 @@ bool SphereHitChecker::HitCheck(Object* const objA, const HitCheckExamineObjectI
 {
     HitCheckExamineObjectInfo aInfo;
     aInfo.SetExamineInfo(objA);
+    //当たり判定調査
     return HitCheckProcess(aInfo, objBInfo);
 }
 /// <summary>

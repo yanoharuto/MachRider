@@ -4,11 +4,16 @@
 
 //modelのアドレスを貰うとモデルハンドルを返す
 std::map<std::string, int> AssetManager::assetMap;
+/// <summary>
+/// 描画モデルハンドル供給準備
+/// </summary>
 AssetManager::AssetManager()
 {
     assetMap.clear();
 }
-
+/// <summary>
+/// 各モデルの情報をデリート
+/// </summary>
 AssetManager::~AssetManager()
 {
     for (auto ite = assetMap.begin(); ite != assetMap.end(); ite++)

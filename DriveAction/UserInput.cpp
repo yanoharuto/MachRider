@@ -3,38 +3,44 @@
 InputState UserInput::keyInputState[KEY_INPUT_KIND_NUM];
 //パッドの情報
 XINPUT_STATE UserInput::xInput;
+//ゲームパッドで入力するか
 bool UserInput::isInputPad;
+/// <summary>
+/// 入力したキーがどれか分かるように準備
+/// </summary>
 UserInput::UserInput()
 {
     //ゲームパッド入力ならTrue
     isInputPad = GetJoypadNum() != 0;
-    keyInputCode[KeyInputKind::Up] = PAD_INPUT_UP;
-    keyInputCode[KeyInputKind::Down] = PAD_INPUT_DOWN;
-    keyInputCode[KeyInputKind::Left] = PAD_INPUT_LEFT;
-    keyInputCode[KeyInputKind::Right] = PAD_INPUT_RIGHT;
-    keyInputCode[KeyInputKind::Space] = PAD_INPUT_10;
-    keyInputCode[KeyInputKind::EscapeKey] = PAD_INPUT_9;
-    keyInputCode[KeyInputKind::WKey] = PAD_INPUT_8;
-    keyInputCode[KeyInputKind::DKey] = PAD_INPUT_6;
-    keyInputCode[KeyInputKind::SKey] = PAD_INPUT_5;
-    keyInputCode[KeyInputKind::AKey] = PAD_INPUT_4;
+    //各入力キー
+    using enum KeyInputKind;
+    keyInputCode[Up] = PAD_INPUT_UP;
+    keyInputCode[Down] = PAD_INPUT_DOWN;
+    keyInputCode[Left] = PAD_INPUT_LEFT;
+    keyInputCode[Right] = PAD_INPUT_RIGHT;
+    keyInputCode[Space] = PAD_INPUT_10;
+    keyInputCode[EscapeKey] = PAD_INPUT_9;
+    keyInputCode[WKey] = PAD_INPUT_8;
+    keyInputCode[DKey] = PAD_INPUT_6;
+    keyInputCode[SKey] = PAD_INPUT_5;
+    keyInputCode[AKey] = PAD_INPUT_4;
 }
 /// <summary>
 /// 入力状況更新
 /// </summary>
 void UserInput::Update()
 {
-    if (isInputPad)
+    if (isInputPad)//パッド操作
     {
-        ButtonUpdate();
+        UpdateGamePadButton();
     }
-    else//パッド操作
+    else//キーボード操作
     {
         //現在入力されたボタンを所得
         int inputKey = GetJoypadInputState(DX_INPUT_KEY);
         for (int i = 0; i < KEY_INPUT_KIND_NUM; i++)
         {
-            ButtonUpdate(inputKey & keyInputCode[i], &keyInputState[i]);
+            UpdateButton(inputKey & keyInputCode[i], &keyInputState[i]);
         }
     }
     //ゲームパッド入力ならTrue
@@ -50,13 +56,12 @@ InputState UserInput::GetInputState(KeyInputKind inputKind)
 {
     return keyInputState[inputKind];
 }
-
 /// <summary>
-/// ボタンの入力状況を所得
+/// キーボードボタンの入力更新
 /// </summary>
-/// <param name="inputJudge"></param>
-/// <param name="_Button"></param>
-void UserInput::ButtonUpdate(bool inputJudge, InputState* _Button)
+/// <param name="_Input">入力状況</param>    
+/// <param name="_Button">更新したいボタン</param>
+void UserInput::UpdateButton(bool inputJudge, InputState* _Button)
 {    
     //ボタンが押されてたら
     if (inputJudge)
@@ -99,17 +104,17 @@ void UserInput::ButtonUpdate(bool inputJudge, InputState* _Button)
     }
 }
 /// <summary>
-/// ボタンの入力更新
+/// ゲームパッドの入力更新
 /// </summary>
-void UserInput::ButtonUpdate()
+void UserInput::UpdateGamePadButton()
 {
     //ゲームパッドの場合のボタン入力を所得
     GetJoypadXInputState(DX_INPUT_KEY_PAD1, &xInput);
 
-    ButtonUpdate(xInput.ThumbLY > SHORT_VALUE - 1, &keyInputState[Up]);
-    ButtonUpdate(xInput.ThumbLY < -SHORT_VALUE, &keyInputState[Down]);
-    ButtonUpdate(xInput.ThumbLX > SHORT_VALUE - 1, &keyInputState[Right]);
-    ButtonUpdate(xInput.ThumbLX < -SHORT_VALUE, &keyInputState[Left]);
-    ButtonUpdate(xInput.Buttons[XINPUT_BUTTON_B] == 1, &keyInputState[Space]);
-    ButtonUpdate(xInput.Buttons[XINPUT_BUTTON_BACK] == 1, &keyInputState[EscapeKey]);   
+    UpdateButton(xInput.ThumbLY > SHORT_VALUE - 1, &keyInputState[Up]);
+    UpdateButton(xInput.ThumbLY < -SHORT_VALUE, &keyInputState[Down]);
+    UpdateButton(xInput.ThumbLX > SHORT_VALUE - 1, &keyInputState[Right]);
+    UpdateButton(xInput.ThumbLX < -SHORT_VALUE, &keyInputState[Left]);
+    UpdateButton(xInput.Buttons[XINPUT_BUTTON_B] == 1, &keyInputState[Space]);
+    UpdateButton(xInput.Buttons[XINPUT_BUTTON_BACK] == 1, &keyInputState[EscapeKey]);   
 }

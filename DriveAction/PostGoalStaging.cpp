@@ -196,18 +196,22 @@ void PostGoalStaging::ConvertTimeScotre()
 /// </summary>
 void PostGoalStaging::ConvertCollectScotre()
 {
-    if (!SoundPlayer::IsPlaySound(scoreEndSE))
+    //一つ一つスコアに変換する工程をスキップ
+    bool isSkip = UserInput::GetInputState(Space) == Push;
+    //効果音が鳴り終わったタイミングで入手した宝石をスコアに変換する
+    if (!SoundPlayer::IsPlaySound(scoreEndSE) || isSkip)
     {
         //描画したアイテムの数が獲得したアイテムの数と同じ以上にになったら
-        if (UserInput::GetInputState(Space) == Push || (drawCollectIconNum >= getCollectNum && !isEndConvertScore))
+        if (isSkip || (drawCollectIconNum >= getCollectNum && !isEndConvertScore))
         {
+            //描画するスコアなどを記録と統一
             collectScoreUI.score = resultScore->GetScore(collectBonus);
             drawCollectIconNum = getCollectNum;
             isEndConvertScore = true;
-            ////花吹雪エフェクト
+            ////花吹雪エフェクト開始
             confettiEffect = EffectManager::GetPlayEffect2D(confetti);
             SetPosPlayingEffekseer2DEffect(confettiEffect, SCREEN_WIDTH / 2, SCREEN_HEIGHT, 5);
-            //ファンファーレ
+            //ファンファーレ効果音
             SoundPlayer::Play2DSE(gameEndFanfare);
         }
         else
