@@ -7,11 +7,11 @@ class PlayerDataEditor;
 class EnemyDataEditor;
 class CollectItemDataEditor;
 class StageObjectController;
-
+class EditManual;
 /// <summary>
 /// 編集処理の流れ
 /// </summary>
-class EditorSceneFlow:public SceneFlowBase
+class EditorSceneFlow :public SceneFlowBase
 {
 public:
     /// <summary>
@@ -20,17 +20,19 @@ public:
     enum EditProcessState
     {
         //player編集
-        EditPlayer,
+        editPlayer,
         //収集アイテム編集
-        EditCollect,
+        editCollect,
         //敵編集
-        EditEnemy,
+        editEnemy,
     };
     /// <summary>
-    /// コンストラクタ
+    /// 編集に必要なものを確保
     /// </summary>
     EditorSceneFlow();
-
+    /// <summary>
+    /// 編集物やステージの背景などを解放
+    /// </summary>
     ~EditorSceneFlow();
     /// <summary>
     /// 更新
@@ -46,8 +48,6 @@ private:
     /// 編集するものを選択
     /// </summary>
     void SelectEditKind();
-    //描画する文字のサイズ
-    const int fontSize = 124;
     //ステージの端
     StageObjectController* stage;
     //編集箇所
@@ -56,11 +56,11 @@ private:
     StageDataEditor* nowEditor;
     //カメラ
     EditorCamera* camera;
-    //エネミー編集クラス
-    EnemyDataEditor* enemyEditor;
-    //プレイヤー編集クラス
-    PlayerDataEditor* playerEditor;
-    //収集アイテム編集クラス
-    CollectItemDataEditor* collectEditor;
+    //編集クラスのまとめ
+    std::vector<StageDataEditor*> editorVec;
+    //編集クラスの番号
+    int selectEditorNum = 0;
+    //編集操作説明
+    EditManual* manual;
 };
 

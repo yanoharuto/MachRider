@@ -1,8 +1,8 @@
 #pragma once
 #include <unordered_map>
 #include <list>
-struct ConflictExamineResultInfo;
-struct HitCheckExamineObjectInfo;
+struct CollisionResultInfo;
+struct HitCheckInfo;
 class Actor;
 class SphereHitChecker;
 /// <summary>
@@ -22,13 +22,13 @@ public:
     /// “–‚½‚è”»’è‚Ìˆ—‚ğŒÄ‚Ño‚·
     /// </summary>
     /// <param name="resultInfo"></param>
-    virtual void ConflictProcess(ConflictExamineResultInfo resultInfo);
+    virtual void OnConflict(CollisionResultInfo resultInfo);
 
     /// <summary>
 /// “–‚½‚è”»’è‚ÅÕ“Ë‚µ‚Ä‚¢‚é‚©’²‚×‚é‚Ì‚É•K—v‚Èî•ñ‚ğ“n‚·
 /// </summary>
 /// <returns></returns>
-    virtual HitCheckExamineObjectInfo GetHitExamineCheckInfo()const;
+    virtual HitCheckInfo GetHitExamineCheckInfo()const;
 protected:
     /// <summary>
     /// “–‚½‚è”»’è‚Ì‚¿å

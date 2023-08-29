@@ -15,11 +15,11 @@ LaserCollider::LaserCollider(Actor* obj, float setLineRange)
 /// </summary>
 /// <param name="hitCheckInfo">“–‚½‚Á‚Ä‚­‚é“z‚Ìî•ñ</param>
 /// <returns></returns>
-ConflictExamineResultInfo LaserCollider::HitCheck(HitCheckExamineObjectInfo hitCheckInfo)
+CollisionResultInfo LaserCollider::HitCheck(HitCheckInfo hitCheckInfo)
 {
-    ConflictExamineResultInfo resultInfo = {};
+    CollisionResultInfo resultInfo = {};
     //ƒŒ[ƒU[‚Ìî•ñ
-    HitCheckExamineObjectInfo lineInfo;
+    HitCheckInfo lineInfo;
     lineInfo.SetExamineInfo(object);
     //object‚Ì‚‚³•ªL‚Î‚·
     float range = (object->GetPos().y - hitCheckInfo.pos.y) * lineRange;

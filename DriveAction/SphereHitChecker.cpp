@@ -23,10 +23,10 @@ SphereHitChecker::~SphereHitChecker()
 bool SphereHitChecker::HitCheck(Object* const objA, Object* const objB)
 {
     //１引数の当たり判定情報
-    HitCheckExamineObjectInfo aInfo;
+    HitCheckInfo aInfo;
     aInfo.SetExamineInfo(objA);
     //2引数の当たり判定情報
-    HitCheckExamineObjectInfo bInfo;
+    HitCheckInfo bInfo;
     bInfo.SetExamineInfo(objB);
     //当たり判定調査
     return HitCheckProcess(aInfo, bInfo);
@@ -37,9 +37,9 @@ bool SphereHitChecker::HitCheck(Object* const objA, Object* const objB)
 /// <param name="objA">調べたいオブジェクトA</param>
 /// <param name="objBInfo">調べたいオブジェクトB</param>
 /// <returns>当たったらTrue</returns>
-bool SphereHitChecker::HitCheck(Object* const objA, const HitCheckExamineObjectInfo objBInfo)
+bool SphereHitChecker::HitCheck(Object* const objA, const HitCheckInfo objBInfo)
 {
-    HitCheckExamineObjectInfo aInfo;
+    HitCheckInfo aInfo;
     aInfo.SetExamineInfo(objA);
     //当たり判定調査
     return HitCheckProcess(aInfo, objBInfo);
@@ -50,7 +50,7 @@ bool SphereHitChecker::HitCheck(Object* const objA, const HitCheckExamineObjectI
 /// <param name="objAInfo">調べたいオブジェクトA</param>
 /// <param name="objBInfo">調べたいオブジェクトB</param>
 /// <returns>当たったらTrue</returns>
-bool SphereHitChecker::HitCheck(const HitCheckExamineObjectInfo objAInfo, const HitCheckExamineObjectInfo objBInfo)
+bool SphereHitChecker::HitCheck(const HitCheckInfo objAInfo, const HitCheckInfo objBInfo)
 {
     return HitCheckProcess(objAInfo, objBInfo);
 }
@@ -58,9 +58,9 @@ bool SphereHitChecker::HitCheck(const HitCheckExamineObjectInfo objAInfo, const 
 /// 当たり判定で衝突しているか調べるのに必要な情報を渡す
 /// </summary>
 /// <returns></returns>
-HitCheckExamineObjectInfo SphereHitChecker::GetHitExamineCheckInfo() const
+HitCheckInfo SphereHitChecker::GetHitExamineCheckInfo() const
 {
-    HitCheckExamineObjectInfo info;
+    HitCheckInfo info;
     info.SetExamineInfo(object);
     info.velocity = object->GetVelocity();
     return info;
@@ -79,7 +79,7 @@ bool SphereHitChecker::IsDead()
 /// <param name="objAInfo">調べたいオブジェクトA</param>
 /// <param name="objBInfo">調べたいオブジェクトB</param>
 /// <returns>当たったらTrue</returns>
-bool SphereHitChecker::HitCheckProcess(HitCheckExamineObjectInfo objAInfo, HitCheckExamineObjectInfo objBInfo)
+bool SphereHitChecker::HitCheckProcess(HitCheckInfo objAInfo, HitCheckInfo objBInfo)
 {
     //引数同士の距離
     VECTOR distance = VSub(objAInfo.pos, objBInfo.pos);

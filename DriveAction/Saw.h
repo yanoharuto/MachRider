@@ -17,11 +17,11 @@ public:
     /// 引数の場所に設置する
     /// </summary>
     /// <param name="arrangementData">編集データ</param>
-    Saw(EditArrangementData arrangementData);
+    Saw(PlacementData arrangementData);
     /// <summary>
     /// 継承するならこっち
     /// </summary>
-    Saw(ObjectInit::InitObjKind kind, EditArrangementData arrangementData);
+    Saw(ObjectInit::InitObjKind kind, PlacementData arrangementData);
     /// <summary>
     /// 当たり判定消去
     /// </summary>
@@ -34,14 +34,14 @@ public:
     /// <summary>
     /// 衝突処理実行 playerにぶつかったら破壊
     /// </summary>
-    void ConflictProcess(const ConflictExamineResultInfo conflictInfo) override;
+    void OnConflict(const CollisionResultInfo conflictInfo) override;
     
 protected:
     /// <summary>
     /// 共通初期化処理
     /// </summary>
     /// <param name="arrangementData"></param>
-    void Init(EditArrangementData arrangementData);
+    void Init(PlacementData arrangementData);
     //回転量
     static const float addRotate;
     //当たり判定

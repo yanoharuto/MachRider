@@ -7,7 +7,6 @@
 /// •`‰æ•û–@‚ğ•ÏX‚·‚é‚È‚ç‘æ“ñˆø”‚É“n‚µ‚Ä‚­‚¾‚³‚¢
 /// </summary>
 /// <param name="kind"></param>
-/// <param name="setViewer"></param>
 Actor::Actor(ObjectInit::InitObjKind kind)
     :Object(kind)
 {
@@ -18,9 +17,9 @@ Actor::Actor(ObjectInit::InitObjKind kind)
 /// “–‚½‚è”»’è‚Å“–‚½‚Á‚Ä‚½‚ç“n‚·î•ñ
 /// </summary>
 /// <returns></returns>
-HitCheckExamineObjectInfo Actor::GetHitCheckExamineInfo()
+HitCheckInfo Actor::GetHitCheckExamineInfo()
 {
-    HitCheckExamineObjectInfo objInfo;
+    HitCheckInfo objInfo;
     objInfo.SetExamineInfo(this);
     objInfo.velocity = velocity;
     return objInfo;

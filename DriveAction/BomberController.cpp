@@ -1,7 +1,7 @@
 #include "BomberController.h"
 #include "Bomber.h"
 #include "ObjectObserver.h"
-#include "ModelViewer.h"
+#include "DrawModel.h"
 #include "Utility.h"
 /// <summary>
 /// ”š’e§ŒäŒW
@@ -10,7 +10,7 @@
 BomberController::BomberController()
     :DamageObjectController(ObjectInit::bomber)
 {
-    viewer = new ModelViewer(ObjectInit::bomber);
+    drawModel = new DrawModel(ObjectInit::bomber);
 }
 /// <summary>
 /// ”š’e‚ğXV‚Å‚«‚é‚æ‚¤‚É‚·‚é

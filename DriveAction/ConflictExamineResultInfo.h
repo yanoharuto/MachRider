@@ -4,31 +4,36 @@
 
 enum class HitSituation
 {
+    //当たってない
     NotHit,
+    //当たった
     Enter,
+    //当たり続けている
     Stay,
+    //離れた
     Exist
 };
 /// <summary>
 /// 当たり判定の結果 渡す情報
 /// </summary>
-struct ConflictExamineResultInfo
+struct CollisionResultInfo
 {
-    HitSituation hit = HitSituation::NotHit;//当たり判定で当たったか
-    Object::Object::ObjectTag tag = Object::ObjectTag::obstacle;//オブジェクトのタグ
+    //当たり判定の当たり状況
+    HitSituation hit = HitSituation::NotHit;
+    //当たったオブジェクトのタグ
+    Object::Object::ObjectTag tag = Object::ObjectTag::obstacle;
+    //吹っ飛ぶベクトル
     VECTOR bounceVec = {};
+    //当たった後の位置
     VECTOR pos = {};
-    float radius = 0;//半径
-    float bouncePower = 0;//吹っ飛び力
+    //吹っ飛び力
+    float bouncePower = 0;
     /// <summary>
     /// tagや半径　吹っ飛び力を設定
     /// </summary>
-    /// <param name="hit">当たり判定で当たったか</param>
-    /// <param name="obj">作りたい情報のオブジェクト</param>
     void SetObjInfo(Object* const obj)
     {
         tag = obj->GetTag();
-        radius = obj->GetRadius();
         bouncePower = obj->GetBouncePower();
     }
 };

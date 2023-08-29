@@ -102,7 +102,7 @@ void ConflictManager::DrawCollisionSphere()
 {
     for (auto objIte = hitCheckList.begin(); objIte != hitCheckList.end(); objIte++)
     {
-       HitCheckExamineObjectInfo info = (*objIte)->GetHitExamineCheckInfo();
+       HitCheckInfo info = (*objIte)->GetHitExamineCheckInfo();
         DrawSphere3D(info.pos, info.radius, 4, GetColor(200, 200, 200), GetColor(200, 200, 200), false);
     }
 }
@@ -112,19 +112,19 @@ void ConflictManager::DrawCollisionSphere()
 /// <param name="conflictProccesor">衝突処理実行役</param>
 /// <param name="hitChecker">当たり判定</param>
 /// <returns>衝突結果</returns>
-ConflictExamineResultInfo ConflictManager::GetConflictResultInfo(ConflictProcessor* const conflictProccesor, SphereHitChecker* const hitChecker)
+CollisionResultInfo ConflictManager::GetConflictResultInfo(ConflictProcessor* const conflictProccesor, SphereHitChecker* const hitChecker)
 {
-    HitCheckExamineObjectInfo examineInfo = conflictProccesor->GetHitExamineCheckInfo();
+    HitCheckInfo examineInfo = conflictProccesor->GetHitExamineCheckInfo();
     //引数のオブジェクトそのものと当たってたらスルー もう動いてなくてもぶつかっているか調べない
     if (hitChecker != processorKeyMap[conflictProccesor] && !hitChecker->IsDead())
     {
         //当たっているか調べる
-        ConflictExamineResultInfo examineResultInfo = hitChecker->HitCheck(examineInfo);
+        CollisionResultInfo examineResultInfo = hitChecker->HitCheck(examineInfo);
 
         //当たった情報を渡す
         return examineResultInfo;
     }
-    return ConflictExamineResultInfo{};
+    return CollisionResultInfo{};
 }
 
 /// <summary>
@@ -139,15 +139,15 @@ void ConflictManager::Update()
         for (auto hitCheckItr = hitCheckList.begin(); hitCheckItr != hitCheckList.end(); hitCheckItr++)
         {
             //当たり判定結果
-            ConflictExamineResultInfo resultInfo = GetConflictResultInfo((*processorItr).first, *hitCheckItr);
+            CollisionResultInfo resultInfo = GetConflictResultInfo((*processorItr).first, *hitCheckItr);
             //衝突処理実行役同士の衝突なら
             if (hitCheckerKeyMap.contains(*hitCheckItr))
             {
                 //こっちにも当たり判定処理実行
-                hitCheckerKeyMap[*hitCheckItr]->ConflictProcess(GetConflictResultInfo(hitCheckerKeyMap[*hitCheckItr], processorKeyMap[(*processorItr).first]));
+                hitCheckerKeyMap[*hitCheckItr]->OnConflict(GetConflictResultInfo(hitCheckerKeyMap[*hitCheckItr], processorKeyMap[(*processorItr).first]));
             }
             //衝突処理実行
-            (*processorItr).first->ConflictProcess(resultInfo);
+            (*processorItr).first->OnConflict(resultInfo);
         }
     }
 }

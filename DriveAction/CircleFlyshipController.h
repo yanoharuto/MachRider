@@ -15,11 +15,11 @@ public:
     /// <summary>
     /// 輪になっているレーザー照射機の追加
     /// </summary>
-    void AddObject(std::vector<EditArrangementData> arrangementData) override;
+    void AddObject(std::vector<PlacementData> arrangementData) override;
 private:
     /// <summary>
 /// 輪になっているレーザー照射機の配置と追加
 /// </summary>
-    void AddObject(EditArrangementData arrangementData);
+    void AddObject(PlacementData arrangementData);
 };
 

@@ -1,6 +1,6 @@
 #include "ActorController.h"
 #include "Actor.h"
-#include "ModelViewer.h"
+#include "DrawModel.h"
 #include "Utility.h"
 /// <summary>
 /// デリート
@@ -12,7 +12,7 @@ ActorController::~ActorController()
         SAFE_DELETE(*ite);
     }
     actorList.clear();
-    SAFE_DELETE(viewer);
+    SAFE_DELETE(drawModel);
 }
 /// <summary>
 /// ゲーム開始準備処理
@@ -42,12 +42,12 @@ void ActorController::Update()
 /// </summary>
 void ActorController::Draw() const
 {
-    if (viewer != nullptr)
+    if (drawModel != nullptr)
     {
         for (auto ite = actorList.begin(); ite != actorList.end(); ite++)
         {
-            //Viewerに渡して描画してもらう
-            viewer->Draw((*ite));
+            //Drawerに渡して描画してもらう
+            drawModel->Draw((*ite));
         }
     }
 }

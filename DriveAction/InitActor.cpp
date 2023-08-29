@@ -33,14 +33,15 @@ InitActor::~InitActor()
 /// <returns>初期化に必要な情報</returns>
 ActorParameter InitActor::GetActorParamator(InitObjKind kind)
 {
-    //初期化情報文字列コンテナ
-    auto initData = GetActorParametorString(kind);
+    //初期化情報文字列ベクター
+    auto initData = GetActorParametorStrVec(kind);
     ActorParameter initParam = {};
     char* end;
+
     //各情報をString型からfloat型に置き換え
-    initParam.firstPosY = strtof(initData[InitObjParamator::firstPosY].c_str(), &end);
-    initParam.setBouncePow = strtof(initData[InitObjParamator::bouncePower].c_str(), &end);
-    initParam.setRadius = strtof(initData[InitObjParamator::collRadius].c_str(), &end);
+    initParam.firstPosY = strtof(initData[firstPosY].c_str(), &end);
+    initParam.setBouncePow = strtof(initData[bouncePower].c_str(), &end);
+    initParam.setRadius = strtof(initData[collRadius].c_str(), &end);
     return initParam;
 }
 /// <summary>
@@ -54,7 +55,7 @@ int InitActor::GetModelHandle(InitObjKind kind)
     int modelHandle = assetManager->Get3DModelAssetHandle(GetActorInitPassData(kind).modelPass);
     char* end;
     //modelの大きさを変更
-    float modelScale = strtof(GetActorParametorString(kind)[InitObjParamator::modelSize].c_str(), &end);
+    float modelScale = strtof(GetActorParametorStrVec(kind)[InitObjParamator::modelSize].c_str(), &end);
     MV1SetScale(modelHandle, VGet(modelScale, modelScale, modelScale));
     return modelHandle;
 }
@@ -76,7 +77,7 @@ std::string InitActor::GetAddDataPass(InitObjKind kind)
 /// <returns>引数のオブジェクトの追加情報や描画モデルまでのパス</returns>
 InitDataPass InitActor::GetActorInitPassData(InitObjKind obj)
 {
-    auto initData = GetActorParametorString(obj);
+    auto initData = GetActorParametorStrVec(obj);
     InitDataPass passData = {};
     passData.GetExtractParamator(initData);
     return passData;
@@ -87,7 +88,7 @@ InitDataPass InitActor::GetActorInitPassData(InitObjKind obj)
 /// </summary>
 /// <param name="obj">初期化したいオブジェクト</param>
 /// <returns>初期化したいパラメータの文字列</returns>
-std::vector<std::string> InitActor::GetActorParametorString(InitObjKind objKind)
+std::vector<std::string> InitActor::GetActorParametorStrVec(InitObjKind objKind)
 {
     int num = static_cast<int>(objKind);
     //データ読み取り

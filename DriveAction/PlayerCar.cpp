@@ -9,7 +9,7 @@
 #include "ConflictManager.h"
 #include "AssetManager.h"
 #include "SphereCollider.h"
-#include "PlayerViewer.h"
+#include "PlayerDrawModel.h"
 #include "Timer.h"
 #include "PlayerConflictProcessor.h"
 #include "ConflictManager.h"
@@ -19,7 +19,7 @@
 /// </summary>
 /// <param name="firstPos"></param>
 /// <param name="setDirection"></param>
-PlayerCar::PlayerCar(EditArrangementData arrangementData)
+PlayerCar::PlayerCar(PlacementData arrangementData)
 	:Car(ObjectInit::player)
 {
 	//初期位置設定
@@ -87,9 +87,7 @@ void PlayerCar::Update()
 	//位置の更新
 	ReflectsVelocity();
 	//タイヤの更新
-	WheelArgumentCarInfo carInfo;
-	carInfo.Init(MGetTranslate(position), direction, VSize(velocity));
-	wheels->WheelUpdate(carInfo);
+	wheels->Update();
 	UpdateEffects();
 	//連続してぶつかっていたらSerialがtrueになったまま
 	isSerialConflict = isNowConflict;
@@ -100,7 +98,7 @@ void PlayerCar::Update()
 /// ぶつかった時の処理
 /// </summary>
 /// <param name="conflictInfo"></param>
-void PlayerCar::ConflictProcess(ConflictExamineResultInfo conflictInfo)
+void PlayerCar::OnConflict(CollisionResultInfo conflictInfo)
 {
 	if (conflictInfo.hit == HitSituation::Enter)
 	{
@@ -256,7 +254,7 @@ void PlayerCar::UpdateEffects()
 /// ダメージを与えた時のリアクション
 /// </summary>
 /// <param name="conflictInfo"></param>
-void PlayerCar::DamageReaction(ConflictExamineResultInfo conflictInfo)
+void PlayerCar::DamageReaction(CollisionResultInfo conflictInfo)
 {
 	//位置と吹っ飛びベクトルを取ってくる
 	conflictVec = VScale(conflictInfo.bounceVec,conflictInfo.bouncePower);
@@ -290,7 +288,7 @@ void PlayerCar::DamageReaction(ConflictExamineResultInfo conflictInfo)
 /// 衝突時のリアクション
 /// </summary>
 /// <param name="conflictInfo"></param>
-void PlayerCar::ConflictReaction(ConflictExamineResultInfo conflictInfo)
+void PlayerCar::ConflictReaction(CollisionResultInfo conflictInfo)
 {
 	//ターボ中で連続衝突していないなら
 	if (isTurbo && !isSerialConflict)

@@ -15,7 +15,7 @@ public:
     /// ‰ŠúˆÊ’u‚ğ‹³‚¦‚Ä
     /// </summary>
     /// <param name="firstPos"></param>
-    Coin(EditArrangementData arrangementData);
+    Coin(PlacementData arrangementData);
     ~Coin();
     /// <summary>
     /// XV
@@ -25,7 +25,7 @@ public:
     /// ‚Ô‚Â‚©‚Á‚½‚Ìˆ—
     /// </summary>
     /// <param name="conflictInfo"></param>
-    void ConflictProcess(const ConflictExamineResultInfo conflictInfo) override;
+    void OnConflict(const CollisionResultInfo conflictInfo) override;
     /// <summary>
     /// UpdateŠÖ”‚Æ“¯‚¶‚±‚Æ‚ğ‚·‚é
     /// </summary>

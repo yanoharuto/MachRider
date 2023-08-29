@@ -3,12 +3,12 @@
 /// <summary>
 /// 保存したい情報
 /// </summary>
-struct EditArrangementData
+struct PlacementData
 {
     //オブジェクトの種類
     int objKind = 0;
-    //何番目のミッションか
-    int missionNum = 0;
+    //何番目の収集アイテムのタイミングか
+    int collectNum = 0;
     //ポジションX
     float posX = 0;
     //ポジションZ

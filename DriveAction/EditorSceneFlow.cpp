@@ -9,29 +9,41 @@
 #include "PlayerDataEditor.h"
 #include "EditorCamera.h"
 #include "EffekseerForDXLib.h"
+#include "EditManual.h"
 /// <summary>
-/// 編集の流れ
+/// 編集に必要なものを確保
 /// </summary>
 EditorSceneFlow::EditorSceneFlow()
 {
+    //背景
     stage = new StageObjectController();
-    editState = EditPlayer;
-    enemyEditor = new EnemyDataEditor();
-    playerEditor = new PlayerDataEditor();
-    collectEditor = new CollectItemDataEditor();
+    editState = editPlayer;
+    //各オブジェクトのEditor
+    editorVec.push_back(new PlayerDataEditor());
+    editorVec.push_back(new CollectItemDataEditor());
+    editorVec.push_back(new EnemyDataEditor(saw));
+    editorVec.push_back(new EnemyDataEditor(moveSaw));
+    editorVec.push_back(new EnemyDataEditor(circleLaserShip));
+    editorVec.push_back(new EnemyDataEditor(upDownLaserShip));
+    editorVec.push_back(new EnemyDataEditor(bomberShip));
+    //カメラ
     camera = new EditorCamera();
     nextSceneType=SceneType::TITLE;
-    nowEditor = playerEditor;
+    nowEditor = editorVec[0];
     camera->Update();
-    SetFontSize(fontSize);
+    manual = new EditManual();
 }
-
+/// <summary>
+/// 編集物やステージの背景などを解放
+/// </summary>
 EditorSceneFlow::~EditorSceneFlow()
 {
     SAFE_DELETE(stage);
-    SAFE_DELETE(enemyEditor);
-    SAFE_DELETE(playerEditor);
-    SAFE_DELETE(collectEditor);
+    SAFE_DELETE(manual);
+    for (int i = 0; i < editorVec.size(); i++)
+    {
+        SAFE_DELETE(editorVec[i]);
+    }
     SAFE_DELETE(camera);
 }
 /// <summary>
@@ -41,23 +53,26 @@ void EditorSceneFlow::Update()
 {
     //カメラの更新
     camera->Update();
+    //Skeyで出てくるタイミングを変更
     if (UserInput::GetInputState(SKey) == Hold)
     {
-        nowEditor->ChangeMissionNum();
+        nowEditor->ChangeEditedCollectNum();
     }
     //sとaKeyを押してない間は編集
     else if (UserInput::GetInputState(AKey) != Hold)
     {
-        //編集
-        nowEditor->Update();
-        //編集したら次へ
+        //今なにも編集していないなら
         if (nowEditor->IsEndEditing())
         {
+            //編集するオブジェクトの種類を変更
             SelectEditKind();
         }
+        //編集
+        nowEditor->Update();
     }
     //エフェクト更新
     Effekseer_Sync3DSetting();
+    //エフェクト更新
     UpdateEffekseer3D();
 }
 /// <summary>
@@ -67,50 +82,40 @@ void EditorSceneFlow::Draw() const
 {
     //ステージに配置されている物
     stage->Draw();
-    //編集したものを全部描画
-    playerEditor->DrawAllEditedObject();
-    collectEditor->DrawAllEditedObject();
-    enemyEditor->DrawAllEditedObject();
-    //現在編集している物
-    nowEditor->DrawNowEditObject();
-    //文字の描画
-    playerEditor->DrawEditString();
-    collectEditor->DrawEditString();
-    enemyEditor->DrawEditString();
-    nowEditor->DrawSelectString();
+    //各オブジェクトの描画
+    for (int i = 0; i < editorVec.size(); i++)
+    {
+        editorVec[i]->Draw();
+    }
+    //操作説明
+    manual->Draw(nowEditor);
+    //エフェクト
     DrawEffekseer3D();
 }
 /// <summary>
-/// 次に何を編集するか
+/// 次に何を編集するか選択する
 /// </summary>
 void EditorSceneFlow::SelectEditKind()
 {
+    //上下キーで編集できるオブジェクトの種類を変更
     if (UserInput::GetInputState(Up) == Push) 
     {
-        switch (editState)
+        selectEditorNum--;
+        //一周したら後ろに繋げる
+        if (selectEditorNum < 0)
         {
-        case EditorSceneFlow::EditCollect:
-            editState = EditPlayer;
-            nowEditor = playerEditor;
-            break;
-        case EditorSceneFlow::EditEnemy:
-            editState = EditCollect;
-            nowEditor = collectEditor;
-            break;
+            selectEditorNum = editorVec.size() - 1;
         }
     }
     else if (UserInput::GetInputState(Down) == Push)
     {
-        switch (editState)
+        selectEditorNum++;
+        //一周したら一番前に繋げる
+        if (selectEditorNum > editorVec.size() - 1)
         {
-        case EditorSceneFlow::EditCollect:
-            editState = EditEnemy;
-            nowEditor = enemyEditor;
-            break;
-        case EditorSceneFlow::EditPlayer:
-            editState = EditCollect;
-            nowEditor = collectEditor;
-            break;
+            selectEditorNum = 0;
         }
     }
+    //現在編集中のエディターを更新
+    nowEditor = editorVec[selectEditorNum];
 }

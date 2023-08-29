@@ -14,7 +14,7 @@
 /// ˆÚ“®‰ñ“]‚Ì‚±‚¬‚è
 /// </summary>
 /// <param name="editData"></param>
-MoveSaw::MoveSaw(EditArrangementData editData)
+MoveSaw::MoveSaw(PlacementData editData)
     :Saw(moveSaw,editData)
 {   
     //’Ç‰Áî•ñ‚©‚çˆÚ“®‘¬“x‚È‚Ç‚ğŠ“¾

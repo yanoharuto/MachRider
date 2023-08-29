@@ -4,37 +4,37 @@
 #include "EditObjectData.h"
 #include "InitObjKind.h"
 #include "FirstPositionGetter.h"
+#define NEW_EDIT_NUM -1
 class EditorObject;
-class EditorModelViewer;
+class EditorDrawModel;
+enum ActionKind;
+using namespace ObjectInit;
 /// <summary>
 /// ステージに配置するオブジェクトの位置などを保存する
 /// </summary>
 class StageDataEditor abstract
 {
+
 public:
     /// <summary>
     ///ステージに配置するオブジェクトの位置などを保存する
     /// </summary>
     /// <param name="setFileName">どのファイルに保存するか教えて</param>
-    StageDataEditor(std::string setFileName);
-    ~StageDataEditor();
+    StageDataEditor(std::string setFileName,InitObjKind objKind);
+    virtual ~StageDataEditor();
     /// <summary>
-    /// 更新
+    /// 新しく編集したり過去に編集したものを再編集したりする
     /// </summary>
-    virtual void Update() = 0;
+    virtual void Update();
     /// <summary>
-    /// 編集終了オブジェクトの描画
+    /// 編集中や編集し終えたオブジェクトの描画
     /// </summary>
-    virtual void DrawAllEditedObject()const {};
-    /// <summary>
-    /// 今現在編集中のオブジェクトの描画
-    /// </summary>
-    virtual void DrawNowEditObject()const = 0;
+    virtual void Draw()const;
     /// <summary>
     /// 編集が終了したか
     /// </summary>
-    /// <returns></returns>
-    bool IsEndEditing()const { return isEndEdit; };
+    /// <returns>編集が終了したらTrue</returns>
+    bool IsEndEditing()const { return nowEditAction == EditActionKind::select; };
     /// <summary>
     /// 今編集しているオブジェクトのポジション
     /// </summary>
@@ -43,49 +43,63 @@ public:
     /// <summary>
     /// 現在編集しているアイテムの出てくるタイミングを変更
     /// </summary>
-    void ChangeMissionNum();
+    void ChangeEditedCollectNum();
     /// <summary>
     /// 編集済みデータの削除
     /// </summary>
     /// <param name="eraceNum">削除するのは先頭から何番目か</param>
     void EraceEndEditData(int eraceNum);
-    /// <summary>
-    /// 文字を描画
-    /// </summary>
-    /// <param name="data"></param>
-    virtual void DrawEditString() const = 0;
-    /// <summary>
-    /// 選択中の文字描画
-    /// </summary>
-    virtual void DrawSelectString() const = 0;
+    //編集で行う事
+    enum EditActionKind
+    {
+        //編集中
+        edit,
+        //再編集中
+        reEdit,
+        //編集するか再編集するか選択中
+        select,
+    };
 protected:
     /// <summary>
     /// 選択物の向きと位置がわかるエフェクトの更新
     /// </summary>
     void UpdateEffect();
-    //今編集しているオブジェクトのポジション
-    static EditArrangementData nowEditObjData;
+    /// <summary>
+    /// 編集済みのオブジェクトを選択する
+    /// </summary>
+    void SelectEditedObject();
+
+    /// <summary>
+    /// 編集操作
+    /// </summary>
+    void Edit();
+    /// <summary>
+    /// NowEditObjDataメンバ変数を更新する
+    /// </summary>
+    void UpdateNowEditObjData();
+    
+    //今編集しているオブジェクトの情報
+    static PlacementData nowEditObjData;
+    // 編集したいエネミーの種類
+    InitObjKind editKind = saw;
     //編集終了フラグ
-    bool isEndEdit = true;
-    /// <summary>
-    /// 引数の情報を書き込む
-    /// </summary>
-    /// <param name="data"></param>
-    void SaveEditObjectData(EditArrangementData data)const;
-    /// <summary>
-    /// データ保存ファイル
-    /// </summary>
-    std::string saveFileName;
+    EditActionKind nowEditAction = select;
+    //現在編集中のオブジェクト
+    EditorObject* editObject;
     /// 収集アイテムの数
     static int collectNum;  
     /// 収集アイテムを取ったどのタイミングで出てくるか
-    static int missionNum;
+    static int getCollectNum;
     //オブジェクトの描画担当
-    EditorModelViewer* viewer;
+    EditorDrawModel* drawer;
     //選択エフェクト
     static int selectAura;
     //向きが分かりやすくなるエフェクト
     static int dirEffect;
+    //配置中のオブジェクトの向きが分かるエフェクトのサイズ
+    static int dirEffectSize;
     //編集済みデータ
-    std::vector<EditArrangementData> editDataVec;
+    std::vector<PlacementData> placementDataVec;
+    //編集済みの物を左右キーで選ぼうとすると変動
+    int selectEditedNum = -1;
 };

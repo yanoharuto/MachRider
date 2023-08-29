@@ -8,7 +8,7 @@
 #include "OriginalMath.h"
 #include "Utility.h"
 #include "InitActor.h"
-#include "ModelViewer.h"
+#include "DrawModel.h"
 #include "Object.h"
 
 //収集アイテムが今動いているか
@@ -48,7 +48,7 @@ CollectController::CollectController()
     isMissionEnd = false;
     isActive = false;//今活動中か
     isDestroyAll = false;
-    viewer = new ModelViewer(collect);
+    drawModel = new DrawModel(collect);
 }
 /// <summary>
 /// actorListの先頭の収集アイテムだけ更新
@@ -89,7 +89,7 @@ void CollectController::Update()
 /// </summary>
 void CollectController::Draw() const
 {
-    viewer->Draw((*actorList.begin()));
+    drawModel->Draw((*actorList.begin()));
 }
 /// <summary>
 /// ゲームが始まる前の処理

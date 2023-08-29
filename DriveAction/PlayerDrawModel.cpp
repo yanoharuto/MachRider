@@ -1,19 +1,19 @@
-#include "PlayerViewer.h"
+#include "PlayerDrawModel.h"
 #include "DxLib.h"
 #include "OriginalMath.h"
 #include "PlayerCar.h"
 /// <summary>
-	/// プレイヤーの機体の傾きなどに対応するViewer
+	/// プレイヤーの機体の傾きなどに対応する
 	/// </summary>
-PlayerViewer::PlayerViewer()
-	:ModelViewer(ObjectInit::player)
+PlayerDrawModel::PlayerDrawModel()
+	:DrawModel(ObjectInit::player)
 {
 }
 /// <summary>
 /// プレイヤーの角度に合わせて回転する
 /// </summary>
 /// <param name="drawObj"></param>
-void PlayerViewer::Draw(PlayerCar* drawObj) const
+void PlayerDrawModel::Draw(PlayerCar* drawObj) const
 {
     //描画するモデルがないなら終了
     if (modelHandle == -1)return;
@@ -32,7 +32,7 @@ void PlayerViewer::Draw(PlayerCar* drawObj) const
 /// <summary>
 /// 描画モデルの行列をセット
 /// </summary>
-void PlayerViewer::ModelSetMatrix(PlayerCar* player) const
+void PlayerDrawModel::ModelSetMatrix(PlayerCar* player) const
 {
     //プレイヤーの角度をもらってくる
 	VECTOR playerRota = player->GetModelRotateVec();

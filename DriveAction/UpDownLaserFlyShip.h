@@ -11,7 +11,7 @@ public:
     /// <summary>
     /// 上下に動きながらレーザーを出すやつ
     /// </summary>
-    UpDownLaserFlyShip(EditArrangementData setPos);
+    UpDownLaserFlyShip(PlacementData setPos);
     /// <summary>
     /// 上下に動くよ
     /// </summary>

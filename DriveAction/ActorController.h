@@ -4,7 +4,7 @@
 #include "EditObjectData.h"
 #include "InitObjKind.h"
 class Actor;
-class ModelViewer;
+class DrawModel;
 /// <summary>
 /// 1つの種類のactorの子クラスを動かすために使う
 /// </summary>
@@ -20,7 +20,7 @@ public:
     /// リストに追加
     /// </summary>
     /// <param name="editData"></param>
-    virtual void AddObject(std::vector<EditArrangementData> editData) {};
+    virtual void AddObject(std::vector<PlacementData> editData) {};
     /// <summary>
     /// 操作しているオブジェクトの種類
     /// </summary>
@@ -47,7 +47,7 @@ protected:
     //このリストを回す
     std::list<Actor*> actorList;
     //描画担当
-    ModelViewer* viewer = nullptr;
+    DrawModel* drawModel = nullptr;
     //操作するオブジェクトの種類
     ObjectInit::InitObjKind controllObjKind;
 };

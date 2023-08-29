@@ -1,19 +1,15 @@
 #include "Object.h"
 #include "InitActor.h"
 /// <summary>
-/// オブジェクトの種類を渡して
+/// オブジェクトの種類を渡すと初期化する
 /// </summary>
-/// <param name="kind"></param>
+/// <param name="kind">オブジェクトの種類</param>
 Object::Object(ObjectInit::InitObjKind kind)
 {
     InitParamater(kind);
 }
-Object::~Object()
-{
- 
-}
 /// <summary>
-/// コンストラクタで呼ばれる処理
+/// 各オブジェクトの当たり判定や跳ね返り力等の初期化
 /// </summary>
 void Object::InitParamater(ObjectInit::InitObjKind kind)
 {

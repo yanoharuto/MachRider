@@ -4,7 +4,7 @@
 #include "Timer.h"
 #include "ObjectObserver.h"
 #include "Object.h"
-#include "ModelViewer.h"
+#include "DrawModel.h"
 /// <summary>
 /// タイトルで走らせる
 /// </summary>
@@ -13,14 +13,14 @@ DemoCarController::DemoCarController(VECTOR setPos, VECTOR setDir)
 {
     demoCar = new DemoCar(setPos, setDir);
     observer = std::make_shared<ObjectObserver>(demoCar);
-    viewer = new ModelViewer(ObjectInit::player);
+    drawModel = new DrawModel(ObjectInit::player);
 }
 
 DemoCarController::~DemoCarController()
 {
     SAFE_DELETE(demoCar);
     observer.reset();
-    SAFE_DELETE(viewer);
+    SAFE_DELETE(drawModel);
 }
 /// <summary>
 /// 車の移動
@@ -43,7 +43,7 @@ bool DemoCarController::IsAlive() const
 /// </summary>
 void DemoCarController::Draw() const
 {
-    viewer->Draw(demoCar);
+    drawModel->Draw(demoCar);
 }
 /// <summary>
 /// 位置の初期化

@@ -1,5 +1,5 @@
 #include "SawController.h"
-#include "ModelViewer.h"
+#include "DrawModel.h"
 #include "Saw.h"
 #include "Utility.h"
 /// <summary>
@@ -8,13 +8,13 @@
 SawController::SawController()
     :ActorController(ObjectInit::saw)
 {
-    viewer = new ModelViewer(controllObjKind);
+    drawModel = new DrawModel(controllObjKind);
 }
 /// <summary>
 /// ŠÛ‹˜‚ğ’Ç‰Á
 /// </summary>
 /// <param name="editData">’Ç‰Á‚·‚éˆÊ’u‚È‚Ç‚Ìî•ñ</param>
-void SawController::AddObject(std::vector<EditArrangementData> editData)
+void SawController::AddObject(std::vector<PlacementData> editData)
 {
     if (!editData.empty())
     {

@@ -12,7 +12,7 @@
 /// <param name="setFirstPos"></param>
 /// <param name="setDestinationPos"></param>
 /// <param name="initParam"></param>
-BomberFlyShip::BomberFlyShip(EditArrangementData data, FlyShipInit::InitFlyShipParamator initParam)
+BomberFlyShip::BomberFlyShip(PlacementData data, FlyShipInit::InitFlyShipParamator initParam)
     :FlyShip(bomberShip)
 {
     position.x = data.posX;

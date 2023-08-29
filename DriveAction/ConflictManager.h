@@ -3,7 +3,7 @@
 #include <unordered_map>
 class ConflictProcessor;
 class SphereHitChecker;
-struct ConflictExamineResultInfo;
+struct CollisionResultInfo;
 /// <summary>
 /// “–‚½‚è”»’è‚ğ“Z‚ß‚Ä‚·‚é‚½‚ß‚Ì“z
 /// </summary>
@@ -50,7 +50,7 @@ public:
     /// <param name="conflictProccesor">Õ“Ëˆ—Às–ğ</param>
     /// <param name="hitChecker">“–‚½‚è”»’è</param>
     /// <returns>Õ“ËŒ‹‰Ê</returns>
-    ConflictExamineResultInfo GetConflictResultInfo(ConflictProcessor* const conflictProccesor, SphereHitChecker* const hitChecker);
+    CollisionResultInfo GetConflictResultInfo(ConflictProcessor* const conflictProccesor, SphereHitChecker* const hitChecker);
     /// <summary>
     /// ‰½‚©Õ“Ë‚µ‚Ä‚¢‚é•¨‚ª‚È‚¢‚©’²‚×‚é
     /// </summary>

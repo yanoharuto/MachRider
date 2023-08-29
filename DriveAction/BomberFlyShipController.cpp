@@ -1,13 +1,13 @@
 #include "BomberFlyShipController.h"
 #include "BomberFlyShip.h"
-#include "ModelViewer.h"
+#include "DrawModel.h"
 BomberFlyShipController::BomberFlyShipController()
     :FlyShipController(bomberShip)
 {
-    viewer = new ModelViewer(bomberShip);
+    drawModel = new DrawModel(bomberShip);
 }
 
-void BomberFlyShipController::AddObject(std::vector<EditArrangementData> editData)
+void BomberFlyShipController::AddObject(std::vector<PlacementData> editData)
 {
     if (!editData.empty())
     {

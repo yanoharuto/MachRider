@@ -1,6 +1,6 @@
 #include "MoveSawController.h"
 #include "MoveSaw.h"
-#include "ModelViewer.h"
+#include "DrawModel.h"
 #include "Utility.h"
 /// <summary>
 /// ˆÚ“®‚·‚é‰ñ“]‚Ì‚±‚¬‚è‚ÌŠÇ—Ò
@@ -8,13 +8,13 @@
 MoveSawController::MoveSawController()
     :ActorController(ObjectInit::moveSaw)
 {
-    viewer = new ModelViewer(controllObjKind);
+    drawModel = new DrawModel(controllObjKind);
 }
 /// <summary>
 /// ˆÚ“®‚·‚é‰ñ“]‚Ì‚±‚¬‚è‚Ì’Ç‰Á
 /// </summary>
 /// <param name="editData"></param>
-void MoveSawController::AddObject(std::vector<EditArrangementData> editData)
+void MoveSawController::AddObject(std::vector<PlacementData> editData)
 {
     if (!editData.empty())
     {

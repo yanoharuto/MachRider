@@ -14,9 +14,9 @@ SphereCollider::SphereCollider(Actor* obj)
 /// </summary>
 /// <param name="hitCheckInfo">“–‚½‚Á‚Ä‚«‚½•û‚Ìî•ñ</param>
 /// <returns></returns>
-ConflictExamineResultInfo SphereCollider::HitCheck(HitCheckExamineObjectInfo hitCheckInfo)
+CollisionResultInfo SphereCollider::HitCheck(HitCheckInfo hitCheckInfo)
 {
-    ConflictExamineResultInfo resultInfo = {};
+    CollisionResultInfo resultInfo = {};
     //“–‚½‚Á‚Ä‚½‚ç‚Á”ò‚Ô•ûŒü‚Æ‚©‚ğ•Ô‚·
     if (SphereHitChecker::HitCheck(object, hitCheckInfo))
     {

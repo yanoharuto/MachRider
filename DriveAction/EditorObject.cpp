@@ -6,24 +6,15 @@
 const int EditorObject::moveSpeed;
 //回転速度
 const int EditorObject::rotaSpeed;
+
 /// <summary>
 /// エディタ上で使用するオブジェクト
 /// </summary>
-EditorObject::EditorObject(ObjectInit::InitObjKind kind)
-    :Actor(kind)
+EditorObject::EditorObject()
+    :Object()
 {
-    objKind = kind;
-}
-/// <summary>
-/// 位置や方向を変更した状態で
-/// </summary>
-/// <param name="editData"></param>
-EditorObject::EditorObject(EditArrangementData editData)
-    :Actor(static_cast<ObjectInit::InitObjKind>(editData.objKind))
-{
-    objKind = static_cast<ObjectInit::InitObjKind>(editData.objKind);
-    position = VGet(editData.posX, 0, editData.posZ);
-    direction = VGet(editData.dirX, 0, editData.dirZ);
+    position = {};
+    direction = VGet(1, 0, 0);
 }
 
 EditorObject::~EditorObject()
@@ -37,18 +28,28 @@ void EditorObject::Update()
     ReflectInput();
 }
 /// <summary>
-/// オブジェクトの位置や回転などを渡す
+/// 描画に必要な構造体を渡す
 /// </summary>
-/// <returns></returns>
-EditArrangementData EditorObject::GetEditObjectData() const
+/// <returns>位置と向きと描画したいオブジェクトの種類</returns>
+PlacementData EditorObject::GePlacementData() const
 {
-    EditArrangementData data;
+    PlacementData data;
+    //向き
     data.dirX = direction.x;
     data.dirZ = direction.z;
+    //ポジション
     data.posX = position.x;
     data.posZ = position.z;
-    data.objKind = objKind;
     return data;
+}
+/// <summary>
+/// 引数の配置を引き継ぎ位置を変える
+/// </summary>
+/// <param name="setData">配置</param>
+void EditorObject::SetArrangementData(PlacementData setData)
+{
+    position = VGet(setData.posX, 0, setData.posZ);
+    direction = VGet(setData.dirX, 0, setData.dirZ);
 }
 /// <summary>
 /// 入力を反映して移動と回転を更新
@@ -57,12 +58,16 @@ void EditorObject::ReflectInput()
 {
     if (UserInput::GetInputState(WKey) == Hold)//ｗキーを押してたら回転モード
     {
-        float rotate = 0;
-        if (UserInput::GetInputState(Left) == Hold)rotate = -rotaSpeed;
-        else if (UserInput::GetInputState(Right) == Hold)rotate = +rotaSpeed;
-        
-        direction = OriginalMath::GetYRotateVector(direction, rotate);
-
+       
+        //左右キーを押すと回転する
+        if (UserInput::GetInputState(Left) == Hold)
+        {
+           direction = OriginalMath::GetYRotateVector(direction, -rotaSpeed);
+        }
+        else if (UserInput::GetInputState(Right) == Hold)
+        {
+            direction = OriginalMath::GetYRotateVector(direction, rotaSpeed);
+        }
     }
     else //押してなかったら移動モード
     {

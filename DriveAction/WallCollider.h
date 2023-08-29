@@ -20,7 +20,7 @@ public:
     /// </summary>
     /// <param name="hitCheckInfo"></param>
     /// <returns></returns>
-    ConflictExamineResultInfo HitCheck(HitCheckExamineObjectInfo hitCheckInfo) override;
+    CollisionResultInfo HitCheck(HitCheckInfo hitCheckInfo) override;
 private:
     //Ç±ÇÍà»è„ÇÃílÇ…Ç»Ç¡ÇΩÇÁíµÇÀï‘Ç∑
     VECTOR firstPos;

@@ -1,27 +1,27 @@
 #pragma once
-#include "ModelViewer.h"
+#include "DrawModel.h"
 #include "EditObjectData.h"
 class EditorObject;
 /// <summary>
 /// 各編集オブジェクトの描画担当役
 /// </summary>
-class EditorModelViewer:public ModelViewer
+class EditorDrawModel:public DrawModel
 {
 public:
     /// <summary>
     /// 各編集オブジェクトの描画担当役
     /// </summary>
-    EditorModelViewer(ObjectInit::InitObjKind kind);
+    EditorDrawModel(ObjectInit::InitObjKind kind);
     /// <summary>
     /// 引数の場所に描画
     /// </summary>
     /// <param name="data"></param>
-    virtual void Draw(EditArrangementData data)const;
+    virtual void Draw(PlacementData data)const;
     /// <summary>
     /// 編集者が選択している物の表示　若干上に上がる
     /// </summary>
     /// <param name="data"></param>
-    virtual void SelectDraw(EditArrangementData data)const;
+    virtual void SelectDraw(PlacementData data)const;
 protected:
 
     /// <summary>

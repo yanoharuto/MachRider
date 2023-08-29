@@ -4,8 +4,8 @@
 #include "DxLib.h"
 #include "Wheels.h"
 
-struct ConflictExamineResultInfo;
-struct HitCheckExamineObjectInfo;
+struct CollisionResultInfo;
+struct HitCheckInfo;
 class Timer;
 class Wheels;
 
@@ -27,15 +27,14 @@ public:
 	/// 移動する前のポジションを渡す
 	/// </summary>
 	/// <returns></returns>
-	virtual HitCheckExamineObjectInfo GetHitCheckExamineInfo() override;
+	virtual HitCheckInfo GetHitCheckExamineInfo() override;
 
 protected:
 	/// <summary>
 	/// 車がぶつかった時の関数
 	/// </summary>
-	/// <param name="conflictObjPos">ぶつかったオブジェクトの位置</param>
-	/// <param name="conflictObjRad">ぶつかったオブジェクトの半径</param>
-	virtual void ConflictReaction(const ConflictExamineResultInfo conflictInfo);
+	/// <param name="conflictInfo">ぶつかった時の結果</param>
+	virtual void ConflictReaction(const CollisionResultInfo conflictInfo);
 	/// <summary>
 	/// 進む方向と速さを更新する
 	/// </summary>

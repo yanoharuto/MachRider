@@ -5,7 +5,7 @@
 #include "SoundListener.h"
 #include "Utility.h"
 #include "FirstPositionGetter.h"
-#include "PlayerViewer.h"
+#include "PlayerDrawModel.h"
 #include "PlayerObserver.h"
 /// <summary>
 /// プレイヤーの車の管理
@@ -18,7 +18,7 @@ Player::Player()
     playerObserver = std::make_shared<PlayerObserver>(car);
     listener = new SoundListener(CreatePlayerObserver());
     //プレイヤー描画役
-    playerViewer = new PlayerViewer();
+    playerDrawer = new PlayerDrawModel();
 }
 /// <summary>
 /// 車とLisnerのDelete
@@ -50,5 +50,5 @@ void Player::Update()
 /// </summary>
 void Player::Draw() const
 {
-    playerViewer->Draw(car);
+    playerDrawer->Draw(car);
 }

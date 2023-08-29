@@ -13,14 +13,14 @@ PlayerConflictProcessor::~PlayerConflictProcessor()
 /// 衝突結果実行役
 /// </summary>
 /// <param name="resultInfo">衝突結果</param>
-void PlayerConflictProcessor::ConflictProcess(ConflictExamineResultInfo resultInfo)
+void PlayerConflictProcessor::OnConflict(CollisionResultInfo resultInfo)
 {
     //衝突後の処理を行う必要がないなら終了
     if (object == nullptr)return;
     if (resultInfo.hit != HitSituation::NotHit)
     {
         //当たった時の処理を行う
-        object->ConflictProcess(resultInfo);
+        object->OnConflict(resultInfo);
         //コレクトアイテムならカウント
         if (resultInfo.tag == Object::collect)
         {

@@ -4,19 +4,19 @@
 #include "FirstPositionGetter.h"
 #include "CircleLaserFlyShip.h"
 #include "OriginalMath.h"
-#include "ModelViewer.h"
+#include "DrawModel.h"
 /// <summary>
 /// 輪になっているレーザー照射機の更新とかする
 /// </summary>
 CircleFlyShipController::CircleFlyShipController()
     :FlyShipController(circleLaserShip)
 {
-    viewer = new ModelViewer(circleLaserShip);
+    drawModel = new DrawModel(circleLaserShip);
 }
 /// <summary>
 /// 輪になっているレーザー照射機の配置と追加
 /// </summary>
-void CircleFlyShipController::AddObject(std::vector<EditArrangementData> editData)
+void CircleFlyShipController::AddObject(std::vector<PlacementData> editData)
 {
     if (!editData.empty())
     {
@@ -34,7 +34,7 @@ void CircleFlyShipController::AddObject(std::vector<EditArrangementData> editDat
 /// <summary>
 /// 輪になっているレーザー照射機の配置と追加
 /// </summary>
-void CircleFlyShipController::AddObject(EditArrangementData arrangementData)
+void CircleFlyShipController::AddObject(PlacementData arrangementData)
 {
     //機体が囲んでいる中心座標
     VECTOR centerPos = VGet(arrangementData.posX, 0, arrangementData.posZ);

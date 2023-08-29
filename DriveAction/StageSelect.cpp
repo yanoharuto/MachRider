@@ -12,6 +12,7 @@
 StageSelect::StageSelect()
 {
     stageNum = 0;
+    StageDataManager::ChangeStageData(this);
     stageNameData = UIManager::CreateUIData(stageName);
     selectButtonData = UIManager::CreateUIData(stageSelectButton);
 }

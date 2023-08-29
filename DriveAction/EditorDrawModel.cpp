@@ -1,19 +1,19 @@
-#include "EditorModelViewer.h"
+#include "EditorDrawModel.h"
 #include "OriginalMath.h"
 #include "EditorObject.h"
 #include "InitActor.h"
 /// <summary>
 /// 各編集オブジェクトの描画担当役
 /// </summary>
-EditorModelViewer::EditorModelViewer(ObjectInit::InitObjKind kind)
-    :ModelViewer(kind)
+EditorDrawModel::EditorDrawModel(ObjectInit::InitObjKind kind)
+    :DrawModel(kind)
 {
 }
 /// <summary>
 /// 引数の場所に描画
 /// </summary>
 /// <param name="data"></param>
-void EditorModelViewer::Draw(EditArrangementData data) const
+void EditorDrawModel::Draw(PlacementData data) const
 {
     //描画するモデルがないなら終了
     if (modelHandle == -1)return;
@@ -27,7 +27,7 @@ void EditorModelViewer::Draw(EditArrangementData data) const
 /// 編集者が選択している物の表示　若干上に上がる
 /// </summary>
 /// <param name="data"></param>
-void EditorModelViewer::SelectDraw(EditArrangementData data) const
+void EditorDrawModel::SelectDraw(PlacementData data) const
 {
     //描画するモデルがないなら終了
     if (modelHandle == -1)return;
@@ -41,7 +41,7 @@ void EditorModelViewer::SelectDraw(EditArrangementData data) const
 /// 描画モデルの行列をセット
 /// </summary>
 /// <param name="dir"></param>
-void EditorModelViewer::ModelSetMatrix(VECTOR dir) const
+void EditorDrawModel::ModelSetMatrix(VECTOR dir) const
 {
     // 向きに合わせて回転.
     MV1SetRotationZYAxis(modelHandle, dir, VGet(0.0f, 1.0f, 0.0f), 0.0f);

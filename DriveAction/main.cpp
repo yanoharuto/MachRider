@@ -31,7 +31,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	SetGraphMode(SCREEN_WIDTH, SCREEN_HEIGHT, 32);
 	SetZBufferBitDepth(24);
 	ChangeWindowMode(true);
-	
 	// １メートルに相当する値を設定する
 	Set3DSoundOneMetre(16.0f);
 	if (DxLib_Init() == -1)		// ＤＸライブラリ初期化処理

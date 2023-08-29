@@ -17,7 +17,7 @@ public:
 	/// コンストラクタ
 	/// </summary>
 	/// <returns></returns>
-	PlayerCar(EditArrangementData arrangementData);
+	PlayerCar(PlacementData arrangementData);
 	///デストラクタ
     ~PlayerCar()override;
     /// <summary>
@@ -29,7 +29,7 @@ public:
 	/// ぶつかった時の処理
 	/// </summary>
 	/// <param name="conflictInfo"></param>
-	void ConflictProcess(ConflictExamineResultInfo conflictInfo)override;
+	void OnConflict(CollisionResultInfo conflictInfo)override;
 	/// <summary>
 	/// 機体の傾きを渡す
 	/// </summary>
@@ -58,12 +58,12 @@ private:
 	/// ダメージを受けた時のリアクション
 	/// </summary>
 	/// <param name="conflictInfo"></param>
-	void DamageReaction(ConflictExamineResultInfo conflictInfo);
+	void DamageReaction(CollisionResultInfo conflictInfo);
 	/// <summary>
 	/// ぶつかった時のリアクション
 	/// </summary>
 	/// <param name="conflictInfo"></param>
-	void ConflictReaction(ConflictExamineResultInfo conflictInfo);
+	void ConflictReaction(CollisionResultInfo conflictInfo);
 	/// <summary>
 	/// ダメージを受けた後の処理。無敵時間復帰など
 	/// </summary>

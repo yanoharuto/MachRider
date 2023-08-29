@@ -7,30 +7,37 @@ enum MenuState
     continueGame = 0,
     //やり直しをした状態
     retry = 1,
+    //タイトルに戻る
+    returnTitle=2,
     //ゲーム終了
-    exitGame = 2,
+    exitGame = 3,
 };
-class StopWatch;
+
 using namespace UIInit;
+/// <summary>
+/// ゲーム中断機能
+/// </summary>
 class Menu
 {
 public:
+    /// <summary>
+/// 各UI初期化
+/// </summary>
     Menu();
     ~Menu();
     /// <summary>
     /// 項目の変更など
     /// </summary>
-    /// <returns></returns>
     void Update();
     /// <summary>
     /// 現在のメニューの状態
     /// </summary>
-    /// <returns></returns>
-    MenuState GetMenuState();
+    /// <returns>プレイヤーがやり直したいかゲームを続行したいか返す</returns>
+    MenuState GetMenuState()const;
     /// <summary>
     /// メニュー画面を開いているかどうか
     /// </summary>
-    /// <returns></returns>
+    /// <returns>開いていたらTrue</returns>
     static bool IsMenuOpen();
     /// <summary>
     /// メニュー画面を開いている時間を所得
@@ -57,7 +64,7 @@ private:
     //Menuの外枠
     UIData cursorUIData;
     //メニューの項目
-    UIData uiDatas[3];
+    UIData uiDatas[4];
     //選択
     int cursolPos = 0;
 };

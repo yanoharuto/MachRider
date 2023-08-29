@@ -11,32 +11,16 @@ public:
     /// プレイヤーの初期位置の編集
     /// </summary>
     PlayerDataEditor();
-    ~PlayerDataEditor();
     /// <summary>
     /// 更新
     /// </summary>
     void Update()override;
     /// <summary>
-    /// プレイヤーの描画
+    /// 編集中、編集済みのプレイヤーを描画
     /// </summary>
-    void DrawNowEditObject()const override;
-    /// <summary>
-    /// プレイヤーの描画
-    /// </summary>
-    void DrawAllEditedObject()const override;
-    /// <summary>
-    /// 文字を描画
-    /// </summary>
-    void DrawEditString() const override;
-    /// <summary>
-    /// 選択されているときの文字を描画
-    /// </summary>
-    void DrawSelectString()const override;
+    void Draw()const override;
 private:
-    //プレイヤー
-    EditorObject* player;
-    const int drawStrY = 400;
-    unsigned int selectColor = GetColor(255, 0, 0);
-    std::string drawEditString = "Player";
+    //読み込む配置情報のファイルのパス
+    static const std::string loadEditFilePath;
 };
 

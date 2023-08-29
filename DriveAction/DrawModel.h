@@ -4,13 +4,13 @@ class Object;
 /// <summary>
 /// model‚Ì•`‰æ‚ð‚·‚é–ð
 /// </summary>
-class ModelViewer
+class DrawModel
 {
 public:
     /// <summary>
     /// model‚Ì•`‰æ‚ð‚·‚é–ð
     /// </summary>
-    ModelViewer(ObjectInit::InitObjKind kind);
+    DrawModel(ObjectInit::InitObjKind kind);
     /// <summary>
     /// •`‰æ
     /// </summary>

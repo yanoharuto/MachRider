@@ -21,9 +21,9 @@ WallCollider::~WallCollider()
 /// </summary>
 /// <param name="hitCheckInfo"></param>
 /// <returns></returns>
-ConflictExamineResultInfo WallCollider::HitCheck(HitCheckExamineObjectInfo hitCheckInfo)
+CollisionResultInfo WallCollider::HitCheck(HitCheckInfo hitCheckInfo)
 {
-    ConflictExamineResultInfo resultInfo;//•Ô‚è’l
+    CollisionResultInfo resultInfo;//•Ô‚è’l
     resultInfo.SetObjInfo(object);
     resultInfo.pos = hitCheckInfo.pos;
     resultInfo.hit = HitSituation::NotHit;

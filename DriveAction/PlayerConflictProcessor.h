@@ -18,7 +18,7 @@ public:
     /// 衝突結果実行役
     /// </summary>
     /// <param name="resultInfo">衝突結果</param>
-    void ConflictProcess(ConflictExamineResultInfo resultInfo)override;
+    void OnConflict(CollisionResultInfo resultInfo)override;
     /// <summary>
     /// 収集アイテムにぶつかった回数
     /// </summary>

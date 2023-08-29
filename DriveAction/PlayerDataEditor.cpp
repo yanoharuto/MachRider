@@ -2,82 +2,76 @@
 #include "UserInput.h"
 #include "EditorObject.h"
 #include "Utility.h"
-#include "EditorModelViewer.h"
-
+#include "EditorDrawModel.h"
+#include "Utility.h"
+const std::string PlayerDataEditor::loadEditFilePath = "playerData.csv";
 /// <summary>
 /// プレイヤーの初期位置の編集
 /// </summary>
 PlayerDataEditor::PlayerDataEditor()
-    :StageDataEditor("playerData.csv")
+    :StageDataEditor(loadEditFilePath,player)
 {
-    if (editDataVec.empty())
+    if (!placementDataVec.empty())
     {
-        player = new EditorObject(ObjectInit::player);
+        editObject->SetArrangementData(placementDataVec[0]);
     }
-    else
-    {
-        player = new EditorObject(editDataVec[0]);
-    }
-    viewer = new EditorModelViewer(ObjectInit::player);
+    
 }
 
-PlayerDataEditor::~PlayerDataEditor()
-{
-    SaveEditObjectData(player->GetEditObjectData());
-    SAFE_DELETE(player);
-}
 /// <summary>
 /// 更新
 /// </summary>
 void PlayerDataEditor::Update()
 {
-    if (isEndEdit)
+    if (nowEditAction == select && UserInput::GetInputState(Space) == Push)
     {
         //スペースキーで編集開始
-        isEndEdit = UserInput::GetInputState(Space) != Push;
+        nowEditAction = edit;
     }
-    else if (!isEndEdit)
+    else if (nowEditAction == edit)
     {
         //移動回転
-        player->Update();
+        editObject->Update();
         //編集終了
         if (UserInput::GetInputState(Space) == Push)
         {
-            isEndEdit = true;
+            nowEditAction = select;
+            PlacementData editData = editObject->GePlacementData();
+            editData.objKind = editKind;
+            if(placementDataVec.empty())
+            {
+                placementDataVec.push_back(editData);
+            }
+            else
+            {
+                placementDataVec[0] = editData;
+            }
         }
     }
-    //カメラに見るべきオブジェクトを伝える
-    nowEditObjData = player->GetEditObjectData();
+    UpdateNowEditObjData();
     UpdateEffect();
 }
 /// <summary>
-/// プレイヤーの描画
+/// 編集中、編集済みのプレイヤーを描画
 /// </summary>
-void PlayerDataEditor::DrawNowEditObject() const
+void PlayerDataEditor::Draw() const
 {
-    viewer->SelectDraw(player->GetEditObjectData());
-}
-/// <summary>
-/// プレイヤーの描画
-/// </summary>
-void PlayerDataEditor::DrawAllEditedObject() const
-{
-    if (isEndEdit)
+    //今現在編集中なら
+    if (nowEditAction != select)
     {
-        viewer->Draw(player->GetEditObjectData());
+        //今編集しているエネミー
+        drawer->SelectDraw(nowEditObjData);
     }
-}
-/// <summary>
-/// 文字を描画
-/// </summary>
-void PlayerDataEditor::DrawEditString() const
-{
-    DrawString(0, drawStrY, drawEditString.c_str(), GetColor(0, 0, 0));
-}
-/// <summary>
-/// 選択されているときの文字を描画
-/// </summary>
-void PlayerDataEditor::DrawSelectString() const
-{
-    DrawString(0, drawStrY, drawEditString.c_str(), selectColor);
+    else//編集していないいときは
+    {
+        //編集中じゃなくてもeditKindと同じものを選ぼうとしていたら描画
+        if (nowEditObjData.objKind == editKind)
+        {
+            drawer->SelectDraw(nowEditObjData);
+        }
+        else
+        {
+            drawer->Draw(nowEditObjData);
+        }
+    }
 }

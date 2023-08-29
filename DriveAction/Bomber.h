@@ -24,7 +24,7 @@ public:
     /// <summary>
     /// Õ“ËŒã‚Ìˆ—
     /// </summary>
-    void ConflictProcess(ConflictExamineResultInfo resultInfo)override;
+    void OnConflict(CollisionResultInfo resultInfo)override;
 private:
     /// <summary>
     /// “–‚½‚è”»’èíœ

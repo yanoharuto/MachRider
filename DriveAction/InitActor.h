@@ -115,7 +115,7 @@ private:
     /// </summary>
     /// <param name="obj">初期化したいオブジェクト</param>
     /// <returns>初期化したいパラメータの文字列</returns>
-    static std::vector<std::string> GetActorParametorString(InitObjKind obj);
+    static std::vector<std::string> GetActorParametorStrVec(InitObjKind obj);
     //initActorFileNameの先のファイルから所得したデータをまとめたVector
     static std::vector<std::string> objectInitDataPassVec;
     //初期化するパスを纏めているファイルの名前

@@ -15,7 +15,7 @@ public:
     /// 移動する回転のこぎりの追加
     /// </summary>
     /// <param name="editData"></param>
-    void AddObject(std::vector<EditArrangementData> editData)override;
+    void AddObject(std::vector<PlacementData> editData)override;
     /// <summary>
     /// 更新。　破壊されたら破棄
     /// </summary>

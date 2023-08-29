@@ -21,13 +21,13 @@ public:
     /// <summary>
     /// Õ“Ëˆ—
     /// </summary>
-    virtual void ConflictProcess(const ConflictExamineResultInfo conflictInfo) {};
+    virtual void OnConflict(const CollisionResultInfo conflictInfo) {};
 
     /// <summary>
     /// “–‚½‚è”»’è‚Å“–‚½‚Á‚Ä‚½‚ç“n‚·î•ñ
     /// </summary>
     /// <returns></returns>
-    virtual HitCheckExamineObjectInfo GetHitCheckExamineInfo();
+    virtual HitCheckInfo GetHitCheckExamineInfo();
     /// <summary>
     /// ƒQ[ƒ€‚ªn‚Ü‚é‘O‚É‚·‚é‚±‚Æ
     /// </summary>

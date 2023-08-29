@@ -8,7 +8,7 @@ const float UpDownLaserFlyShip::updownSpeed = 6.0f;
 /// <summary>
 /// 上下に動きながらレーザーを出すやつ
 /// </summary>
-UpDownLaserFlyShip::UpDownLaserFlyShip(EditArrangementData editData)
+UpDownLaserFlyShip::UpDownLaserFlyShip(PlacementData editData)
     :LaserFlyShip(ObjectInit::upDownLaserShip)
 {
     GenerateLaser(DamageObjectGenerator::bigRadLaser);

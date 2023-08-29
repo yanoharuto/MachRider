@@ -26,14 +26,14 @@ void EnemyGenerator::GenerateEnemys(int collectNum, ActorController* const addOb
 /// </summary>
 /// <param name="collectNum">今の収集アイテムの所得数</param>
 /// <returns>エネミーの配置情報</returns>
-std::vector<EditArrangementData> EnemyGenerator::GetNowEnemyEditData(int collectNum)
+std::vector<PlacementData> EnemyGenerator::GetNowEnemyEditData(int collectNum)
 {
-    std::vector<EditArrangementData> editData;
+    std::vector<PlacementData> editData;
     for (int i = 0; i < editDataVec.size(); i++)
     {
         ObjectInit::InitObjKind dataKind = static_cast<ObjectInit::InitObjKind>(editDataVec[i].objKind);
         //プレイヤーが収集アイテムを取ってきたらそのタイミングで敵を増やす
-        if (editDataVec[i].missionNum == collectNum)
+        if (editDataVec[i].collectNum == collectNum)
         {
             editData.push_back(editDataVec[i]);
         }

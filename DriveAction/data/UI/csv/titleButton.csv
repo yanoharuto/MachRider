@@ -1,17 +1,17 @@
 ﻿ drawX
-315
+835
  drawY
-149
+670
  width
-315
+553
  height
-149
+260
  xNum
-3
- yNum
 1
+ yNum
+2
 graphPass
-data/UI/image/TitleButton.pngg
+data/UI/image/Title.png
 size
 0.6
 frameSpeed

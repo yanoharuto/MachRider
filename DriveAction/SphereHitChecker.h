@@ -1,7 +1,7 @@
 #pragma once
 #include "Object.h"
-struct HitCheckExamineObjectInfo;
-struct ConflictExamineResultInfo;
+struct HitCheckInfo;
+struct CollisionResultInfo;
 class Actor;
 /// <summary>
 /// 球同士の当たり判定をやります
@@ -28,27 +28,27 @@ public:
     /// <param name="objA">調べたいオブジェクトA<</param>
     /// <param name="objBInfo">調べたいオブジェクトB</param>
     /// <returns>当たったらTrue</returns>
-    bool HitCheck(Object* const objA, const HitCheckExamineObjectInfo objBInfo);
+    bool HitCheck(Object* const objA, const HitCheckInfo objBInfo);
     /// <summary>
     /// 当たったかどうか調べるよ
     /// </summary>
     /// <param name="objAInfo">調べたいオブジェクトA<</param>
     /// <param name="objBInfo">調べたいオブジェクトB</param>
     /// <returns>当たったらTrue</returns>
-    bool HitCheck(const HitCheckExamineObjectInfo objAInfo, const HitCheckExamineObjectInfo objBInfo);
+    bool HitCheck(const HitCheckInfo objAInfo, const HitCheckInfo objBInfo);
 
     /// <summary>
     /// 当たり判定を行う
     /// </summary>
     /// <param name="hitCheckInfo">その結果当たったか位置がずれるか</param>
     /// <returns></returns>
-    virtual ConflictExamineResultInfo HitCheck(HitCheckExamineObjectInfo hitCheckInfo) = 0;
+    virtual CollisionResultInfo HitCheck(HitCheckInfo hitCheckInfo) = 0;
 
     /// <summary>
     /// 当たり判定で衝突しているか調べるのに必要な情報を渡す
     /// </summary>
     /// <returns></returns>
-    virtual HitCheckExamineObjectInfo GetHitExamineCheckInfo()const;
+    virtual HitCheckInfo GetHitExamineCheckInfo()const;
 
     /// <summary>
     /// trueなら当たり判定無し
@@ -62,7 +62,7 @@ protected:
     /// <param name="objAInfo">調べたいオブジェクトA</param>
     /// <param name="objBInfo">調べたいオブジェクトB</param>
     /// <returns>当たったらTrue</returns>
-    bool HitCheckProcess(HitCheckExamineObjectInfo objAInfo, HitCheckExamineObjectInfo objBInfo);
+    bool HitCheckProcess(HitCheckInfo objAInfo, HitCheckInfo objBInfo);
 
     //当たり判定の持ち主
     Actor* object = nullptr;

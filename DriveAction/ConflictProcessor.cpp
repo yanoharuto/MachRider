@@ -14,25 +14,22 @@ ConflictProcessor::ConflictProcessor(Actor* const obj)
 /// <summary>
 /// 当たり判定の処理を呼び出す
 /// </summary>
-/// <param name="resultInfo"></param>
-void ConflictProcessor::ConflictProcess(ConflictExamineResultInfo resultInfo)
+/// <param name="resultInfo">衝突時の結果</param>
+void ConflictProcessor::OnConflict(CollisionResultInfo resultInfo)
 {
-    //衝突後の処理を行う必要がないなら終了
-    if (object == nullptr)return;
-
     if (resultInfo.hit != HitSituation::NotHit)
     {
         //当たった時の処理を行う
-        object->ConflictProcess(resultInfo);
+        object->OnConflict(resultInfo);
     }
 }
 /// <summary>
 /// 当たり判定で衝突しているか調べるのに必要な情報を渡す
 /// </summary>
 /// <returns></returns>
-HitCheckExamineObjectInfo ConflictProcessor::GetHitExamineCheckInfo() const
+HitCheckInfo ConflictProcessor::GetHitExamineCheckInfo() const
 {
-    HitCheckExamineObjectInfo info;
+    HitCheckInfo info;
     info.SetExamineInfo(object);
     info.velocity = object->GetVelocity();
     return info;

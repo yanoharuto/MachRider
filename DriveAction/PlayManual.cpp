@@ -5,7 +5,7 @@ PlayManual::PlayManual()
 {
     playManualData = UIManager::CreateUIData(manual);
     sheatData = UIManager::CreateUIData(playManualSheat);
-	UIKind nowUIKind = manual;
+	
 	leftBUI.data = UIManager::CreateUIData(leftButton);
 	rightBUI.data = UIManager::CreateUIData(rightButton);
 	//ジョイパッドならUI変更

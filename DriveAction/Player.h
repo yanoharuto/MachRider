@@ -5,7 +5,7 @@
 class SphereCollider;
 class PlayerObserver;
 class SoundListener;
-class PlayerViewer;
+class PlayerDrawModel;
 class PlayerCar;
 /// <summary>
 /// プレイヤーの車の管理
@@ -46,7 +46,7 @@ private:
     //操作する車
     PlayerCar* car;
     //描画に使う
-    PlayerViewer* playerViewer;
+    PlayerDrawModel* playerDrawer;
     //音を聞く場所の更新
     SoundListener* listener = nullptr;
     //ダメージを受けるクールタイム

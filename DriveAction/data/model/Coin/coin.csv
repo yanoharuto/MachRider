@@ -9,7 +9,7 @@ data/model/Coin/Coin.mv1
 23
     //modelの当たり半径
     collRadius = 11
-46
+68
     //跳ね返りの大きさ
     bouncePower = 14
 0

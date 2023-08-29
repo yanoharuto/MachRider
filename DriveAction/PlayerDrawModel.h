@@ -1,17 +1,17 @@
 #pragma once
-#include "ModelViewer.h"
+#include "DrawModel.h"
 class PlayerCar;
 /// <summary>
-/// プレイヤーの機体の傾きなどに対応するViewer
+/// プレイヤーの機体の傾きなどに対応する
 /// </summary>
-class PlayerViewer :
-    public ModelViewer
+class PlayerDrawModel :
+    public DrawModel
 {
 public:
     /// <summary>
-    /// プレイヤーの機体の傾きなどに対応するViewer
+    /// プレイヤーの機体の傾きなどに対応
     /// </summary>
-    PlayerViewer();
+    PlayerDrawModel();
     /// <summary>
     /// プレイヤーの角度に合わせて回転する
     /// </summary>

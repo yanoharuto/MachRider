@@ -74,7 +74,7 @@ void Bomber::Update()
 /// <summary>
 /// Õ“ËŒã‚Ìˆ—
 /// </summary>
-void Bomber::ConflictProcess(ConflictExamineResultInfo resultInfo)
+void Bomber::OnConflict(CollisionResultInfo resultInfo)
 {
     if (resultInfo.tag != ObjectTag::damageObject && burnEffect == -1)
     {

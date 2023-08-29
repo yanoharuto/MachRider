@@ -9,7 +9,7 @@ data/model/Player/IceBlades.mv1
 2
     //modelの当たり半径
     collRadius = 11
-3
+5
     //跳ね返りの大きさ
     bouncePower = 14
 1

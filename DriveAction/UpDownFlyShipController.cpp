@@ -1,14 +1,14 @@
 #include "UpDownFlyShipController.h"
 #include "UpDownLaserFlyShip.h"
-#include "ModelViewer.h"
+#include "DrawModel.h"
 
 UpDownFlyShipController::UpDownFlyShipController()
     :FlyShipController(upDownLaserShip)
 {
-    viewer = new ModelViewer(upDownLaserShip);
+    drawModel = new DrawModel(upDownLaserShip);
 }
 
-void UpDownFlyShipController::AddObject(std::vector<EditArrangementData> editData)
+void UpDownFlyShipController::AddObject(std::vector<PlacementData> editData)
 {
     if (!editData.empty())
     {

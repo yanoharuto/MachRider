@@ -15,7 +15,7 @@ public:
 /// 丸鋸を追加
 /// </summary>
 /// <param name="editData">追加する位置などの情報</param>
-    void AddObject(std::vector<EditArrangementData> editData)override;
+    void AddObject(std::vector<PlacementData> editData)override;
     /// <summary>
     /// 更新。　破壊されたら破棄
     /// </summary>

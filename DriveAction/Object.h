@@ -1,7 +1,7 @@
 #pragma once
 #include "DxLib.h"
 #include "InitObjKind.h"
-class ModelViewer;
+class DrawModel;
 class Object
 {
 public:
@@ -45,7 +45,7 @@ public:
     /// デストラクタ
     /// </summary>
     /// <returns></returns>
-    virtual ~Object();
+    virtual ~Object() {};
     /// <summary>
     /// 更新
     /// </summary>

@@ -36,8 +36,8 @@ private:
     /// </summary>
     /// <param name="collectNum">今の収集アイテムの所得数</param>
     /// <returns>エネミーの配置情報</returns>
-    std::vector<EditArrangementData> GetNowEnemyEditData(int getCollectNum);
+    std::vector<PlacementData> GetNowEnemyEditData(int getCollectNum);
     
     //敵の位置まとめ
-    std::vector<EditArrangementData> editDataVec;
+    std::vector<PlacementData> editDataVec;
 };

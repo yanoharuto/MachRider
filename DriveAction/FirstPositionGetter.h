@@ -19,12 +19,20 @@ public:
     /// </summary>
     /// <param name="dataKind"></param>
     /// <returns></returns>
-    static std::vector<EditArrangementData> GetInitData(Object::ObjectTag tag);
+    static std::vector<PlacementData> GetInitData(Object::ObjectTag tag);
     /// <summary>
     /// CSVファイルからステージに配置するための情報を所得
     /// </summary>
-    /// <param name="fileName"></param>
-    static std::vector<EditArrangementData> CSVConvertFirstData(std::string fileName);
+    /// <param name="fileName">配置情報までのパス</param>
+    /// /// <returns>CSVファイルからステージに配置するための情報</returns>
+    static std::vector<PlacementData> CSVConvertFirstData(std::string fileName);
+    /// <summary>
+    /// CSVファイルからステージに配置するための情報を所得
+    /// </summary>
+    /// <param name="fileName">配置情報までのパス</param>
+    /// <param name="kind">所得したい配置物の種類</param>
+    /// <returns>CSVファイルからステージに配置するための情報</returns>
+    static std::vector<PlacementData> CSVConvertFirstData(std::string fileName,ObjectInit::InitObjKind kind);
 private:
 
 };

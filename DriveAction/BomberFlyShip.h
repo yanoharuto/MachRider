@@ -17,7 +17,7 @@ public:
     /// </summary>
     /// <param name="setFirstPos">出現位置</param>
     /// <param name="setDestinationPos">目的地</param>
-    BomberFlyShip(EditArrangementData data,FlyShipInit::InitFlyShipParamator initParam);
+    BomberFlyShip(PlacementData data,FlyShipInit::InitFlyShipParamator initParam);
     /// <summary>
     /// 爆弾を落としながら進む
     /// </summary>

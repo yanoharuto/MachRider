@@ -4,9 +4,9 @@
 #include "DxLib.h"
 #include "InitObjKind.h"
 #include "FlyShipController.h"
-#include "EditorModelViewer.h"
-CircleFlyShipViewer::CircleFlyShipViewer()
-    :EditorModelViewer(ObjectInit::circleLaserShip)
+#include "EditorDrawModel.h"
+CircleFlyShipDrawer::CircleFlyShipDrawer()
+    :EditorDrawModel(ObjectInit::circleLaserShip)
 {
     Init();
 }
@@ -14,7 +14,7 @@ CircleFlyShipViewer::CircleFlyShipViewer()
 /// 普通に円を作っている機体を描画
 /// </summary>
 /// <param name="data"></param>
-void CircleFlyShipViewer::Draw(EditArrangementData data) const
+void CircleFlyShipDrawer::Draw(PlacementData data) const
 {
     VECTOR dataDir = VGet(data.dirX, 0, data.dirZ);
     VECTOR dataPos = VGet(data.posX, 0, data.posZ);
@@ -34,7 +34,7 @@ void CircleFlyShipViewer::Draw(EditArrangementData data) const
 /// 若干上空に描画する
 /// </summary>
 /// <param name="data"></param>
-void CircleFlyShipViewer::SelectDraw(EditArrangementData data) const
+void CircleFlyShipDrawer::SelectDraw(PlacementData data) const
 {
     VECTOR dataDir = VGet(data.dirX, 0, data.dirZ);
     VECTOR dataPos = VGet(data.posX, selectPosY, data.posZ);
@@ -53,7 +53,7 @@ void CircleFlyShipViewer::SelectDraw(EditArrangementData data) const
 /// <summary>
 /// 円を作るために必要な情報を所得
 /// </summary>
-void CircleFlyShipViewer::Init()
+void CircleFlyShipDrawer::Init()
 {
     //配置に必要な情報
     using namespace FlyShipInit;

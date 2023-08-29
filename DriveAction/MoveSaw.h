@@ -13,7 +13,7 @@ public:
     /// <summary>
 /// ˆÚ“®‚·‚é‰ñ“]‚Ì‚±‚¬‚è
 /// </summary>
-    MoveSaw(EditArrangementData editData);
+    MoveSaw(PlacementData editData);
     /// <summary>
     /// ˆÚ“®‚µ‚È‚ª‚ç‰ñ“]‚·‚é
     /// </summary>

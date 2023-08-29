@@ -13,7 +13,7 @@ const float Saw::addRotate = 20.0f;
 /// ‰ñ“]‚Ì‚±‚¬‚è
 /// </summary>
 /// <param name="arrangementData"></param>
-Saw::Saw(EditArrangementData arrangementData)
+Saw::Saw(PlacementData arrangementData)
     :Actor(saw)
 {
     //“–‚½‚è”»’è
@@ -28,7 +28,7 @@ Saw::Saw(EditArrangementData arrangementData)
 /// <summary>
 /// Œp³‚·‚é‚È‚ç‚±‚Á‚¿
 /// </summary>
-Saw::Saw(ObjectInit::InitObjKind kind, EditArrangementData arrangementData)
+Saw::Saw(ObjectInit::InitObjKind kind, PlacementData arrangementData)
     :Actor(kind)
 {
     Init(arrangementData);
@@ -66,7 +66,7 @@ void Saw::Update()
 /// <summary>
 /// Õ“Ëˆ—Às player‚É‚Ô‚Â‚©‚Á‚½‚ç”j‰ó
 /// </summary>
-void Saw::ConflictProcess(const ConflictExamineResultInfo conflictInfo)
+void Saw::OnConflict(const CollisionResultInfo conflictInfo)
 {
     if (conflictInfo.tag == player && objState != activeEnd)
     {
@@ -80,7 +80,7 @@ void Saw::ConflictProcess(const ConflictExamineResultInfo conflictInfo)
 /// ‹¤’Ê‰Šú‰»ˆ—
 /// </summary>
 /// <param name="arrangementData"></param>
-void Saw::Init(EditArrangementData arrangementData)
+void Saw::Init(PlacementData arrangementData)
 {
     position.x = arrangementData.posX;
     position.z = arrangementData.posZ;

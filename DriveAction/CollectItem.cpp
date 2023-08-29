@@ -20,7 +20,7 @@ const float Coin::moveYSpeed = 4.0f;
 /// ‰Šú‰»
 /// </summary>
 /// <param name="arrangementData"></param>
-Coin::Coin(EditArrangementData arrangementData)
+Coin::Coin(PlacementData arrangementData)
     :Actor(ObjectInit::collect)
 {
     //ˆÊ’u
@@ -95,7 +95,7 @@ void Coin::Update()
 /// ‚Ô‚Â‚©‚Á‚½‚Ìˆ—
 /// </summary>
 /// <param name="conflictInfo"></param>
-void Coin::ConflictProcess(const ConflictExamineResultInfo conflictInfo)
+void Coin::OnConflict(const CollisionResultInfo conflictInfo)
 {
     if (conflictInfo.tag == ObjectTag::player)
     {

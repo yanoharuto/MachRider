@@ -1,24 +1,24 @@
 #pragma once
-#include "EditorModelViewer.h"
+#include "EditorDrawModel.h"
 
 /// <summary>
 /// ‰~Œ`ã‚ÉwŒ`‚ğ‘g‚Ş“G‚Ì•`‰æ’S“–
 /// </summary>
-class CircleFlyShipViewer final:
-    public EditorModelViewer
+class CircleFlyShipDrawer final:
+    public EditorDrawModel
 {
 public:
-    CircleFlyShipViewer();
+    CircleFlyShipDrawer();
     /// <summary>
     /// •`‰æ‚·‚é
     /// </summary>
     /// <param name="data"></param>
-    void Draw(EditArrangementData data)const override;
+    void Draw(PlacementData data)const override;
     /// <summary>
     /// •ÒW’†‚É‘I‘ğ‚³‚ê‚Ä‚¢‚é‚Æ‚«áŠ±ã‹ó‚É•`‰æ‚·‚é
     /// </summary>
     /// <param name="data"></param>
-    void SelectDraw(EditArrangementData data)const override;
+    void SelectDraw(PlacementData data)const override;
 private:
     /// <summary>
     /// ‰Šú‰»

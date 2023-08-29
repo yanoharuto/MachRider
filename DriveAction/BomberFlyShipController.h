@@ -5,6 +5,6 @@ class BomberFlyShipController :
 {
 public:
     BomberFlyShipController();
-    void AddObject(std::vector<EditArrangementData> editData)override;
+    void AddObject(std::vector<PlacementData> editData)override;
 };
 

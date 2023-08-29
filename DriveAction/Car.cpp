@@ -27,7 +27,7 @@ Car::Car(ObjectInit::InitObjKind kind)
 	InitSpeedParamater(kind);
 	tag = ObjectTag::player;
 	ReflectsVelocity();
-	wheels = new Wheels(WheelArgumentCarInfo{MGetIdent(),direction,VSize(velocity)});
+	wheels = new Wheels();
 }
 
 
@@ -37,11 +37,10 @@ Car::~Car()
 }
 
 /// <summary>
-/// ぶつかった時の処理　減速する
+/// 車がぶつかった時の関数
 /// </summary>
-/// <param name="conflictObjPos"></param>
-/// <param name="conflictObjRad"></param>
-void Car::ConflictReaction(const ConflictExamineResultInfo conflictInfo)
+/// <param name="conflictInfo">ぶつかった時の結果</param>
+void Car::ConflictReaction(CollisionResultInfo conflictInfo)
 {
 	conflictVec = conflictInfo.bounceVec;
 	conflictVec.y = 0;
@@ -57,16 +56,17 @@ void Car::ConflictReaction(const ConflictExamineResultInfo conflictInfo)
 /// <summary>
 /// 進む方向と速さを更新する
 /// </summary>
-/// <param name="deltaTime">経過時間</param>
-/// <param name="accelVec">次の更新までに進む方向と速さ</param>
 void Car::UpdateVelocity()
 {
+	//加速する
 	UpdateAccelPower();
-	//加速量
+	//移動量を作成
 	VECTOR accelVec = VScale(direction, accelPower);
-	//タイヤの向きから進行方向を取る
+	//タイヤの向きから進行方向のずれを所得
 	float theta = wheels->GetMoveDirTheta(VSize(accelVec));
-	theta *= speedParamator.gripPower - (accelPower - speedParamator.lowestSpeed) / speedParamator.maxSpeed * speedParamator.gripPower;
+	//早いほど曲がりにくくなるようにする
+	theta *= speedParamator.gripPower - accelPower / speedParamator.maxSpeed;
+	//加速量をタイヤの向きで変化させる
 	velocity = VTransform(accelVec, MGetRotY(theta));
 	// 上下方向にいかないようにベロシティを整える.
 	velocity = VGet(velocity.x, 0, velocity.z);	
@@ -156,9 +156,9 @@ void Car::InitSpeedParamater(ObjectInit::InitObjKind kind)
 /// 移動する前のポジションを渡す
 /// </summary>
 /// <returns></returns>
-HitCheckExamineObjectInfo Car::GetHitCheckExamineInfo()
+HitCheckInfo Car::GetHitCheckExamineInfo()
 {
-	HitCheckExamineObjectInfo info;
+	HitCheckInfo info;
 	info.pos = prevPos;
 	info.radius = radius;
 	info.velocity = velocity;

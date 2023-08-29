@@ -4,196 +4,80 @@
 #include "UserInput.h"
 #include "OriginalMath.h"
 #include "AssetManager.h"
-//左側タイヤの初期角度
-static const float firstLWheelRota = 0.0f;
-//右側タイヤの初期角度
-static const float firstRWheelRota = 180.0f;
 //車の回転力
-static const float wheelDriveRotaPower = 4.4f;
+const float Wheels::wheelDriveRotaPower = 4.4f;
 //タイヤが左右に傾く力
-static const float wheelCurvePower = 1.7f;
+const float Wheels::wheelCurvePower = 1.7f;
 //この角度までタイヤは傾くよ
-static const float maxWheelRotaY = 45.5f;
+const float Wheels::maxAxisY = 45.5f;
 //進行方向に影響するまでに必要なタイヤの角度
-static const float rotaCalculationLine = 1.2f;
-
-Wheels::Wheels(const WheelArgumentCarInfo InitInfo)
-{
-	carInfo = InitInfo;
-	InitWheel(lFWheel, modelHandle, VGet(-fWheelPos.x, fWheelPos.y, -fWheelPos.z), firstLWheelRota);
-	InitWheel(lBWheel, modelHandle, VGet(bWheelPos.x, fWheelPos.y, -fWheelPos.z), firstLWheelRota);
-	InitWheel(rBWheel, modelHandle, VGet(bWheelPos.x, fWheelPos.y, fWheelPos.z), firstRWheelRota);
-	InitWheel(rFWheel, modelHandle, VGet(-fWheelPos.x, fWheelPos.y, fWheelPos.z), firstRWheelRota);
-}
-
-Wheels::~Wheels()
-{
-	MV1DeleteModel(modelHandle);
-	MV1DeleteModel(lFWheel.modelHandle);
-	MV1DeleteModel(rFWheel.modelHandle);
-	MV1DeleteModel(lBWheel.modelHandle);
-	MV1DeleteModel(rBWheel.modelHandle);
-}
-
-void Wheels::Draw()
-{
-	MV1DrawModel(lFWheel.modelHandle);
-	MV1DrawModel(rFWheel.modelHandle);
-	MV1DrawModel(lBWheel.modelHandle);
-	MV1DrawModel(rBWheel.modelHandle);
-}
+const float Wheels::curbCalculationLine = 1.2f;
+//軸距　前輪と後輪の距離
+const float Wheels::wheelbase = 10.0f;
 
 /// <summary>
 /// 左右キーを入力したら傾け、上下キーで回転させる
 /// </summary>
 /// <param name="_Key">入力情報</param>
-void Wheels::WheelUpdate(const WheelArgumentCarInfo info)
-{
-	carInfo = info;
-	AllSetWheelMatrix();
-	//車が速いとよく回る
-	if (carInfo.carSpeed > 0)
-	{
-		wheelDriveSpeed += -carInfo.carSpeed * wheelDriveRotaPower;
-	}
-	//タイヤを傾ける処理
+void Wheels::Update()
+{	
+	//右を押したら
 	if (UserInput::GetInputState(Right) != Free)
 	{		
-		isStraightDash = false;
-		if (wheelDriveRota < maxWheelRotaY)
-		{
-			wheelDriveRota += wheelCurvePower;
-		}
-		else
-		{
-			wheelDriveRota = maxWheelRotaY;
-		}
-
+		//y軸回転
+		axisY = axisY < maxAxisY ? axisY + wheelCurvePower : maxAxisY;
 	}
+	//左を押したら
 	else if (UserInput::GetInputState(Left) != Free)
-	{		
-		isStraightDash = false;
-		if (wheelDriveRota > -maxWheelRotaY)
-		{
-			wheelDriveRota -= wheelCurvePower;
-		}
-		else
-		{
-			wheelDriveRota = -maxWheelRotaY;
-		}
+	{
+		axisY = axisY > -maxAxisY ? axisY - wheelCurvePower : -maxAxisY;
 	}
 	//どっちも押されてなかったらタイヤを元に戻す
-	else if (fabsf(wheelDriveRota) > rotaCalculationLine)
+	else if (fabsf(axisY) > curbCalculationLine)
 	{
-		wheelDriveRota += wheelDriveRota > 0 ? -wheelCurvePower : wheelCurvePower;
+		axisY += axisY > 0 ? -wheelCurvePower : wheelCurvePower;
 		//ある程度戻ってたら角度を0にする
-		if (fabsf(wheelDriveRota) < rotaCalculationLine)
+		if (fabsf(axisY) < curbCalculationLine)
 		{
-			wheelDriveRota = 0;
+			axisY = 0;
 		}
-		isStraightDash = true;
 	}	
 }
 
 /// <summary>
-/// どの向きに曲がればいいかタンジェントを返すよ
+/// 進行方向が何度曲がるか返す
 /// </summary>
 /// <param name="velocitySize">速さのベクトルの大きさ</param>
-/// <returns>負の数ならだったら左</returns>
-float Wheels::GetMoveDirTheta(const float velocitySize)
+/// <returns>進行方向が左右に何度ずれるか返す</returns>
+float Wheels::GetMoveDirTheta(const float velocitySize)const
 {
-	if (wheelDriveRota > rotaCalculationLine)
+	//右にタイヤが曲がっているなら
+	if (axisY > curbCalculationLine)
 	{
-		return atan2f(velocitySize, GetRotationRadius(firstLWheelRota)); 
+		//回転半径と移動速度で曲がる量を出す
+		return atan2f(velocitySize, GetRotationRadius()); 
 	}
-	else if (wheelDriveRota < -rotaCalculationLine)
+	//左にタイヤが曲がっているなら
+	else if (axisY < -curbCalculationLine)
 	{
-		return -atan2f(velocitySize,GetRotationRadius(firstLWheelRota));
+		return -atan2f(velocitySize,GetRotationRadius());
 	}
 	return 0.0f;
 }
 
-void Wheels::AllSetWheelMatrix()
-{
-	//左前タイヤ
-	SetWheelMatrix(lFWheel, wheelDriveSpeed, firstLWheelRota + wheelDriveRota);
-	//左後ろタイヤ
-	SetWheelMatrix(lBWheel, wheelDriveSpeed, firstLWheelRota);
-	//右前タイヤ	
-	SetWheelMatrix(rFWheel, -wheelDriveSpeed, firstRWheelRota + wheelDriveRota);
-	//右後ろタイヤ
-	SetWheelMatrix(rBWheel, -wheelDriveSpeed, firstRWheelRota);
-}
 /// <summary>
 /// 回転するための半径を返す
 /// </summary>
-/// <param name="firstWheelRota">各タイヤの最初の角度</param>
-/// <returns></returns>
-float Wheels::GetRotationRadius(const float firstWheelRota)
+/// <returns>回転半径</returns>
+float Wheels::GetRotationRadius()const
 {
 	//ある程度タイヤが曲がっていたら曲がり始める
-	if (fabsf(wheelDriveRota) > rotaCalculationLine)
+	if (fabsf(axisY) > curbCalculationLine)
 	{
 		//タイヤの角度をタンジェントに
-		float rota = tan(static_cast<float> (fabsf(wheelDriveRota)) * RAGE);
-		//回転半径を出す
-		float radius = (fWheelPos.x + bWheelPos.x) / rota;
-		//車の向きに後ろタイヤをY軸分回転させる
-		VECTOR bWDir = VTransform(carInfo.direction, MGetRotY((firstWheelRota) * RAGE));
-		//後ろタイヤの横向きを出す
-		bWDir = VNorm(VCross(bWDir, VGet(0, 1, 0)));
-		//回転半径の中心座標を出す
-		VECTOR circleAxisPos = VScale(bWDir, radius);
-
-		//進行方向を曲げるのに必要な円の半径を出す
-		return  VSize(circleAxisPos);
+		float rota = tan(static_cast<float> (fabsf(axisY)) * RAGE);
+		//軸距を割って回転半径を出す
+		return  wheelbase / rota;
 	}
 	return 0.0f;
-}
-/// <summary>
-	/// 車から見たタイヤの座標が返ってくる
-	/// </summary>
-	/// <param name="_wheel"></param>
-VECTOR Wheels::WheelGetPos(const Wheel& wheel)
-{
-	//タイヤの前方方向の位置
-	VECTOR between = VScale(carInfo.direction, -wheel.betweenBody.x);
-	//タイヤの横方向の位置と足す
-	between = VAdd(between, VScale(VCross(carInfo.direction, VGet(0, 1, 0)), -wheel.betweenBody.z));
-	//高さを合わせる
-	between.y = fWheelPos.y;
-	return  between;
-}
-/// <summary>
-	/// タイヤの位置と回転を設定
-	/// </summary>
-	/// <param name="_wheel">設定したいタイヤ</param>
-	/// <param name="_rotaX">タイヤの転がるときの回転</param>
-	/// <param name="_rotaY">タイヤの向きがずれるときの回転</param>
-
-void Wheels::SetWheelMatrix(Wheel& wheel, const float rotaX, const float rotaY)
-{
-	//タイヤの位置を車の向きに合わせる
-	MATRIX wheelPos = MMult(carInfo.matrix, MGetTranslate(WheelGetPos(wheel)));
-
-	MATRIX wheelRota = MMult(MGetRotX(rotaX * RAGE), MGetRotY(rotaY * RAGE));
-	wheel.matrix = MMult(wheelRota, wheelPos);
-	MV1SetMatrix(wheel.modelHandle, wheel.matrix);
-}
-/// <summary>
-/// タイヤの初期化
-/// </summary>
-/// <param name="_Wheel">初期化したいタイヤ</param>
-/// <param name="_ModelHandle">タイヤのモデル</param>
-/// <param name="_Pos">車から見た位置</param>
-/// <param name="_Rota">回転角</param>
-void Wheels::InitWheel(Wheel& wheel, int DuplicateSourceModel, VECTOR pos, float rota)
-{
-	wheel.modelHandle = MV1DuplicateModel(DuplicateSourceModel);
-	wheel.betweenBody = pos;
-	VECTOR wheelPos = WheelGetPos(wheel);
-	MATRIX bodyMat = MV1GetMatrix(DuplicateSourceModel);
-
-	wheel.matrix = MMult(MGetRotY(rota * RAGE), MMult(bodyMat, MGetTranslate(wheelPos)));
-	MV1SetMatrix(wheel.modelHandle, wheel.matrix);
 }

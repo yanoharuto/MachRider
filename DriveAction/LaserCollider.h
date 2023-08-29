@@ -19,7 +19,7 @@ public:
     /// </summary>
     /// <param name="hitCheckInfo">“–‚½‚Á‚Ä‚­‚é“z‚Ìî•ñ</param>
     /// <returns></returns>
-    ConflictExamineResultInfo HitCheck(HitCheckExamineObjectInfo hitCheckInfo)override;
+    CollisionResultInfo HitCheck(HitCheckInfo hitCheckInfo)override;
 private:
     //ü•ª‚Ì’·‚³‚Í‚‚³‚ÆŒW”‚É‚æ‚Á‚ÄŒˆ‚ß‚é
     float lineRange;

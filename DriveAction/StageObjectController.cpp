@@ -6,7 +6,7 @@
 #include "FirstPositionGetter.h"
 #include "InitActor.h"
 #include "StageWall.h"
-#include "ModelViewer.h"
+#include "DrawModel.h"
 /// <summary>
 /// ‰Šú‰»
 /// </summary>
@@ -21,7 +21,7 @@ StageObjectController::StageObjectController()
     //skyDome‚Ìİ’è
     skyDomeModelHandle = InitActor::GetModelHandle(skyDome);
     stageWall = new StageWall();
-    viewer = new ModelViewer(wall);
+    drawModel = new DrawModel(wall);
 }
 
 /// <summary>
@@ -31,7 +31,7 @@ StageObjectController::StageObjectController()
 StageObjectController::~StageObjectController()
 {
     SAFE_DELETE(stageWall);
-    SAFE_DELETE(viewer);
+    SAFE_DELETE(drawModel);
 }
 
 /// <summary>
@@ -40,7 +40,7 @@ StageObjectController::~StageObjectController()
 void StageObjectController::Draw() const
 {
     //•Ç‚Æ°
-    viewer->Draw(stageWall);
+    drawModel->Draw(stageWall);
     MV1DrawModel(floorModelHandle);
     //ƒ‰ƒCƒg‚Ì‰e‹¿‚È‚µ‚Å‹ó‚ğ•`‰æ
     SetUseLighting(false);

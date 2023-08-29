@@ -30,24 +30,42 @@ PlayScene::~PlayScene()
 /// <returns></returns>
 SceneType PlayScene::Update()
 {
+    //メニューでプレイヤーが何を選んだか
     menu->Update();
-    auto menuState = menu->GetMenuState();
-    //ゲームを中断する場合
-    if (menuState != continueGame)
+    MenuState menuState = menu->GetMenuState();
+    
+
+    switch (menuState)
     {
-        nowSceneType = menuState == retry ? SceneType::RELOAD : SceneType::ESCAPE;
-    }
-    //menu画面が開いてないなら普通の処理
-    else if (menu->IsMenuOpen() == false)
-    {
-        //シーンごとの処理
-        sceneFlow->Update();
-        //処理が終わったら
-        if (sceneFlow->GetIsEndProccess())
+    case continueGame:
+        //menu画面が開いてないなら普通の処理
+        if (menu->IsMenuOpen() == false)
         {
-            return sceneFlow->GetNextSceneType();
+            //シーンごとの処理
+            sceneFlow->Update();
+            //処理が終わったら
+            if (sceneFlow->GetIsEndProccess())
+            {
+                return sceneFlow->GetNextSceneType();
+            }
         }
+    break;
+    //ゲームをやり直す
+    case retry:
+        nowSceneType = SceneType::RELOAD;
+        break;
+        //タイトルに戻る
+    case returnTitle:
+        nowSceneType = SceneType::TITLE;
+        break;
+        //ゲーム終了
+    case exitGame:
+        nowSceneType = SceneType::ESCAPE;
+        break;
+    default:
+        break;
     }
+    
     return nowSceneType;
 }
 /// <summary>
