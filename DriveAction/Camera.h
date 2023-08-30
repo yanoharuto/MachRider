@@ -41,22 +41,22 @@ class Camera abstract
 {
 public:
     /// <summary>
-    /// どのタイミングで使うか教えて
+    /// カメラの速度や高さの初期化
     /// </summary>
-    /// <param name="type"></param>
+    /// <param name="type">どのタイミングで使うか教えて</param>
     Camera(InitCamera::UseCameraSceneKind type);
     virtual ~Camera();
     /// <summary>
     /// カメラの範囲内か調べる
     /// </summary>
-    /// <param name="actor"></param>
+    /// <param name="actor">調べたいオブジェクト</param>
     /// <returns></returns>
     bool IsLookingCamera(const Actor* const actor) const;
 protected:
     /// <summary>
     /// カメラのパラメータ等を読み取る
     /// </summary>
-    /// <param name="type"></param>
+    /// <param name="type">シーンによってカメラの性能を変える</param>
     void LoadData(InitCamera::UseCameraSceneKind type);
     //初期化に必要なパラメーターへのパス
     std::string initFileName= "data/Camera/CameraInitPass.csv";

@@ -5,7 +5,7 @@
 #include "ConflictManager.h"
 #include "Utility.h"
 #include "InitObjKind.h"
-#include "SphereCollider.h"
+#include "SphereHitChecker.h"
 #include "ConflictProcessor.h"
 #include "ObjectObserver.h"
 //—Ž‰º‘¬“x
@@ -28,7 +28,7 @@ Bomber::Bomber(std::unique_ptr<ObjectObserver> setObserver)
     velocity = VGet(0, 0, 0);
     direction = VGet(1, 0, 0);
     //“–‚½‚è”»’è
-    collider = new SphereCollider(this);
+    collider = new SphereHitChecker(this);
     conflictProcessor = new ConflictProcessor(this);
     ConflictManager::AddConflictProcessor(conflictProcessor, collider);
 }

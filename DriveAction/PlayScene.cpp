@@ -7,7 +7,7 @@
 #include "Clock.h"
 #include "Menu.h"
 /// <summary>
-/// 遊んでいるときのシーン
+/// メニュー画面とゲームの流れの確保と音をロード
 /// </summary>
 PlayScene::PlayScene()
     :SceneBase(SceneType::PLAY)
@@ -17,7 +17,9 @@ PlayScene::PlayScene()
     SoundPlayer::LoadSound(playBGM);
     menu = new Menu();
 }
-
+/// <summary>
+/// メニューとゲームの開放と音を止める
+/// </summary>
 PlayScene::~PlayScene()
 {
     SAFE_DELETE(menu);
@@ -73,11 +75,11 @@ SceneType PlayScene::Update()
 /// </summary>
 void PlayScene::Draw()const
 {
-    if (Menu::IsMenuOpen())
+    if (Menu::IsMenuOpen())//メニューを開いていたらメニュー画面を描画
     {
          menu->Draw();
     }
-    else
+    else//遊んでいるときの状態を描画
     {
         sceneFlow->Draw();
     }

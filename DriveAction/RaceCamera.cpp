@@ -3,7 +3,10 @@
 #include "ObjectObserver.h"
 #include "Utility.h"
 #include "UserInput.h"
-
+/// <summary>
+/// 遊んでいるときのカメラの初期化
+/// </summary>
+/// <param name="player">プレイヤーの位置</param>
 RaceCamera::RaceCamera(std::weak_ptr<ObjectObserver> target)
     :Camera(InitCamera::game)
 {
@@ -12,7 +15,9 @@ RaceCamera::RaceCamera(std::weak_ptr<ObjectObserver> target)
     position = {0,pos.y,0};
     SetCameraPositionAndTarget_UpVecY(position, pos);
 }
-
+/// <summary>
+/// 位置や向きの更新
+/// </summary>
 void RaceCamera::Update()
 {
     VECTOR subVec = VSub(targetObserver.lock()->GetSubjectDir(), direction);

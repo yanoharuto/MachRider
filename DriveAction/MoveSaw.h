@@ -2,7 +2,7 @@
 #include "Saw.h"
 #include "EditObjectData.h"
 class ReusableTimer;
-class SphereCollider;
+class SphereHitChecker;
 /// <summary>
 /// ˆÚ“®‚·‚é‰ñ“]‚Ì‚±‚¬‚è
 /// </summary>

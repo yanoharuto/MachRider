@@ -1,6 +1,6 @@
 #include "Player.h"
 #include "PlayerCar.h"
-#include "SphereCollider.h"
+#include "SphereHitChecker.h"
 #include "SoundPlayer.h"
 #include "SoundListener.h"
 #include "Utility.h"

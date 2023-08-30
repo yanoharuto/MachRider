@@ -3,7 +3,7 @@
 #include "Actor.h"
 #include "EditorObject.h"
 class ConflictProcessor;
-class SphereCollider;
+class SphereHitChecker;
 /// <summary>
 /// 収集アイテム
 /// </summary>
@@ -46,7 +46,7 @@ private:
     //回転量
     float totalMoveYValue = 0;
     //球当たり判定
-    SphereCollider* collider;
+    SphereHitChecker* collider;
     //車にぶつかった
     bool isCarConflict = false;
     //プレイヤーがコインをゲットしたときのエフェクト

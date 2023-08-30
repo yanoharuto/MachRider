@@ -5,7 +5,7 @@
 #include "EditObjectData.h"
 class PlayerConflictProcessor;
 class SphereHitChecker;
-class SphereCollider;
+
 class Timer;
  /// <summary>
  /// プレイヤーが操作する車
@@ -42,7 +42,7 @@ public:
 	int GetCollectCount();
 private:
 	/// <summary>
-	/// 加速用ベクトルを作る
+	/// 加速用ベクトルを更新
 	/// </summary>
 	/// <returns></returns>
 	void UpdateVelocity()override;
@@ -132,5 +132,5 @@ private:
 	//衝突処理を呼んでくれる
 	PlayerConflictProcessor* conflictProcessor;
 	//playerCar自身の当たり判定
-	SphereCollider* hitChecker;
+	SphereHitChecker* hitChecker;
 };

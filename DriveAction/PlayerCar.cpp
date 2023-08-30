@@ -8,12 +8,12 @@
 #include "EffectManager.h"
 #include "ConflictManager.h"
 #include "AssetManager.h"
-#include "SphereCollider.h"
+#include "SphereHitChecker.h"
 #include "PlayerDrawModel.h"
 #include "Timer.h"
 #include "PlayerConflictProcessor.h"
 #include "ConflictManager.h"
-#include "SphereCollider.h"
+
 /// <summary>
 /// プレイヤーが操作する車
 /// </summary>
@@ -43,7 +43,7 @@ PlayerCar::PlayerCar(PlacementData arrangementData)
 	SoundPlayer::LoadSound(playerDamage);
 	//衝突処理呼び役
 	conflictProcessor = new PlayerConflictProcessor(this);
-	hitChecker = new SphereCollider(this);
+	hitChecker = new SphereHitChecker(this);
 	ConflictManager::AddConflictProcessor(conflictProcessor,hitChecker);
 }
 
@@ -139,7 +139,7 @@ int PlayerCar::GetCollectCount()
 	return conflictProcessor->GetCollectNum();
 }
 /// <summary>
-/// 加速用ベクトルを作る
+/// 加速用ベクトルを更新
 /// </summary>
 /// <returns></returns>
 void PlayerCar::UpdateVelocity()
@@ -222,7 +222,7 @@ void PlayerCar::UpdateEffects()
 			UpdateEffect(&windEffect, VGet(position.x, 0, position.z), VGet(0, degree * RAGE, 0), carWind);
 			UpdateEffect(&turboBurnerEffect, VAdd(position, VScale(direction, -radius)), VGet(-twistZRota, degree * RAGE, 0), turboBurner);
 		}
-		else
+		else//加速終了
 		{
 			StopEffekseer3DEffect(turboBurnerEffect);
 			turboBurnerEffect = -1;
@@ -235,13 +235,14 @@ void PlayerCar::UpdateEffects()
 			UpdateEffect(&turboCourceEffect, VGet(position.x, 0, position.z), VGet(0, degree * RAGE, 0), turboCourse);
 			UpdateEffect(&chargeBurnerEffect, VAdd(position, VScale(direction, -radius)), VGet(-twistZRota, degree * RAGE, 0), chargeBurner);
 		}
-		else
+		else//ターボチャージ中エフェクト終了
 		{
 			StopEffekseer3DEffect(turboCourceEffect);
 			turboCourceEffect = -1;
 			StopEffekseer3DEffect(chargeBurnerEffect);
 			chargeBurnerEffect = -1;
 		}
+		//ターボも準備もしていないなら
 		if (!(isTurbo || isTurboReserve))
 		{
 			//走っているとき出るエフェクト
@@ -353,10 +354,10 @@ float PlayerCar::GetTurboPower()
 		}
 		return 0;
 	}
-	//離したらチャージ終了
 	else 
 	{	
-		if (turboInput)
+		//離したらチャージ終了
+		if (turboInput == Detach)
 		{
 			//十分にチャージ出来たらターボに入る
 			if (!isTurbo && turboChargeTime > speedParamator.turboChargeTime)

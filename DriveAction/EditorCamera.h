@@ -10,7 +10,7 @@ public:
     EditorCamera();
     void Update();
     /// <summary>
-    /// Œü‚«
+    /// ƒJƒƒ‰‚ÌŒü‚«‚ğŠ“¾
     /// </summary>
     /// <returns></returns>
     static VECTOR GetNormDirection();

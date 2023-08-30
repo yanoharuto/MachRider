@@ -3,7 +3,7 @@
 #include "CSVFileLoader.h"
 #include "InitActor.h"
 #include "OriginalMath.h"
-#include "SphereCollider.h"
+#include "SphereHitChecker.h"
 #include "ConflictManager.h"
 #include "Utility.h"
 #include "ConflictProcessor.h"
@@ -25,7 +25,7 @@ MoveSaw::MoveSaw(PlacementData editData)
     //前方方向に動く
     velocity = VScale(direction, atoi(addStrDataVec[moveSpeed].c_str()));
     //当たり判定
-    collider = new SphereCollider(this);
+    collider = new SphereHitChecker(this);
     conflictProcessor = new ConflictProcessor(this);
     ConflictManager::AddConflictProcessor(conflictProcessor, collider);
     //破壊時のエフェクト

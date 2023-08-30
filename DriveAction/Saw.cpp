@@ -1,7 +1,7 @@
 #include "Saw.h"
 #include "InitObjKind.h"
 #include "OriginalMath.h"
-#include "SphereCollider.h"
+#include "SphereHitChecker.h"
 #include "Utility.h"
 #include "ConflictManager.h"
 #include "ConflictProcessor.h"
@@ -12,17 +12,18 @@ const float Saw::addRotate = 20.0f;
 /// <summary>
 /// 回転のこぎり
 /// </summary>
-/// <param name="arrangementData"></param>
+/// <param name="arrangementData">配置情報</param>
 Saw::Saw(PlacementData arrangementData)
     :Actor(saw)
 {
     //当たり判定
-    collider = new SphereCollider(this);
+    collider = new SphereHitChecker(this);
     conflictProcessor = new ConflictProcessor(this);
     ConflictManager::AddConflictProcessor(conflictProcessor,collider);
     
     //破壊時のエフェクト
     EffectManager::LoadEffect(bombExplosion);
+    //初期化処理
     Init(arrangementData);
 }
 /// <summary>
@@ -77,9 +78,9 @@ void Saw::OnConflict(const CollisionResultInfo conflictInfo)
     }
 }
 /// <summary>
-/// 共通初期化処理
+/// 初期化処理
 /// </summary>
-/// <param name="arrangementData"></param>
+/// <param name="arrangementData">配置情報</param>
 void Saw::Init(PlacementData arrangementData)
 {
     position.x = arrangementData.posX;

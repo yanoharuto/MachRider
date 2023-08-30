@@ -239,14 +239,12 @@
     <ClCompile Include="ConflictManager.cpp" />
     <ClCompile Include="CountDown.cpp" />
     <ClCompile Include="Effect.cpp" />
-    <ClCompile Include="GimmickObject.cpp" />
     <ClCompile Include="MiniMap.cpp" />
     <ClCompile Include="GamePlayUI.cpp" />
     <ClCompile Include="PostGoalStaging.cpp" />
     <ClCompile Include="RacePrevProcess.cpp" />
     <ClCompile Include="EditorSceneFlow.cpp" />
     <ClCompile Include="ResultScore.cpp" />
-    <ClCompile Include="SphereCollider.cpp" />
     <ClCompile Include="StageDataManager.cpp" />
     <ClCompile Include="StageWall.cpp" />
     <ClCompile Include="StopWatch.cpp" />
@@ -263,7 +261,6 @@
     <ClCompile Include="PlaySceneFlow.cpp" />
     <ClCompile Include="StageSelect.cpp" />
     <ClCompile Include="TitleSceneFlow.cpp" />
-    <ClCompile Include="VectorDataCreator.cpp" />
     <ClCompile Include="WallCollider.cpp" />
     <ClCompile Include="Wheels.cpp" />
     <ClCompile Include="SphereHitChecker.cpp" />
@@ -355,7 +352,6 @@
     <ClInclude Include="ConflictManager.h" />
     <ClInclude Include="CountDown.h" />
     <ClInclude Include="Effect.h" />
-    <ClInclude Include="GimmickObject.h" />
     <ClInclude Include="ListUtility.h" />
     <ClInclude Include="MiniMap.h" />
     <ClInclude Include="GamePlayUI.h" />
@@ -365,7 +361,6 @@
     <ClInclude Include="RacePrevProcess.h" />
     <ClInclude Include="EditorSceneFlow.h" />
     <ClInclude Include="ResultScore.h" />
-    <ClInclude Include="SphereCollider.h" />
     <ClInclude Include="StageDataManager.h" />
     <ClInclude Include="StageWall.h" />
     <ClInclude Include="StopWatch.h" />
@@ -382,7 +377,6 @@
     <ClInclude Include="StageSelect.h" />
     <ClInclude Include="TitleSceneFlow.h" />
     <ClInclude Include="UIManager.h" />
-    <ClInclude Include="VectorDataCreator.h" />
     <ClInclude Include="WallCollider.h" />
     <ClInclude Include="Wheels.h" />
     <ClInclude Include="SphereHitChecker.h" />

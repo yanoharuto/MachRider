@@ -4,7 +4,7 @@
 #include "EditObjectData.h"
 #include "InitObjKind.h"
 using namespace ObjectInit;
-class SphereCollider;
+class SphereHitChecker;
 class ConflictProcessor;
 /// <summary>
 /// 障害物　（丸のこ）
@@ -19,8 +19,10 @@ public:
     /// <param name="arrangementData">編集データ</param>
     Saw(PlacementData arrangementData);
     /// <summary>
-    /// 継承するならこっち
+    /// MoveSawなど継承するなら
     /// </summary>
+    /// <param name="kind">継承先の種類</param>
+    /// <param name="arrangementData">配置情報</param>
     Saw(ObjectInit::InitObjKind kind, PlacementData arrangementData);
     /// <summary>
     /// 当たり判定消去
@@ -38,14 +40,14 @@ public:
     
 protected:
     /// <summary>
-    /// 共通初期化処理
+    /// 初期化処理
     /// </summary>
-    /// <param name="arrangementData"></param>
+    /// <param name="arrangementData">配置情報</param>
     void Init(PlacementData arrangementData);
     //回転量
     static const float addRotate;
     //当たり判定
-    SphereCollider* collider;
+    SphereHitChecker* collider;
     //衝突処理実行役
     ConflictProcessor* conflictProcessor;
     //破壊爆破エフェクト

@@ -1,11 +1,11 @@
 #pragma once
 #include "DamageObject.h"
-class SphereCollider;
+class SphereHitChecker;
 class ConflictProcessor;
 /// <summary>
 /// 上から下に落とす爆弾
 /// </summary>
-class Bomber final :public DamageObject
+class Bomber final : public DamageObject
 {
 public:
     /// <summary>
@@ -20,11 +20,11 @@ public:
     /// 更新
     /// </summary>
     /// <param name="deltaTime"></param>
-    void Update()override;
+    void Update() override;
     /// <summary>
     /// 衝突後の処理
     /// </summary>
-    void OnConflict(CollisionResultInfo resultInfo)override;
+    void OnConflict(CollisionResultInfo resultInfo) override;
 private:
     /// <summary>
     /// 当たり判定削除
@@ -39,7 +39,7 @@ private:
     //燃えているときのエフェクト
     int burnEffect = -1;
     //当たり判定
-    SphereCollider* collider = nullptr;
+    SphereHitChecker* collider = nullptr;
     //衝突処理実行役
     ConflictProcessor* conflictProcessor = nullptr;
 };

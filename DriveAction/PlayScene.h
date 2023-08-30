@@ -8,7 +8,13 @@ class PlayScene final:
     public SceneBase
 {
 public:
+    /// <summary>
+    /// メニュー画面とゲームの流れの確保と音をロード
+    /// </summary>
     PlayScene();
+    /// <summary>
+/// メニューとゲームの開放と音を止める
+/// </summary>
     ~PlayScene() override;
     /// <summary>
     /// ゲームを遊ぶ

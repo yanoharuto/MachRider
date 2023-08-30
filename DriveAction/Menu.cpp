@@ -41,27 +41,28 @@ void Menu::Update()
     {
         if (UserInput::GetInputState(Up)==Push)
         {
-            cursolPos--;
+            selectUI--;
             //一番上の項目からさらに上に行く場合そのまま
-            if (cursolPos  < continueGame) 
+            if (selectUI  < continueGame) 
             {
-                cursolPos = continueGame;
+                selectUI = continueGame;
             }
         }
         else if (UserInput::GetInputState(Down)==Push)
         {
-            cursolPos++;
+            selectUI++;
             //一番下の項目からさらに下に行く場合そのまま
-            if (cursolPos > exitGame)
+            if (selectUI > exitGame)
             {
-                cursolPos = exitGame;
+                selectUI = exitGame;
             }
         }
-        cursorUIData.y = uiDatas[cursolPos].y;
+        //移動後のカーソル
+        cursorUIData.y = uiDatas[selectUI].y;
         //メニューを開いた状態でスペースキーを押したら押した項目を保存
         if (UserInput::GetInputState(Input::Space) == Push)
         {
-            menuState = static_cast<MenuState>(cursolPos);
+            menuState = static_cast<MenuState>(selectUI);
             isOpenMenu = !(menuState == continueGame);
             openMenuTime += Clock::GetNowGameTime() - startTime;
         }
@@ -71,7 +72,8 @@ void Menu::Update()
     {
         //メニュー画面を開いたり閉じたり
         isOpenMenu = !isOpenMenu;
-        cursolPos = continueGame;
+        selectUI = continueGame;
+
         if (isOpenMenu)
         {
             backScreen = RaceScreen::GetScreen();
@@ -80,6 +82,7 @@ void Menu::Update()
         }
         else
         {
+            //メニュー画面を開いている時間を計測
             openMenuTime += Clock::GetNowGameTime() - startTime;
         }
     }
@@ -120,9 +123,9 @@ void Menu::Draw() const
         SetDrawBright(MAX1BYTEVALUE, MAX1BYTEVALUE, MAX1BYTEVALUE);
         //各UIを描画  選択中なら二枚目の状態にする
         UIDrawer::DrawRotaUI(cursorUIData);
-        UIDrawer::DrawRotaUI(uiDatas[continueGame], cursolPos == continueGame ? 0 : 1);
-        UIDrawer::DrawRotaUI(uiDatas[retry], cursolPos == retry ? 0 : 1);
-        UIDrawer::DrawRotaUI(uiDatas[exitGame], cursolPos == exitGame ? 0 : 1);
-        UIDrawer::DrawRotaUI(uiDatas[returnTitle], cursolPos == returnTitle ? 0 : 1);
+        UIDrawer::DrawRotaUI(uiDatas[continueGame], selectUI == continueGame ? 0 : 1);
+        UIDrawer::DrawRotaUI(uiDatas[retry], selectUI == retry ? 0 : 1);
+        UIDrawer::DrawRotaUI(uiDatas[exitGame], selectUI == exitGame ? 0 : 1);
+        UIDrawer::DrawRotaUI(uiDatas[returnTitle], selectUI == returnTitle ? 0 : 1);
     }
 }

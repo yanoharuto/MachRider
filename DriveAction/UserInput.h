@@ -6,9 +6,13 @@ namespace Input
 /// </summary>
     enum InputState
     {
+        //何もしていない
         Free,
+        //入力
         Push,
+        //ずっと入力
         Hold,
+        //離した
         Detach
     };
     /// <summary>
@@ -16,19 +20,31 @@ namespace Input
     /// </summary>
     enum KeyInputKind
     {
+        //上入力
         Up = 0,
+        //下入力
         Down = 1,
+        //左
         Left = 2,
+        //右
         Right = 3,
+        //スペースキー
         Space = 4,
+        //エスケープキー
         EscapeKey = 5,
+        //Wキー
         WKey = 6,
+        //Dキー
         DKey = 7,
+        //Sキー
         SKey = 8,
+        //Aキー
         AKey = 9
     };
+    //入力の種類
 #define KEY_INPUT_KIND_NUM 10
-#define SHORT_VALUE 12767
+    //レバーの値の幅
+#define LEVER_VALUE 12767
 }
 using namespace Input;
 /// <summary>
@@ -81,4 +97,3 @@ private:
     //対応しているボタンの一覧
     int keyInputCode[KEY_INPUT_KIND_NUM];
 };
-

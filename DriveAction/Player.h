@@ -2,7 +2,7 @@
 #include <iostream>
 #include <memory>
 #include "ActorController.h"
-class SphereCollider;
+class SphereHitChecker;
 class PlayerObserver;
 class SoundListener;
 class PlayerDrawModel;
@@ -42,7 +42,7 @@ public:
     bool IsAlive()const override { return true; };
 private:
     //プレイヤーの車の当たり判定
-    SphereCollider* collider;
+    SphereHitChecker* collider;
     //操作する車
     PlayerCar* car;
     //描画に使う
@@ -51,6 +51,7 @@ private:
     SoundListener* listener = nullptr;
     //ダメージを受けるクールタイム
     const float setDamageCoolTime = 0.1f;
+    //プレイヤーの情報を共有するためのポインタ
     std::shared_ptr<PlayerObserver> playerObserver;
 };
 

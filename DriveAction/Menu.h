@@ -66,6 +66,6 @@ private:
     //ƒƒjƒ…[‚Ì€–Ú
     UIData uiDatas[4];
     //‘I‘ğ
-    int cursolPos = 0;
+    int selectUI = 0;
 };
 

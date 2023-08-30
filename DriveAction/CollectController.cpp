@@ -16,7 +16,7 @@ bool CollectController::isActive = false;
 //収集アイテムが全部Deleteされたか
 bool CollectController::isDestroyAll = false;
 //ゲーム終了したか
-bool CollectController::isMissionEnd = false;
+bool CollectController::isGameEnd = false;
 /// 現在動いている収集アイテムの位置
 VECTOR CollectController:: nowActiveCollectItemPos;
 //残っている収集アイテムの数
@@ -45,7 +45,7 @@ CollectController::CollectController()
     //static変数の初期化
     totalCollectNum = actorList.size();//収集アイテム最大値
     remainingCollectNum = totalCollectNum;//残りの数
-    isMissionEnd = false;
+    isGameEnd = false;
     isActive = false;//今活動中か
     isDestroyAll = false;
     drawModel = new DrawModel(collect);
@@ -78,7 +78,7 @@ void CollectController::Update()
         isDestroyAll = actorList.empty();
         break;
     case Object::activeEnd://最後の一つなら
-        isMissionEnd = actorList.size() == 1;
+        isGameEnd = actorList.size() == 1;
         break;
     default:
         break;
@@ -141,7 +141,7 @@ int CollectController::GetRemainingCollectNum()
 /// <returns></returns>
 bool CollectController::IsEndingMission()
 {
-    return isMissionEnd;
+    return isGameEnd;
 }
 /// <summary>
 /// 全てのアイテムが破壊されたか

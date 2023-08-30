@@ -7,7 +7,7 @@
 #include "EffekseerForDXLib.h"
 #include "SoundPlayer.h"
 #include "InitActor.h"
-#include "SphereCollider.h"
+#include "SphereHitChecker.h"
 #include "ConflictProcessor.h"
 //‰ñ“]—Ê
 const float Coin::rotateY = 2.5f;
@@ -34,7 +34,7 @@ Coin::Coin(PlacementData arrangementData)
     tag = ObjectTag::collect;
     //“–‚½‚è”»’è
     conflictProcessor = new ConflictProcessor(this);
-    collider = new SphereCollider(this);
+    collider = new SphereHitChecker(this);
 }
 
 Coin::~Coin()

@@ -111,10 +111,10 @@ void UserInput::UpdateGamePadButton()
     //ゲームパッドの場合のボタン入力を所得
     GetJoypadXInputState(DX_INPUT_KEY_PAD1, &xInput);
 
-    UpdateButton(xInput.ThumbLY > SHORT_VALUE - 1, &keyInputState[Up]);
-    UpdateButton(xInput.ThumbLY < -SHORT_VALUE, &keyInputState[Down]);
-    UpdateButton(xInput.ThumbLX > SHORT_VALUE - 1, &keyInputState[Right]);
-    UpdateButton(xInput.ThumbLX < -SHORT_VALUE, &keyInputState[Left]);
+    UpdateButton(xInput.ThumbLY > LEVER_VALUE - 1, &keyInputState[Up]);
+    UpdateButton(xInput.ThumbLY < -LEVER_VALUE, &keyInputState[Down]);
+    UpdateButton(xInput.ThumbLX > LEVER_VALUE - 1, &keyInputState[Right]);
+    UpdateButton(xInput.ThumbLX < -LEVER_VALUE, &keyInputState[Left]);
     UpdateButton(xInput.Buttons[XINPUT_BUTTON_B] == 1, &keyInputState[Space]);
     UpdateButton(xInput.Buttons[XINPUT_BUTTON_BACK] == 1, &keyInputState[EscapeKey]);   
 }

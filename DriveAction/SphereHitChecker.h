@@ -16,6 +16,25 @@ public:
     SphereHitChecker(Actor* const obj);
     ~SphereHitChecker();
     /// <summary>
+/// 当たっているか調べ吹っ飛ぶ方向とかを返す
+/// </summary>
+/// <param name="hitCheckInfo"></param>
+/// <returns></returns>
+    virtual CollisionResultInfo HitCheck(HitCheckInfo hitCheckInfo);
+
+    /// <summary>
+    /// 当たり判定で衝突しているか調べるのに必要な情報を渡す
+    /// </summary>
+    /// <returns></returns>
+    virtual HitCheckInfo GetHitExamineCheckInfo()const;
+
+    /// <summary>
+    /// trueなら当たり判定無し
+    /// </summary>
+    /// <returns></returns>
+    bool IsDead();
+protected:
+    /// <summary>
     /// 当たったかどうか調べるよ
     /// </summary>
     /// <param name="objA">調べたいオブジェクトA<</param>
@@ -37,24 +56,6 @@ public:
     /// <returns>当たったらTrue</returns>
     bool HitCheck(const HitCheckInfo objAInfo, const HitCheckInfo objBInfo);
 
-    /// <summary>
-    /// 当たり判定を行う
-    /// </summary>
-    /// <param name="hitCheckInfo">その結果当たったか位置がずれるか</param>
-    /// <returns></returns>
-    virtual CollisionResultInfo HitCheck(HitCheckInfo hitCheckInfo) = 0;
-
-    /// <summary>
-    /// 当たり判定で衝突しているか調べるのに必要な情報を渡す
-    /// </summary>
-    /// <returns></returns>
-    virtual HitCheckInfo GetHitExamineCheckInfo()const;
-
-    /// <summary>
-    /// trueなら当たり判定無し
-    /// </summary>
-    /// <returns></returns>
-    bool IsDead();
 protected:
     /// <summary>
     /// 当たったかどうか調べるときの共通処理
@@ -67,4 +68,3 @@ protected:
     //当たり判定の持ち主
     Actor* object = nullptr;
 };
-

@@ -37,7 +37,7 @@ void EditorCamera::Update()
     staticDir = direction;
 }
 /// <summary>
-/// ƒJƒƒ‰‚ÌŒü‚«
+/// ƒJƒƒ‰‚ÌŒü‚«‚ğŠ“¾
 /// </summary>
 /// <returns></returns>
 VECTOR EditorCamera::GetNormDirection()

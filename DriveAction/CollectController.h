@@ -62,7 +62,7 @@ private:
     //収集アイテムが全部Deleteされたか
     static bool isDestroyAll;
     //収集アイテムを取り終わった
-    static bool isMissionEnd;
+    static bool isGameEnd;
     //収集アイテムの最大数
     static int totalCollectNum;
     //所得されたアイテムの数

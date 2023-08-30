@@ -144,9 +144,6 @@
     <ClCompile Include="PostGoalStaging.cpp">
       <Filter>ソース ファイル\UI</Filter>
     </ClCompile>
-    <ClCompile Include="VectorDataCreator.cpp">
-      <Filter>ソース ファイル\DataCreate</Filter>
-    </ClCompile>
     <ClCompile Include="Player.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -158,9 +155,6 @@
     </ClCompile>
     <ClCompile Include="FadeInFadeOut.cpp">
       <Filter>ソース ファイル\Other</Filter>
-    </ClCompile>
-    <ClCompile Include="GimmickObject.cpp">
-      <Filter>ソース ファイル\Object</Filter>
     </ClCompile>
     <ClCompile Include="Bomber.cpp">
       <Filter>ソース ファイル\Item</Filter>
@@ -193,9 +187,6 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="ConflictProcessor.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="SphereCollider.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="ShadowMap.cpp">
@@ -485,9 +476,6 @@
     <ClInclude Include="HitCheckExamineObjectInfo.h">
       <Filter>ヘッダー ファイル\StructAndEnum</Filter>
     </ClInclude>
-    <ClInclude Include="GimmickObject.h">
-      <Filter>ヘッダー ファイル\Object</Filter>
-    </ClInclude>
     <ClInclude Include="GamePlayUI.h">
       <Filter>ヘッダー ファイル\UI</Filter>
     </ClInclude>
@@ -517,9 +505,6 @@
     </ClInclude>
     <ClInclude Include="ConflictManager.h">
       <Filter>ヘッダー ファイル\ConflictCheck</Filter>
-    </ClInclude>
-    <ClInclude Include="VectorDataCreator.h">
-      <Filter>ヘッダー ファイル\DataCreate</Filter>
     </ClInclude>
     <ClInclude Include="Player.h">
       <Filter>ヘッダー ファイル</Filter>
@@ -561,9 +546,6 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="ConflictProcessor.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="SphereCollider.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="ShadowMap.h">
