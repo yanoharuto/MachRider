@@ -134,7 +134,7 @@ void SoundPlayer::Load3DSound(SoundKind kind)
         //データ読み取り
         CSVFileLoader* initDataLoader = new CSVFileLoader(initFilePassData[num]);
         std::vector<const char*> initData = initDataLoader->GetLoadCharData();
-        Set3DRadiusSoundMem(atoi(initData[soundRadius]), soundHandleMap[kind]);
+        Set3DRadiusSoundMem(static_cast<float>(atof(initData[soundRadius])), soundHandleMap[kind]);
         SAFE_DELETE(initDataLoader);
     }
 }

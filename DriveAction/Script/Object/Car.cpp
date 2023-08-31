@@ -142,14 +142,14 @@ void Car::InitSpeedParamater(ObjectInit::InitObjKind kind)
 	//速さ関連の情報を所得
 	auto loader = new CSVFileLoader(InitActor::GetAddDataPass(kind));
 	auto strVec = loader->GetLoadStringData();
-	speedParamator.acceleSpeed = atof(strVec[acceleSpeed].c_str());
-	speedParamator.lowestSpeed = atof(strVec[lowestSpeed].c_str());
-	speedParamator.maxSpeed = atof(strVec[maxSpeed].c_str());
-	speedParamator.turboAddSpeed = atof(strVec[turboSpeed].c_str());
-	speedParamator.turboTime = atof(strVec[turboTime].c_str());
-	speedParamator.gripPower = atof(strVec[gripPower].c_str());
-	speedParamator.breakPower = atof(strVec[breakePower].c_str());
-	speedParamator.turboChargeTime = atof(strVec[turboChargeTime].c_str());
+	speedParamator.acceleSpeed = SAFE_STR_TO_F(strVec[acceleSpeed]);
+	speedParamator.lowestSpeed = SAFE_STR_TO_F(strVec[lowestSpeed]);
+	speedParamator.maxSpeed = SAFE_STR_TO_F(strVec[maxSpeed]);
+	speedParamator.turboAddSpeed = SAFE_STR_TO_F(strVec[turboSpeed]);
+	speedParamator.turboTime = SAFE_STR_TO_F(strVec[turboTime]);
+	speedParamator.gripPower = SAFE_STR_TO_F(strVec[gripPower]);
+	speedParamator.breakPower = SAFE_STR_TO_F(strVec[breakePower]);
+	speedParamator.turboChargeTime = SAFE_STR_TO_F(strVec[turboChargeTime]);
 }
 
 /// <summary>

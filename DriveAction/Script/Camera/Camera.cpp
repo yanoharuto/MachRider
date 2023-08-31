@@ -32,23 +32,25 @@ bool Camera::IsLookingCamera(const Actor* const actor) const
 /// <param name="type">シーンによってカメラの性能を変える</param>
 void Camera::LoadData(UseCameraSceneKind type)
 {
-    //纏めファイルを所得
+    //カメラ情報まとめファイルを所得
     CSVFileLoader* initFileLoader = new CSVFileLoader(initFileName);
-    std::vector<const char*> loadData = initFileLoader->GetLoadCharData();
-    //纏めファイルからシーン毎の情報を所得
-    CSVFileLoader* initDataLoader = new CSVFileLoader(loadData[type]);
-    loadData = initDataLoader->GetLoadCharData();
+    auto strData = initFileLoader->GetLoadStringData();
+    //まとめファイルからシーンごとの情報を所得
+    CSVFileLoader* initDataLoader = new CSVFileLoader(strData[type]);
+    strData = initDataLoader->GetLoadStringData();
     SAFE_DELETE(initFileLoader);
     //カメラの有効範囲
-    SetCameraNearFar(atof(loadData[setNearValue]), atof(loadData[setFarValue]));
+    float nearValue = SAFE_STR_TO_F(strData[setNearValue]);
+    float farValue = SAFE_STR_TO_F(strData[setFarValue]);
+    SetCameraNearFar(nearValue, farValue);
     //ターゲットとの距離
-    targetBetween = atof(loadData[setTargetBetween]);
+    targetBetween = SAFE_STR_TO_F(strData[setTargetBetween]);
     //高度
-    posY = atof(loadData[setYPosition]);
+    posY = SAFE_STR_TO_F(strData[setYPosition]);
     //カメラの速さ
-    cameraSpeed = atof(loadData[setCameraSpeed]);
+    cameraSpeed = SAFE_STR_TO_F(strData[setCameraSpeed]);
     //カメラの見えている範囲
-    lookingDeg = atof(loadData[setLookingDegree]);
+    lookingDeg = SAFE_STR_TO_F(strData[setLookingDegree]);
 
     SAFE_DELETE(initDataLoader);
 }

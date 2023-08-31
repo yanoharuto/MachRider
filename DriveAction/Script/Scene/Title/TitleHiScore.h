@@ -7,14 +7,16 @@ class TitleHiScore:private NumUI
 {
 public:
     /// <summary>
-/// タイトルで表示するハイスコア
-/// </summary>
+    /// タイトルで表示するハイスコア
+    /// </summary>
     TitleHiScore();
-    ~TitleHiScore();
+    /// <summary>
+    /// 特になし
+    /// </summary>
+    ~TitleHiScore() {};
     /// <summary>
     /// 現在選ばれているステージのハイスコア表示
     /// </summary>
-    /// <param name="num"></param>
     void Draw()const;
 
 private:

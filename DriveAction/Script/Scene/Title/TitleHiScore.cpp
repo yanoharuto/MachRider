@@ -10,9 +10,6 @@ TitleHiScore::TitleHiScore()
     
 }
 
-TitleHiScore::~TitleHiScore()
-{
-}
 /// <summary>
 /// 現在選ばれているステージのハイスコア表示
 /// </summary>

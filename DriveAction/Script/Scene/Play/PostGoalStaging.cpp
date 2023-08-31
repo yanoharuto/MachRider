@@ -247,7 +247,7 @@ void PostGoalStaging::EndAnnounceProcess()
         //ëçêîà⁄ìÆãóó£
         float graphWidth = finishAnnounceData.width / finishAnnounceData.dataHandle.size() * finishAnnounceData.size;
         float moveBetween = (SCREEN_WIDTH + graphWidth) * UIDrawer::GetScreenRaito();
-        finishAnnounceData.x = SCREEN_WIDTH * UIDrawer::GetScreenRaito() - static_cast<int>(larpTime * (moveBetween));
+        finishAnnounceData.x = static_cast<int>(SCREEN_WIDTH * UIDrawer::GetScreenRaito() - larpTime * (moveBetween));
     }
 }
 /// <summary>
