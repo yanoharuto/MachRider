@@ -29,6 +29,9 @@ StageDataEditor::StageDataEditor(std::string setFileName, InitObjKind objKind)
     editObject = new EditorObject();
     drawer = new EditorDrawModel(editKind);
 }
+/// <summary>
+/// 描画役と編集オブジェクトの解放
+/// </summary>
 StageDataEditor::~StageDataEditor()
 {
     EditDataSaver dataSaver;
@@ -37,7 +40,6 @@ StageDataEditor::~StageDataEditor()
     SAFE_DELETE(drawer);
     //編集オブジェクト
     SAFE_DELETE(editObject);
-    
 }
 /// <summary>
 /// 新しく編集したり過去に編集したものを再編集したりする
@@ -81,7 +83,7 @@ void StageDataEditor::Draw() const
     if (!placementDataVec.empty())
     {
         //編集済みのオブジェクト全て描画
-        for (int i = 0; i < placementDataVec.size(); i++)
+        for (unsigned int i = 0; i < placementDataVec.size(); i++)
         {
             //描画するオブジェクトの種類
             InitObjKind drawKind = static_cast<InitObjKind>(placementDataVec[i].objKind);
@@ -225,7 +227,7 @@ void StageDataEditor::SelectEditedObject()
         {
             selectEditedNum++;
             //過去に編集したアイテムの数より少なくなっているか
-            if (selectEditedNum >= placementDataVec.size())
+            if (selectEditedNum >= static_cast<int>(placementDataVec.size()))
             {
                 selectEditedNum = placementDataVec.size() - 1;
             }

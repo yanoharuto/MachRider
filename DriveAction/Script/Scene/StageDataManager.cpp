@@ -3,6 +3,9 @@
 #include "ListUtility.h"
 #include "CSVFileLoader.h"
 #include "StageSelect.h"
+#include "ReusableTimer.h"
+#include "ResultScore.h"
+#include "ScoreRecordWriter.h"
 //ステージのファイルの名前
 std::string StageDataManager::fileAddres = "-1";
 //ステージのデータ
@@ -82,6 +85,49 @@ ScoreBorder StageDataManager::GetScoreBorder()
     scoreBorder.second = atoi(scoreStrInfoVec[StageScore::secondScore].c_str());
     scoreBorder.third = atoi(scoreStrInfoVec[StageScore::thirdScore].c_str());
     return scoreBorder;
+}
+/// <summary>
+/// 初期位置の文字列情報
+/// </summary>
+/// <param name="tag">欲しいオブジェクトの初期位置情報のタグ</param>
+/// <returns>tagのオブジェクトが初期位置を決めるときに必要な文字列情報</returns>
+std::vector<std::string> StageDataManager::GetPlaceStrData(Object::ObjectTag tag)
+{
+    ///今選択しているステージの初期位置の入ったファイルのパス
+    std::string selectStageFirstPlaceFilePath;
+    //各オブジェクトの初期位置のファイルまでのパスを所得
+    switch (tag)
+    {
+    case Object::player:
+        selectStageFirstPlaceFilePath = GetSelectStageData(playerPositionFilePass);
+        break;
+    case Object::collect:
+        selectStageFirstPlaceFilePath = GetSelectStageData(collectFilePass);
+        break;
+    default:
+        selectStageFirstPlaceFilePath = GetSelectStageData(enemyFilePass);
+        break;
+    }
+    //初期化文字列リストを取ってくる
+    CSVFileLoader* csv = new CSVFileLoader(selectStageFirstPlaceFilePath);
+    return csv->GetLoadStringData();
+}
+/// <summary>
+/// ゲームの制限時間のタイマーを作成
+/// </summary>
+/// <returns>ゲーム制限時間タイマー</returns>
+ReusableTimer* StageDataManager::CreateGameTimer()
+{
+    float gameLimitTime = SAFE_STR_TO_F(GetSelectStageData(gameTime));
+    return new ReusableTimer(gameLimitTime);
+}
+/// <summary>
+/// スコアの記録更新役を渡す
+/// </summary>
+/// <returns>スコアの記録更新役</returns>
+ScoreRecordWriter* StageDataManager::GetScoreRecordWriter()
+{
+    return new ScoreRecordWriter(GetSelectStageData(stageScoreFilePass),GetScoreBorder());
 }
 /// <summary>
 /// 初期化

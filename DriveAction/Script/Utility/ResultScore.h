@@ -48,6 +48,11 @@ public:
     /// </summary>
     /// <returns>ハイスコアが更新されていたらTrue</returns>
     bool IsUpdateHiScore();
+    /// <summary>
+    /// ステージのハイスコアを文字列にしたもの
+    /// </summary>
+    /// <returns>ステージのハイスコアを文字列にしたもの</returns>
+    std::string GetHighScoreString()const;
 private:
     /// <summary>
     /// スコアを確定させる
@@ -61,6 +66,8 @@ private:
     int collectScore = 0;
     //ハイスコア更新フラグ
     bool isUpdateHighScore = false;
+    //ハイスコア更新したときのスコア文字列
+    std::string updateStr;
     //残り時間のボーナス
     static const int clearTimeBonus;
     //コインはボーナス

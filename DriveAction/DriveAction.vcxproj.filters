@@ -363,13 +363,7 @@
     <ClCompile Include="Script\Utility\ReusableTimer.cpp">
       <Filter>ソース ファイル\Utility</Filter>
     </ClCompile>
-    <ClCompile Include="Script\Utility\ScoreNum.cpp">
-      <Filter>ソース ファイル\Utility</Filter>
-    </ClCompile>
     <ClCompile Include="Script\Utility\ShadowMap.cpp">
-      <Filter>ソース ファイル\Utility</Filter>
-    </ClCompile>
-    <ClCompile Include="Script\Utility\StopWatch.cpp">
       <Filter>ソース ファイル\Utility</Filter>
     </ClCompile>
     <ClCompile Include="Script\Utility\Timer.cpp">
@@ -425,6 +419,12 @@
     </ClCompile>
     <ClCompile Include="Script\ObjectController\AddableObjectController.cpp">
       <Filter>ソース ファイル\ObjectController</Filter>
+    </ClCompile>
+    <ClCompile Include="Script\UI\ScoreNum.cpp">
+      <Filter>ソース ファイル\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Script\Utility\ScoreRecordWriter.cpp">
+      <Filter>ソース ファイル\Utility</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -719,13 +719,7 @@
     <ClInclude Include="Script\Utility\Rule.h">
       <Filter>ヘッダー ファイル\Utility</Filter>
     </ClInclude>
-    <ClInclude Include="Script\Utility\ScoreNum.h">
-      <Filter>ヘッダー ファイル\Utility</Filter>
-    </ClInclude>
     <ClInclude Include="Script\Utility\ShadowMap.h">
-      <Filter>ヘッダー ファイル\Utility</Filter>
-    </ClInclude>
-    <ClInclude Include="Script\Utility\StopWatch.h">
       <Filter>ヘッダー ファイル\Utility</Filter>
     </ClInclude>
     <ClInclude Include="Script\Utility\Timer.h">
@@ -778,6 +772,12 @@
     </ClInclude>
     <ClInclude Include="Script\ObjectController\AddableObjectController.h">
       <Filter>ヘッダー ファイル\ObjectController</Filter>
+    </ClInclude>
+    <ClInclude Include="Script\UI\ScoreNum.h">
+      <Filter>ヘッダー ファイル\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Script\Utility\ScoreRecordWriter.h">
+      <Filter>ヘッダー ファイル\Utility</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -33,7 +33,7 @@ CollectController::CollectController()
     auto positionGetter = new FirstPositionGetter();
     auto editDataVec = positionGetter->GetPlaceData(Object::collect);
     //配置情報に基づいてNewしていく
-    for (int i = 0; i < editDataVec.size(); i++)
+    for (unsigned int i = 0; i < editDataVec.size(); i++)
     {
         //収集アイテムの位置をコンストラクタに与える
         Coin* newCoin = new Coin(editDataVec[i]);

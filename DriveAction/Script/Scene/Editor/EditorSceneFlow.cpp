@@ -47,7 +47,7 @@ EditorSceneFlow::~EditorSceneFlow()
     SAFE_DELETE(stage);
     SAFE_DELETE(manual);
     SAFE_DELETE(editorEffect);
-    for (int i = 0; i < editorVec.size(); i++)
+    for (unsigned int i = 0; i < editorVec.size(); i++)
     {
         SAFE_DELETE(editorVec[i]);
     }
@@ -92,7 +92,7 @@ void EditorSceneFlow::Draw() const
     //ステージに配置されている物
     stage->Draw();
     //各オブジェクトの描画
-    for (int i = 0; i < editorVec.size(); i++)
+    for (unsigned int i = 0; i < editorVec.size(); i++)
     {
         editorVec[i]->Draw();
     }
@@ -120,7 +120,7 @@ void EditorSceneFlow::SelectEditKind()
     {
         selectEditorNum++;
         //一周したら一番前に繋げる
-        if (selectEditorNum > editorVec.size() - 1)
+        if (selectEditorNum > static_cast<int>(editorVec.size() - 1))
         {
             selectEditorNum = 0;
         }

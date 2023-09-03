@@ -12,9 +12,13 @@ class ShadowMap
 {
 public:
     /// <summary>
-    /// 影を描画するクラス
+    /// プレイヤーを中心に影を描画できるようにする
     /// </summary>
+    /// <param name="player">プレイヤーの位置を伝えるクラス</param>
     ShadowMap(std::weak_ptr<ObjectObserver> player);
+    /// <summary>
+    /// プレイヤーのオブザーバーのリセットとシャドウマップの削除
+    /// </summary>
     ~ShadowMap();
     /// <summary>
     /// 影の描画範囲の変更

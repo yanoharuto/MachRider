@@ -5,7 +5,7 @@
 #include "Timer.h"
 #include "PlayerObserver.h"
 #include "StageDataManager.h"
-
+#include "ScoreRecordWriter.h"
 //収集アイテムゲットボーナス
 const int ResultScore::getCollectBonus = 500;
 //残り時間のボーナス
@@ -76,41 +76,12 @@ void ResultScore::FixScore(Timer* const timer, std::weak_ptr<PlayerObserver> pla
     int highScore = timeScore + collectScore;
     //↑二つが過去のハイスコアより多かったらTrue
     isUpdateHighScore = timeScore + collectScore > score.highScore;
-    //ハイスコア更新ならデータを書き換える
+    //スコアが更新されたなら
     if(isUpdateHighScore)
     {
-        //区切り文字
-        std::string colon = ",";
-        //スコアの線引き文字列
-        std::string borderString = std::to_string(score.gold) + colon + std::to_string(score.silver) + colon + std::to_string(score.bronze) + colon;
-        //スコアのランキング文字列
-        std::string updateString;
-        //ハイスコアランキング1位の更新
-        if (score.highScore < highScore)
-        {
-            updateString = std::to_string(highScore) + colon + std::to_string(score.highScore) + colon + std::to_string(score.second) + colon;
-        }
-        //2位の更新
-        else if (score.second < highScore)
-        {
-            updateString = std::to_string(score.highScore) + colon + std::to_string(highScore) + colon + std::to_string(score.second) + colon;
-        }
-        //3位の更新
-        else if (score.third < highScore)
-        {
-            updateString = std::to_string(score.highScore) + colon + std::to_string(score.second) + colon + std::to_string(highScore) + colon;
-        }
-        //スコア更新有りなら書き込む
-        if (!updateString.empty())
-        {
-            std::ofstream writing_file;
-            //ステージのスコアをまとめたファイルのパス
-            std::string filePass = StageDataManager::GetSelectStageData(stageScoreFilePass);
-            // ファイルを開いて
-            writing_file.open(filePass, std::ios::out);
-            //スコアの更新
-            writing_file << borderString + updateString << std::endl;
-        }
+        updateStr = highScore;
+        ScoreRecordWriter* scoreRecordWriter = StageDataManager::GetScoreRecordWriter();
+        scoreRecordWriter->UpdateScoreRecord(this);
     }
 }
 /// <summary>
@@ -120,4 +91,12 @@ void ResultScore::FixScore(Timer* const timer, std::weak_ptr<PlayerObserver> pla
 bool ResultScore::IsUpdateHiScore()
 {
     return isUpdateHighScore;
+}
+/// <summary>
+/// ステージのハイスコアを文字列にしたもの
+/// </summary>
+/// <returns>ステージのハイスコアを文字列にしたもの</returns>
+std::string ResultScore::GetHighScoreString() const
+{
+    return updateStr;
 }

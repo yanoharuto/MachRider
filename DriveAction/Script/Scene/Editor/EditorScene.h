@@ -4,8 +4,7 @@
 /// <summary>
 /// 編集シーンクラス
 /// </summary>
-class EditorScene final:
-    public SceneBase
+class EditorScene final : public SceneBase
 {
 public:
     /// <summary>

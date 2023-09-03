@@ -12,7 +12,7 @@ class EditorEffect;
 /// <summary>
 /// •ÒWˆ—‚Ì—¬‚ê
 /// </summary>
-class EditorSceneFlow :public SceneFlowBase
+class EditorSceneFlow : public SceneFlowBase
 {
 public:
     /// <summary>

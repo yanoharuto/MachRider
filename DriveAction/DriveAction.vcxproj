@@ -111,6 +111,7 @@
     <ClCompile Include="Script\UI\MiniMap.cpp" />
     <ClCompile Include="Script\UI\NumUI.cpp" />
     <ClCompile Include="Script\UI\PlayManual.cpp" />
+    <ClCompile Include="Script\UI\ScoreNum.cpp" />
     <ClCompile Include="Script\UI\SpaceKeyUI.cpp" />
     <ClCompile Include="Script\UI\TimerUI.cpp" />
     <ClCompile Include="Script\UI\UIDrawer.cpp" />
@@ -121,9 +122,8 @@
     <ClCompile Include="Script\Utility\RaceScreen.cpp" />
     <ClCompile Include="Script\Utility\ResultScore.cpp" />
     <ClCompile Include="Script\Utility\ReusableTimer.cpp" />
-    <ClCompile Include="Script\Utility\ScoreNum.cpp" />
+    <ClCompile Include="Script\Utility\ScoreRecordWriter.cpp" />
     <ClCompile Include="Script\Utility\ShadowMap.cpp" />
-    <ClCompile Include="Script\Utility\StopWatch.cpp" />
     <ClCompile Include="Script\Utility\Timer.cpp" />
     <ClCompile Include="Script\Utility\UserInput.cpp" />
   </ItemGroup>
@@ -226,6 +226,7 @@
     <ClInclude Include="Script\UI\MiniMap.h" />
     <ClInclude Include="Script\UI\NumUI.h" />
     <ClInclude Include="Script\UI\PlayManual.h" />
+    <ClInclude Include="Script\UI\ScoreNum.h" />
     <ClInclude Include="Script\UI\SpaceKeyUI.h" />
     <ClInclude Include="Script\UI\TimerUI.h" />
     <ClInclude Include="Script\UI\UIDrawer.h" />
@@ -239,9 +240,8 @@
     <ClInclude Include="Script\Utility\ResultScore.h" />
     <ClInclude Include="Script\Utility\ReusableTimer.h" />
     <ClInclude Include="Script\Utility\Rule.h" />
-    <ClInclude Include="Script\Utility\ScoreNum.h" />
+    <ClInclude Include="Script\Utility\ScoreRecordWriter.h" />
     <ClInclude Include="Script\Utility\ShadowMap.h" />
-    <ClInclude Include="Script\Utility\StopWatch.h" />
     <ClInclude Include="Script\Utility\Timer.h" />
     <ClInclude Include="Script\Utility\UserInput.h" />
     <ClInclude Include="Script\Utility\Utility.h" />

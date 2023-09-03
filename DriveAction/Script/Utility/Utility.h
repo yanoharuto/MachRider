@@ -5,8 +5,8 @@
 //関数のマクロ
 //安全にインスタンスを開放 
 #define SAFE_DELETE(p) {if(p){delete p; p=nullptr;}}
-
-#define SAFE_STR_TO_F(f) static_cast<float>(atof(f.c_str()));
+//文字列をfloat型に変更
+#define SAFE_STR_TO_F(str) static_cast<float>(atof(str.c_str()));
 
 //エラーウィンドウ
 #define ERROR_MSG(str){MessageBox(NULL,TEXT(str),TEXT("Error"),MB_OK|MB_ICONERROR);}

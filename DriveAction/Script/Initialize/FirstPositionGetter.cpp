@@ -1,6 +1,7 @@
 #include "FirstPositionGetter.h"
 #include "CSVFileLoader.h"
 #include "Utility.h"
+#include "StageDataManager.h"
 /// <summary>
 /// 初期位置を渡す
 /// </summary>
@@ -8,55 +9,31 @@
 /// <returns>そのオブジェクトの位置をまとめたコンテナ</returns>
 std::vector<PlacementData> FirstPositionGetter::GetPlaceData(Object::ObjectTag tag)
 {
-    std::vector<PlacementData> initData;//初期位置のコンテナ
-    using enum Object::ObjectTag;
 
-    switch (tag)//各オブジェクトの初期位置をまとめたコンテナを所得
-    {
-    case player:
-        initData = CSVConvertFirstData(StageDataManager::GetSelectStageData(playerPositionFilePass));
-        break;
-    case damageObject:
-        initData = CSVConvertFirstData(StageDataManager::GetSelectStageData(enemyFilePass));
-        break;
-    case collect:
-        initData = CSVConvertFirstData(StageDataManager::GetSelectStageData(collectFilePass));
-        break;
-    }
-    return initData;
+    return CSVConvertFirstData(StageDataManager::GetPlaceStrData(tag));
 }
-/// <summary>
-/// CSVファイルからステージに配置するための情報を所得
-/// </summary>
-/// <param name="fileName"></param>
-std::vector<PlacementData> FirstPositionGetter::CSVConvertFirstData(std::string fileName)
+std::vector<PlacementData> FirstPositionGetter::CSVConvertFirstData(std::vector<std::string> placeStrData)
 {
-    //初期化文字列リストを取ってくる
-    CSVFileLoader* csv = new CSVFileLoader(fileName);
-    auto initStrDataVec = csv->GetLoadStringData();
-    
     //データの種類と列の多さからオブジェクトの数を計算
-    int objCount = csv->GetLineCount() / EDIT_ARRANGEMENT_DATA_KIND_NUM;
+    int objCount = placeStrData.size() / 2 / EDIT_ARRANGEMENT_DATA_KIND_NUM;
 
     //戻り値
     std::vector<PlacementData> dataVec;
-    
+
     for (int i = 0; i < objCount; i++)
     {
         //構造体の情報の種類
         int dataKindNum = i * EDIT_ARRANGEMENT_DATA_KIND_NUM;
         //配置初期化情報
         PlacementData initData = {};
-        initData.objKind= atoi(initStrDataVec[dataKindNum + EditArrangementDataKind::objectKindNum].c_str());
-        initData.collectNum = atoi(initStrDataVec[dataKindNum + EditArrangementDataKind::missionTurnNum].c_str());
-        initData.posX = static_cast<float>(atof(initStrDataVec[dataKindNum + EditArrangementDataKind::positionX].c_str()));
-        initData.posZ = static_cast<float>(atof(initStrDataVec[dataKindNum + EditArrangementDataKind::positionZ].c_str()));
-        initData.dirX = static_cast<float>(atof(initStrDataVec[dataKindNum + EditArrangementDataKind::directionX].c_str()));
-        initData.dirZ = static_cast<float>(atof(initStrDataVec[dataKindNum + EditArrangementDataKind::directionZ].c_str()));
+        initData.objKind = atoi(placeStrData[dataKindNum + EditArrangementDataKind::objectKindNum].c_str());
+        initData.collectNum = atoi(placeStrData[dataKindNum + EditArrangementDataKind::missionTurnNum].c_str());
+        initData.posX = static_cast<float>(atof(placeStrData[dataKindNum + EditArrangementDataKind::positionX].c_str()));
+        initData.posZ = static_cast<float>(atof(placeStrData[dataKindNum + EditArrangementDataKind::positionZ].c_str()));
+        initData.dirX = static_cast<float>(atof(placeStrData[dataKindNum + EditArrangementDataKind::directionX].c_str()));
+        initData.dirZ = static_cast<float>(atof(placeStrData[dataKindNum + EditArrangementDataKind::directionZ].c_str()));
         dataVec.push_back(initData);
     }
-    SAFE_DELETE(csv);
-
     return dataVec;
 }
 /// <summary>
@@ -71,7 +48,7 @@ std::vector<PlacementData> FirstPositionGetter::CSVConvertFirstData(std::string 
     CSVFileLoader* csv = new CSVFileLoader(fileName);
     auto initStrDataVec = csv->GetLoadStringData();
 
-    //データの種類と列の多さからオブジェクトの数を計算
+    //データの種類と列の多さからオブジェクトの数を出す
     int objCount = csv->GetLineCount() / EDIT_ARRANGEMENT_DATA_KIND_NUM;
 
     //戻り値

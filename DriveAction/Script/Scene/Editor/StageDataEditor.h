@@ -21,6 +21,9 @@ public:
     /// </summary>
     /// <param name="setFileName">どのファイルに保存するか教えて</param>
     StageDataEditor(std::string setFileName,InitObjKind objKind);
+    /// <summary>
+    /// 描画役と編集オブジェクトの解放
+    /// </summary>
     virtual ~StageDataEditor();
     /// <summary>
     /// 新しく編集したり過去に編集したものを再編集したりする

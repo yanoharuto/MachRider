@@ -1,7 +1,10 @@
 #include "ShadowMap.h"
 #include "ObjectObserver.h"
 
-
+/// <summary>
+/// プレイヤーを中心に影を描画できるようにする
+/// </summary>
+/// <param name="player">プレイヤーの位置を伝えるクラス</param>
 ShadowMap::ShadowMap(std::weak_ptr <ObjectObserver> player)
 {
     //かげの向き
@@ -9,9 +12,12 @@ ShadowMap::ShadowMap(std::weak_ptr <ObjectObserver> player)
     SetShadowMapDrawArea(shadowMap, DrawAreaMinPos, DrawAreaMaxPos);
     playerObserber = player;
 }
-
+/// <summary>
+/// プレイヤーのオブザーバーのリセットとシャドウマップの削除
+/// </summary>
 ShadowMap::~ShadowMap()
 {
+    playerObserber.reset();
     DeleteShadowMap(shadowMap);
 }
 /// <summary>

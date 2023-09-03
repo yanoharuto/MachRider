@@ -3,6 +3,7 @@
 #include <string>
 #include <unordered_map>
 #include "DxLib.h"
+#include "Object.h"
 namespace InitStage
 {
     /// <summary>
@@ -65,8 +66,10 @@ namespace InitStage
 using namespace InitStage;
 class StageSelect;
 class ResultScore;
+class ReusableTimer;
+class ScoreRecordWriter;
 /// <summary>
-/// 遊ぶステージのデータのパスを渡す
+/// 遊ぶステージのデータを渡す
 /// </summary>
 class StageDataManager
 {
@@ -87,21 +90,37 @@ public:
     /// <returns>現在遊んでいるステージのスコアの線引きを纏めたもの</returns>
     static ScoreBorder GetScoreBorder();
     /// <summary>
+    /// 初期位置の文字列情報
+    /// </summary>
+    /// <param name="tag">欲しいオブジェクトの初期位置情報のタグ</param>
+    /// <returns>tagのオブジェクトが初期位置を決めるときに必要な文字列情報</returns>
+    static std::vector<std::string> GetPlaceStrData(Object::ObjectTag tag);
+    /// <summary>
+    /// ゲームの制限時間のタイマーを作成
+    /// </summary>
+    /// <returns>ゲーム制限時間タイマー</returns>
+    static ReusableTimer* CreateGameTimer();
+    /// <summary>
+    /// スコアの記録更新役を渡す
+    /// </summary>
+    /// <returns>スコアの記録更新役</returns>
+    static ScoreRecordWriter* GetScoreRecordWriter();
+private:
+    /// <summary>
+    /// ステージの情報管理者
+    /// </summary>
+    StageDataManager();
+    /// <summary>
     /// 各ステージのデータを取ってくる
     /// </summary>
     /// <param name="dataKind">欲しいステージのデータの種類</param>
     /// <returns>ステージの制限時間や縦幅横幅、初期位置の入ったファイルのパスなどが返ってくる</returns>
     static std::string GetSelectStageData(StageData dataKind);
-private:
     /// <summary>
     /// どのステージを選んでいるか
     /// </summary>
     /// <returns>ステージの名前文字列を返す</returns>
     static std::string GetSelectStageName();
-    /// <summary>
-    /// ステージの情報管理者
-    /// </summary>
-    StageDataManager();
     /// <summary>
     /// 初期化
     /// </summary>

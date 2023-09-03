@@ -218,8 +218,7 @@ void PlaySceneFlow::StartUpdate()
 		nowProgress = PlaySceeneProgress::game;
 		SoundPlayer::Play2DSE(playBGM);
 		//ゲーム終了タイマー
-		double time = atof(StageDataManager::GetSelectStageData(gameTime).c_str());
-		gameLimitTimer = new ReusableTimer(time);
+		gameLimitTimer = StageDataManager::CreateGameTimer();
 		//UIを追加
 		playerUI = new GamePlayUI(gameLimitTimer, player);
 	}

@@ -12,7 +12,10 @@ EditorScene::EditorScene()
     sceneFlow = new EditorSceneFlow();
     menu = new Menu();
 }
-
+/// <summary>
+/// メニューとEditorの更新
+/// </summary>
+/// <returns>タイトルに戻ったりゲームを終了したりEditorを再読み込みしたりする</returns>
 SceneType EditorScene::Update()
 {
     menu->Update();

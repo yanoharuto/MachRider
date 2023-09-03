@@ -29,7 +29,7 @@ void EnemyGenerator::GenerateEnemys(int collectNum, AddableObjectController* con
 std::vector<PlacementData> EnemyGenerator::GetNowEnemyEditData(int collectNum)
 {
     std::vector<PlacementData> editData;
-    for (int i = 0; i < editDataVec.size(); i++)
+    for (unsigned int i = 0; i < editDataVec.size(); i++)
     {
         ObjectInit::InitObjKind dataKind = static_cast<ObjectInit::InitObjKind>(editDataVec[i].objKind);
         //プレイヤーが収集アイテムを取ってきたらそのタイミングで敵を増やす
