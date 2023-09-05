@@ -11,8 +11,8 @@
 #include "DrawModel.h"
 #include "Object.h"
 
-//収集アイテムが今動いているか
-bool CollectController::isActive = false;
+//収集アイテムの状態
+Object::ObjectState CollectController::objState = Object::sleep;
 //収集アイテムが全部Deleteされたか
 bool CollectController::isDestroyAll = false;
 //ゲーム終了したか
@@ -37,17 +37,18 @@ CollectController::CollectController()
     {
         //収集アイテムの位置をコンストラクタに与える
         Coin* newCoin = new Coin(editDataVec[i]);
-
-        actorList.push_back(newCoin);
-        
+        actorList.push_back(newCoin);  
         //マップに位置を伝えるためオブザーバーを渡す
         MiniMap::AddMarker(std::make_unique<ObjectObserver>(newCoin));
     }
-    //static変数の初期化
-    totalCollectNum = actorList.size();//収集アイテム最大値
-    remainingCollectNum = totalCollectNum;//残りの数
+    //収集アイテム最大値
+    totalCollectNum = actorList.size();
+    //残りの数
+    remainingCollectNum = totalCollectNum;
+    //ゲーム終了フラグ
     isGameEnd = false;
-    isActive = false;//今活動中か
+    //今動いている
+    objState = Object::active;
     isDestroyAll = false;
     //描画役
     drawModel = new DrawModel(collect);
@@ -57,33 +58,38 @@ CollectController::CollectController()
 /// </summary>
 void CollectController::Update()
 {
-    //イテレーター
+    //何もない状態なら終了
+    if (actorList.empty())return;
+    //actorListの先頭の一つだけ動かす
     auto objIte = actorList.begin();
     (*objIte)->Update();
-    isActive = (*objIte)->GetObjectState() == Object::ObjectState::active;
     //今現在動いているアイテムの場所を更新
     nowActiveCollectItemPos = (*objIte)->GetPos();
-    //残っているアイテムの数
-    remainingCollectNum = actorList.size();
-    //取っているけどエフェクトを出している途中なら現存数をへらす
-    if ((*objIte)->GetObjectState() != Object::ObjectState::active) remainingCollectNum --;
 
-    //もう存在していなかったら更新終了
-    Actor* brokenObj = (*objIte);
-    switch ((*objIte)->GetObjectState())
+    //取っているけどエフェクトを出している途中なら現存数をへらす
+    objState = (*objIte)->GetObjectState();
+    //プレイヤーにぶつかって取られたならアクティブ以外の状態になっている
+    if (objState != Object::ObjectState::active)
     {
-    case Object::dead:
-        //消していいやつだったら消す
-        actorList.erase(objIte);
-        SAFE_DELETE(brokenObj);
-        //全部消されたならTrue
-        isDestroyAll = actorList.empty();
-        break;
-    case Object::activeEnd://最後の一つなら
-        isGameEnd = actorList.size() == 1;
-        break;
-    default:
-        break;
+        //残り数を全体から1減らす
+        remainingCollectNum = actorList.size() - 1;
+        //壊していいようにする
+        Actor* brokenObj = (*objIte);
+        //
+        switch (objState)
+        {
+        case Object::activeEnd:
+            //最後の一つならゲーム終了条件達成
+            isGameEnd = actorList.size() == 1;
+            break;
+        case Object::dead:
+            //消していいやつだったら消す
+            actorList.erase(objIte);
+            SAFE_DELETE(brokenObj);
+            //全部消されたならTrue
+            isDestroyAll = actorList.empty();
+            break;
+        }
     }
 }
 /// <summary>
@@ -91,7 +97,10 @@ void CollectController::Update()
 /// </summary>
 void CollectController::Draw() const
 {
-    drawModel->Draw((*actorList.begin()));
+    if (!actorList.empty())
+    {
+        drawModel->Draw((*actorList.begin()));
+    }
 }
 /// <summary>
 /// ゲームが始まる前の処理
@@ -119,7 +128,7 @@ VECTOR CollectController::GetCollectItemBetween(VECTOR pos)
 /// <returns></returns>
 bool CollectController::IsActiveCollect()
 {
-    return isActive;
+    return objState;
 }
 /// <summary>
 /// プレイヤーが集めなければいけないアイテムの数
@@ -141,7 +150,7 @@ int CollectController::GetRemainingCollectNum()
 /// 全てのアイテムを回収し終えたかどうか
 /// </summary>
 /// <returns></returns>
-bool CollectController::IsEndingMission()
+bool CollectController::IsEndGame()
 {
     return isGameEnd;
 }

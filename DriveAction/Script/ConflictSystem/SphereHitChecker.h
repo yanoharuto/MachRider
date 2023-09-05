@@ -21,13 +21,11 @@ public:
     /// <param name="hitCheckInfo">当たっているか調べたい当たり判定</param>
     /// <returns>当たってたら衝突結果を返す</returns>
     virtual CollisionResultInfo HitCheck(HitCheckInfo hitCheckInfo);
-
     /// <summary>
     /// 当たり判定で衝突しているか調べるのに必要な情報を渡す
     /// </summary>
     /// <returns>当たり判定で必要な情報</returns>
     virtual HitCheckInfo GetHitExamineCheckInfo()const;
-
     /// <summary>
     /// trueなら当たり判定無し
     /// </summary>

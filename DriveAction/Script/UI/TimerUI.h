@@ -1,5 +1,7 @@
 #pragma once
 #include <string>
+#include <iostream>
+#include <memory>
 #include "UIManager.h"
 class Timer;
 class NumUI;
@@ -13,9 +15,9 @@ public:
     /// 残り時間のセットと数字画像の読み込み
     /// </summary>
     /// <param name="setTimer">残り時間タイマー</param>
-    TimerUI(Timer* setTimer);
+    TimerUI(std::weak_ptr<Timer> setTimer);
     /// <summary>
-    /// 特になし
+    /// タイマーのロック解除
     /// </summary>
     ~TimerUI();
     //残り時間を描画する
@@ -28,8 +30,7 @@ private:
     //タイマーの枠の横位置
     int frameX;
     //残り時間を所得する用
-    Timer* timer = nullptr;
+    std::weak_ptr<Timer> timer;
     //数字を描画する
     NumUI* numUI = nullptr;
 };
-

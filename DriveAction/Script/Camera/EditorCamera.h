@@ -17,7 +17,7 @@ public:
     /// <summary>
     /// カメラの向きを所得
     /// </summary>
-    /// <returns></returns>
+    /// <returns>カメラの向きベクトル</returns>
     static VECTOR GetNormDirection();
 private:
     //回転速度

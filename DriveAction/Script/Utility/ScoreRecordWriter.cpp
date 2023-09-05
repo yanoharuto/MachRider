@@ -1,15 +1,18 @@
 #include "ScoreRecordWriter.h"
 #include "ResultScore.h"
 /// <summary>
-/// 更新するスコアのファイルを開く
+/// スコアの記録を所得
 /// </summary>
 /// <param name="filePath">スコアのファイルのパス</param>
 /// <param name="scoreBorder">そのステージのスコアの記録の線引き</param>
 ScoreRecordWriter::ScoreRecordWriter(std::string filePath, InitStage::ScoreBorder scoreBorder)
 {
+    //CSVファイルの区切り文字
+    std::string colon = ",";
+    scoreRecordFilePath = filePath;
     border = scoreBorder;
-    // ファイルを開いて
-    writing_file.open(filePath, std::ios::out);
+    //変更しない線引きの箇所
+    borderString = std::to_string(scoreBorder.gold) + colon + std::to_string(scoreBorder.silver) + colon + std::to_string(scoreBorder.bronze) + colon;
 }
 /// <summary>
 /// スコアの記録の更新
@@ -17,14 +20,14 @@ ScoreRecordWriter::ScoreRecordWriter(std::string filePath, InitStage::ScoreBorde
 /// <param name="score">現在遊んでいるステージの記録を教えてもらう</param>
 void ScoreRecordWriter::UpdateScoreRecord(ResultScore* const resultScore)
 {
-    //区切り文字
+    //最高スコア
+    int highScore = resultScore->GetUpdateScore();
+    //CSVファイルの区切り文字
     std::string colon = ",";
-    //スコアの線引き文字列
-    std::string borderString = std::to_string(border.gold) + colon + std::to_string(border.silver) + colon + std::to_string(border.bronze) + colon;
     //スコアのランキング文字列
     std::string updateString;
-    std::string highScoreStr = resultScore->GetHighScoreString();
-    int highScore = atoi(highScoreStr.c_str());
+    //ハイスコアの文字列
+    std::string highScoreStr = std::to_string(highScore);
     //ハイスコアランキング1位の更新
     if (border.highScore < highScore)
     {
@@ -43,7 +46,12 @@ void ScoreRecordWriter::UpdateScoreRecord(ResultScore* const resultScore)
     //スコア更新有りなら書き込む
     if (!updateString.empty())
     {
+        // ファイルを開いて
+        std::ofstream writing_file;
+        writing_file.open(scoreRecordFilePath, std::ios::out);
         //スコアの更新
         writing_file << borderString + updateString << std::endl;
+        //書き込み終了
+        writing_file.close();
     }
 }

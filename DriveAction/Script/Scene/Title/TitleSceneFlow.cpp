@@ -8,7 +8,7 @@
 #include "FadeInFadeOut.h"
 #include "TitleDemo.h"
 #include "Timer.h"
-#include "RaceScreen.h"
+#include "GameScreen.h"
 #include "UIDrawer.h"
 #include "TitleRanking.h"
 /// <summary>
@@ -116,6 +116,6 @@ void TitleSceneFlow::SelectStageProcess()
 void TitleSceneFlow::EndTitleProcess()
 {
     SoundPlayer::StopSound(titleBGM);
-    isEndProccess = true;
+    isEndProcesss = true;
     nextSceneType = SceneType::PLAY;
 }

@@ -1,7 +1,7 @@
 #include "FadeInFadeOut.h"
 #include "DxLib.h"
 #include "Utility.h"
-#include "RaceScreen.h"
+#include "GameScreen.h"
 //画面が移り変わる値。高いほど白くなる
 int FadeInFadeOut::fadeValue = 0;
 //画面が移り変わる速度
@@ -33,7 +33,7 @@ void FadeInFadeOut::FadeIn()
 void FadeInFadeOut::FadeOut()
 {
 	fadeValue = 0;
-	backScreen = RaceScreen::GetScreen();
+	backScreen = GameScreen::GetScreen();
 	while (fadeValue < MAX1BYTEVALUE)
 	{
 		fadeValue += fadeSpeed;//α値と色のRGB増加

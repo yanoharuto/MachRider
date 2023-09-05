@@ -9,13 +9,18 @@
 /// <returns>そのオブジェクトの位置をまとめたコンテナ</returns>
 std::vector<PlacementData> FirstPositionGetter::GetPlaceData(Object::ObjectTag tag)
 {
-
     return CSVConvertFirstData(StageDataManager::GetPlaceStrData(tag));
 }
+/// <summary>
+/// CSVファイルからステージに配置するための情報を所得
+/// </summary>
+/// <param name="fileName">配置情報までのパス</param>
+/// <param name="kind">所得したい配置物の種類</param>
+/// <returns>CSVファイルからステージに配置するための情報</returns>
 std::vector<PlacementData> FirstPositionGetter::CSVConvertFirstData(std::vector<std::string> placeStrData)
 {
     //データの種類と列の多さからオブジェクトの数を計算
-    int objCount = placeStrData.size() / 2 / EDIT_ARRANGEMENT_DATA_KIND_NUM;
+    int objCount = placeStrData.size() / EDIT_ARRANGEMENT_DATA_KIND_NUM;
 
     //戻り値
     std::vector<PlacementData> dataVec;

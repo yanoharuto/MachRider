@@ -2,7 +2,7 @@
 #include "UserInput.h"
 #include "DxLib.h"
 #include "Utility.h"
-#include "RaceScreen.h"
+#include "GameScreen.h"
 #include "UIDrawer.h"
 #include "Clock.h"
 //メニューの状態
@@ -78,7 +78,7 @@ void Menu::Update()
 
         if (isOpenMenu)
         {
-            backScreen = RaceScreen::GetScreen();
+            backScreen = GameScreen::GetScreen();
             //メニュー画面を開いた時間を所得
             startTime = Clock::GetNowGameTime();
         }

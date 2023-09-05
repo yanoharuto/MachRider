@@ -3,15 +3,14 @@
 /// <summary>
 /// ゲーム終了時のカウントダウン
 /// </summary>
-class EndCountDown :
-    public CountDown
+class EndCountDown final: public CountDown
 {
 public:
     /// <summary>
     /// タイマーが切れそうになったらカウントダウンを表示する
     /// </summary>
-    /// <param name="timer"></param>
-    EndCountDown(Timer* timer);
+    /// <param name="timer">残り時間のタイマー</param>
+    EndCountDown(std::weak_ptr<Timer> timer);
     /// <summary>
     /// カウントダウンの数字と終わりを表示
     /// </summary>

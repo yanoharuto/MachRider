@@ -96,7 +96,7 @@ void Bomber::EraceCollider()
 {
     if (collider != nullptr)
     {
-        ConflictManager::EraceConflictProccesor(conflictProcessor, collider);
+        ConflictManager::EraceConflictProcessor(conflictProcessor, collider);
         SAFE_DELETE(collider);
         SAFE_DELETE(conflictProcessor);
     }

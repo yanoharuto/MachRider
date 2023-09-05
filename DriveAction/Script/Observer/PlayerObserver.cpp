@@ -4,7 +4,7 @@
 /// プレイヤーの情報を渡すやつ
 /// </summary>
 /// <param name="playerCar">プレイヤー</param>
-PlayerObserver::PlayerObserver(PlayerCar* playerCar)
+PlayerObserver::PlayerObserver(PlayerCar* const playerCar)
     :ObjectObserver(playerCar)
 {
     subject = playerCar;

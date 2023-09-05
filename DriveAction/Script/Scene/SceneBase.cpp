@@ -24,7 +24,7 @@ SceneType SceneBase::Update()
 {
     //シーンごとの処理
     sceneFlow->Update();
-    if (sceneFlow->GetIsEndProccess())//処理が終わったら
+    if (sceneFlow->GetIsEndProcesss())//処理が終わったら
     {
         //次のシーンに飛ぶ
         return sceneFlow->GetNextSceneType();

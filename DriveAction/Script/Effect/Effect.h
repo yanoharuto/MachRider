@@ -1,7 +1,10 @@
 #pragma once
-
-//エフェクトの初期化
+/// <summary>
+/// エフェクトの初期化
+/// </summary>
+/// <returns>失敗したら-1</returns>
 int Effect_Initialize();
-//エフェクトの終了処理
+/// <summary>
+/// エフェクトの終了処理
+/// </summary>
 void Effect_Finalize();
-

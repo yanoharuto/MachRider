@@ -2,9 +2,8 @@
 #include <iostream>
 #include <memory>
 #define SCORE_KIND_NUM 4
+class GameManager;
 class Timer;
-class PlayerObserver;
-
 /// <summary>
 /// 最終的なスコアの保存役
 /// </summary>
@@ -14,13 +13,9 @@ public:
     /// <summary>
     /// ゲームクリアしたときのスコアを計算する
     /// </summary>
-    /// <param name="timer">クリアタイム</param>
-    /// <param name="player">クリアしたプレイヤーの情報通達役</param>
-    ResultScore(Timer* timer, std::weak_ptr<PlayerObserver> player);
-    /// <summary>
-    /// 特になし
-    /// </summary>
-    ~ResultScore(){};
+    /// <param name="gameManager">スコア計算に必要な情報をもらう</param>
+    /// <param name="timer">クリアタイムを所得する</param>
+    ResultScore(std::weak_ptr<GameManager> gameManager, std::weak_ptr<Timer> timer);
     //スコアの種類
     enum ScoreKind
     {
@@ -52,22 +47,22 @@ public:
     /// ステージのハイスコアを文字列にしたもの
     /// </summary>
     /// <returns>ステージのハイスコアを文字列にしたもの</returns>
-    std::string GetHighScoreString()const;
+    int GetUpdateScore()const;
 private:
     /// <summary>
     /// スコアを確定させる
     /// </summary>
-    /// <param name="timer">クリアタイム所得</param>
-    /// <param name="player">プレイヤーの所得した収集アイテムを調べる</param>
-    void FixScore(Timer* const timer, std::weak_ptr<PlayerObserver> player);
+    /// <param name="remainingTime">クリアタイム所得</param>
+    /// <param name="getCollectNum">プレイヤーの所得した収集アイテム数</param>
+    void FixScore(int remainingTime, int getCollectNum);
     //残り時間のスコア
     int timeScore = 0;
     //収集アイテムを集めたスコア
     int collectScore = 0;
     //ハイスコア更新フラグ
     bool isUpdateHighScore = false;
-    //ハイスコア更新したときのスコア文字列
-    std::string updateStr;
+    //スコア記録更新したときのスコア
+    int updateScore;
     //残り時間のボーナス
     static const int clearTimeBonus;
     //コインはボーナス

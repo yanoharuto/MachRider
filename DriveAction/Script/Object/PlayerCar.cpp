@@ -57,7 +57,7 @@ PlayerCar::~PlayerCar()
 	SAFE_DELETE(bounceTimer);
 	SAFE_DELETE(turboTimer);
 	//当たり判定消去
-	ConflictManager::EraceConflictProccesor(conflictProcessor, hitChecker);
+	ConflictManager::EraceConflictProcessor(conflictProcessor, hitChecker);
 	SAFE_DELETE(conflictProcessor);
 	SAFE_DELETE(hitChecker);
 	//音消す
@@ -81,7 +81,7 @@ void PlayerCar::Update()
 	//機体を傾ける
 	RotateUpdate();
 	//ダメージを受けてたら無敵時間減少していく
-	DamagePostProccess();
+	DamagePostProcesss();
 	//速度を更新
 	UpdateVelocity();
 	//位置の更新
@@ -314,7 +314,7 @@ void PlayerCar::ConflictReaction(CollisionResultInfo conflictInfo)
 /// <summary>
 /// ダメージ処理
 /// </summary>
-void PlayerCar::DamagePostProccess()
+void PlayerCar::DamagePostProcesss()
 {
 	//ダメージを受けたら
 	if (isDamage)

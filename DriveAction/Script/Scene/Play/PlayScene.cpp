@@ -1,7 +1,6 @@
 #include "PlayScene.h"
 #include "PlaySceneFlow.h"
 #include "Utility.h"
-#include "SoundPlayer.h"
 #include "FadeInFadeOut.h"
 #include "Clock.h"
 #include "Menu.h"
@@ -12,8 +11,6 @@ PlayScene::PlayScene()
     :SceneBase(SceneType::PLAY)
 {
     sceneFlow = new PlaySceneFlow();
-    
-    SoundPlayer::LoadSound(playBGM);
     menu = new Menu();
 }
 /// <summary>
@@ -23,7 +20,6 @@ PlayScene::~PlayScene()
 {
     SAFE_DELETE(menu);
     SAFE_DELETE(sceneFlow);
-    SoundPlayer::StopSound(playBGM);
 }
 /// <summary>
 /// ƒQ[ƒ€‚ð—V‚Ô
@@ -45,7 +41,7 @@ SceneType PlayScene::Update()
             //ƒV[ƒ“‚²‚Æ‚Ìˆ—
             sceneFlow->Update();
             //ˆ—‚ªI‚í‚Á‚½‚ç
-            if (sceneFlow->GetIsEndProccess())
+            if (sceneFlow->GetIsEndProcesss())
             {
                 return sceneFlow->GetNextSceneType();
             }

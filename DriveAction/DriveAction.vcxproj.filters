@@ -123,7 +123,7 @@
     <ClCompile Include="Script\Camera\EditorCamera.cpp">
       <Filter>ソース ファイル\Camera</Filter>
     </ClCompile>
-    <ClCompile Include="Script\Camera\RaceCamera.cpp">
+    <ClCompile Include="Script\Camera\GameCamera.cpp">
       <Filter>ソース ファイル\Camera</Filter>
     </ClCompile>
     <ClCompile Include="Script\Camera\TitleCamera.cpp">
@@ -354,7 +354,7 @@
     <ClCompile Include="Script\Utility\FadeInFadeOut.cpp">
       <Filter>ソース ファイル\Utility</Filter>
     </ClCompile>
-    <ClCompile Include="Script\Utility\RaceScreen.cpp">
+    <ClCompile Include="Script\Utility\GameScreen.cpp">
       <Filter>ソース ファイル\Utility</Filter>
     </ClCompile>
     <ClCompile Include="Script\Utility\ResultScore.cpp">
@@ -396,10 +396,7 @@
     <ClCompile Include="Script\Scene\Play\PlaySceneFlow.cpp">
       <Filter>ソース ファイル\Scene\Play</Filter>
     </ClCompile>
-    <ClCompile Include="Script\Scene\Play\PostGoalStaging.cpp">
-      <Filter>ソース ファイル\Scene\Play</Filter>
-    </ClCompile>
-    <ClCompile Include="Script\Scene\Play\RacePrevProcess.cpp">
+    <ClCompile Include="Script\Scene\Play\GamePrevProcess.cpp">
       <Filter>ソース ファイル\Scene\Play</Filter>
     </ClCompile>
     <ClCompile Include="Script\main.cpp">
@@ -426,6 +423,18 @@
     <ClCompile Include="Script\Utility\ScoreRecordWriter.cpp">
       <Filter>ソース ファイル\Utility</Filter>
     </ClCompile>
+    <ClCompile Include="Script\Scene\Play\PlayGameProcess.cpp">
+      <Filter>ソース ファイル\Scene\Play</Filter>
+    </ClCompile>
+    <ClCompile Include="Script\Scene\Play\PostGameEndStagingProcess.cpp">
+      <Filter>ソース ファイル\Scene\Play</Filter>
+    </ClCompile>
+    <ClCompile Include="Script\Scene\Play\GameManager.cpp">
+      <Filter>ソース ファイル\Scene\Play</Filter>
+    </ClCompile>
+    <ClCompile Include="Script\Utility\StopTimer.cpp">
+      <Filter>ソース ファイル\Utility</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Script\DrawModel\EditorCircleFlyShipDrawModel.h">
@@ -446,7 +455,7 @@
     <ClInclude Include="Script\Camera\EditorCamera.h">
       <Filter>ヘッダー ファイル\Camera</Filter>
     </ClInclude>
-    <ClInclude Include="Script\Camera\RaceCamera.h">
+    <ClInclude Include="Script\Camera\GameCamera.h">
       <Filter>ヘッダー ファイル\Camera</Filter>
     </ClInclude>
     <ClInclude Include="Script\Camera\TitleCamera.h">
@@ -707,16 +716,13 @@
     <ClInclude Include="Script\Utility\OriginalMath.h">
       <Filter>ヘッダー ファイル\Utility</Filter>
     </ClInclude>
-    <ClInclude Include="Script\Utility\RaceScreen.h">
+    <ClInclude Include="Script\Utility\GameScreen.h">
       <Filter>ヘッダー ファイル\Utility</Filter>
     </ClInclude>
     <ClInclude Include="Script\Utility\ResultScore.h">
       <Filter>ヘッダー ファイル\Utility</Filter>
     </ClInclude>
     <ClInclude Include="Script\Utility\ReusableTimer.h">
-      <Filter>ヘッダー ファイル\Utility</Filter>
-    </ClInclude>
-    <ClInclude Include="Script\Utility\Rule.h">
       <Filter>ヘッダー ファイル\Utility</Filter>
     </ClInclude>
     <ClInclude Include="Script\Utility\ShadowMap.h">
@@ -734,10 +740,7 @@
     <ClInclude Include="Script\Scene\Play\Menu.h">
       <Filter>ヘッダー ファイル\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="Script\Scene\Play\RacePrevProcess.h">
-      <Filter>ヘッダー ファイル\Scene\Play</Filter>
-    </ClInclude>
-    <ClInclude Include="Script\Scene\Play\PostGoalStaging.h">
+    <ClInclude Include="Script\Scene\Play\GamePrevProcess.h">
       <Filter>ヘッダー ファイル\Scene\Play</Filter>
     </ClInclude>
     <ClInclude Include="Script\Scene\Play\PlaySceneFlow.h">
@@ -777,6 +780,18 @@
       <Filter>ヘッダー ファイル\UI</Filter>
     </ClInclude>
     <ClInclude Include="Script\Utility\ScoreRecordWriter.h">
+      <Filter>ヘッダー ファイル\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Script\Scene\Play\PlayGameProcess.h">
+      <Filter>ヘッダー ファイル\Scene\Play</Filter>
+    </ClInclude>
+    <ClInclude Include="Script\Scene\Play\PostGameEndStagingProcess.h">
+      <Filter>ヘッダー ファイル\Scene\Play</Filter>
+    </ClInclude>
+    <ClInclude Include="Script\Scene\Play\GameManager.h">
+      <Filter>ヘッダー ファイル\Scene\Play</Filter>
+    </ClInclude>
+    <ClInclude Include="Script\Utility\StopTimer.h">
       <Filter>ヘッダー ファイル\Utility</Filter>
     </ClInclude>
   </ItemGroup>

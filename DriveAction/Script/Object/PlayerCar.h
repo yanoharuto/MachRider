@@ -5,7 +5,6 @@
 #include "EditObjectData.h"
 class PlayerConflictProcessor;
 class SphereHitChecker;
-
 class Timer;
  /// <summary>
  /// プレイヤーが操作する車
@@ -24,7 +23,6 @@ public:
     /// 更新（移動処理）
     /// </summary>
 	void Update() override;
-
 	/// <summary>
 	/// ぶつかった時の処理
 	/// </summary>
@@ -67,7 +65,7 @@ private:
 	/// <summary>
 	/// ダメージを受けた後の処理。無敵時間復帰など
 	/// </summary>
-	void DamagePostProccess();
+	void DamagePostProcesss();
 	/// <summary>
 	/// 左右に押しながら下を離すとブースト
 	/// </summary>
@@ -86,22 +84,16 @@ private:
 	/// </summary>
 	/// <param name="effectHandle">消したいエフェクト</param>
 	void DeleteEffect(int effectHandle);
-	//高さ
-	const float setFirstPosY = 6.0f;
+	//ターボ時間
+	Timer* turboTimer = nullptr;
+	//衝突処理を呼んでくれる
+	PlayerConflictProcessor* conflictProcessor;
+	//playerCar自身の当たり判定
+	SphereHitChecker* hitChecker;
 	//走っているときに出るエフェクト
 	int windEffect = -1;
 	//ぶつかった時のエフェクト
 	int clashEffect = -1;
-	//急加速中
-	bool isTurbo = false;
-	//急加速準備中
-	bool isTurboReserve = false;
-	//衝突している最中か調べる
-	bool isNowConflict = false;
-	//連続衝突
-	bool isSerialConflict = false;
-	//加速チャージタイム
-	float turboChargeTime = 0;
 	//ダメージを受けた時のエフェクト
 	int damageEffect = -1;
 	//ターボ準備中に出るエフェクト
@@ -112,25 +104,28 @@ private:
 	int chargeBurnerEffect = -1;
 	//加速中の後ろの炎
 	int turboBurnerEffect = -1;
-	//曲がったりするときに傾く速度
-	const float twistZRotaSpeed = 1.7f * RAGE;
-	//最大傾き度
-	const float twistZMaxRota = 27.0f * RAGE;
+	//急加速中
+	bool isTurbo = false;
+	//急加速準備中
+	bool isTurboReserve = false;
+	//衝突している最中か調べる
+	bool isNowConflict = false;
+	//連続衝突
+	bool isSerialConflict = false;
+	//ダメージ
+	bool isDamage = false;
+	//加速チャージタイム
+	float turboChargeTime = 0;
 	//y軸回転
 	float rotaY = 0;
 	//縦に回転する
 	float twistZRota = 0.0f;
-	//ダメージ
-	bool isDamage = false;
 	//ダメージを受けた時の操作不可能時間の合計
 	const float setDamageReactionTime = 0.8f;
 	//ダメージを受けた時に回転する量
 	const float damageReactionRotaValue = 540.0f;
-
-	//ターボ時間
-	Timer* turboTimer = nullptr;
-	//衝突処理を呼んでくれる
-	PlayerConflictProcessor* conflictProcessor;
-	//playerCar自身の当たり判定
-	SphereHitChecker* hitChecker;
+	//曲がったりするときに傾く速度
+	const float twistZRotaSpeed = 1.7f * RAGE;
+	//最大傾き度
+	const float twistZMaxRota = 27.0f * RAGE;
 };

@@ -5,10 +5,11 @@
 /// <summary>
 /// ゲーム終了時のカウントダウン
 /// </summary>
-/// <param name="timer"></param>
-EndCountDown::EndCountDown(Timer* timer)
+/// <param name="timer">ゲームの残り時間タイマー</param>
+EndCountDown::EndCountDown(std::weak_ptr<Timer> timer)
 	:CountDown(timer)
 {
+
 	endUI = UIManager::CreateUIData(onGameEndCountDownEnd);
 }
 /// <summary>

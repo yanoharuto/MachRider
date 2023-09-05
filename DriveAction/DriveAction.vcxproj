@@ -21,7 +21,7 @@
   <ItemGroup>
     <ClCompile Include="Script\Camera\Camera.cpp" />
     <ClCompile Include="Script\Camera\EditorCamera.cpp" />
-    <ClCompile Include="Script\Camera\RaceCamera.cpp" />
+    <ClCompile Include="Script\Camera\GameCamera.cpp" />
     <ClCompile Include="Script\Camera\TitleCamera.cpp" />
     <ClCompile Include="Script\ConflictSystem\ConflictManager.cpp" />
     <ClCompile Include="Script\ConflictSystem\ConflictProcessor.cpp" />
@@ -87,12 +87,14 @@
     <ClCompile Include="Script\Scene\Editor\EditorSceneFlow.cpp" />
     <ClCompile Include="Script\Scene\Editor\EnemyDataEditor.cpp" />
     <ClCompile Include="Script\Scene\Editor\StageDataEditor.cpp" />
+    <ClCompile Include="Script\Scene\Play\GameManager.cpp" />
     <ClCompile Include="Script\Scene\Play\Menu.cpp" />
     <ClCompile Include="Script\Scene\Play\PlayerDataEditor.cpp" />
+    <ClCompile Include="Script\Scene\Play\PlayGameProcess.cpp" />
     <ClCompile Include="Script\Scene\Play\PlayScene.cpp" />
     <ClCompile Include="Script\Scene\Play\PlaySceneFlow.cpp" />
-    <ClCompile Include="Script\Scene\Play\PostGoalStaging.cpp" />
-    <ClCompile Include="Script\Scene\Play\RacePrevProcess.cpp" />
+    <ClCompile Include="Script\Scene\Play\PostGameEndStagingProcess.cpp" />
+    <ClCompile Include="Script\Scene\Play\GamePrevProcess.cpp" />
     <ClCompile Include="Script\Scene\SceneBase.cpp" />
     <ClCompile Include="Script\Scene\StageDataManager.cpp" />
     <ClCompile Include="Script\Scene\StageSelect.cpp" />
@@ -119,7 +121,8 @@
     <ClCompile Include="Script\Utility\Clock.cpp" />
     <ClCompile Include="Script\Utility\CSVFileLoader.cpp" />
     <ClCompile Include="Script\Utility\FadeInFadeOut.cpp" />
-    <ClCompile Include="Script\Utility\RaceScreen.cpp" />
+    <ClCompile Include="Script\Utility\StopTimer.cpp" />
+    <ClCompile Include="Script\Utility\GameScreen.cpp" />
     <ClCompile Include="Script\Utility\ResultScore.cpp" />
     <ClCompile Include="Script\Utility\ReusableTimer.cpp" />
     <ClCompile Include="Script\Utility\ScoreRecordWriter.cpp" />
@@ -131,7 +134,7 @@
     <ClInclude Include="EditorEffect.h" />
     <ClInclude Include="Script\Camera\Camera.h" />
     <ClInclude Include="Script\Camera\EditorCamera.h" />
-    <ClInclude Include="Script\Camera\RaceCamera.h" />
+    <ClInclude Include="Script\Camera\GameCamera.h" />
     <ClInclude Include="Script\Camera\TitleCamera.h" />
     <ClInclude Include="Script\ConflictSystem\ConflictExamineResultInfo.h" />
     <ClInclude Include="Script\ConflictSystem\ConflictManager.h" />
@@ -200,12 +203,14 @@
     <ClInclude Include="Script\Scene\Editor\EditorSceneFlow.h" />
     <ClInclude Include="Script\Scene\Editor\EnemyDataEditor.h" />
     <ClInclude Include="Script\Scene\Editor\StageDataEditor.h" />
+    <ClInclude Include="Script\Scene\Play\GameManager.h" />
     <ClInclude Include="Script\Scene\Play\Menu.h" />
     <ClInclude Include="Script\Scene\Play\PlayerDataEditor.h" />
+    <ClInclude Include="Script\Scene\Play\PlayGameProcess.h" />
     <ClInclude Include="Script\Scene\Play\PlayScene.h" />
     <ClInclude Include="Script\Scene\Play\PlaySceneFlow.h" />
-    <ClInclude Include="Script\Scene\Play\PostGoalStaging.h" />
-    <ClInclude Include="Script\Scene\Play\RacePrevProcess.h" />
+    <ClInclude Include="Script\Scene\Play\PostGameEndStagingProcess.h" />
+    <ClInclude Include="Script\Scene\Play\GamePrevProcess.h" />
     <ClInclude Include="Script\Scene\SceneBase.h" />
     <ClInclude Include="Script\Scene\SceneFlowBase.h" />
     <ClInclude Include="Script\Scene\SceneType.h" />
@@ -234,12 +239,12 @@
     <ClInclude Include="Script\Utility\Clock.h" />
     <ClInclude Include="Script\Utility\CSVFileLoader.h" />
     <ClInclude Include="Script\Utility\FadeInFadeOut.h" />
+    <ClInclude Include="Script\Utility\StopTimer.h" />
     <ClInclude Include="Script\Utility\ListUtility.h" />
     <ClInclude Include="Script\Utility\OriginalMath.h" />
-    <ClInclude Include="Script\Utility\RaceScreen.h" />
+    <ClInclude Include="Script\Utility\GameScreen.h" />
     <ClInclude Include="Script\Utility\ResultScore.h" />
     <ClInclude Include="Script\Utility\ReusableTimer.h" />
-    <ClInclude Include="Script\Utility\Rule.h" />
     <ClInclude Include="Script\Utility\ScoreRecordWriter.h" />
     <ClInclude Include="Script\Utility\ShadowMap.h" />
     <ClInclude Include="Script\Utility\Timer.h" />

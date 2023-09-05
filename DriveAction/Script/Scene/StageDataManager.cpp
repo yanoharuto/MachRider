@@ -3,7 +3,7 @@
 #include "ListUtility.h"
 #include "CSVFileLoader.h"
 #include "StageSelect.h"
-#include "ReusableTimer.h"
+#include "StopTimer.h"
 #include "ResultScore.h"
 #include "ScoreRecordWriter.h"
 //ステージのファイルの名前
@@ -30,8 +30,8 @@ void StageDataManager::ChangeStageData(StageSelect* const select)
     //選んでいるステージのアドレスを保存
     fileAddres = dataVector[select->GetSelectStageNum()];
 
-    stageWidth = atof(GetSelectStageData(InitStage::width).c_str());
-    stageLength = atof(GetSelectStageData(InitStage::length).c_str());
+    stageWidth = SAFE_STR_TO_F(GetSelectStageData(InitStage::width));
+    stageLength = SAFE_STR_TO_F(GetSelectStageData(InitStage::length));
 }
 /// <summary>
 /// ステージの数
@@ -116,10 +116,10 @@ std::vector<std::string> StageDataManager::GetPlaceStrData(Object::ObjectTag tag
 /// ゲームの制限時間のタイマーを作成
 /// </summary>
 /// <returns>ゲーム制限時間タイマー</returns>
-ReusableTimer* StageDataManager::CreateGameTimer()
+std::shared_ptr<StopTimer> StageDataManager::CreateGameTimer()
 {
-    float gameLimitTime = SAFE_STR_TO_F(GetSelectStageData(gameTime));
-    return new ReusableTimer(gameLimitTime);
+    double gameLimitTime = SAFE_STR_TO_F(GetSelectStageData(gameTime));
+    return std::make_shared<StopTimer>(gameLimitTime);
 }
 /// <summary>
 /// スコアの記録更新役を渡す

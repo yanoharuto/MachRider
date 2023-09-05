@@ -11,10 +11,6 @@ Timer::Timer(double setLimitTime)
     limitTime = setLimitTime;
     startTime = Clock::GetNowGameTime();
 }
-
-Timer::~Timer()
-{
-}
 /// <summary>
 /// İ’èŠÔ‚ğ‰ß‚¬‚½‚©
 /// </summary>
@@ -29,8 +25,7 @@ bool Timer::IsOverLimitTime()const
 /// <returns>‰½•bŒo‚Á‚½‚©</returns>
 double Timer::GetElaspedTime()const
 {    
-    double nowTime = Clock::GetNowGameTime();
-    double elaspedTime = nowTime - startTime;
+    double elaspedTime = Clock::GetNowGameTime() - startTime;
     return elaspedTime;
 }
 /// <summary>

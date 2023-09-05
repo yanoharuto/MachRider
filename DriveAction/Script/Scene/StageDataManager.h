@@ -2,6 +2,8 @@
 #include <vector>
 #include <string>
 #include <unordered_map>
+#include <memory>
+#include <iostream>
 #include "DxLib.h"
 #include "Object.h"
 namespace InitStage
@@ -66,7 +68,7 @@ namespace InitStage
 using namespace InitStage;
 class StageSelect;
 class ResultScore;
-class ReusableTimer;
+class StopTimer;
 class ScoreRecordWriter;
 /// <summary>
 /// 遊ぶステージのデータを渡す
@@ -99,7 +101,7 @@ public:
     /// ゲームの制限時間のタイマーを作成
     /// </summary>
     /// <returns>ゲーム制限時間タイマー</returns>
-    static ReusableTimer* CreateGameTimer();
+    static std::shared_ptr<StopTimer> CreateGameTimer();
     /// <summary>
     /// スコアの記録更新役を渡す
     /// </summary>

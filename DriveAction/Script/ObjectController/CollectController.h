@@ -4,6 +4,7 @@
 #include <list>
 #include "ActorController.h"
 #include "DxLib.h"
+#include "Object.h"
 /// <summary>
 /// 収集アイテムの操作
 /// </summary>
@@ -51,14 +52,14 @@ public:
     /// プレイヤーが収集アイテムを集め終えたか
     /// </summary>
     /// <returns></returns>
-    static bool IsEndingMission();
+    static bool IsEndGame();
     /// <summary>
     /// 全アイテムが破壊されたか
     /// </summary>
     static bool IsDestroyAllItem();
 private:
-    //収集アイテムが生きているか
-    static bool isActive;
+    //収集アイテムの状態
+    static Object::ObjectState objState;
     //収集アイテムが全部Deleteされたか
     static bool isDestroyAll;
     //収集アイテムを取り終わった

@@ -24,5 +24,6 @@ void TitleCamera::Update()
     VECTOR between = VScale(OriginalMath::GetYRotateVector(targetObserver.lock()->GetSubjectDir(),cameraRotate),targetBetween);
     position = VAdd(VAdd(aimPos, VScale(targetObserver.lock()->GetSubjectDir(), targetBetween)), between);
     position.y = posY;
+    //ƒJƒƒ‰‚ÌŒü‚«‚ğ•ÏX
     SetCameraPositionAndTarget_UpVecY(position, aimPos);
 }

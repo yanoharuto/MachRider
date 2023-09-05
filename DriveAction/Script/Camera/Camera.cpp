@@ -5,7 +5,6 @@
 #include "Utility.h"
 //ƒJƒƒ‰‚Ì‰æŠp
 float Camera::lookingDeg = 0;
-
 using namespace InitCamera;
 /// <summary>
 /// ƒJƒƒ‰‚Ì‘¬“x‚â‚‚³‚Ì‰Šú‰»

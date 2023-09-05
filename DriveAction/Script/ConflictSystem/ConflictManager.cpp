@@ -10,13 +10,10 @@ std::unordered_map<SphereHitChecker*, ConflictProcessor*> ConflictManager::hitCh
 //当たっているか調べるクラスのリスト
 std::list<SphereHitChecker*> ConflictManager::hitCheckList;
 /// <summary>
-/// 当たり判定を纏めてするための奴
+/// 当たり判定を纏めて行うための奴
 /// </summary>
 ConflictManager::ConflictManager()
 {
-    processorKeyMap.clear();
-    hitCheckerKeyMap.clear();
-    hitCheckList.clear();
 }
 /// <summary>
 /// 当たり判定登録Map全消し
@@ -55,7 +52,7 @@ void ConflictManager::EraceHitChecker(SphereHitChecker* const hitChecker)
 /// <summary>
 /// 衝突処理実行役を追加
 /// </summary>
-/// <param name="conflictProccesor">追加したい衝突処理実行役</param>
+/// <param name="conflictProcessor">追加したい衝突処理実行役</param>
 /// <param name="hitChecker">呼びたいやつの当たり判定</param>
 void ConflictManager::AddConflictProcessor(ConflictProcessor* const conflictProcessor, SphereHitChecker* const hitChecker)
 {
@@ -67,9 +64,9 @@ void ConflictManager::AddConflictProcessor(ConflictProcessor* const conflictProc
 /// <summary>
 /// 衝突処理実行役を削除
 /// </summary>
-/// <param name="conflictProccesor">消したい衝突処理実行役</param>
+/// <param name="conflictProcessor">消したい衝突処理実行役</param>
 /// /// <param name="hitChecker">当たり判定も消す</param>
-void ConflictManager::EraceConflictProccesor(ConflictProcessor* const conflictProcessor, SphereHitChecker* const hitChecker)
+void ConflictManager::EraceConflictProcessor(ConflictProcessor* const conflictProcessor, SphereHitChecker* const hitChecker)
 {
     if (!processorKeyMap.empty())
     {
@@ -109,14 +106,14 @@ void ConflictManager::DrawCollisionSphere()
 /// <summary>
 /// 引数のオブジェクト同士がぶつかっているか調べその結果を返す
 /// </summary>
-/// <param name="conflictProccesor">衝突処理実行役</param>
+/// <param name="conflictProcessor">衝突処理実行役</param>
 /// <param name="hitChecker">当たり判定</param>
 /// <returns>衝突結果</returns>
-CollisionResultInfo ConflictManager::GetConflictResultInfo(ConflictProcessor* const conflictProccesor, SphereHitChecker* const hitChecker)
+CollisionResultInfo ConflictManager::GetConflictResultInfo(ConflictProcessor* const conflictProcessor, SphereHitChecker* const hitChecker)
 {
-    HitCheckInfo examineInfo = conflictProccesor->GetHitExamineCheckInfo();
+    HitCheckInfo examineInfo = conflictProcessor->GetHitExamineCheckInfo();
     //引数のオブジェクトそのものと当たってたらスルー もう動いてなくてもぶつかっているか調べない
-    if (hitChecker != processorKeyMap[conflictProccesor] && !hitChecker->IsDead())
+    if (hitChecker != processorKeyMap[conflictProcessor] && !hitChecker->IsDead())
     {
         //当たっているか調べる
         CollisionResultInfo examineResultInfo = hitChecker->HitCheck(examineInfo);

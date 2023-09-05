@@ -9,7 +9,7 @@ class SceneFlowBase abstract
 public:
     SceneFlowBase() 
     {
-        isEndProccess = false; 
+        isEndProcesss = false; 
     };
     virtual ~SceneFlowBase() {};
     /// <summary>
@@ -25,7 +25,7 @@ public:
     /// 処理が終わったか
     /// </summary>
     /// <returns></returns>
-    bool GetIsEndProccess() { return isEndProccess; };
+    bool GetIsEndProcesss() { return isEndProcesss; };
     /// <summary>
     /// 次のシーンのタイプ
     /// </summary>
@@ -33,7 +33,7 @@ public:
     SceneType GetNextSceneType() { return nextSceneType; };
 protected:
     //処理が終わったか
-    bool isEndProccess = false;
+    bool isEndProcesss = false;
     //次のシーンはどれか
     SceneType nextSceneType = SceneType::TITLE;
 };

@@ -34,6 +34,7 @@ void BomberFlyShip::Update()
     {
         //爆弾を投下
         DamageObjectGenerator::GenerateDamageObject(DamageObjectGenerator::bomber, std::make_unique<ObjectObserver>(this));
+        //クールタイム再セット
         bombFallTimer->Reuse();
     }
 }

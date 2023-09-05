@@ -9,7 +9,7 @@ class ScoreRecordWriter
 {
 public:
     /// <summary>
-    /// 更新するスコアのファイルを開く
+    /// スコアの記録を所得
     /// </summary>
     /// <param name="filePath">スコアのファイルのパス</param>
     /// <param name="scoreBorder">そのステージのスコアの記録の線引き</param>
@@ -22,7 +22,9 @@ public:
 private:
     //遊んでいるステージのスコアの記録の線引き
     ScoreBorder border;
-    //書き込むファイル
-    std::ofstream writing_file;
+    //borderから文字列に変換した
+    std::string borderString;
+    //記録すファイルのパス
+    std::string scoreRecordFilePath;
 };
 

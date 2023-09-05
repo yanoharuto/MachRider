@@ -5,13 +5,13 @@ class ConflictProcessor;
 class SphereHitChecker;
 struct CollisionResultInfo;
 /// <summary>
-/// 当たり判定を纏めてするための奴
+///  当たり判定を纏めて行うための奴
 /// </summary>
 class ConflictManager
 {
 public:
     /// <summary>
-    /// 当たり判定を纏めてするための奴
+    /// 当たり判定を纏めて行うための奴
     /// </summary>
     ConflictManager();
     /// <summary>
@@ -31,15 +31,15 @@ public:
     /// <summary>
     /// 衝突処理を呼ぶConflictProcessorを追加
     /// </summary>
-    /// <param name="conflictProccesor">衝突処理を呼ぶConflictProcessorを追加</param>
+    /// <param name="conflictProcessor">衝突処理を呼ぶConflictProcessorを追加</param>
     /// <param name="hitChecker">conflictProcessorの当たり判定</param>
-    static void AddConflictProcessor(ConflictProcessor* const conflictProccesor,SphereHitChecker* const hitChecker);
+    static void AddConflictProcessor(ConflictProcessor* const conflictProcessor,SphereHitChecker* const hitChecker);
     /// <summary>
     /// 衝突処理実行役を削除
     /// </summary>
-    /// <param name="conflictProccesor">消したい衝突処理実行役</param>
+    /// <param name="conflictProcessor">消したい衝突処理実行役</param>
     /// /// <param name="hitChecker">当たり判定も消す</param>
-    static void EraceConflictProccesor(ConflictProcessor* const conflictProccesor, SphereHitChecker* const hitChecker);
+    static void EraceConflictProcessor(ConflictProcessor* const conflictProcessor, SphereHitChecker* const hitChecker);
     /// <summary>
     /// デバッグ用球を出す
     /// </summary>
@@ -47,10 +47,10 @@ public:
     /// <summary>
     /// 引数のオブジェクト同士がぶつかっているか調べその結果を返す
     /// </summary>
-    /// <param name="conflictProccesor">衝突処理実行役</param>
+    /// <param name="conflictProcessor">衝突処理実行役</param>
     /// <param name="hitChecker">当たり判定</param>
     /// <returns>衝突結果</returns>
-    CollisionResultInfo GetConflictResultInfo(ConflictProcessor* const conflictProccesor, SphereHitChecker* const hitChecker);
+    CollisionResultInfo GetConflictResultInfo(ConflictProcessor* const conflictProcessor, SphereHitChecker* const hitChecker);
     /// <summary>
     /// 何か衝突している物がないか調べる
     /// </summary>

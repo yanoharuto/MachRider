@@ -22,7 +22,7 @@ SceneType TitleScene::Update()
     //タイトルでの処理
     sceneFlow->Update();
     //タイトル処理終了ならゲーム画面へ
-    if (sceneFlow->GetIsEndProccess())
+    if (sceneFlow->GetIsEndProcesss())
     {
         return SceneType::PLAY;
     }

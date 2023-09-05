@@ -41,7 +41,7 @@ Coin::~Coin()
 {
     if (collider != nullptr)//ìñÇΩÇËîªíËè¡ãé
     {
-        ConflictManager::EraceConflictProccesor(conflictProcessor, collider);
+        ConflictManager::EraceConflictProcessor(conflictProcessor, collider);
         SAFE_DELETE(conflictProcessor);
         SAFE_DELETE(collider); 
     }
@@ -72,7 +72,7 @@ void Coin::Update()
     {
         if (conflictProcessor != nullptr)
         {
-            ConflictManager::EraceConflictProccesor(conflictProcessor, collider);
+            ConflictManager::EraceConflictProcessor(conflictProcessor, collider);
             SAFE_DELETE(conflictProcessor);
             SAFE_DELETE(collider);
         }

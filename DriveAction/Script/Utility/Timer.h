@@ -1,5 +1,4 @@
 #pragma once
-
 /// <summary>
 /// 決められた時間進んだりする
 /// </summary>
@@ -10,8 +9,7 @@ public:
     /// 制限時間等を計測する
     /// </summary>
     /// <param name="setLimitTime">計測したい時間</param>
-    Timer(double limitTime);
-    ~Timer();
+    Timer(double);
     /// <summary>
     /// 設定時間を過ぎたか
     /// </summary>
@@ -38,4 +36,3 @@ protected:
     //計測開始時間
     double startTime = 0;
 };
-

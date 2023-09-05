@@ -1,7 +1,10 @@
 #include "DxLib.h"
 #include "EffekseerForDXLib.h"
 #include "Utility.h"
-//エフェクトの初期化
+/// <summary>
+/// エフェクトの初期化
+/// </summary>
+/// <returns>失敗したら-1</returns>
 int Effect_Initialize() {
     // DirectX11を使用するようにする。(DirectX9も可、一部機能不可)
     // Effekseerを使用するには必ず設定する。
@@ -28,7 +31,9 @@ int Effect_Initialize() {
     Effekseer_Set2DSetting(SCREEN_WIDTH,SCREEN_HEIGHT);
     return 0;
 }
-//エフェクトの終了処理
+/// <summary>
+/// エフェクトの終了処理
+/// </summary>
 void Effect_Finalize() {
 
     // Effekseerを終了する。

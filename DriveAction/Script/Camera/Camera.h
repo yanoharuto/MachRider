@@ -67,6 +67,8 @@ protected:
     /// </summary>
     /// <param name="type">シーンによってカメラの性能を変える</param>
     void LoadData(InitCamera::UseCameraSceneKind type);
+    //見たいものの位置等を教えてくれるやつ
+    std::weak_ptr<ObjectObserver> targetObserver;
     //初期化に必要なパラメーターへのパス
     std::string initFileName= "data/Camera/CameraInitPass.csv";
     //カメラの位置
@@ -83,8 +85,6 @@ protected:
     float posY;
     //カメラの追いつく速度
     float cameraSpeed;
-    //カメラが見ている範囲角
+    //カメラの見える範囲角
     static float lookingDeg;
-    //見たいものの位置等を教えてくれるやつ
-    std::weak_ptr<ObjectObserver> targetObserver;
 };

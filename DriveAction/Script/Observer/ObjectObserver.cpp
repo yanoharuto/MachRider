@@ -4,7 +4,7 @@
 /// オブジェクトの監視役
 /// </summary>
 /// <param name="setSubject">監視したいオブジェクト</param>
-ObjectObserver::ObjectObserver(Object* setSubject)
+ObjectObserver::ObjectObserver(Object* const setSubject)
 {
     subject = setSubject;
 }

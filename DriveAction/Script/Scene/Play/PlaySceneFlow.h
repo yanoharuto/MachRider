@@ -3,28 +3,15 @@
 #include <iostream>
 #include <memory>
 #include "SceneFlowBase.h"
-
-#define PlaySceneProccess 4
-class PlayerObserver;
-class AssetManager;
-class ConflictManager;
-class EffectManager;
-class PostGoalStaging;
-class GamePlayUI;
-class RaceCamera;
-class ResultScore;
-class RaceScreen;
-class RacePrevProcess;
-class ShadowMap;
-class ReusableTimer;
-class UIManager;
-class ActorControllerManager;
-class EnemyGenerator;
-class PlaySceneFlow;
+#define PlaySceneProcesss 4
+class PostGameEndStagingProcess;
+class GamePrevProcess;
+class PlayGameProcess;
+class GameManager;
 /// <summary>
 /// どういう順番で処理を行うか決める
 /// </summary>
-class PlaySceneFlow final:public SceneFlowBase
+class PlaySceneFlow final : public SceneFlowBase
 {
 public:
     /// <summary>
@@ -32,6 +19,9 @@ public:
     /// </summary>
     /// <returns></returns>
     PlaySceneFlow();
+    /// <summary>
+    /// オブジェクトやカメラ、UIタイマーなどを削除
+    /// </summary>
     ~PlaySceneFlow()override;
     /// <summary>
     /// プレイシーンの更新
@@ -42,26 +32,17 @@ public:
     /// 描画
     /// </summary>
     void Draw()const override;
-    
 private:
     /// <summary>
     /// プレイシーンの段階
     /// </summary>
-    enum PlaySceeneProgress
+    enum PlaySceneProgress
     {
         start,
         game,
         playerGoal,
         end
     };
-    /// <summary>
-    /// マネージャーの描画関数を呼び出す
-    /// </summary>
-    void DrawManagers()const;
-    /// <summary>
-    /// シャドウマップを使った描画
-    /// </summary>
-    void UseShadowMapDraw()const;
     /// <summary>
     /// 遊んでいるときの処理
     /// </summary>
@@ -79,27 +60,15 @@ private:
     /// </summary>
     void StartUpdate();
     //各シーンの処理の関数ポインタ
-    void (PlaySceneFlow::*UpdateFunc[PlaySceneProccess])();
-    //カメラ
-    RaceCamera* camera;
+    void (PlaySceneFlow::*UpdateFunc[PlaySceneProcesss])();
     //ゴール後の処理
-    PostGoalStaging* postGoalStaging;
-    //プレイヤー関係のUI
-    GamePlayUI* playerUI;
-    //当たり判定処理
-    ConflictManager* conflictManager;
-    //今何の処理を行うか決める変数
-    PlaySceeneProgress nowProgress;
+    PostGameEndStagingProcess* postGoalStaging;
+    //遊んでいるときの処理
+    PlayGameProcess* playGameProcess;
     //レース前の処理
-    RacePrevProcess* racePrevProccess;
-    //ゲーム終了タイマー
-    ReusableTimer* gameLimitTimer;
-    //こいつを回してプレイヤーとか敵を動かす
-    ActorControllerManager* controllerManager;
-    //シャドウマップ
-    ShadowMap* shadowMap;
-    //レース中の描画した物を保存する
-    RaceScreen* screen;
-    //プレイヤーの位置や向いている方向を教えてくれる
-    std::weak_ptr<PlayerObserver> player;
+    GamePrevProcess* gamePrevProcess;
+    //カメラや各オブジェクトの更新などを行ってくれるクラスの共有クラス
+    std::shared_ptr<GameManager> gameManager;
+    //今何の処理を行うか決める変数
+    PlaySceneProgress nowProgress;
 };

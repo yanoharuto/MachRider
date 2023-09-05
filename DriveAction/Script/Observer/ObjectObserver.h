@@ -11,8 +11,7 @@ public:
     /// オブジェクトの監視役
     /// </summary>
     /// <param name="setSubject">監視したいオブジェクト</param>
-    ObjectObserver(Object* setSubject);
-    virtual ~ObjectObserver() {};
+    ObjectObserver(Object* const setSubject);
     /// <summary>
     /// 監視対象の位置を渡す
     /// </summary>

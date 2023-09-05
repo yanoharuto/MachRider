@@ -3,7 +3,7 @@
 #include "SceneFlowBase.h"
 #include "UIManager.h"
 #include "StageObjectController.h"
-class RaceScreen;
+class GameScreen;
 class StageSelect;
 class GameManager;
 class FlashUI;
@@ -73,7 +73,7 @@ private:
     //タイトルの状態
     TitleState titleState;
     //描画した状態を保存する
-    RaceScreen* screen;
+    GameScreen* screen;
     //タイトルロゴ
     UIData titleLogoData;
     //タイトル画面に表示するハイスコア

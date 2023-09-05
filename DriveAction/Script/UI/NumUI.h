@@ -27,16 +27,6 @@ public:
     /// <param name="num">数字</param>
     void Draw(float num) const;
     /// <summary>
-    /// 中心座標X
-    /// </summary>
-    /// <returns></returns>
-    int GetX()const { return numData.x; };
-    /// <summary>
-    /// 中心座標Y
-    /// </summary>
-    /// <returns></returns>
-    int GetY()const { return numData.y; };
-    /// <summary>
     /// 一文字の大きさ
     /// </summary>
     /// <returns></returns>

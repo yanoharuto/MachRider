@@ -11,18 +11,18 @@
 #include "UIDrawer.h"
 #include "PlayManual.h"
 #include "ReusableTimer.h"
+#include "GameManager.h"
 /// <summary>
 /// 遊んでいるときのUI　制限時間とか
 /// </summary>
 /// <param name="setTimer"></param>
 /// <param name="setFirstCoinNum"></param>
-GamePlayUI::GamePlayUI(Timer* setTimer, std::weak_ptr<PlayerObserver> player)
+GamePlayUI::GamePlayUI(std::weak_ptr<GameManager> manager, std::weak_ptr<Timer> timer)
 {
     //残り時間
-    gameTimerUI = new TimerUI(setTimer);
+    gameTimerUI = new TimerUI(timer);
     //ミニマップ
-    minimapUI = new MiniMap(player);
-    
+    minimapUI = new MiniMap(manager.lock()->GetPlayerObserver());
     //残りの収集アイテムの数
     firstCoinNum = CollectController::GetTotalCollectNum();
     firstCollectNumUI = new NumUI(allCollectItemNum);
@@ -33,13 +33,12 @@ GamePlayUI::GamePlayUI(Timer* setTimer, std::weak_ptr<PlayerObserver> player)
     frameUI = UIManager::CreateUIData(collectItemFrameUI);
     //残り収集アイテムについてのコメントUI
     remainingFrazeUI = UIManager::CreateUIData(remainingCollectItemPhrase);
-
-    //収集アイテムの方向を出す
-    cSign = new CollectCompass(player);
     //プレイヤーのアイテム所得情報を教えてもらう
-    playerObserver = player;
+    playerObserver = manager.lock()->GetPlayerObserver();
+    //収集アイテムの方向を出す
+    cSign = new CollectCompass(playerObserver);
     //ゲーム終了カウントダウン
-    countDown = new EndCountDown(setTimer);
+    countDown = new EndCountDown(timer);
     //残り時間
     remainingNumDrawTimer = new ReusableTimer(remainingNumDrawTime);
     //操作方法

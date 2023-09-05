@@ -39,7 +39,7 @@ Saw::Saw(ObjectInit::InitObjKind kind, PlacementData arrangementData)
 /// </summary>
 Saw::~Saw()
 {
-    ConflictManager::EraceConflictProccesor(conflictProcessor,collider);
+    ConflictManager::EraceConflictProcessor(conflictProcessor,collider);
     SAFE_DELETE(collider);
     SAFE_DELETE(conflictProcessor);
     
@@ -59,7 +59,7 @@ void Saw::Update()
     //è’ìÀíºå„ÅAìñÇΩÇËîªíËçÌèú
     if (objState == activeEnd && collider != nullptr)
     {
-        ConflictManager::EraceConflictProccesor(conflictProcessor, collider);
+        ConflictManager::EraceConflictProcessor(conflictProcessor, collider);
         SAFE_DELETE(collider);
         SAFE_DELETE(conflictProcessor);
     }

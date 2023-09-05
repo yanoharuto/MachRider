@@ -12,6 +12,7 @@ class PlayerCarController;
 class EnemyGenerator;
 class CollectCompass;
 class PlayManual;
+class GameManager;
 class ReusableTimer;
 /// <summary>
 /// —V‚ñ‚Å‚¢‚é‚Æ‚«‚ÌUI
@@ -19,7 +20,7 @@ class ReusableTimer;
 class GamePlayUI final
 {
 public:
-    GamePlayUI(Timer* setTimer ,std::weak_ptr<PlayerObserver> player);
+    GamePlayUI(std::weak_ptr<GameManager> manager, std::weak_ptr<Timer> timer);
     /// <summary>
     /// ŠeUI‚ð‰ð•ú
     /// </summary>
