@@ -52,10 +52,6 @@ public:
     /// <param name="type">どのタイミングで使うか教えて</param>
     Camera(InitCamera::UseCameraSceneKind type);
     /// <summary>
-    /// 特になし
-    /// </summary>
-    virtual ~Camera() {};
-    /// <summary>
     /// 引数のものがカメラの範囲内か調べる
     /// </summary>
     /// <param name="actor">調べたいオブジェクト</param>

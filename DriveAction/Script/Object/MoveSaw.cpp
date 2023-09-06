@@ -21,9 +21,9 @@ MoveSaw::MoveSaw(PlacementData editData)
     auto addDataLoader = new CSVFileLoader(InitActor::GetAddDataPass(moveSaw));
     auto addStrDataVec = addDataLoader->GetLoadStringData();
     //タイマーが動いている間だけ動く
-    moveLarpTimer = new ReusableTimer(atoi(addStrDataVec[moveTime].c_str()));
+    moveLarpTimer = new ReusableTimer(SAFE_STR_TO_D(addStrDataVec[moveTime]));
     //前方方向に動く
-    velocity = VScale(direction, atoi(addStrDataVec[moveSpeed].c_str()));
+    velocity = VScale(direction, SAFE_STR_TO_F(addStrDataVec[moveSpeed]));
     //当たり判定
     collider = new SphereHitChecker(this);
     conflictProcessor = new ConflictProcessor(this);

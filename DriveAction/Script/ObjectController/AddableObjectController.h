@@ -11,7 +11,6 @@ public:
     /// </summary>
     /// <param name="kind">初期化したいオブジェクトの種類</param>
     AddableObjectController(ObjectInit::InitObjKind kind);
-
     /// <summary>
     /// リストに対象のオブジェクトを纏めて追加
     /// </summary>

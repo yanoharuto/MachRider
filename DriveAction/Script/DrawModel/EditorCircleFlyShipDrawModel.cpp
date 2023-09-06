@@ -5,6 +5,7 @@
 #include "InitObjKind.h"
 #include "FlyShipController.h"
 #include "EditorDrawModel.h"
+#include "Utility.h"
 /// <summary>
 /// 円形飛行艇は編集時は陣形の飛行機纏めて描画する
 /// そのために必要な情報を初期化
@@ -66,9 +67,9 @@ void EditorCircleFlyShipDrawModel::Init()
     using namespace FlyShipInit;
     //FlyShip用のデータをロード
     CSVFileLoader* addDataLoader = new CSVFileLoader(InitActor::GetAddDataPass(circleLaserShip));
-    auto addData = addDataLoader->GetLoadCharData();
-    uniNum = atof(addData[unitNum]);
-    uniBetween = atof(addData[unitBetween]);
+    auto addData = addDataLoader->GetLoadStringData();
+    uniNum = SAFE_STR_TO_I(addData[unitNum]);
+    uniBetween = SAFE_STR_TO_F(addData[unitBetween]);
     //機体の数だけ割る
     uniDirRota = 360.0f / uniNum;
 }

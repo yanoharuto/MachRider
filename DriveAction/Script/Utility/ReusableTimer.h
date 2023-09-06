@@ -3,7 +3,7 @@
 /// <summary>
 /// もう一度時間を計測できるタイマー
 /// </summary>
-class ReusableTimer : public Timer
+class ReusableTimer final: public Timer
 {
 public:
     /// <summary>

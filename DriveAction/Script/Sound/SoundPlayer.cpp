@@ -20,7 +20,7 @@ SoundPlayer::SoundPlayer()
 /// </summary>
 SoundPlayer::~SoundPlayer()
 {
-    for (int i = 0; i < soundHandleMap.size(); i++)
+    for (int i = 0; i < SAFE_GET_SIZE(soundHandleMap); i++)
     {
         int success = StopSoundMem((*soundHandleMap.begin()).second);
         success = DeleteSoundMem((*soundHandleMap.begin()).second);
@@ -133,8 +133,9 @@ void SoundPlayer::Load3DSound(SoundKind kind)
         int num = static_cast<int>(kind);
         //データ読み取り
         CSVFileLoader* initDataLoader = new CSVFileLoader(initFilePassData[num]);
-        std::vector<const char*> initData = initDataLoader->GetLoadCharData();
-        Set3DRadiusSoundMem(static_cast<float>(atof(initData[soundRadius])), soundHandleMap[kind]);
+        //読み取ったデータから聞こえる半径を設定
+        auto initStrDataVec = initDataLoader->GetLoadStringData();
+        Set3DRadiusSoundMem(SAFE_STR_TO_F(initStrDataVec[soundRadius]), soundHandleMap[kind]);
         SAFE_DELETE(initDataLoader);
     }
 }

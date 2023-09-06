@@ -197,6 +197,44 @@
     <ClInclude Include="Script\Object\Wheels.h" />
     <ClInclude Include="Script\Observer\ObjectObserver.h" />
     <ClInclude Include="Script\Observer\PlayerObserver.h" />
+    <ClInclude Include="Script\rapidjson\allocators.h" />
+    <ClInclude Include="Script\rapidjson\cursorstreamwrapper.h" />
+    <ClInclude Include="Script\rapidjson\document.h" />
+    <ClInclude Include="Script\rapidjson\encodedstream.h" />
+    <ClInclude Include="Script\rapidjson\encodings.h" />
+    <ClInclude Include="Script\rapidjson\error\en.h" />
+    <ClInclude Include="Script\rapidjson\error\error.h" />
+    <ClInclude Include="Script\rapidjson\filereadstream.h" />
+    <ClInclude Include="Script\rapidjson\filewritestream.h" />
+    <ClInclude Include="Script\rapidjson\fwd.h" />
+    <ClInclude Include="Script\rapidjson\internal\biginteger.h" />
+    <ClInclude Include="Script\rapidjson\internal\clzll.h" />
+    <ClInclude Include="Script\rapidjson\internal\diyfp.h" />
+    <ClInclude Include="Script\rapidjson\internal\dtoa.h" />
+    <ClInclude Include="Script\rapidjson\internal\ieee754.h" />
+    <ClInclude Include="Script\rapidjson\internal\itoa.h" />
+    <ClInclude Include="Script\rapidjson\internal\meta.h" />
+    <ClInclude Include="Script\rapidjson\internal\pow10.h" />
+    <ClInclude Include="Script\rapidjson\internal\regex.h" />
+    <ClInclude Include="Script\rapidjson\internal\stack.h" />
+    <ClInclude Include="Script\rapidjson\internal\strfunc.h" />
+    <ClInclude Include="Script\rapidjson\internal\strtod.h" />
+    <ClInclude Include="Script\rapidjson\internal\swap.h" />
+    <ClInclude Include="Script\rapidjson\istreamwrapper.h" />
+    <ClInclude Include="Script\rapidjson\memorybuffer.h" />
+    <ClInclude Include="Script\rapidjson\memorystream.h" />
+    <ClInclude Include="Script\rapidjson\msinttypes\inttypes.h" />
+    <ClInclude Include="Script\rapidjson\msinttypes\stdint.h" />
+    <ClInclude Include="Script\rapidjson\ostreamwrapper.h" />
+    <ClInclude Include="Script\rapidjson\pointer.h" />
+    <ClInclude Include="Script\rapidjson\prettywriter.h" />
+    <ClInclude Include="Script\rapidjson\rapidjson.h" />
+    <ClInclude Include="Script\rapidjson\reader.h" />
+    <ClInclude Include="Script\rapidjson\schema.h" />
+    <ClInclude Include="Script\rapidjson\stream.h" />
+    <ClInclude Include="Script\rapidjson\stringbuffer.h" />
+    <ClInclude Include="Script\rapidjson\uri.h" />
+    <ClInclude Include="Script\rapidjson\writer.h" />
     <ClInclude Include="Script\Scene\Editor\CollectItemDataEditor.h" />
     <ClInclude Include="Script\Scene\Editor\EditDataSaver.h" />
     <ClInclude Include="Script\Scene\Editor\EditorScene.h" />
@@ -239,6 +277,7 @@
     <ClInclude Include="Script\Utility\Clock.h" />
     <ClInclude Include="Script\Utility\CSVFileLoader.h" />
     <ClInclude Include="Script\Utility\FadeInFadeOut.h" />
+    <ClInclude Include="Script\Utility\json.hpp" />
     <ClInclude Include="Script\Utility\StopTimer.h" />
     <ClInclude Include="Script\Utility\ListUtility.h" />
     <ClInclude Include="Script\Utility\OriginalMath.h" />
@@ -250,6 +289,9 @@
     <ClInclude Include="Script\Utility\Timer.h" />
     <ClInclude Include="Script\Utility\UserInput.h" />
     <ClInclude Include="Script\Utility\Utility.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
@@ -305,19 +347,19 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>Script/Camera;Script/ConflictSystem;Script/DrawModel;Script/Effect;Script/Initialize;Script/Object;Script/ObjectController;Script/Observer;Script/Scene;Script/Sound;Script/UI;Script/Utility;Script/Scene/Editor;Script/Scene/Play;Script/Scene/Title;$(IncludePath)</IncludePath>
+    <IncludePath>Script/Camera;Script/ConflictSystem;Script/DrawModel;Script/Effect;Script/Initialize;Script/Object;Script/ObjectController;Script/Observer;Script/Scene;Script/Sound;Script/UI;Script/Utility;Script/Scene/Editor;Script/Scene/Play;Script/Scene/Title;Script/rapidjson;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>Script/Camera;Script/ConflictSystem;Script/DrawModel;Script/Effect;Script/Initialize;Script/Object;Script/ObjectController;Script/Observer;Script/Scene;Script/Sound;Script/UI;Script/Utility;Script/Scene/Editor;Script/Scene/Play;Script/Scene/Title;$(IncludePath)</IncludePath>
+    <IncludePath>Script/Camera;Script/ConflictSystem;Script/DrawModel;Script/Effect;Script/Initialize;Script/Object;Script/ObjectController;Script/Observer;Script/Scene;Script/Sound;Script/UI;Script/Utility;Script/Scene/Editor;Script/Scene/Play;Script/Scene/Title;Script/rapidjson;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>Script/Camera;Script/ConflictSystem;Script/DrawModel;Script/Effect;Script/Initialize;Script/Object;Script/ObjectController;Script/Observer;Script/Scene;Script/Sound;Script/UI;Script/Utility;Script/Scene/Editor;Script/Scene/Play;Script/Scene/Title;$(IncludePath)</IncludePath>
+    <IncludePath>Script/Camera;Script/ConflictSystem;Script/DrawModel;Script/Effect;Script/Initialize;Script/Object;Script/ObjectController;Script/Observer;Script/Scene;Script/Sound;Script/UI;Script/Utility;Script/Scene/Editor;Script/Scene/Play;Script/Scene/Title;Script/rapidjson;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>Script/Camera;Script/ConflictSystem;Script/DrawModel;Script/Effect;Script/Initialize;Script/Object;Script/ObjectController;Script/Observer;Script/Scene;Script/Sound;Script/UI;Script/Utility;Script/Scene/Editor;Script/Scene/Play;Script/Scene/Title;$(IncludePath)</IncludePath>
+    <IncludePath>Script/Camera;Script/ConflictSystem;Script/DrawModel;Script/Effect;Script/Initialize;Script/Object;Script/ObjectController;Script/Observer;Script/Scene;Script/Sound;Script/UI;Script/Utility;Script/Scene/Editor;Script/Scene/Play;Script/Scene/Title;Script/rapidjson;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -405,5 +447,12 @@
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
+    <Import Project="packages\StyleCop.MSBuild.6.2.0\build\StyleCop.MSBuild.targets" Condition="Exists('packages\StyleCop.MSBuild.6.2.0\build\StyleCop.MSBuild.targets')" />
   </ImportGroup>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>このプロジェクトは、このコンピューター上にない NuGet パッケージを参照しています。それらのパッケージをダウンロードするには、[NuGet パッケージの復元] を使用します。詳細については、http://go.microsoft.com/fwlink/?LinkID=322105 を参照してください。見つからないファイルは {0} です。</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('packages\StyleCop.MSBuild.6.2.0\build\StyleCop.MSBuild.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\StyleCop.MSBuild.6.2.0\build\StyleCop.MSBuild.targets'))" />
+  </Target>
 </Project>

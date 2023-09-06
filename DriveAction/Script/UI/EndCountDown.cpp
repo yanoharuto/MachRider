@@ -9,7 +9,6 @@
 EndCountDown::EndCountDown(std::weak_ptr<Timer> timer)
 	:CountDown(timer)
 {
-
 	endUI = UIManager::CreateUIData(onGameEndCountDownEnd);
 }
 /// <summary>

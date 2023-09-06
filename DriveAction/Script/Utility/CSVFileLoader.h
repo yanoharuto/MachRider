@@ -14,10 +14,6 @@ public:
     /// <param name="filePass">読み込むファイルのパス</param>
     CSVFileLoader(std::string filePass);
     /// <summary>
-    /// 特になし
-    /// </summary>
-    ~CSVFileLoader() {};
-    /// <summary>
     /// CSVファイルを読み込む
     /// </summary>
     /// <returns></returns>

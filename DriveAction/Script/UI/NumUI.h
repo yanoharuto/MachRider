@@ -13,10 +13,6 @@ public:
     /// </summary>
     NumUI(UIKind kind);
     /// <summary>
-    /// “Á‚É‚È‚µ
-    /// </summary>
-    ~NumUI();
-    /// <summary>
     /// ®”‚Ì•`‰æ
     /// </summary>
     /// <param name="num">®”</param>

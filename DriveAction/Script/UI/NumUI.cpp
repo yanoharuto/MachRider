@@ -14,12 +14,6 @@ NumUI::NumUI(UIKind kind)
     pointData.size = numData.size;
 }
 /// <summary>
-/// “Á‚É‚È‚µ
-/// </summary>
-NumUI::~NumUI()
-{
-}
-/// <summary>
 /// ®”‚Ì•`‰æ
 /// </summary>
 /// <param name="num">®”</param>

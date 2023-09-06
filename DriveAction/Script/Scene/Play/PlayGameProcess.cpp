@@ -40,8 +40,8 @@ void PlayGameProcess::Update(std::weak_ptr<GameManager> const gameObject)
 	{
 		timer->Stop();
 	}
-	//収集アイテムが全部消え終わったら終了
-	if (CollectController::IsDestroyAllItem())
+	//収集アイテムが全部消え終わった,制限時間の終了したなら
+	if (CollectController::IsDestroyAllItem()||timer->IsOverLimitTime())
 	{
 		isEndProcess = true;
 	}

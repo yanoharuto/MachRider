@@ -13,12 +13,6 @@ FlashUI::FlashUI(UIKind uiKind)
     isAValueIncrement = true;
 }
 /// <summary>
-/// 特になし
-/// </summary>
-FlashUI::~FlashUI()
-{
-}
-/// <summary>
 /// アルファ値の更新
 /// </summary>
 void FlashUI::Update()

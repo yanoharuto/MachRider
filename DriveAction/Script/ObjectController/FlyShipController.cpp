@@ -1,6 +1,6 @@
 #include "FlyShipController.h"
 #include "CSVFileLoader.h"
-
+#include "Utility.h"
 /// <summary>
 /// 初期化するために必要なデータを所得
 /// </summary>
@@ -22,16 +22,16 @@ InitFlyShipParamator FlyShipController::GetInitData(ObjectInit::InitObjKind kind
     param.actorParam = InitActor::GetActorParamator(kind);
     //FlyShip用のデータをロード
     CSVFileLoader* addDataLoader = new CSVFileLoader(InitActor::GetAddDataPass(kind));
-    auto addData = addDataLoader->GetLoadCharData();
+    auto addData = addDataLoader->GetLoadStringData();
     //移動速度
-    param.moveSpeed = static_cast<float>(atof(addData[moveSpeed]));
+    param.moveSpeed = SAFE_STR_TO_F(addData[moveSpeed]);
     //生存時間
-    param.setAliveTime = static_cast<float>(atof(addData[aliveTime]));
+    param.setAliveTime = SAFE_STR_TO_F(addData[aliveTime]);
     //クールタイム
-    param.setCoolTime = static_cast<float>(atof(addData[coolTime]));
+    param.setCoolTime = SAFE_STR_TO_F(addData[coolTime]);
     //１グループ何体か
-    param.unitNum = static_cast<float>(atof(addData[unitNum]));
+    param.unitNum = SAFE_STR_TO_I(addData[unitNum]);
     //個体間距離
-    param.unitBetween = static_cast<float>(atof(addData[unitBetween]));
+    param.unitBetween = SAFE_STR_TO_F(addData[unitBetween]);
     return param;
 }

@@ -13,13 +13,6 @@ public:
     /// </summary>
     ScoreNum();
     /// <summary>
-    /// 特になし
-    /// </summary>
-    ~ScoreNum() 
-    {
-
-    };
-    /// <summary>
     /// スコアによって大きさ変更
     /// </summary>
     /// <param name="num">合計score</param>

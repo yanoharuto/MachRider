@@ -12,10 +12,6 @@ public:
     /// </summary>
     PlayManual();
     /// <summary>
-    /// “Á‚É‚È‚µ
-    /// </summary>
-    ~PlayManual() {};
-    /// <summary>
     /// ƒvƒŒƒCƒ„[‚Ì“ü—Í‚É‚æ‚Á‚Ä‘€ìà–¾‚ğ•Ï‚¦‚é
     /// </summary>
     void Update();

@@ -31,12 +31,12 @@ std::vector<PlacementData> FirstPositionGetter::CSVConvertFirstData(std::vector<
         int dataKindNum = i * EDIT_ARRANGEMENT_DATA_KIND_NUM;
         //配置初期化情報
         PlacementData initData = {};
-        initData.objKind = atoi(placeStrData[dataKindNum + EditArrangementDataKind::objectKindNum].c_str());
-        initData.collectNum = atoi(placeStrData[dataKindNum + EditArrangementDataKind::missionTurnNum].c_str());
-        initData.posX = static_cast<float>(atof(placeStrData[dataKindNum + EditArrangementDataKind::positionX].c_str()));
-        initData.posZ = static_cast<float>(atof(placeStrData[dataKindNum + EditArrangementDataKind::positionZ].c_str()));
-        initData.dirX = static_cast<float>(atof(placeStrData[dataKindNum + EditArrangementDataKind::directionX].c_str()));
-        initData.dirZ = static_cast<float>(atof(placeStrData[dataKindNum + EditArrangementDataKind::directionZ].c_str()));
+        initData.objKind = SAFE_STR_TO_I(placeStrData[dataKindNum + objectKindNum]);
+        initData.collectNum = SAFE_STR_TO_I(placeStrData[dataKindNum + missionTurnNum]);
+        initData.posX = SAFE_STR_TO_F(placeStrData[dataKindNum + positionX]);
+        initData.posZ = SAFE_STR_TO_F(placeStrData[dataKindNum + positionZ]);
+        initData.dirX = SAFE_STR_TO_F(placeStrData[dataKindNum + directionX]);
+        initData.dirZ = SAFE_STR_TO_F(placeStrData[dataKindNum + directionZ]);
         dataVec.push_back(initData);
     }
     return dataVec;
@@ -58,7 +58,7 @@ std::vector<PlacementData> FirstPositionGetter::CSVConvertFirstData(std::string 
 
     //戻り値
     std::vector<PlacementData> dataVec;
-
+    
     for (int i = 0; i < objCount; i++)
     {
         //構造体の情報の種類
@@ -66,15 +66,15 @@ std::vector<PlacementData> FirstPositionGetter::CSVConvertFirstData(std::string 
         
         //配置初期化情報
         PlacementData initData = {};
-        initData.objKind = atoi(initStrDataVec[groupNum + EditArrangementDataKind::objectKindNum].c_str());
+        initData.objKind = SAFE_STR_TO_I(initStrDataVec[groupNum + objectKindNum]);
         //所得したい情報だったら
         if (initData.objKind == kind)
         {
-            initData.collectNum = atoi(initStrDataVec[groupNum + EditArrangementDataKind::missionTurnNum].c_str());
-            initData.posX = static_cast<float>(atof(initStrDataVec[groupNum + EditArrangementDataKind::positionX].c_str()));
-            initData.posZ = static_cast<float>(atof(initStrDataVec[groupNum + EditArrangementDataKind::positionZ].c_str()));
-            initData.dirX = static_cast<float>(atof(initStrDataVec[groupNum + EditArrangementDataKind::directionX].c_str()));
-            initData.dirZ = static_cast<float>(atof(initStrDataVec[groupNum + EditArrangementDataKind::directionZ].c_str()));
+            initData.collectNum = SAFE_STR_TO_I(initStrDataVec[groupNum + missionTurnNum]);
+            initData.posX = SAFE_STR_TO_F(initStrDataVec[groupNum + positionX]);
+            initData.posZ = SAFE_STR_TO_F(initStrDataVec[groupNum + positionZ]);
+            initData.dirX = SAFE_STR_TO_F(initStrDataVec[groupNum + directionX]);
+            initData.dirZ = SAFE_STR_TO_F(initStrDataVec[groupNum + directionZ]);
             dataVec.push_back(initData);
         }
     }

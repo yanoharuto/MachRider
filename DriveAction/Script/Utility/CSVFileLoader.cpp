@@ -1,7 +1,7 @@
-#include "CSVFileLoader.h"
 #include <fstream>
 #include <sstream>
-
+#include "CSVFileLoader.h"
+#include "Utility.h"
 using namespace std;
 /// <summary>
 /// CSVƒtƒ@ƒCƒ‹‚ğ“Ç‚İ‚Ş
@@ -37,7 +37,7 @@ std::vector<std::string> CSVFileLoader::GetLoadStringData()const
 std::vector<const char*> CSVFileLoader::GetLoadCharData()const
 {
     std::vector<const char*> charVec;
-    for (int i = 0; i < loadData.size(); i++)
+    for (int i = 0; i < SAFE_GET_SIZE(loadData); i++)
     {
         charVec.push_back(loadData[i].c_str());
     }

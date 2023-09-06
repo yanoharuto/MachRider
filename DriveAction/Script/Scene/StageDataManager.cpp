@@ -30,8 +30,8 @@ void StageDataManager::ChangeStageData(StageSelect* const select)
     //選んでいるステージのアドレスを保存
     fileAddres = dataVector[select->GetSelectStageNum()];
 
-    stageWidth = SAFE_STR_TO_F(GetSelectStageData(InitStage::width));
-    stageLength = SAFE_STR_TO_F(GetSelectStageData(InitStage::length));
+    stageWidth = SAFE_STR_TO_I(GetSelectStageData(InitStage::width));
+    stageLength = SAFE_STR_TO_I(GetSelectStageData(InitStage::length));
 }
 /// <summary>
 /// ステージの数
@@ -77,13 +77,13 @@ ScoreBorder StageDataManager::GetScoreBorder()
     //ステージ情報文字列コンテナ
     auto scoreStrInfoVec = fileLoader->GetLoadStringData();
     //ステージのスコアの線引き
-    ScoreBorder scoreBorder;
-    scoreBorder.gold = atoi(scoreStrInfoVec[StageScore::goldScore].c_str());
-    scoreBorder.silver = atoi(scoreStrInfoVec[StageScore::silverScore].c_str());
-    scoreBorder.bronze = atoi(scoreStrInfoVec[StageScore::bronzeScore].c_str());
-    scoreBorder.highScore = atoi(scoreStrInfoVec[StageScore::highScore].c_str());
-    scoreBorder.second = atoi(scoreStrInfoVec[StageScore::secondScore].c_str());
-    scoreBorder.third = atoi(scoreStrInfoVec[StageScore::thirdScore].c_str());
+    ScoreBorder scoreBorder = {};
+    scoreBorder.gold = SAFE_STR_TO_I(scoreStrInfoVec[StageScore::goldScore]);
+    scoreBorder.silver = SAFE_STR_TO_I(scoreStrInfoVec[StageScore::silverScore]);
+    scoreBorder.bronze = SAFE_STR_TO_I(scoreStrInfoVec[StageScore::bronzeScore]);
+    scoreBorder.highScore = SAFE_STR_TO_I(scoreStrInfoVec[StageScore::highScore]);
+    scoreBorder.second = SAFE_STR_TO_I(scoreStrInfoVec[StageScore::secondScore]);
+    scoreBorder.third = SAFE_STR_TO_I(scoreStrInfoVec[StageScore::thirdScore]);
     return scoreBorder;
 }
 /// <summary>

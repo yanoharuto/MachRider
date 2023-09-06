@@ -123,7 +123,7 @@ VECTOR PlayerCar::GetModelRotateVec()
 	//ダメージを受けていたらぐるぐる回転
 	if (isDamage)
 	{
-		rotaY = bounceTimer->GetElaspedTime() / setDamageReactionTime;
+		rotaY = static_cast<float> (bounceTimer->GetElaspedTime() / setDamageReactionTime);
 		rotaY *= damageReactionRotaValue;
 	}
 
@@ -382,7 +382,7 @@ float PlayerCar::GetTurboPower()
 		if (turboTimer != nullptr && !turboTimer->IsOverLimitTime())
 		{
 			//加速量を渡す
-			return turboTimer->GetRemainingTime() * speedParamator.turboAddSpeed;
+			return static_cast<float>(turboTimer->GetRemainingTime() * speedParamator.turboAddSpeed);
 		}
 		else//終了後
 		{

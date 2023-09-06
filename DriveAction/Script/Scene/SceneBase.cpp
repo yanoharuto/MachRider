@@ -8,6 +8,7 @@
 SceneBase::SceneBase(SceneType _SceneType)
 {
     nowSceneType = _SceneType;
+    sceneFlow = nullptr;
 }
 /// <summary>
 /// SceneFlow‚Ì‰ð•ú

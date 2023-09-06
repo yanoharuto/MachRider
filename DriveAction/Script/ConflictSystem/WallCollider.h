@@ -14,10 +14,6 @@ public:
     /// <param name="setEndPos">‚±‚êˆÈ‰º‚Ì’l‚É‚È‚Á‚½‚ç’µ‚Ë•Ô‚·</param>
     WallCollider(Actor* owner,VECTOR setFirstPos,VECTOR setEndPos);
     /// <summary>
-    /// “Á‚É‚È‚µ
-    /// </summary>
-    ~WallCollider() {};
-    /// <summary>
     /// “–‚½‚Á‚½‚©’²‚×‚é
     /// </summary>
     /// <param name="hitCheckInfo">’²‚×‚½‚¢“–‚½‚è”»’è</param>

@@ -40,7 +40,7 @@ void ScoreNum::Draw(int num)const
         data.size = numData.size * secondBorderFontSize;
     }
     //ÉXÉRÉAÇÃï`âÊ
-    SetDrawBright(numColor.x,numColor.y,numColor.z);
+    SetDrawBright(static_cast<int>(numColor.x), static_cast<int>(numColor.y), static_cast<int>(numColor.z));
     NumUI::Draw(data, num);
     SetDrawBright(MAX1BYTEVALUE, MAX1BYTEVALUE, MAX1BYTEVALUE);
 }

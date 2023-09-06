@@ -30,5 +30,5 @@ protected:
     /// <param name="dir"></param>
     void ModelSetMatrix(VECTOR dir) const;
     //‘I‘ğ‚³‚ê‚Ä‚¢‚é‚È‚ç‚¿‚å‚Á‚ÆˆÊ’u‚ª‚‚­‚È‚é
-    const int selectPosY = 75;
+    const float selectPosY = 75.0f;
 };

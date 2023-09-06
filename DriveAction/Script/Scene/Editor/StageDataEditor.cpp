@@ -236,7 +236,7 @@ void StageDataEditor::SelectEditedObject()
         if (selectEditedNum != prevNum)
         {
             //過去に編集したデータを所得
-            auto editedData = placementDataVec[selectEditedNum];
+            PlacementData editedData = placementDataVec[selectEditedNum];
             editObject->SetArrangementData(editedData);
             getCollectNum = editedData.collectNum;
         }

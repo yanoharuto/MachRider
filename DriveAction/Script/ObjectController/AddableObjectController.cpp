@@ -1,5 +1,9 @@
 #include "AddableObjectController.h"
-
+#include "Utility.h"
+/// <summary>
+/// 初期化
+/// </summary>
+/// <param name="kind">初期化したいオブジェクトの種類</param>
 AddableObjectController::AddableObjectController(ObjectInit::InitObjKind kind)
     :ActorController(kind)
 {
@@ -12,7 +16,8 @@ void AddableObjectController::OnAddObject(std::vector<PlacementData> placeDataVe
 {
     if (!placeDataVec.empty())
     {
-        for (int i = 0; i < placeDataVec.size(); i++)
+        //配置位置リストのサイズだけ追加
+        for (int i = 0; i < SAFE_GET_SIZE(placeDataVec); i++)
         {
             //同じ種類なら追加
             if (placeDataVec[i].objKind == controllObjKind)

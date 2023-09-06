@@ -24,7 +24,7 @@ UIManager::~UIManager()
     {
         //分割読み込み画像を消去
         auto graphs = ((*itr).second).dataHandle;
-        for (int i = 0; i < graphs.size(); i++)
+        for (int i = 0; i < SAFE_GET_SIZE(graphs); i++)
         {
             DeleteGraph(graphs[i]);
         }
@@ -58,14 +58,14 @@ UIData UIManager::CreateUIData(int kindNum)
         CSVFileLoader* initDataFile = new CSVFileLoader(uiPathVec[kindNum]);
         std::vector<std::string> dataVec = initDataFile->GetLoadStringData();
         //位置とか幅とか分割数を読み取る
-        data.x = atoi(dataVec[drawX].c_str());
-        data.y = atoi(dataVec[drawY].c_str());
+        data.x = SAFE_STR_TO_I(dataVec[drawX]);
+        data.y = SAFE_STR_TO_I(dataVec[drawY]);
         //横分割数
-        int divXNum = atoi(dataVec[xNum].c_str());
+        int divXNum = SAFE_STR_TO_I(dataVec[xNum]);
         //縦分割数
-        int divYNum = atoi(dataVec[yNum].c_str());
-        data.width = atoi(dataVec[width].c_str()) / divXNum;
-        data.height = atoi(dataVec[height].c_str()) / divYNum;
+        int divYNum = SAFE_STR_TO_I(dataVec[yNum]);
+        data.width = SAFE_STR_TO_I(dataVec[width]) / divXNum;
+        data.height = SAFE_STR_TO_I(dataVec[height]) / divYNum;
         //画像を分割読み込み
         int graphArray[1000];
         LoadDivGraph(dataVec[graphPass].c_str(), divXNum * divYNum, divXNum, divYNum, data.width, data.height, graphArray);
@@ -74,8 +74,8 @@ UIData UIManager::CreateUIData(int kindNum)
             data.dataHandle.push_back(graphArray[i]);
         }
         //大きさとコマ送り速度
-        data.size = static_cast<float>(atof(dataVec[UISize].c_str()));
-        data.frameSpeed = static_cast<float>(atof(dataVec[frameSpeed].c_str()));
+        data.size = SAFE_STR_TO_F(dataVec[UISize]);
+        data.frameSpeed = SAFE_STR_TO_F(dataVec[frameSpeed]);
         //再ダウンロードする時用に保存する
         loadUIDataMap.insert(std::make_pair(kindNum, data));
         //初期化データを消す

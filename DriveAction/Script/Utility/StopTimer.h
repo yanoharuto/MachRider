@@ -3,7 +3,7 @@
 /// <summary>
 /// 止めることが出来るタイマー
 /// </summary>
-class StopTimer : public Timer
+class StopTimer final : public Timer
 {
 public:
     /// <summary>

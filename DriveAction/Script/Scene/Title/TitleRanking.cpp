@@ -57,7 +57,7 @@ void TitleRanking::Draw() const
 /// <param name="color">êîéöÇÃêF</param>
 void TitleRanking::Draw(NumUI* ui, int num, VECTOR color) const
 {
-    SetDrawBright(color.x, color.y, color.z);
+    SetDrawBright(static_cast<int>(color.x), static_cast<int>(color.y), static_cast<int>(color.z));
     ui->Draw(num);
     SetDrawBright(MAX1BYTEVALUE, MAX1BYTEVALUE, MAX1BYTEVALUE);
 }

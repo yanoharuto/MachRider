@@ -33,6 +33,6 @@ void TimerUI::Draw()
     //ƒ^ƒCƒ}[‚Ì˜g‚ð•`‰æ@’†‰›‚É‚·‚é‚½‚ß‚É
     DrawRotaGraph( frameX , frameUI.y, frameUI.size, 0, frameUI.dataHandle[0], true);
     //Žc‚èŽžŠÔ‚Ì•`‰æ
-    float limit = timer.lock()->GetRemainingTime();
+    float limit = static_cast<float>(timer.lock()->GetRemainingTime());
     numUI->Draw(limit);
 }

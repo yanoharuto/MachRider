@@ -12,10 +12,6 @@ public:
     /// <param name="uiKind"></param>
     FlashUI(UIKind uiKind);
     /// <summary>
-    /// 特になし
-    /// </summary>
-    ~FlashUI();
-    /// <summary>
     /// アルファ値の更新
     /// </summary>
     void Update();

@@ -11,14 +11,9 @@ public:
     /// </summary>
     TitleHiScore();
     /// <summary>
-    /// 特になし
-    /// </summary>
-    ~TitleHiScore() {};
-    /// <summary>
     /// 現在選ばれているステージのハイスコア表示
     /// </summary>
     void Draw()const;
-
 private:
     //各ステージのハイスコア
     UIData hiScoreUI;

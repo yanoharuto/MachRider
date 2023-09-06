@@ -22,8 +22,12 @@
  /// <returns>é∏îsÇ∑ÇÈÇ∆false</returns>
 bool UIDrawer::DrawRotaUI(UIData data, int gHIndex, float angle, bool trans)
 {
-    gHIndex = gHIndex % data.dataHandle.size();
-   int success = DrawRotaGraph(data.x * widthRaito, data.y * heightRaito, data.size * screenSizeRaito, angle, data.dataHandle[gHIndex], trans);
+   gHIndex = gHIndex % data.dataHandle.size();
+   //âÊñ ÉTÉCÉYÇ…çáÇÌÇπÇΩï`âÊ
+   int x = static_cast<int>(data.x * widthRaito);
+   int y = static_cast<int>(data.y * heightRaito);
+   double size = static_cast<double>(data.size * screenSizeRaito);
+   int success = DrawRotaGraph(x, y, size, angle, data.dataHandle[gHIndex], trans);
    return success != -1;
 }
 /// <summary>
@@ -43,9 +47,9 @@ UIDrawer::UIDrawer()
     //âÊñ ÉTÉCÉY
     GetScreenState(&screenWidth, &screenHeight, &color);
     //â°ïùî‰ó¶
-    widthRaito = screenWidth / SCREEN_WIDTH;
+    widthRaito = static_cast<float>(screenWidth / SCREEN_WIDTH);
     //ècïùî‰ó¶
-    heightRaito = screenHeight / SCREEN_HEIGHT;
+    heightRaito = static_cast<float>(screenHeight / SCREEN_HEIGHT);
     //HDÇÃëÂÇ´Ç≥Ç∆î‰ärÇµÇΩëÂÇ´Ç≥
-    screenSizeRaito = (screenWidth + screenHeight) / (SCREEN_WIDTH + SCREEN_HEIGHT);
+    screenSizeRaito = static_cast<float>((screenWidth + screenHeight) / (SCREEN_WIDTH + SCREEN_HEIGHT));
 }

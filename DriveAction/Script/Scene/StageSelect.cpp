@@ -51,7 +51,7 @@ void StageSelect::Draw() const
 {
     //stageNameUIのCopy
     UIData stageNameData = stageNameUI;
-    for (int i = 0; i < stageNameData.dataHandle.size(); i++)
+    for (int i = 0; i < SAFE_GET_SIZE(stageNameData.dataHandle); i++)
     {
         if (i == selectStageNum)//現在選んでいるステージは大きくちょっとずらして表示
         {

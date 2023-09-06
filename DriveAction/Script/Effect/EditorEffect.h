@@ -21,7 +21,7 @@ public:
     void Update(StageDataEditor* const editor);
 private:
     //配置中のオブジェクトの向きが分かるエフェクトのサイズ
-    const int dirEffectSize = 5;
+    const float dirEffectSize = 5.0f;
     //編集物の位置の分かりやすくなるエフェクト
     int posEffect = -1;
     //向きが分かりやすくなるエフェクト

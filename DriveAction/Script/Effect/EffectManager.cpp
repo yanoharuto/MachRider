@@ -39,11 +39,10 @@ void EffectManager::LoadEffect(EffectKind kind)
         CSVFileLoader* initDataFile = new CSVFileLoader(initDataVec[kind]);
 
         std::vector<std::string> dataVec = initDataFile->GetLoadStringData();
-
+        //エフェクトのアセットのパス
         const char* effectPass = dataVec[EffectInitData::effectPass].c_str();
-
-        float size = atof(dataVec[EffectInitData::effectSize].c_str());
-        size *= UIDrawer::GetScreenRaito();
+        //エフェクトの大きさ
+        float size = SAFE_STR_TO_F(dataVec[EffectInitData::effectSize]);
         //エフェクトの読み込みと大きさをセット
         int effectHandle = LoadEffekseerEffect(effectPass, size);
         effectMap.insert(std::make_pair(kind, effectHandle));

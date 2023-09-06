@@ -38,7 +38,9 @@ GameManager::GameManager()
 	camera->Update();
 	playerObserver = playerP->CreatePlayerObserver();
 }
-
+/// <summary>
+/// 各クラスを開放
+/// </summary>
 GameManager::~GameManager()
 {
 	SAFE_DELETE(conflictManager);
