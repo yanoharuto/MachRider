@@ -11,20 +11,20 @@
 #include "UIDrawer.h"
 #include "PlayManual.h"
 #include "ReusableTimer.h"
-#include "GameManager.h"
+#include "CollectItemObserver.h"
 /// <summary>
 /// 遊んでいるときのUI　制限時間とか
 /// </summary>
 /// <param name="setTimer"></param>
 /// <param name="setFirstCoinNum"></param>
-GamePlayUI::GamePlayUI(std::weak_ptr<GameManager> manager, std::weak_ptr<Timer> timer)
+GamePlayUI::GamePlayUI(std::weak_ptr<PlayerObserver> player, std::weak_ptr<Timer> timer, std::shared_ptr<CollectItemObserver> collectItemObserver)
 {
     //残り時間
     gameTimerUI = new TimerUI(timer);
     //ミニマップ
-    minimapUI = new MiniMap(manager.lock()->GetPlayerObserver());
+    minimapUI = new MiniMap(player);
     //残りの収集アイテムの数
-    firstCoinNum = CollectController::GetTotalCollectNum();
+    firstCoinNum = collectItemObserver->GetTotalItemNum();
     firstCollectNumUI = new NumUI(allCollectItemNum);
     //現在取った数
     getNumUI = new NumUI(getCollectItemNum);
@@ -34,9 +34,9 @@ GamePlayUI::GamePlayUI(std::weak_ptr<GameManager> manager, std::weak_ptr<Timer> 
     //残り収集アイテムについてのコメントUI
     remainingFrazeUI = UIManager::CreateUIData(remainingCollectItemPhrase);
     //プレイヤーのアイテム所得情報を教えてもらう
-    playerObserver = manager.lock()->GetPlayerObserver();
+    playerObserver = player;
     //収集アイテムの方向を出す
-    cSign = new CollectCompass(playerObserver);
+    collectCompass = new CollectCompass(player,collectItemObserver);
     //ゲーム終了カウントダウン
     countDown = new EndCountDown(timer);
     //残り時間
@@ -56,7 +56,7 @@ GamePlayUI::~GamePlayUI()
     SAFE_DELETE(firstCollectNumUI);
     SAFE_DELETE(remainingNumUI);
     SAFE_DELETE(countDown);
-    SAFE_DELETE(cSign);
+    SAFE_DELETE(collectCompass);
     SAFE_DELETE(remainingNumDrawTimer);
     SAFE_DELETE(playManual);
     playerObserver.reset();
@@ -85,7 +85,7 @@ void GamePlayUI::Update()
     //ミニマップ
     minimapUI->Update();
     //収集アイテムの位置を教えてくれる
-    cSign->Update();
+    collectCompass->Update();
     //操作方法更新
     playManual->Update();
 }

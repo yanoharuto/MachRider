@@ -25,7 +25,7 @@ public:
     /// 車の位置とかを渡す
     /// </summary>
     /// <returns></returns>
-    std::weak_ptr<PlayerObserver> CreatePlayerObserver() const;
+    std::shared_ptr<PlayerObserver> CreatePlayerObserver() const;
     /// <summary>
     /// 音を聞くために場所を更新
     /// </summary>
@@ -47,17 +47,4 @@ private:
     const float setDamageCoolTime = 0.1f;
     //プレイヤーの情報を共有するためのポインタ
     std::shared_ptr<PlayerObserver> playerObserver;
-};
-
-/// <summary>
-/// プレイヤーのUI周りに必要な情報
-/// </summary>
-enum PlayerRelatedInfo
-{
-    //当たった回数
-    damageObjHitCount = 0,
-    //コインを回収した回数
-    hitCoinCount = 1,
-    //速度
-    accelPower = 3,
 };

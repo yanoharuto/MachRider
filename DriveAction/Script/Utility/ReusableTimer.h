@@ -12,7 +12,7 @@ public:
     /// <param name="setLimitTime">計測する時間</param>
     ReusableTimer(double setLimitTime);
     ///<summary>
-    /// もう一度計測開始
+    /// もう一度最初に設定した計測時間分計測開始
     ///</summary>
     void Reuse();
 };

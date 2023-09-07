@@ -8,11 +8,10 @@ class Timer;
 class NumUI;
 class PlayerObserver;
 class EndCountDown;
-class PlayerCarController;
 class EnemyGenerator;
 class CollectCompass;
 class PlayManual;
-class GameManager;
+class CollectItemObserver;
 class ReusableTimer;
 /// <summary>
 /// 遊んでいるときのUI
@@ -20,7 +19,7 @@ class ReusableTimer;
 class GamePlayUI final
 {
 public:
-    GamePlayUI(std::weak_ptr<GameManager> manager, std::weak_ptr<Timer> timer);
+    GamePlayUI(std::weak_ptr<PlayerObserver> player, std::weak_ptr<Timer> timer, std::shared_ptr<CollectItemObserver> collectItemObserver);
     /// <summary>
     /// 各UIを解放
     /// </summary>
@@ -65,7 +64,7 @@ private:
     //プレイヤーの位置とか収集アイテムの所得数などを教えてくれる奴
     std::weak_ptr<PlayerObserver> playerObserver;
     //収集アイテムの方向とかを教えてくれる
-    CollectCompass* cSign;
+    CollectCompass* collectCompass;
     //プレイヤーの操作方法
     PlayManual* playManual;
 };

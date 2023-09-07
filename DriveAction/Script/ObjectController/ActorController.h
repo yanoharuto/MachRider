@@ -32,6 +32,10 @@ public:
     /// </summary>
     virtual void Draw()const;
 protected:
+    /// <summary>
+    /// •`‰æ–ð‚ÆActorList‚Ì‰ð•ú
+    /// </summary>
+    void DeleteActorListAndDrawModel();
     //‚±‚ÌƒŠƒXƒg‚ð‰ñ‚·
     std::list<Actor*> actorList;
     //•`‰æ’S“–

@@ -2,10 +2,11 @@
 #include "BomberFlyShip.h"
 #include "DrawModel.h"
 /// <summary>
-/// 爆撃機の管理の初期化
+/// 爆撃機の初期化と爆弾発射準備
 /// </summary>
-BomberFlyShipController::BomberFlyShipController()
-    :FlyShipController(bomberShip)
+/// <param name="generator">爆弾を発射できるクラス</param>
+BomberFlyShipController::BomberFlyShipController(std::shared_ptr<DamageObjectGenerator> generator)
+    :FlyShipController(bomberShip,generator)
 {
     drawModel = new DrawModel(bomberShip);
 }
@@ -15,5 +16,5 @@ BomberFlyShipController::BomberFlyShipController()
 /// <param name="editData">配置情報</param>
 void BomberFlyShipController::AddObject(PlacementData editData)
 {
-    actorList.push_back(new BomberFlyShip(editData, param));
+    actorList.push_back(new BomberFlyShip(editData,param,damageObjectGenerator));
 }

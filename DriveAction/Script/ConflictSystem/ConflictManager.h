@@ -45,17 +45,18 @@ public:
     /// </summary>
     void DrawCollisionSphere();
     /// <summary>
+    /// 何か衝突している物がないか調べる
+    /// </summary>
+    void Update();
+private:
+
+    /// <summary>
     /// 引数のオブジェクト同士がぶつかっているか調べその結果を返す
     /// </summary>
     /// <param name="conflictProcessor">衝突処理実行役</param>
     /// <param name="hitChecker">当たり判定</param>
     /// <returns>衝突結果</returns>
     CollisionResultInfo GetConflictResultInfo(ConflictProcessor* const conflictProcessor, SphereHitChecker* const hitChecker);
-    /// <summary>
-    /// 何か衝突している物がないか調べる
-    /// </summary>
-    void Update();
-private:
     //当たった結果を反映させるクラスのマップ
     static std::unordered_map<ConflictProcessor*, SphereHitChecker*> processorKeyMap;
     //conflictProcessor持ちの当たり判定か調べるためのマップ

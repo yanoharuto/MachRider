@@ -3,6 +3,9 @@
 #include <unordered_map>
 namespace EffectInit
 {
+    /// <summary>
+    /// エフェクトの種類
+    /// </summary>
     enum EffectKind
     {
         //車がぶつかった時のエフェクト
@@ -16,7 +19,7 @@ namespace EffectInit
         //回転半径が小さいレーザー
         littleRadiusLaserEffect = 14,
         //回転半径が大きいレーザー
-        bigRadiusLaserEffect = 17,
+        laser = 17,
         //レーザーの跡
         laserTrack = 20,
         //コインをゲットしたときのエフェクト
@@ -38,10 +41,13 @@ namespace EffectInit
         //高速移動中のバーナー
         turboBurner = 47
     };
+    /// <summary>
+    /// エフェクトの初期化に必要なもの
+    /// </summary>
     enum EffectInitData
     {
-        effectPass = 2,
-        effectSize = 5
+        effectPass = 2,//エフェクトのパス
+        effectSize = 5//エフェクトの大きさ
     };
 }
 using namespace EffectInit;
@@ -55,23 +61,26 @@ public:
     /// エフェクトを読み込んだり渡したりする
     /// </summary>
     EffectManager();
+    /// <summary>
+    /// エフェクトを解放
+    /// </summary>
     ~EffectManager();
     /// <summary>
-    /// 読み込むエフェクト
+    /// エフェクトを読み込む
     /// </summary>
-    /// <param name="kind"></param>
+    /// <param name="kind">エフェクトの種類</param>
     static void LoadEffect(EffectKind kind);
     /// <summary>
-    /// 3Ⅾエフェクトを渡す
+    /// ロード済みの3Ⅾエフェクトを渡す
     /// </summary>
-    /// <param name="kind"></param>
-    /// <returns></returns>
+    /// <param name="kind">エフェクトの種類</param>
+    /// <returns>3Ⅾエフェクトのハンドル</returns>
     static int GetPlayEffect3D(EffectKind kind);
     /// <summary>
-    /// 2Dエフェクトを渡す
+    /// ロード済みの2Dエフェクトを渡す
     /// </summary>
     /// <param name="kind"></param>
-    /// <returns></returns>
+    /// <returns>2Ⅾエフェクトのハンドル</returns>
     static int GetPlayEffect2D(EffectKind kind);
 private:
     //エフェクトのハンドルが入るマップ

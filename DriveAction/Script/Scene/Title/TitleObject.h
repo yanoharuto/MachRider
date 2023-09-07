@@ -4,25 +4,26 @@
 #include "DxLib.h"
 class Timer;
 class ActorControllerManager;
-class DemoCarController;
+class TitlteCarController;
 class TitleCamera;
 class ObjectObserver;
 class ShadowMap;
 class ReusableTimer;
+class CollectItemObserver;
 /// <summary>
 /// タイトルの後ろで動かす
 /// </summary>
-class TitleDemo
+class TitleObject
 {
 public:
     /// <summary>
     /// タイトルでゲームの雰囲気を伝える
     /// </summary>
-    TitleDemo();
+    TitleObject();
     /// <summary>
     /// 初期化周期タイマーや走っている車などの解放
     /// </summary>
-    ~TitleDemo();
+    ~TitleObject();
     /// <summary>
     /// 車やステージ選択の更新
     /// </summary>
@@ -35,7 +36,9 @@ private:
     //纏めて動かすマネージャー
     ActorControllerManager* manager;
     //とりあえず走っている車
-    DemoCarController* demoCarController;
+    std::shared_ptr<TitlteCarController> titleCarController;
+    //収集アイテムの監視クラス
+    std::shared_ptr<CollectItemObserver> collectItemObserver;
     //カメラ
     TitleCamera* camera;
     //このタイマーが切れると場面変換

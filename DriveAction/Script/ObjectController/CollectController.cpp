@@ -10,23 +10,10 @@
 #include "InitActor.h"
 #include "DrawModel.h"
 #include "Object.h"
-
-//収集アイテムの状態
-Object::ObjectState CollectController::objState = Object::sleep;
-//収集アイテムが全部Deleteされたか
-bool CollectController::isDestroyAll = false;
-//ゲーム終了したか
-bool CollectController::isGameEnd = false;
-/// 現在動いている収集アイテムの位置
-VECTOR CollectController:: nowActiveCollectItemPos;
-//残っている収集アイテムの数
-int CollectController::remainingCollectNum = 0;
-//収集アイテムの総数
-int CollectController::totalCollectNum = 0;
 /// <summary>
 /// 収集アイテムを予めNewして最大枚数を保存
 /// </summary>
-CollectController::CollectController()
+CollectItemController::CollectItemController()
     :ActorController(collect)
 {
     //配置情報所得
@@ -45,18 +32,19 @@ CollectController::CollectController()
     totalCollectNum = actorList.size();
     //残りの数
     remainingCollectNum = totalCollectNum;
-    //ゲーム終了フラグ
-    isGameEnd = false;
-    //今動いている
-    objState = Object::active;
-    isDestroyAll = false;
+    //今出てきている収集アイテムの数
+    collectCount = 0;
     //描画役
     drawModel = new DrawModel(collect);
+    //今のアイテムの位置
+    nowActiveCollectItemPos = {};
+    //回収されているかどうかのフラグ
+    isCollectNowItem = false;
 }
 /// <summary>
 /// actorListの先頭の収集アイテムだけ更新
 /// </summary>
-void CollectController::Update()
+void CollectItemController::Update()
 {
     //何もない状態なら終了
     if (actorList.empty())return;
@@ -65,37 +53,38 @@ void CollectController::Update()
     (*objIte)->Update();
     //今現在動いているアイテムの場所を更新
     nowActiveCollectItemPos = (*objIte)->GetPos();
-
     //取っているけどエフェクトを出している途中なら現存数をへらす
-    objState = (*objIte)->GetObjectState();
+    Object::ObjectState objState = (*objIte)->GetObjectState();
     //プレイヤーにぶつかって取られたならアクティブ以外の状態になっている
-    if (objState != Object::ObjectState::active)
+    if (objState == Object::dead)
     {
         //残り数を全体から1減らす
         remainingCollectNum = actorList.size() - 1;
         //壊していいようにする
         Actor* brokenObj = (*objIte);
-        //
-        switch (objState)
-        {
-        case Object::activeEnd:
-            //最後の一つならゲーム終了条件達成
-            isGameEnd = actorList.size() == 1;
-            break;
-        case Object::dead:
-            //消していいやつだったら消す
-            actorList.erase(objIte);
-            SAFE_DELETE(brokenObj);
-            //全部消されたならTrue
-            isDestroyAll = actorList.empty();
-            break;
-        }
+        //消していいやつだったら消す
+        actorList.erase(objIte);
+        SAFE_DELETE(brokenObj);
+        //次のアイテムは何番目か
+        collectCount = totalCollectNum - remainingCollectNum;
+        //収集アイテムは今取られている
+        isCollectNowItem = true;
+    }
+    //取られてエフェクトを出している
+    else if (objState == Object::activeEnd)
+    {
+        isCollectNowItem = true;
+    }
+    else
+    {
+        //収集アイテムは今取られていない
+        isCollectNowItem = false;
     }
 }
 /// <summary>
 /// 収集アイテムの描画
 /// </summary>
-void CollectController::Draw() const
+void CollectItemController::Draw() const
 {
     if (!actorList.empty())
     {
@@ -105,7 +94,7 @@ void CollectController::Draw() const
 /// <summary>
 /// ゲームが始まる前の処理
 /// </summary>
-void CollectController::PrepareGame()
+void CollectItemController::PrepareGame()
 {
     //イテレーター
     auto objIte = actorList.begin();
@@ -114,51 +103,43 @@ void CollectController::PrepareGame()
     nowActiveCollectItemPos = (*objIte)->GetPos();
 }
 /// <summary>
-/// 引数の場所と収集アイテムの位置の距離ベクトルを出す
+/// 引数と収集アイテムの距離
 /// </summary>
-/// <param name="pos"></param>
-/// <returns></returns>
-VECTOR CollectController::GetCollectItemBetween(VECTOR pos)
+/// <param name="pos">収集アイテムとの距離を調べたい位置</param>
+/// <returns>引数と収集アイテムの距離ベクトル</returns>
+VECTOR CollectItemController::GetItemBetween(VECTOR pos)const
 {
     return VSub(nowActiveCollectItemPos, pos);
 }
 /// <summary>
-/// 収集アイテムが動いているか
+/// 最初にステージに配置される枚数
 /// </summary>
-/// <returns></returns>
-bool CollectController::IsActiveCollect()
-{
-    return objState;
-}
-/// <summary>
-/// プレイヤーが集めなければいけないアイテムの数
-/// </summary>
-/// <returns></returns>
-int CollectController::GetTotalCollectNum()
+/// <returns>ステージに配置された最大数</returns>
+int CollectItemController::GetTotalNum()const
 {
     return totalCollectNum;
 }
 /// <summary>
-/// 残っているアイテムの数
+/// アイテムの残り枚数
 /// </summary>
-/// <returns></returns>
-int CollectController::GetRemainingCollectNum()
+/// <returns>プレイヤーに取られると減る</returns>
+int CollectItemController::GetRemainingNum()const
 {
     return remainingCollectNum;
 }
 /// <summary>
-/// 全てのアイテムを回収し終えたかどうか
+/// 今の収集アイテムが何番目のアイテムか
 /// </summary>
-/// <returns></returns>
-bool CollectController::IsEndGame()
+/// <returns>取られたら増える</returns>
+int CollectItemController::GetCollectCount()const
 {
-    return isGameEnd;
+    return collectCount;
 }
 /// <summary>
-/// 全てのアイテムが破壊されたか
+/// さっきまであったアイテムが回収されたか
 /// </summary>
-/// <returns></returns>
-bool CollectController::IsDestroyAllItem()
+/// <returns>回収されたらTrue</returns>
+bool CollectItemController::IsCollectNowItem()const
 {
-    return isDestroyAll;
+    return isCollectNowItem;
 }

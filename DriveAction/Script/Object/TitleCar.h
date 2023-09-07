@@ -3,8 +3,7 @@
 /// <summary>
 /// タイトル画面で走らせる車
 /// </summary>
-class DemoCar :
-    public Car
+class TitleCar : public Car
 {
 public:
     /// <summary>
@@ -12,17 +11,17 @@ public:
     /// </summary>
     /// <param name="setPos">初期位置</param>
     /// <param name="setDir">初期向き</param>
-    DemoCar(VECTOR setPos,VECTOR setDir);
+    TitleCar(VECTOR setPos,VECTOR setDir);
     /// <summary>
-    /// タイヤとエフェクト削除
+    /// タイヤとエフェクト解放
     /// </summary>
-    ~DemoCar()override;
+    ~TitleCar()override;
     /// <summary>
     /// 初期位置に戻す
     /// </summary>
     void InitPosition();
     /// <summary>
-    /// 更新
+    /// 一定方向に走る
     /// </summary>
     void Update()override;
 private:

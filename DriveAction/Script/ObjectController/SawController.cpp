@@ -19,7 +19,7 @@ void SawController::AddObject(PlacementData editData)
     actorList.push_back(new Saw(editData));
 }
 /// <summary>
-/// XVB@”j‰ó‚³‚ê‚½‚ç”jŠü
+/// ‰ñ“]‚³‚¹‚é@”j‰ó‚³‚ê‚½‚ç”jŠü
 /// </summary>
 void SawController::Update()
 {

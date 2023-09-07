@@ -12,7 +12,7 @@ std::unordered_map<int, UIData> UIManager::loadUIDataMap;
 UIManager::UIManager()
 {
     CSVFileLoader* initDataFile = new CSVFileLoader(initUIDataPassFile);
-    uiPathVec = initDataFile->GetLoadStringData();
+    uiPathVec = initDataFile->GeFileStringData();
     SAFE_DELETE(initDataFile);
 }
 /// <summary>
@@ -56,7 +56,7 @@ UIData UIManager::CreateUIData(int kindNum)
     {
         //データ読み取り
         CSVFileLoader* initDataFile = new CSVFileLoader(uiPathVec[kindNum]);
-        std::vector<std::string> dataVec = initDataFile->GetLoadStringData();
+        std::vector<std::string> dataVec = initDataFile->GeFileStringData();
         //位置とか幅とか分割数を読み取る
         data.x = SAFE_STR_TO_I(dataVec[drawX]);
         data.y = SAFE_STR_TO_I(dataVec[drawY]);

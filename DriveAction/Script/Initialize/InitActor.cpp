@@ -1,22 +1,56 @@
+#include <iostream>
+#include <fstream>
+#include <sstream>
 #include "InitActor.h"
 #include "CSVFileLoader.h"
 #include "Utility.h"
 #include "InitObjKind.h"
 #include "AssetManager.h"
+#include "document.h"
+#include "istreamwrapper.h"
+
 //initActorFileNameの先のファイルから所得したデータをまとめたVector
 std::vector<std::string> InitActor::objectInitDataPassVec;
 //初期化するパスを纏めているファイルの名前
 std::string InitActor::initActorFileName = "data/model/InitObjPass.csv";
 //描画モデルの管理担当
 AssetManager* InitActor::assetManager;
+
+using namespace rapidjson;
 /// <summary>
 /// 全てのactorの初期化をするためのパスが入ったファイルを読み込む
 /// </summary>
 InitActor::InitActor()
 {
-    CSVFileLoader* initDataLoader = new CSVFileLoader(initActorFileName);
-    objectInitDataPassVec = initDataLoader->GetLoadStringData();
-    SAFE_DELETE(initDataLoader);
+    if (initActorFileName.find("csv") != -1)//csvと書いてあるなら
+    {
+        CSVFileLoader* initDataLoader = new CSVFileLoader(initActorFileName);
+        objectInitDataPassVec = initDataLoader->GeFileStringData();
+        SAFE_DELETE(initDataLoader);
+    }
+    else//json形式
+    {
+        //ファイルを開く
+        std::ifstream ifs(initActorFileName.c_str());
+        //ファイルを開けたなら
+        if(ifs.good())
+        {
+            rapidjson::Document doc;
+            rapidjson::IStreamWrapper isw(ifs);
+            doc.ParseStream(isw);
+            
+            objectInitDataPassVec.push_back(doc["player"].GetString());
+            objectInitDataPassVec.push_back(doc["moveSaw"].GetString());
+            objectInitDataPassVec.push_back(doc["bomber"].GetString());
+            objectInitDataPassVec.push_back(doc["upDownShip"].GetString());
+            objectInitDataPassVec.push_back(doc["circleLaserShip"].GetString());
+            objectInitDataPassVec.push_back(doc["laser"].GetString());
+            objectInitDataPassVec.push_back(doc["collect"].GetString());
+            objectInitDataPassVec.push_back(doc["floor"].GetString());
+            objectInitDataPassVec.push_back(doc["skyDome"].GetString());
+            objectInitDataPassVec.push_back(doc["stage"].GetString());
+        }
+    }
     assetManager = new AssetManager();
 }
 /// <summary>
@@ -90,10 +124,36 @@ InitDataPass InitActor::GetActorInitPassData(InitObjKind obj)
 /// <returns>初期化したいパラメータの文字列</returns>
 std::vector<std::string> InitActor::GetActorParametorStrVec(InitObjKind objKind)
 {
+    std::vector<std::string> initData;
+    //初期化したいオブジェクトの種類をint型にする
     int num = static_cast<int>(objKind);
-    //データ読み取り
-    CSVFileLoader* initDataLoader = new CSVFileLoader(objectInitDataPassVec[num]);
-    auto initData = initDataLoader->GetLoadStringData();
-    SAFE_DELETE(initDataLoader);
+    //CSVファイルではなかったら
+    if(initActorFileName.find("csv")!=-1)
+    {
+        //データ読み取り
+        CSVFileLoader* initDataLoader = new CSVFileLoader(objectInitDataPassVec[num]);
+        initData = initDataLoader->GeFileStringData();
+        SAFE_DELETE(initDataLoader);
+    }
+    else
+    {
+        num = objKind / 3 - player;
+        std::string path = objectInitDataPassVec[num];
+        //ファイルを開く
+        std::ifstream ifs(path.c_str());
+        //ファイルを開けたなら
+        if (ifs.good())
+        {
+            rapidjson::Document doc;
+            rapidjson::IStreamWrapper isw(ifs);
+            doc.ParseStream(isw);
+
+            initData.push_back(doc["modelSize"].GetString());
+            initData.push_back(doc["firstPosY"].GetString());
+            initData.push_back(doc["collRadius"].GetString());
+            initData.push_back(doc["bouncePower"].GetString());
+            initData.push_back(doc["addDataPass"].GetString());
+        }
+    }
     return initData;
 }

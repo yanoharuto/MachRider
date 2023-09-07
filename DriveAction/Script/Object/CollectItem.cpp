@@ -28,7 +28,7 @@ Coin::Coin(PlacementData arrangementData)
     position.z = arrangementData.posZ;
     firstY = position.y;
     //エフェクトと音
-    SoundPlayer::LoadSound(coinGet);
+    SoundPlayer::LoadAndInitSound(coinGet);
     EffectManager::LoadEffect(getCollect);
     EffectManager::LoadEffect(collectAura);
     tag = ObjectTag::collect;

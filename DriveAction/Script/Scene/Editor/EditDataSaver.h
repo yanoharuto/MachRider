@@ -16,8 +16,6 @@ public:
     /// 編集したものをCSVファイルに保存する
     /// </summary>
     EditDataSaver() {};
-
-    ~EditDataSaver() {};
     /// <summary>
     /// 編集した情報を保存する
     /// </summary>

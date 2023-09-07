@@ -3,12 +3,13 @@
 #include <iostream>
 #include <string>
 #include "UIManager.h"
+
 class NumUI;
 class Timer;
 class CountDown;
 class PlayManual;
 class ReusableTimer;
-class GameManager;
+class CollectItemObserver;
 /// <summary>
 /// レース前の処理やってくれる
 /// </summary>
@@ -16,9 +17,10 @@ class GamePrevProcess
 {
 public:
     /// <summary>
-    /// 音やUIの初期化
+    /// 操作説明やカウントダウン。音などを準備
     /// </summary>
-    GamePrevProcess();
+    /// <param name="collectObserver">何個回収するか教えてもらう</param>
+    GamePrevProcess(std::weak_ptr<CollectItemObserver> collectObserver);
     /// <summary>
     /// カウントダウンなどを解放
     /// </summary>
@@ -26,7 +28,7 @@ public:
     /// <summary>
     /// カウントダウンの更新
     /// </summary>
-    void Update(std::shared_ptr<GameManager> gameObj);
+    void Update();
     /// <summary>
     /// 遊び方とカウントダウンの描画
     /// </summary>
@@ -57,6 +59,8 @@ private:
     int iconGHIndex = 0;
     //ゲームの目標説明をしている間は周りを白くする
     int fadeValue = 0;
+    //収集アイテムの数
+    int allCollectItemNum = 0;
     //スタートのカウントダウンは5秒
     const float startTimerLimit = 5;
 };

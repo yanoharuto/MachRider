@@ -58,15 +58,18 @@ EditorSceneFlow::~EditorSceneFlow()
 /// </summary>
 void EditorSceneFlow::Update()
 {
-    //カメラの更新
-    camera->Update();
-    //Skeyで出てくるタイミングを変更
+    //skeyで出てくるタイミングを変更
     if (UserInput::GetInputState(SKey) == Hold)
     {
         nowEditor->ChangeEditedCollectNum();
     }
-    //sとaKeyを押してない間は編集
-    else if (UserInput::GetInputState(AKey) != Hold)
+    //aKey押してたら
+    else if (UserInput::GetInputState(AKey) == Hold)
+    {
+        //カメラの更新
+        camera->Update();
+    }
+    else//sとaKeyを押してない間は編集
     {
         //今なにも編集していないなら
         if (nowEditor->IsEndEditing())
@@ -77,7 +80,6 @@ void EditorSceneFlow::Update()
         //編集
         nowEditor->Update();
     }
-
     //エフェクト更新
     editorEffect->Update(nowEditor);
     Effekseer_Sync3DSetting();

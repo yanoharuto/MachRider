@@ -9,20 +9,26 @@
 #include "UIDrawer.h"
 #include "PlayManual.h"
 #include "ReusableTimer.h"
-#include "GameManager.h"
+#include "CollectItemObserver.h"
 /// <summary>
-/// 音やUIの初期化
+/// 操作説明やカウントダウン。音などを準備
 /// </summary>
-GamePrevProcess::GamePrevProcess()
+/// <param name="collectObserver">何個回収するか教えてもらう</param>
+GamePrevProcess::GamePrevProcess(std::weak_ptr<CollectItemObserver> collectObserver)
 {
-    SoundPlayer::LoadSound(fanfare);
+    //音の確保
+    SoundPlayer::LoadAndInitSound(fanfare);
     SoundPlayer::Play2DSE(fanfare);
+    //UIの準備
     gamePuroseData = UIManager::CreateUIData(gamePurose);
     collectIconData = UIManager::CreateUIData(collectIcon);
-    playManual = new PlayManual();
     collectItemNum = new NumUI(collectTargetNumberUI);
+    playManual = new PlayManual();
+    //フェードインフェードアウト用のタイマー
     frameByFrameTimer = new ReusableTimer(gamePuroseData.frameSpeed);
     fadeValue = MAX1BYTEVALUE;
+    //アイテムの数を保存
+    allCollectItemNum = collectObserver.lock()->GetTotalItemNum();
 }
 /// <summary>
 /// カウントダウンなどを解放
@@ -36,9 +42,8 @@ GamePrevProcess::~GamePrevProcess()
 /// <summary>
 /// 遊び方とカウントダウンの描画
 /// </summary>
-void GamePrevProcess::Update(std::shared_ptr<GameManager> gameObj)
+void GamePrevProcess::Update()
 {
-    gameObj->PrepareGame();
     fadeValue--;
     //描画する画像のコマ送り用　何秒かごとに次のコマに行く
     if (frameByFrameTimer->IsOverLimitTime())
@@ -80,7 +85,7 @@ void GamePrevProcess::Draw() const
         int num = iconGHIndex % collectIconData.dataHandle.size();
         UIDrawer::DrawRotaUI(collectIconData,num);
         //何個集めるか
-        collectItemNum->Draw(CollectController::GetTotalCollectNum());
+        collectItemNum->Draw(allCollectItemNum);
     }
     else
     {

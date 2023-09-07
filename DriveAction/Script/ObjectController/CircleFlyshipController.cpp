@@ -6,12 +6,14 @@
 #include "OriginalMath.h"
 #include "DrawModel.h"
 /// <summary>
-/// 輪になっているレーザー照射機の更新とかする
+/// レーザーを発射できるようにGeneratorを確保
 /// </summary>
-CircleFlyShipController::CircleFlyShipController()
-    :FlyShipController(circleLaserShip)
+/// <param name="generator">レーザー発射に必要なクラス</param>
+CircleFlyShipController::CircleFlyShipController(std::shared_ptr<DamageObjectGenerator> generator)
+    :FlyShipController(circleLaserShip,generator)
 {
     drawModel = new DrawModel(circleLaserShip);
+    generator.reset();
 }
 /// <summary>
 /// 輪になっているレーザー照射機の配置と追加
@@ -34,6 +36,6 @@ void CircleFlyShipController::AddObject(PlacementData arrangementData)
         //生成位置はdirの方向にbetween分離れた所
         generatePos = VAdd(centerPos, VScale(dir, param.unitBetween));
         //機体生成位置と機体が向く位置
-        actorList.push_back(new CircleLaserFlyShip(generatePos, centerPos));
+        actorList.push_back(new CircleLaserFlyShip(generatePos, centerPos,damageObjectGenerator));
     }
 }

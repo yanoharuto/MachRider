@@ -14,11 +14,3 @@ LaserFlyShip::LaserFlyShip(ObjectInit::InitObjKind kind)
 {
     firstPosY = position.y;
 }
-/// <summary>
-/// ƒŒ[ƒU[‚ğì¬
-/// </summary>
-/// <param name="kind"></param>
-void LaserFlyShip::GenerateLaser(DamageObjectGenerator::DamageObjectKind kind)
-{
-    DamageObjectGenerator::GenerateDamageObject(kind,std::make_unique<ObjectObserver>(this));
-}

@@ -8,14 +8,16 @@ class UpDownFlyShipController : public FlyShipController
 {
 public:
     /// <summary>
-    /// 上下に移動する飛行艇の初期化
+    /// 上下に移動する飛行船の管理準備
     /// </summary>
-    UpDownFlyShipController();
+    /// <param name="damageObjeGenerator">レーザーを発射できるようにする</param>
+    UpDownFlyShipController(std::shared_ptr<DamageObjectGenerator> damageObjeGenerator);
 protected:
     /// <summary>
-    /// 追加する
+    /// 上下に対空する飛行船を引数の位置に追加
     /// </summary>
-    /// <param name="editData">配置する位置や向き</param>
+    /// <param name="editData">配置位置</param>
     void AddObject(PlacementData editData)override;
+
 };
 

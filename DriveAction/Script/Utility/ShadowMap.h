@@ -8,7 +8,7 @@ class ObjectObserver;
 /// <summary>
 /// 影を描画するクラス
 /// </summary>
-class ShadowMap
+class ShadowMap final
 {
 public:
     /// <summary>
@@ -23,16 +23,15 @@ public:
     /// <summary>
     /// 影の描画範囲の変更
     /// </summary>
-    /// <param name="objInfo">引数の座標を中心にする</param>
     void SetShadowMapErea();
     /// <summary>
     /// これから描画する影の準備
     /// </summary>
-    void SetUP();
+    void SetUPDrawShadow();
     /// <summary>
     /// 影を描画するの終了
     /// </summary>
-    void DrawEnd();
+    void EndDrawShadow();
     /// <summary>
     /// 書き込んだシャドウマップを使う
     /// </summary>

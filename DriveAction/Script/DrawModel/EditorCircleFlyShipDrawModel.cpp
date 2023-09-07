@@ -67,7 +67,7 @@ void EditorCircleFlyShipDrawModel::Init()
     using namespace FlyShipInit;
     //FlyShip用のデータをロード
     CSVFileLoader* addDataLoader = new CSVFileLoader(InitActor::GetAddDataPass(circleLaserShip));
-    auto addData = addDataLoader->GetLoadStringData();
+    auto addData = addDataLoader->GeFileStringData();
     uniNum = SAFE_STR_TO_I(addData[unitNum]);
     uniBetween = SAFE_STR_TO_F(addData[unitBetween]);
     //機体の数だけ割る

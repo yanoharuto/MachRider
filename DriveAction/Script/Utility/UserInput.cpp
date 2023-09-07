@@ -12,7 +12,7 @@ UserInput::UserInput()
 {
     //ゲームパッド入力ならTrue
     isInputPad = GetJoypadNum() != 0;
-    //各入力キー
+    //各入力キーの対応マクロを設定
     using enum KeyInputKind;
     keyInputCode[Up] = PAD_INPUT_UP;
     keyInputCode[Down] = PAD_INPUT_DOWN;

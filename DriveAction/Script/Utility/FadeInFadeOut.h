@@ -22,7 +22,6 @@ private:
     /// フェードインフェードアウトをする
     /// </summary>
     FadeInFadeOut() {};
-    ~FadeInFadeOut() {};
     //高いほど白くなるよ
     static int fadeValue;
     //フェードアウトする速度

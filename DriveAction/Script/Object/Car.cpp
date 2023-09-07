@@ -1,5 +1,6 @@
-﻿#include "Wheels.h"
-#include "Car.h"
+﻿#include "Car.h"
+#include "OriginalMath.h"
+#include "Wheels.h"
 #include "Utility.h"
 #include "ConflictExamineResultInfo.h"
 #include "EffekseerForDXLib.h"
@@ -29,13 +30,13 @@ Car::Car(ObjectInit::InitObjKind kind)
 	ReflectsVelocity();
 	wheels = new Wheels();
 }
-
-
+/// <summary>
+/// タイヤの開放
+/// </summary>
 Car::~Car()
 {
 	SAFE_DELETE(wheels);
 }
-
 /// <summary>
 /// 車がぶつかった時の関数
 /// </summary>
@@ -51,8 +52,6 @@ void Car::ConflictReaction(CollisionResultInfo conflictInfo)
 	position.y = firstPosY;
 	ReflectsVelocity();
 }
-
-
 /// <summary>
 /// 進む方向と速さを更新する
 /// </summary>
@@ -84,11 +83,17 @@ void Car::ReflectsVelocity()
 		direction = VNorm(velocity);
 	}
 	//ぶつかった時の衝撃影響タイマーがNewされているなら
-	if (bounceTimer != nullptr)
+	if (isBounce)
 	{
 		//ぶつかった時の衝撃で移動
 		velocity = VScale(conflictVec, static_cast<float>(bounceTimer->GetRemainingTime() / bounceTimer->GetLimitTime()));
 		position = VAdd(position, velocity);
+		//吹っ飛ぶ時間を過ぎたなら
+		if (bounceTimer->IsOverLimitTime())
+		{
+			isBounce = false;
+			SAFE_DELETE(bounceTimer);
+		}
 	}
 	else //衝撃が無くなったら運転できる
 	{
@@ -141,7 +146,7 @@ void Car::InitSpeedParamater(ObjectInit::InitObjKind kind)
 {
 	//速さ関連の情報を所得
 	auto loader = new CSVFileLoader(InitActor::GetAddDataPass(kind));
-	auto strVec = loader->GetLoadStringData();
+	auto strVec = loader->GeFileStringData();
 	speedParamator.acceleSpeed = SAFE_STR_TO_F(strVec[acceleSpeed]);
 	speedParamator.lowestSpeed = SAFE_STR_TO_F(strVec[lowestSpeed]);
 	speedParamator.maxSpeed = SAFE_STR_TO_F(strVec[maxSpeed]);
@@ -150,17 +155,4 @@ void Car::InitSpeedParamater(ObjectInit::InitObjKind kind)
 	speedParamator.gripPower = SAFE_STR_TO_F(strVec[gripPower]);
 	speedParamator.breakPower = SAFE_STR_TO_F(strVec[breakePower]);
 	speedParamator.turboChargeTime = SAFE_STR_TO_F(strVec[turboChargeTime]);
-}
-
-/// <summary>
-/// 移動する前のポジションを渡す
-/// </summary>
-/// <returns></returns>
-HitCheckInfo Car::GetHitCheckExamineInfo()
-{
-	HitCheckInfo info;
-	info.pos = prevPos;
-	info.radius = radius;
-	info.velocity = velocity;
-	return info;
 }

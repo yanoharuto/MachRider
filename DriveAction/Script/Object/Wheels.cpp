@@ -14,11 +14,16 @@ const float Wheels::maxAxisY = 45.5f;
 const float Wheels::curbCalculationLine = 1.2f;
 //軸距　前輪と後輪の距離
 const float Wheels::wheelbase = 10.0f;
-
 /// <summary>
-/// 左右キーを入力したら傾け、上下キーで回転させる
+/// タイヤの左右の傾きを初期化
 /// </summary>
-/// <param name="_Key">入力情報</param>
+Wheels::Wheels()
+{
+	axisY = 0.0f;
+}
+/// <summary>
+/// 左右キーを入力したらタイヤの角度を変更
+/// </summary>
 void Wheels::Update()
 {	
 	//右を押したら

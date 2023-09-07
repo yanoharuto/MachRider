@@ -2,21 +2,20 @@
 #include "DxLib.h"
 #include <string>
 
-
 /// <summary>
 /// タイヤのY軸制御と回転半径を出す
 /// </summary>
 class Wheels 
 {
 public:
-	Wheels() {};
-	~Wheels() {};
-    
 	/// <summary>
-	/// 左右キーを入力したらY軸回転
+	/// タイヤの左右の傾きを初期化
+	/// </summary>
+	Wheels();
+	/// <summary>
+	/// 左右キーを入力したらタイヤの角度を変更
 	/// </summary>
 	void Update();
-
 	/// <summary>
 	/// 進行方向が何度曲がるか返す
 	/// </summary>
@@ -29,10 +28,8 @@ private:
     /// </summary>
 	/// <returns>回転半径</returns>
 	float GetRotationRadius() const;
-
 	//車の左右への傾き
 	float axisY = 0.0f;
-
 	//車の回転力
 	static const float wheelDriveRotaPower;
 	//タイヤが左右に傾く力

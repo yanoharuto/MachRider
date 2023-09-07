@@ -13,26 +13,26 @@
 #include "EffectManager.h"
 #include "EffekseerForDXLib.h"
 #include "ScoreNum.h"
-#include "GameManager.h"
+#include "PlayerObserver.h"
 /// <summary>
 /// ゴール後の演出をする
 /// </summary>
-/// <param name="gameManager">ResultScoreにプレイヤー情報を渡す</param>
+/// <param name="player">ResultScoreにプレイヤー情報を渡す</param>
 /// <param name="gameTimer">クリアタイムを受け取る</param>
-PostGameEndStagingProcess::PostGameEndStagingProcess(std::weak_ptr<GameManager> gameManager, std::shared_ptr<Timer> gameTimer)
+PostGameEndStagingProcess::PostGameEndStagingProcess(std::weak_ptr<PlayerObserver> player, std::shared_ptr<Timer> gameTimer)
 {
     //スコアを確定
-    resultScore = new ResultScore(gameManager,gameTimer);
+    resultScore = new ResultScore(player,gameTimer);
 
     SoundPlayer::StopAllSound();
-    SoundPlayer::LoadSound(clap);
-    SoundPlayer::LoadSound(scoreEndSE);
-    SoundPlayer::LoadSound(scoreStartSE);
-    SoundPlayer::LoadSound(sceneNextSE);
-    SoundPlayer::LoadSound(gameEndFanfare);
+    SoundPlayer::LoadAndInitSound(clap);
+    SoundPlayer::LoadAndInitSound(scoreEndSE);
+    SoundPlayer::LoadAndInitSound(scoreStartSE);
+    SoundPlayer::LoadAndInitSound(sceneNextSE);
+    SoundPlayer::LoadAndInitSound(gameEndFanfare);
     
     //プレイヤーの所得した収集アイテム
-    getCollectNum = gameManager.lock()->GetPlayerObserver().lock()->GetCollectCount();
+    getCollectNum = player.lock()->GetCollectCount();
     drawCollectIconNum = 0;
     //最初の処理
     nowConvertScore = timeBonus;

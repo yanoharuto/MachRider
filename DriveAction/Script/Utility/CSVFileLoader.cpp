@@ -23,20 +23,21 @@ CSVFileLoader::CSVFileLoader(std::string filePass)
     ifs.close();
 }
 /// <summary>
-/// CSVファイルを読み込む
+/// CSVファイルで読み込んだ文字列を渡す
 /// </summary>
-/// <returns></returns>
-std::vector<std::string> CSVFileLoader::GetLoadStringData()const
+/// <returns> CSVファイルで読み込んだ文字列</returns>
+std::vector<std::string> CSVFileLoader::GeFileStringData()const
 {
     return loadData;
 }
 /// <summary>
-/// CSVファイルを読み込む
+/// CSVファイルで読み込んだ文字列を渡す
 /// </summary>
-/// <returns></returns>
-std::vector<const char*> CSVFileLoader::GetLoadCharData()const
+/// <returns> CSVファイルで読み込んだ文字列</returns>
+std::vector<const char*> CSVFileLoader::GetFileCharData()const
 {
     std::vector<const char*> charVec;
+    //charに変換して渡す
     for (int i = 0; i < SAFE_GET_SIZE(loadData); i++)
     {
         charVec.push_back(loadData[i].c_str());
@@ -44,9 +45,9 @@ std::vector<const char*> CSVFileLoader::GetLoadCharData()const
     return charVec;
 }
 /// <summary>
-/// 読み込んだファイルの行
+/// 読み込んだファイルの行数を渡す
 /// </summary>
-/// <returns></returns>
+/// <returns>読み込んだファイルの行数</returns>
 int CSVFileLoader::GetLineCount()const
 {
     return lineCount;

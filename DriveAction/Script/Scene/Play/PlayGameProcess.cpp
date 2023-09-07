@@ -3,7 +3,7 @@
 #include "ActorControllerManager.h"
 #include "GamePlayUI.h"
 #include "CollectController.h"
-#include "GameManager.h"
+#include "CollectItemObserver.h"
 #include "SoundPlayer.h"
 #include "PostGameEndStagingProcess.h"
 #include "StageDataManager.h"
@@ -11,15 +11,16 @@
 #include "StopTimer.h"
 #include "Timer.h"
 /// <summary>
-/// プレイヤーの位置をUIに渡す
+/// BGMとゲーム終了タイマーを起動
 /// </summary>
-/// <param name="manager">UIにプレイヤーの位置を渡す</param>
-PlayGameProcess::PlayGameProcess(std::weak_ptr<GameManager> const manager)
+/// <param name="player">UIにプレイヤー情報を渡す</param>
+/// <param name="collectItemObserver">UIに収集アイテム情報を渡す</param>
+PlayGameProcess::PlayGameProcess(std::weak_ptr<PlayerObserver> player, std::shared_ptr<CollectItemObserver> const collectItemObserver)
 {
 	timer = StageDataManager::CreateGameTimer();
-	playUI = new GamePlayUI(manager,timer);
+	playUI = new GamePlayUI(player, timer, collectItemObserver);
 	isEndProcess = false;
-	SoundPlayer::LoadSound(playBGM);
+	SoundPlayer::LoadAndInitSound(playBGM);
 }
 /// <summary>
 /// UIとタイマーの解放
@@ -32,25 +33,26 @@ PlayGameProcess::~PlayGameProcess()
 /// <summary>
 /// 遊んでいるときの更新
 /// </summary>
-/// <param name="gameObject">ゲームをするときに必要なオブジェクト</param>
-void PlayGameProcess::Update(std::weak_ptr<GameManager> const gameObject)
+/// <param name="collectObserver">収集アイテムの残り数を教えてもらう</param>
+void PlayGameProcess::Update(std::weak_ptr<CollectItemObserver> const collectObserver)
 {
-	//収集アイテムを全部取ったなら
-	if (CollectController::IsEndGame())
-	{
-		timer->Stop();
-	}
-	//収集アイテムが全部消え終わった,制限時間の終了したなら
-	if (CollectController::IsDestroyAllItem()||timer->IsOverLimitTime())
+	//収集アイテムが全部消え終わった,制限時間の終了したなら終了
+	if (collectObserver.lock()->GetRemainingItemNum() == 0 || timer->IsOverLimitTime())
 	{
 		isEndProcess = true;
+		timer->Stop();
+	}
+	//最後の一つを回収したならタイマーを止める
+	if (collectObserver.lock()->GetRemainingItemNum() == 1 && collectObserver.lock()->IsCollectNowItem())
+	{
+		//タイマーストップ
+		timer->Stop();
 	}
 	//BGMが鳴ってなかったら再生
 	if (!SoundPlayer::IsPlaySound(playBGM))
 	{
 		SoundPlayer::Play2DSE(playBGM);
 	}
-	gameObject.lock()->Update();
 	playUI->Update();
 }
 /// <summary>

@@ -8,9 +8,10 @@ class CircleFlyShipController : public FlyShipController
 {
 public:
     /// <summary>
-    /// 輪になっているレーザー照射機の更新とかする
+    /// レーザーを発射できるようにGeneratorを確保
     /// </summary>
-    CircleFlyShipController();
+    /// <param name="generator">レーザー発射に必要なクラス</param>
+    CircleFlyShipController(std::shared_ptr<DamageObjectGenerator> generator);
 private:
     /// <summary>
     /// 輪になっているレーザー照射機の配置と追加

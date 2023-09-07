@@ -3,6 +3,7 @@
 #include "EffectManager.h"
 #include "UserInput.h"
 #include "EditObjectData.h"
+#include "OriginalMath.h"
 class PlayerConflictProcessor;
 class SphereHitChecker;
 class Timer;
@@ -20,7 +21,7 @@ public:
 	///デストラクタ
     ~PlayerCar()override;
     /// <summary>
-    /// 更新（移動処理）
+    /// 移動処理 回転や急加速処理など
     /// </summary>
 	void Update() override;
 	/// <summary>
@@ -32,7 +33,7 @@ public:
 	/// 機体の傾きを渡す
 	/// </summary>
 	/// <returns></returns>
-	VECTOR GetModelRotateVec();
+	VECTOR GetModelRotateVec()const;
 	/// <summary>
 	/// 収集アイテムにぶつかった回数
 	/// </summary>
@@ -47,7 +48,7 @@ private:
 	/// <summary>
 	/// 入力するとTwistZRotaが変更する
 	/// </summary>
-	void RotateUpdate();
+	void UpdateRotate();
 	/// <summary>
 	/// 走っているときのエフェクトを更新
 	/// </summary>
@@ -56,16 +57,12 @@ private:
 	/// ダメージを受けた時のリアクション
 	/// </summary>
 	/// <param name="conflictInfo"></param>
-	void DamageReaction(CollisionResultInfo conflictInfo);
+	void ReactionDamage(CollisionResultInfo conflictInfo);
 	/// <summary>
 	/// ぶつかった時のリアクション
 	/// </summary>
 	/// <param name="conflictInfo"></param>
-	void ConflictReaction(CollisionResultInfo conflictInfo);
-	/// <summary>
-	/// ダメージを受けた後の処理。無敵時間復帰など
-	/// </summary>
-	void DamagePostProcesss();
+	void ReactionConflict(CollisionResultInfo conflictInfo);
 	/// <summary>
 	/// 左右に押しながら下を離すとブースト
 	/// </summary>
@@ -108,12 +105,6 @@ private:
 	bool isTurbo = false;
 	//急加速準備中
 	bool isTurboReserve = false;
-	//衝突している最中か調べる
-	bool isNowConflict = false;
-	//連続衝突
-	bool isSerialConflict = false;
-	//ダメージ
-	bool isDamage = false;
 	//加速チャージタイム
 	float turboChargeTime = 0;
 	//y軸回転

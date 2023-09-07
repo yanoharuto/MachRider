@@ -7,7 +7,13 @@
 class PostGameEndStagingProcess;
 class GamePrevProcess;
 class PlayGameProcess;
-class GameManager;
+class ActorControllerManager;
+class GameCamera;
+class ShadowMap;
+class ConflictManager;
+class GameScreen;
+class PlayerObserver;
+class CollectItemObserver;
 /// <summary>
 /// どういう順番で処理を行うか決める
 /// </summary>
@@ -67,8 +73,20 @@ private:
     PlayGameProcess* playGameProcess;
     //レース前の処理
     GamePrevProcess* gamePrevProcess;
-    //カメラや各オブジェクトの更新などを行ってくれるクラスの共有クラス
-    std::shared_ptr<GameManager> gameManager;
+    //カメラ
+    GameCamera* camera;
+    //シャドウマップ
+    ShadowMap* shadowMap;
+    //衝突判判定クラス
+    ConflictManager* conflictManager;
+    //各オブジェクトの管理役
+    std::shared_ptr<ActorControllerManager> controllerManager;
+    //プレイヤーの情報通達クラス
+    std::shared_ptr<PlayerObserver> playerObserver;
+    //収集アイテムの管理クラス
+    std::shared_ptr<CollectItemObserver>  collectItemObserver;
+    //描画状況を保存する
+    GameScreen* screen;
     //今何の処理を行うか決める変数
     PlaySceneProgress nowProgress;
 };

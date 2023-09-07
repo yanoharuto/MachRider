@@ -51,7 +51,7 @@ std::vector<PlacementData> FirstPositionGetter::CSVConvertFirstData(std::string 
 {
     //初期化文字列リストを取ってくる
     CSVFileLoader* csv = new CSVFileLoader(fileName);
-    auto initStrDataVec = csv->GetLoadStringData();
+    auto initStrDataVec = csv->GeFileStringData();
 
     //データの種類と列の多さからオブジェクトの数を出す
     int objCount = csv->GetLineCount() / EDIT_ARRANGEMENT_DATA_KIND_NUM;

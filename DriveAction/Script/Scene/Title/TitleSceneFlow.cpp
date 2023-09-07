@@ -6,7 +6,7 @@
 #include "SoundPlayer.h"
 #include "UserInput.h"
 #include "FadeInFadeOut.h"
-#include "TitleDemo.h"
+#include "TitleObject.h"
 #include "Timer.h"
 #include "GameScreen.h"
 #include "UIDrawer.h"
@@ -16,14 +16,14 @@
 /// </summary>
 TitleSceneFlow::TitleSceneFlow()
 {
-    SoundPlayer::LoadSound(titleBGM);
+    SoundPlayer::LoadAndInitSound(titleBGM);
     stageSelect = new StageSelect();  
     spaceKeyUI = new FlashUI(titlePressSpaceKey);
-    titleDemo = new TitleDemo();
+    titleObject = new TitleObject();
     titleScore = new TitleRanking();
     titleLogoData = UIManager::CreateUIData(tilteLogo);
     
-    SoundPlayer::LoadSound(sceneNextSE);
+    SoundPlayer::LoadAndInitSound(sceneNextSE);
 }
 /// <summary>
 /// 車とかフェードインフェードアウトクラスのDelete
@@ -32,7 +32,7 @@ TitleSceneFlow::~TitleSceneFlow()
 {
     SAFE_DELETE(stageSelect);
     SAFE_DELETE(spaceKeyUI);
-    SAFE_DELETE(titleDemo);
+    SAFE_DELETE(titleObject);
     SAFE_DELETE(titleScore);
 }
 /// <summary>
@@ -41,7 +41,7 @@ TitleSceneFlow::~TitleSceneFlow()
 void TitleSceneFlow::Update()
 {
     //車が勝手に動いたりする
-    titleDemo->Update();
+    titleObject->Update();
 
     //BGM長しっぱ
     if (!SoundPlayer::IsPlaySound(titleBGM)&&titleState!=TitleState::processEnd)
@@ -69,8 +69,11 @@ void TitleSceneFlow::Update()
 /// </summary>
 void TitleSceneFlow::Draw()const
 {
-    titleDemo->Draw();
+    //車やステージを描画
+    titleObject->Draw();
+    //タイトルロゴの描画
     UIDrawer::DrawRotaUI(titleLogoData, 0, 0,true);
+
     if (titleState == TitleState::waitSpaceKey)
     {
         spaceKeyUI->Draw();//スペースキー待ちUI
@@ -80,6 +83,7 @@ void TitleSceneFlow::Draw()const
         stageSelect->Draw();//ステージ選択UI
         titleScore->Draw();
     }
+    //描画内容保存
     screen->ScreenUpdate();
 }
 /// <summary>

@@ -12,7 +12,7 @@ std::vector <std::string> SoundPlayer::initFilePassData;
 SoundPlayer::SoundPlayer()
 {
     CSVFileLoader* initDataLoader = new CSVFileLoader(initSoundFileName);
-    initFilePassData = initDataLoader->GetLoadStringData();
+    initFilePassData = initDataLoader->GeFileStringData();
     SAFE_DELETE(initDataLoader);
 }
 /// <summary>
@@ -102,40 +102,46 @@ void SoundPlayer::StopSound(SoundKind kind)
     }
 }
 /// <summary>
-/// 音をロードして使いまわせるようにする
+/// 音をロードして音量を初期化して使いまわせるようにする
 /// </summary>
 /// <param name="kind">音の種類</param>
-void SoundPlayer::LoadSound(SoundKind kind)
+void SoundPlayer::LoadAndInitSound(SoundKind kind)
 {
+    //音がロードされていないなら
     if (!soundHandleMap.contains(kind))
     {
-
         int num = static_cast<int>(kind);
         //データ読み取り
         CSVFileLoader* initDataLoader = new CSVFileLoader(initFilePassData[num]);
-        std::vector<const char*> initData = initDataLoader->GetLoadCharData();
+        std::vector<const char*> initData = initDataLoader->GetFileCharData();
+        //読み取った文字列からパスを受け取り音データを所得
         int loadSoundHandleNum = LoadSoundMem(initData[soundPass]);
-
+        //mapに追加
         soundHandleMap.insert(std::make_pair(kind, loadSoundHandleNum));
+        //音量を設定
         ChangeVolumeSoundMem(atoi(initData[soundVolume]), loadSoundHandleNum);
+        //読み取りクラスの開放
         SAFE_DELETE(initDataLoader);
     }
 }
 /// <summary>
-/// ３Dの音をロードして使いまわせるようにする
+/// ３Dの音をロードして音量を初期化して使いまわせるようにする
 /// </summary>
 /// <param name="kind">音の種類</param>
-void SoundPlayer::Load3DSound(SoundKind kind)
+void SoundPlayer::LoadAndInit3DSound(SoundKind kind)
 {
+    //音がロードされていないなら
     if (!soundHandleMap.contains(kind))
     {
-        LoadSound(kind);
+        //ロードと初期化
+        LoadAndInitSound(kind);
         int num = static_cast<int>(kind);
         //データ読み取り
         CSVFileLoader* initDataLoader = new CSVFileLoader(initFilePassData[num]);
         //読み取ったデータから聞こえる半径を設定
-        auto initStrDataVec = initDataLoader->GetLoadStringData();
+        auto initStrDataVec = initDataLoader->GeFileStringData();
         Set3DRadiusSoundMem(SAFE_STR_TO_F(initStrDataVec[soundRadius]), soundHandleMap[kind]);
+        //読み取りクラスの開放
         SAFE_DELETE(initDataLoader);
     }
 }

@@ -3,7 +3,7 @@
 /// <summary>
 /// プレイヤーの初期位置の編集
 /// </summary>
-class PlayerDataEditor : public StageDataEditor
+class PlayerDataEditor final: public StageDataEditor
 {
 public:
     /// <summary>

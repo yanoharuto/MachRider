@@ -1,6 +1,8 @@
 #pragma once
 #include <vector>
 #include <unordered_map>
+#include <memory>
+#include <iostream>
 #include "InitActor.h"
 #include "DxLib.h"
 #include "EditObjectData.h"
@@ -17,14 +19,12 @@ public:
     /// 敵機位置についての初期化する
     /// </summary>
     EnemyGenerator();
-
-    ~EnemyGenerator() {};
     /// <summary>
     /// 敵コントローラーに位置情報を教えて追加する
     /// </summary>
     /// <param name="collectNum">プレイヤーが収集したアイテム数</param>
     /// <param name="addObjController">敵コントローラー</param>
-    void GenerateEnemys(int collectNum,AddableObjectController* const addObjController);
+    void GenerateEnemys(int collectNum, std::weak_ptr<AddableObjectController> addObjController);
 private:
     /// <summary>
     /// エネミーの配置情報を渡す

@@ -3,7 +3,7 @@
 #include <memory>
 class PlayerObserver;
 class GamePlayUI;
-class GameManager;
+class CollectItemObserver;
 class StopTimer;
 class Timer;
 /// <summary>
@@ -13,10 +13,11 @@ class PlayGameProcess
 {
 public:
     /// <summary>
-    /// プレイヤーの位置をUIに渡す
+    /// BGMとゲーム終了タイマーを起動
     /// </summary>
-    /// <param name="manager">UIにプレイヤーの位置を渡す</param>
-    PlayGameProcess(std::weak_ptr<GameManager> const manager);
+    /// <param name="player">UIにプレイヤー情報を渡す</param>
+    /// <param name="collectItemObserver">UIに収集アイテム情報を渡す</param>
+    PlayGameProcess(std::weak_ptr<PlayerObserver> player, std::shared_ptr<CollectItemObserver> const collectItemObserver);
     /// <summary>
     /// UIとタイマーの解放
     /// </summary>
@@ -24,8 +25,8 @@ public:
     /// <summary>
     /// 遊んでいるときの更新
     /// </summary>
-    /// <param name="manager">ゲームをするときに必要なオブジェクト</param>
-    void Update(std::weak_ptr<GameManager> const manager);
+    /// <param name="collectObserver">収集アイテムの残り数を教えてもらう</param>
+    void Update(std::weak_ptr<CollectItemObserver> const collectObserver);
     /// <summary>
     /// 描画
     /// </summary>

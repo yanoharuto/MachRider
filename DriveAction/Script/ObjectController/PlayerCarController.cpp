@@ -1,4 +1,4 @@
-#include "PlayeCarController.h"
+#include "PlayerCarController.h"
 #include "PlayerCar.h"
 #include "SphereHitChecker.h"
 #include "SoundPlayer.h"
@@ -35,7 +35,7 @@ PlayerCarController::~PlayerCarController()
 /// ŽÔ‚ÌˆÊ’u‚Æ‚©‚ð“n‚·
 /// </summary>
 /// <returns></returns>
-std::weak_ptr<PlayerObserver> PlayerCarController::CreatePlayerObserver() const
+std::shared_ptr<PlayerObserver> PlayerCarController::CreatePlayerObserver() const
 {
     return playerObserver;
 }

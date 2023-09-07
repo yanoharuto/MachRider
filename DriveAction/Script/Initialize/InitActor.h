@@ -22,10 +22,8 @@ namespace ObjectInit
         collRadius = 11,
         //跳ね返りの大きさ
         bouncePower = 14,
-        //マップの初期位置で使われている番号
-        mapTiledNum = 17,
         //追加情報の置いてある場所
-        addDataPass = 23
+        addDataPass = 17
     };
     /// <summary>
     /// ゲームキャラの初期位置とか当たり判定の大きさとか

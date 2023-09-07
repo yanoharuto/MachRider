@@ -159,9 +159,6 @@
     <ClCompile Include="Script\Object\Actor.cpp">
       <Filter>ソース ファイル\Object</Filter>
     </ClCompile>
-    <ClCompile Include="Script\Object\BigRadiusLaser.cpp">
-      <Filter>ソース ファイル\Object</Filter>
-    </ClCompile>
     <ClCompile Include="Script\Object\Bomber.cpp">
       <Filter>ソース ファイル\Object</Filter>
     </ClCompile>
@@ -180,16 +177,13 @@
     <ClCompile Include="Script\Object\DamageObject.cpp">
       <Filter>ソース ファイル\Object</Filter>
     </ClCompile>
-    <ClCompile Include="Script\Object\DemoCar.cpp">
+    <ClCompile Include="Script\Object\TitleCar.cpp">
       <Filter>ソース ファイル\Object</Filter>
     </ClCompile>
     <ClCompile Include="Script\Object\EditorObject.cpp">
       <Filter>ソース ファイル\Object</Filter>
     </ClCompile>
     <ClCompile Include="Script\Object\LaserFlyShip.cpp">
-      <Filter>ソース ファイル\Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Script\Object\LittleRadiusLaser.cpp">
       <Filter>ソース ファイル\Object</Filter>
     </ClCompile>
     <ClCompile Include="Script\Object\MoveSaw.cpp">
@@ -201,7 +195,7 @@
     <ClCompile Include="Script\Object\PlayerCar.cpp">
       <Filter>ソース ファイル\Object</Filter>
     </ClCompile>
-    <ClCompile Include="Script\Object\RotatingLasers.cpp">
+    <ClCompile Include="Script\Object\RotatingLaser.cpp">
       <Filter>ソース ファイル\Object</Filter>
     </ClCompile>
     <ClCompile Include="Script\Object\Saw.cpp">
@@ -237,7 +231,7 @@
     <ClCompile Include="Script\ObjectController\ActorControllerManager.cpp">
       <Filter>ソース ファイル\ObjectController</Filter>
     </ClCompile>
-    <ClCompile Include="Script\ObjectController\BigRadiusLaserController.cpp">
+    <ClCompile Include="Script\ObjectController\RotatingLaserController.cpp">
       <Filter>ソース ファイル\ObjectController</Filter>
     </ClCompile>
     <ClCompile Include="Script\ObjectController\BomberController.cpp">
@@ -249,13 +243,10 @@
     <ClCompile Include="Script\ObjectController\CollectController.cpp">
       <Filter>ソース ファイル\ObjectController</Filter>
     </ClCompile>
-    <ClCompile Include="Script\ObjectController\DemoCarController.cpp">
+    <ClCompile Include="Script\ObjectController\TitleCarController.cpp">
       <Filter>ソース ファイル\ObjectController</Filter>
     </ClCompile>
     <ClCompile Include="Script\ObjectController\FlyShipController.cpp">
-      <Filter>ソース ファイル\ObjectController</Filter>
-    </ClCompile>
-    <ClCompile Include="Script\ObjectController\LittleRadiusLaserController.cpp">
       <Filter>ソース ファイル\ObjectController</Filter>
     </ClCompile>
     <ClCompile Include="Script\ObjectController\MoveSawController.cpp">
@@ -375,7 +366,7 @@
     <ClCompile Include="Script\Utility\UserInput.cpp">
       <Filter>ソース ファイル\Utility</Filter>
     </ClCompile>
-    <ClCompile Include="Script\Scene\Title\TitleDemo.cpp">
+    <ClCompile Include="Script\Scene\Title\TitleObject.cpp">
       <Filter>ソース ファイル\Scene\Title</Filter>
     </ClCompile>
     <ClCompile Include="Script\Scene\Title\TitleHiScore.cpp">
@@ -411,7 +402,7 @@
     <ClCompile Include="Script\Effect\EditorEffect.cpp">
       <Filter>ソース ファイル\Effect</Filter>
     </ClCompile>
-    <ClCompile Include="Script\ObjectController\CircleFlyshipContorller.cpp">
+    <ClCompile Include="Script\ObjectController\CircleFlyshipController.cpp">
       <Filter>ソース ファイル\ObjectController</Filter>
     </ClCompile>
     <ClCompile Include="Script\ObjectController\DamageObjectController.cpp">
@@ -432,10 +423,10 @@
     <ClCompile Include="Script\Scene\Play\PostGameEndStagingProcess.cpp">
       <Filter>ソース ファイル\Scene\Play</Filter>
     </ClCompile>
-    <ClCompile Include="Script\Scene\Play\GameManager.cpp">
-      <Filter>ソース ファイル\Scene\Play</Filter>
-    </ClCompile>
     <ClCompile Include="Script\Utility\StopTimer.cpp">
+      <Filter>ソース ファイル\Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="Script\Scene\Play\CollectItemObserver.cpp">
       <Filter>ソース ファイル\Utility</Filter>
     </ClCompile>
   </ItemGroup>
@@ -506,7 +497,7 @@
     <ClInclude Include="Script\Object\Saw.h">
       <Filter>ヘッダー ファイル\Object</Filter>
     </ClInclude>
-    <ClInclude Include="Script\Object\RotatingLasers.h">
+    <ClInclude Include="Script\Object\RotatingLaser.h">
       <Filter>ヘッダー ファイル\Object</Filter>
     </ClInclude>
     <ClInclude Include="Script\Object\PlayerCar.h">
@@ -518,9 +509,6 @@
     <ClInclude Include="Script\Object\MoveSaw.h">
       <Filter>ヘッダー ファイル\Object</Filter>
     </ClInclude>
-    <ClInclude Include="Script\Object\LittleRadiusLaser.h">
-      <Filter>ヘッダー ファイル\Object</Filter>
-    </ClInclude>
     <ClInclude Include="Script\Object\LaserFlyShip.h">
       <Filter>ヘッダー ファイル\Object</Filter>
     </ClInclude>
@@ -530,13 +518,10 @@
     <ClInclude Include="Script\Object\EditObjectData.h">
       <Filter>ヘッダー ファイル\Object</Filter>
     </ClInclude>
-    <ClInclude Include="Script\Object\DemoCar.h">
+    <ClInclude Include="Script\Object\TitleCar.h">
       <Filter>ヘッダー ファイル\Object</Filter>
     </ClInclude>
     <ClInclude Include="Script\Object\Actor.h">
-      <Filter>ヘッダー ファイル\Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Script\Object\BigRadiusLaser.h">
       <Filter>ヘッダー ファイル\Object</Filter>
     </ClInclude>
     <ClInclude Include="Script\Object\Bomber.h">
@@ -584,7 +569,7 @@
     <ClInclude Include="Script\ObjectController\ActorControllerManager.h">
       <Filter>ヘッダー ファイル\ObjectController</Filter>
     </ClInclude>
-    <ClInclude Include="Script\ObjectController\BigRadiusLaserController.h">
+    <ClInclude Include="Script\ObjectController\RotatingLaserController.h">
       <Filter>ヘッダー ファイル\ObjectController</Filter>
     </ClInclude>
     <ClInclude Include="Script\ObjectController\BomberController.h">
@@ -599,19 +584,16 @@
     <ClInclude Include="Script\ObjectController\DamageObjectController.h">
       <Filter>ヘッダー ファイル\ObjectController</Filter>
     </ClInclude>
-    <ClInclude Include="Script\ObjectController\DemoCarController.h">
+    <ClInclude Include="Script\ObjectController\TitleCarController.h">
       <Filter>ヘッダー ファイル\ObjectController</Filter>
     </ClInclude>
     <ClInclude Include="Script\ObjectController\FlyShipController.h">
       <Filter>ヘッダー ファイル\ObjectController</Filter>
     </ClInclude>
-    <ClInclude Include="Script\ObjectController\LittleRadiusLaserController.h">
-      <Filter>ヘッダー ファイル\ObjectController</Filter>
-    </ClInclude>
     <ClInclude Include="Script\ObjectController\MoveSawController.h">
       <Filter>ヘッダー ファイル\ObjectController</Filter>
     </ClInclude>
-    <ClInclude Include="Script\ObjectController\PlayeCarController.h">
+    <ClInclude Include="Script\ObjectController\PlayerCarController.h">
       <Filter>ヘッダー ファイル\ObjectController</Filter>
     </ClInclude>
     <ClInclude Include="Script\ObjectController\SawController.h">
@@ -755,7 +737,7 @@
     <ClInclude Include="Script\Scene\Play\PlayerDataEditor.h">
       <Filter>ヘッダー ファイル\Scene\Editor</Filter>
     </ClInclude>
-    <ClInclude Include="Script\Scene\Title\TitleDemo.h">
+    <ClInclude Include="Script\Scene\Title\TitleObject.h">
       <Filter>ヘッダー ファイル\Scene\Title</Filter>
     </ClInclude>
     <ClInclude Include="Script\Scene\Title\TitleHiScore.h">
@@ -791,14 +773,8 @@
     <ClInclude Include="Script\Scene\Play\PostGameEndStagingProcess.h">
       <Filter>ヘッダー ファイル\Scene\Play</Filter>
     </ClInclude>
-    <ClInclude Include="Script\Scene\Play\GameManager.h">
-      <Filter>ヘッダー ファイル\Scene\Play</Filter>
-    </ClInclude>
     <ClInclude Include="Script\Utility\StopTimer.h">
       <Filter>ヘッダー ファイル\Utility</Filter>
-    </ClInclude>
-    <ClInclude Include="Script\Utility\json.hpp">
-      <Filter>ソース ファイル\Utility</Filter>
     </ClInclude>
     <ClInclude Include="Script\rapidjson\allocators.h">
       <Filter>ヘッダー ファイル\rapidjson</Filter>
@@ -913,6 +889,12 @@
     </ClInclude>
     <ClInclude Include="Script\rapidjson\msinttypes\stdint.h">
       <Filter>ヘッダー ファイル\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="Script\Utility\json.hpp">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Script\Scene\Play\CollectItemObserver.h">
+      <Filter>ヘッダー ファイル\Utility</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

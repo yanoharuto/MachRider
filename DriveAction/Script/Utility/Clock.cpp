@@ -13,15 +13,14 @@ Clock::Clock()
     timeD = static_cast<double>(GetNowHiPerformanceCount());
     gameTime = static_cast<double>(GetNowHiPerformanceCount()) / 1000000;
 }
-
 /// <summary>
 /// タイマーを更新する
 /// </summary>
 void Clock::Update()
 {
     // １７ミリ秒(約秒間６０フレームだった時の１フレームあたりの経過時間)
-    // 経過するまでここで待つ
    double temp =  static_cast<double>(GetNowHiPerformanceCount()) - timeD;
+   // 経過するまでここで待つ
     while (temp < DELTATIME)
     {
         temp =  static_cast<double>(GetNowHiPerformanceCount()) - timeD;

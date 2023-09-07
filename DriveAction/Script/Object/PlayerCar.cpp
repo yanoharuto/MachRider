@@ -38,9 +38,9 @@ PlayerCar::PlayerCar(PlacementData arrangementData)
 	EffectManager::LoadEffect(EffectInit::chargeBurner);
 	EffectManager::LoadEffect(EffectInit::turboBurner);
 	//音を読み込ませる
-	SoundPlayer::LoadSound(playerFlight);
-	SoundPlayer::LoadSound(playerCharge);
-	SoundPlayer::LoadSound(playerDamage);
+	SoundPlayer::LoadAndInitSound(playerFlight);
+	SoundPlayer::LoadAndInitSound(playerCharge);
+	SoundPlayer::LoadAndInitSound(playerDamage);
 	//衝突処理呼び役
 	conflictProcessor = new PlayerConflictProcessor(this);
 	hitChecker = new SphereHitChecker(this);
@@ -79,9 +79,7 @@ PlayerCar::~PlayerCar()
 void PlayerCar::Update()
 {	
 	//機体を傾ける
-	RotateUpdate();
-	//ダメージを受けてたら無敵時間減少していく
-	DamagePostProcesss();
+	UpdateRotate();
 	//速度を更新
 	UpdateVelocity();
 	//位置の更新
@@ -89,9 +87,6 @@ void PlayerCar::Update()
 	//タイヤの更新
 	wheels->Update();
 	UpdateEffects();
-	//連続してぶつかっていたらSerialがtrueになったまま
-	isSerialConflict = isNowConflict;
-	isNowConflict = false;
 }
 
 /// <summary>
@@ -104,11 +99,11 @@ void PlayerCar::OnConflict(CollisionResultInfo conflictInfo)
 	{
 		if (conflictInfo.tag == damageObject)//ダメージを受けた
 		{
-			DamageReaction(conflictInfo);
+			ReactionDamage(conflictInfo);
 		}
 		else if (conflictInfo.tag != collect)//ぶつかった
 		{
-			ConflictReaction(conflictInfo);
+			ReactionConflict(conflictInfo);
 		}
 	}
 }
@@ -116,12 +111,12 @@ void PlayerCar::OnConflict(CollisionResultInfo conflictInfo)
 /// 機体の傾きを渡す
 /// </summary>
 /// <returns></returns>
-VECTOR PlayerCar::GetModelRotateVec()
+VECTOR PlayerCar::GetModelRotateVec()const
 {
 	//y軸回転
 	float rotaY = 0;
 	//ダメージを受けていたらぐるぐる回転
-	if (isDamage)
+	if (isBounce)
 	{
 		rotaY = static_cast<float> (bounceTimer->GetElaspedTime() / setDamageReactionTime);
 		rotaY *= damageReactionRotaValue;
@@ -150,7 +145,7 @@ void PlayerCar::UpdateVelocity()
 	VECTOR accelVec = VScale(direction, accelPower);
 
 	//ダメージを受けていなかったらターボ
-	if (!isDamage)
+	if (!isBounce)
 	{
 		accelVec = VAdd(accelVec, VScale(direction, GetTurboPower()));
 	}
@@ -164,7 +159,7 @@ void PlayerCar::UpdateVelocity()
 /// <summary>
 /// 入力すると機体が傾く
 /// </summary>
-void PlayerCar::RotateUpdate()
+void PlayerCar::UpdateRotate()
 {
 	//右か左か押してたら機体を傾ける
 	if (UserInput::GetInputState(Right) == Hold)
@@ -193,7 +188,7 @@ void PlayerCar::UpdateEffects()
 	//車の向き
 	float degree = OriginalMath::GetDegreeMisalignment(VGet(1, 0, 0), direction);
 	
-	if (isDamage)//ダメージを受けていたら
+	if (isBounce)//ダメージを受けていたら
 	{
 		//機体から出る炎を消す
 		if (defaultBurnerEffect != -1)
@@ -255,7 +250,7 @@ void PlayerCar::UpdateEffects()
 /// ダメージを与えた時のリアクション
 /// </summary>
 /// <param name="conflictInfo"></param>
-void PlayerCar::DamageReaction(CollisionResultInfo conflictInfo)
+void PlayerCar::ReactionDamage(CollisionResultInfo conflictInfo)
 {
 	//位置と吹っ飛びベクトルを取ってくる
 	conflictVec = VScale(conflictInfo.bounceVec,conflictInfo.bouncePower);
@@ -267,13 +262,13 @@ void PlayerCar::DamageReaction(CollisionResultInfo conflictInfo)
 	position = conflictInfo.pos;
 	position.y = firstPosY;
 	
-	if (!isDamage)
+	if (!isBounce)
 	{
 		//ダメージを受けた時のエフェクトと音
 		damageEffect = EffectManager::GetPlayEffect3D(EffectInit::carDamage);
 		SetPosPlayingEffekseer3DEffect(damageEffect, position.x, position.y, position.z);
 		SoundPlayer::Play3DSE(playerDamage);
-		isDamage = true;
+		isBounce = true;
 		twistZRota = 0.0f;
 		//加速も終了
 		isTurbo = false;
@@ -289,18 +284,17 @@ void PlayerCar::DamageReaction(CollisionResultInfo conflictInfo)
 /// 衝突時のリアクション
 /// </summary>
 /// <param name="conflictInfo"></param>
-void PlayerCar::ConflictReaction(CollisionResultInfo conflictInfo)
+void PlayerCar::ReactionConflict(CollisionResultInfo conflictInfo)
 {
-	//ターボ中で連続衝突していないなら
-	if (isTurbo && !isSerialConflict)
+	//ターボ中なら
+	if (isTurbo)
 	{
 		//ぶつかった時の音とエフェクト
 		clashEffect = EffectManager::GetPlayEffect3D(EffectInit::carConflict);
 		SetPosPlayingEffekseer3DEffect(clashEffect, position.x, position.y, position.z);
 		SoundPlayer::Play3DSE(playerDamage); 
 	}
-	isNowConflict = true;
-
+	
 	//減速
 	accelPower -= accelPower * colideDecel;
 
@@ -310,22 +304,6 @@ void PlayerCar::ConflictReaction(CollisionResultInfo conflictInfo)
 	
 	//エフェクトも移動
 	UpdateEffects();
-}
-/// <summary>
-/// ダメージ処理
-/// </summary>
-void PlayerCar::DamagePostProcesss()
-{
-	//ダメージを受けたら
-	if (isDamage)
-	{
-		//ダメージタイマーが切れるまで無敵
-		if (bounceTimer->IsOverLimitTime())
-		{
-			isDamage = false;
-			SAFE_DELETE(bounceTimer);
-		}
-	}
 }
 /// <summary>
 /// 左右に押しながら下を離すとブースト

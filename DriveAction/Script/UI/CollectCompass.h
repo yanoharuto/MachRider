@@ -2,6 +2,7 @@
 #include "UIManager.h"
 #include <iostream>
 #include <memory>
+class CollectItemObserver;
 class PlayerObserver;
 /// <summary>
 /// 収集アイテムの方向を記すエフェクトを出す
@@ -10,10 +11,10 @@ class CollectCompass
 {
 public:
     /// <summary>
-    /// エフェクトの読みこみ
+    /// playerObserverとcollectControllerの所得
     /// </summary>
-    /// <param name="player">プレイヤーの位置などを貰うことが出来るオブザーバー</param>
-    CollectCompass(std::weak_ptr<PlayerObserver> player);
+    /// <param name="player">playerの位置情報</param>
+    CollectCompass(std::weak_ptr<PlayerObserver> player,std::shared_ptr<CollectItemObserver> collectItemObserver);
     /// <summary>
     /// エフェクト終了
     /// </summary>
@@ -25,6 +26,8 @@ public:
 private:
     //プレイヤーの位置や向きを取ってくる
     std::weak_ptr<PlayerObserver> playerObserver;
+    //収集アイテムの管理クラス
+    std::weak_ptr<CollectItemObserver> collectObserver;
     //エフェクトハンドル
     int compassEffect = -1;
     //エフェクトのY座標

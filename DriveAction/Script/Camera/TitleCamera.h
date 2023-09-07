@@ -17,7 +17,7 @@ public:
     TitleCamera(std::shared_ptr<ObjectObserver> player);
 
     /// <summary>
-    /// プレイヤーの位置に合わせてカメラの位置を修正
+    /// プレイヤーの位置に合わせてカメラが付いていく
     /// </summary>
     void Update();
 private:

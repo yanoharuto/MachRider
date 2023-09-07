@@ -15,7 +15,9 @@ public:
     /// 初期化
     /// </summary>
     StageObjectController();
-    ///modelをデリート
+    /// <summary>
+    /// ステージを囲むオブジェクトの解放
+    /// </summary>
     ~StageObjectController() override;
     /// <summary>
     /// コースのモデルを描画

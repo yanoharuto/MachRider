@@ -13,10 +13,6 @@ public:
     /// <param name="firstPos"></param>
     /// <param name="setDestinationPos"></param>
     LaserFlyShip(ObjectInit::InitObjKind kind);
-    /// <summary>
-    /// レーザーを照射
-    /// </summary>
-    virtual void GenerateLaser(DamageObjectGenerator::DamageObjectKind kind);
 protected:
     //初期位置Y
     float firstPosY;

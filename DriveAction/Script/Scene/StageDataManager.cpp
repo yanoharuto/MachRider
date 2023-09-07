@@ -62,7 +62,7 @@ std::string StageDataManager::GetSelectStageData(StageData dataKind)
 {
     //今選択中のステージの情報を所得
     auto fileLoader = new CSVFileLoader(GetSelectStageName());
-    auto setStageInitDataVec = fileLoader->GetLoadStringData();
+    auto setStageInitDataVec = fileLoader->GeFileStringData();
     SAFE_DELETE(fileLoader);
     //引数の情報を返す
     return setStageInitDataVec[dataKind];
@@ -75,7 +75,7 @@ ScoreBorder StageDataManager::GetScoreBorder()
 {
     auto fileLoader = new CSVFileLoader(GetSelectStageData(stageScoreFilePass));
     //ステージ情報文字列コンテナ
-    auto scoreStrInfoVec = fileLoader->GetLoadStringData();
+    auto scoreStrInfoVec = fileLoader->GeFileStringData();
     //ステージのスコアの線引き
     ScoreBorder scoreBorder = {};
     scoreBorder.gold = SAFE_STR_TO_I(scoreStrInfoVec[StageScore::goldScore]);
@@ -110,7 +110,7 @@ std::vector<std::string> StageDataManager::GetPlaceStrData(Object::ObjectTag tag
     }
     //初期化文字列リストを取ってくる
     CSVFileLoader* csv = new CSVFileLoader(selectStageFirstPlaceFilePath);
-    return csv->GetLoadStringData();
+    return csv->GeFileStringData();
 }
 /// <summary>
 /// ゲームの制限時間のタイマーを作成
@@ -135,7 +135,7 @@ ScoreRecordWriter* StageDataManager::GetScoreRecordWriter()
 void StageDataManager::InitStageData()
 {
     auto fileLoader = new CSVFileLoader(allStageFilePath);//全ステージのデータリストを読み取る
-    dataVector = fileLoader->GetLoadStringData();
+    dataVector = fileLoader->GeFileStringData();
     SAFE_DELETE(fileLoader);
     fileAddres = dataVector[0];//とりあえず先頭を渡す
 }

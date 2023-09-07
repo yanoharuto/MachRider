@@ -17,9 +17,9 @@ EnemyGenerator::EnemyGenerator()
 /// </summary>
 /// <param name="collectNum">プレイヤーが収集したアイテム数</param>
 /// <param name="addObjController">敵コントローラー</param>
-void EnemyGenerator::GenerateEnemys(int collectNum, AddableObjectController* const addObjController)
+void EnemyGenerator::GenerateEnemys(int collectNum, std::weak_ptr<AddableObjectController> addObjController)
 {
-    addObjController->OnAddObject(GetNowEnemyEditData(collectNum));
+    addObjController.lock()->OnAddObject(GetNowEnemyEditData(collectNum));
 }
 /// <summary>
 /// エネミーの配置情報を渡す
@@ -28,7 +28,9 @@ void EnemyGenerator::GenerateEnemys(int collectNum, AddableObjectController* con
 /// <returns>エネミーの配置情報</returns>
 std::vector<PlacementData> EnemyGenerator::GetNowEnemyEditData(int collectNum)
 {
+    //配置情報
     std::vector<PlacementData> editData;
+
     for (unsigned int i = 0; i < editDataVec.size(); i++)
     {
         ObjectInit::InitObjKind dataKind = static_cast<ObjectInit::InitObjKind>(editDataVec[i].objKind);

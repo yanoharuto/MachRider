@@ -9,7 +9,7 @@ public:
     /// 制限時間等を計測する
     /// </summary>
     /// <param name="setLimitTime">計測したい時間</param>
-    Timer(double);
+    Timer(double setLimitTime);
     /// <summary>
     /// 設定時間を過ぎたか
     /// </summary>
@@ -23,7 +23,7 @@ public:
     /// <summary>
     /// タイマーに設定された時間
     /// </summary>
-    /// <returns>タイマーに設定された時間</returns>
+    /// <returns>タイマーに設定された時間を返す</returns>
     double GetLimitTime()const;
     /// <summary>
     /// 残り時間を所得

@@ -1,6 +1,6 @@
-#include "TitleDemo.h"
+#include "TitleObject.h"
 #include "ActorControllerManager.h"
-#include "DemoCarController.h"
+#include "TitleCarController.h"
 #include "Timer.h"
 #include "StageObjectController.h"
 #include "Utility.h"
@@ -11,27 +11,36 @@
 #include "EnemyGenerator.h"
 #include "EffekseerForDXLib.h"
 #include "ReusableTimer.h"
+#include "CollectItemObserver.h"
+
 /// <summary>
 /// タイトル画面の裏で車を走らせる
 /// </summary>
-TitleDemo::TitleDemo()
+TitleObject::TitleObject()
 {
+    //タイトルシーンの車
+    titleCarController = std::make_shared <TitlteCarController>(demoCarFirstPos, demoCarFirstDir);
+    demoObserver = titleCarController->CreateCarObserver();
+    //収集アイテム
+    std::shared_ptr<CollectItemController> collectController = std::make_shared<CollectItemController>();
+    collectItemObserver = std::make_shared<CollectItemObserver>(collectController);
+    //管理クラスに渡す
+    manager = new ActorControllerManager(collectItemObserver);
+    manager->AddActorController(collectController);
+    manager->AddActorController(titleCarController);
+    //共有後に開放
+    collectController.reset();
+    
     //車とか収集アイテムなど動かす
-    manager = new ActorControllerManager();
-    manager->AddActorController(new CollectController());
-    manager->AddActorController(new StageObjectController());
+    //初期化タイマー
     initTimer = new ReusableTimer(initTime);
-    demoCarController = new DemoCarController(demoCarFirstPos, demoCarFirstDir);
-
-    manager->AddActorController(demoCarController);
-    demoObserver = demoCarController->CreateCarObserver();
     shadowMap = new ShadowMap(demoObserver);
     camera = new TitleCamera(demoObserver);
 }
 /// <summary>
 /// 初期化周期タイマーや走っている車などの解放
 /// </summary>
-TitleDemo::~TitleDemo()
+TitleObject::~TitleObject()
 {
     SAFE_DELETE(initTimer);
     SAFE_DELETE(manager);
@@ -41,7 +50,7 @@ TitleDemo::~TitleDemo()
 /// <summary>
 /// 車やステージ選択の更新
 /// </summary>
-void TitleDemo::Update()
+void TitleObject::Update()
 {
     manager->Update();
     shadowMap->SetShadowMapErea();
@@ -60,7 +69,7 @@ void TitleDemo::Update()
             if (fadeValue > MAX1BYTEVALUE)
             {
                 isAValueIncrement = false;
-                demoCarController->InitPosition();
+                titleCarController->InitPosition();
             }
         }
         else if (!isAValueIncrement)//フェードイン
@@ -78,17 +87,18 @@ void TitleDemo::Update()
 /// <summary>
 /// タイトル画面で走っている車と風景とエフェクトと影を描画
 /// </summary>
-void TitleDemo::Draw() const
+void TitleObject::Draw() const
 {
-    shadowMap->SetUP();
+    //影とオブジェクトを描画
+    shadowMap->SetUPDrawShadow();
     manager->Draw();
-    shadowMap->DrawEnd();
+    shadowMap->EndDrawShadow();
     manager->Draw();
     shadowMap->Use();
 
     DrawEffekseer3D();
     DrawEffekseer2D();
-    
+    //一定時間かかるとフェードインフェードアウト
     if (initTimer->IsOverLimitTime())
     {
         SetDrawBlendMode(DX_BLENDMODE_ALPHA, static_cast<int> (fadeValue));//α値をいじる

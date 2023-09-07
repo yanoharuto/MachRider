@@ -1,11 +1,9 @@
 #pragma once
-#include <list>
-#include <unordered_map>
 #include <memory>
 #include <iostream>
 class ObjectObserver;
-class DamageObjectController;
-class ActorControllerManager;
+class BomberController;
+class RotatingLaserController;
 /// <summary>
 /// 投擲アイテムなどのダメージがあるオブジェクトを生成する
 /// </summary>
@@ -17,24 +15,28 @@ public:
     /// </summary>
     enum DamageObjectKind
     {
-        bomber,
-        littleRadLaser,
-        bigRadLaser
+        bomber,//爆弾
+        laser//レーザー
     };
     /// <summary>
-    /// デフォルトコンストラクタ
+    /// レーザーと爆弾の管理クラスを追加
     /// </summary>
-    DamageObjectGenerator(ActorControllerManager* const controllerManager);
+    /// <param name="laserController">レーザー管理クラス</param>
+    /// <param name="bombController">爆弾管理クラス</param>
+    DamageObjectGenerator(std::shared_ptr<RotatingLaserController> laserController,std::shared_ptr<BomberController> bombController);
+    /// <summary>
+    /// レーザーと爆弾の管理クラスを解放
+    /// </summary>
     ~DamageObjectGenerator();
     /// <summary>
     /// ダメージを与えるオブジェクトを生成
     /// </summary>
-    /// <param name="itemTag"></param>
+    /// <param name="itemTag">作成したいオブジェクトの種類</param>
     /// <param name="sub">発射した人の情報を渡す</param>
-    /// <returns></returns>
-    static void GenerateDamageObject(DamageObjectKind itemTag, std::unique_ptr<ObjectObserver> sub);
+    void GenerateDamageObject(DamageObjectKind itemTag, std::unique_ptr<ObjectObserver> sub);
 private:
-    //作成したコントローラークラス。GetControllerListが呼ばれると初期化される
-    static std::unordered_map<DamageObjectKind, DamageObjectController*> controllerVec;
-    
+    //回転レーザー管理クラス
+    std::shared_ptr<RotatingLaserController> rotaLaserController;
+    //爆弾管理クラス
+    std::shared_ptr<BomberController> bomberController;
 };

@@ -15,10 +15,12 @@ EffectManager::EffectManager()
 {
     effectMap.clear();
     CSVFileLoader* initDataFile = new CSVFileLoader(initDataPassFile);
-    initDataVec = initDataFile->GetLoadStringData();
+    initDataVec = initDataFile->GeFileStringData();
     SAFE_DELETE(initDataFile);
 }
-
+/// <summary>
+/// エフェクトを解放
+/// </summary>
 EffectManager::~EffectManager()
 {
     for (auto ite = effectMap.begin(); ite != effectMap.end(); ite++)
@@ -28,9 +30,9 @@ EffectManager::~EffectManager()
     effectMap.clear();
 }
 /// <summary>
-/// 読み込むエフェクト
+/// エフェクトを読み込む
 /// </summary>
-/// <param name="kind"></param>
+/// <param name="kind">エフェクトの種類</param>
 void EffectManager::LoadEffect(EffectKind kind)
 {
     if (!effectMap.contains(kind))
@@ -38,7 +40,7 @@ void EffectManager::LoadEffect(EffectKind kind)
         //データ読み取り
         CSVFileLoader* initDataFile = new CSVFileLoader(initDataVec[kind]);
 
-        std::vector<std::string> dataVec = initDataFile->GetLoadStringData();
+        std::vector<std::string> dataVec = initDataFile->GeFileStringData();
         //エフェクトのアセットのパス
         const char* effectPass = dataVec[EffectInitData::effectPass].c_str();
         //エフェクトの大きさ
@@ -49,13 +51,14 @@ void EffectManager::LoadEffect(EffectKind kind)
     }
 }
 /// <summary>
-/// 3Ⅾエフェクトを渡す
+/// ロード済みの3Ⅾエフェクトを渡す
 /// </summary>
-/// <param name="kind"></param>
-/// <returns></returns>
+/// <param name="kind">エフェクトの種類</param>
+/// <returns>3Ⅾエフェクトのハンドル</returns>
 int EffectManager::GetPlayEffect3D(EffectKind kind)
 {
     int isPlay = -1;
+    //ロード済みなら渡す
     if (effectMap.contains(kind))
     {
         isPlay = PlayEffekseer3DEffect(effectMap[kind]);
@@ -63,13 +66,14 @@ int EffectManager::GetPlayEffect3D(EffectKind kind)
     return isPlay;
 }
 /// <summary>
-/// 2Dエフェクトを渡す
+/// ロード済みの2Dエフェクトを渡す
 /// </summary>
 /// <param name="kind"></param>
-/// <returns></returns>
+/// <returns>2Ⅾエフェクトのハンドル</returns>
 int EffectManager::GetPlayEffect2D(EffectKind kind)
 {
     int isPlay = -1;
+    //ロード済みなら渡す
     if (effectMap.contains(kind))
     {
         isPlay = PlayEffekseer2DEffect(effectMap[kind]);

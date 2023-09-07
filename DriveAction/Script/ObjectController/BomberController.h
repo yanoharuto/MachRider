@@ -12,7 +12,7 @@ public:
     /// <summary>
     /// 爆弾の管理クラス
     /// </summary>
-    BomberController() ;
+    BomberController();
     /// <summary>
     /// 爆弾を更新できるようにする
     /// </summary>

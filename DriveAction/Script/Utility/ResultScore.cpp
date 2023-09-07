@@ -6,7 +6,6 @@
 #include "PlayerObserver.h"
 #include "StageDataManager.h"
 #include "ScoreRecordWriter.h"
-#include "GameManager.h"
 #include "StopTimer.h"
 //収集アイテムゲットボーナス
 const int ResultScore::getCollectBonus = 500;
@@ -15,23 +14,23 @@ const int ResultScore::clearTimeBonus = 50;
 /// <summary>
 /// ゲームクリアしたときのスコアを計算する
 /// </summary>
-/// <param name="gameManager">スコア計算に必要な情報をもらう</param>
+/// <param name="player">集めたアイテムの数を教えてもらう</param>
 /// <param name="timer">クリアタイムを所得する</param>
-ResultScore::ResultScore(std::weak_ptr<GameManager> gameManager, std::weak_ptr<Timer> timer)
+ResultScore::ResultScore(std::weak_ptr<PlayerObserver> player, std::weak_ptr<Timer> timer)
 {
     //残り時間
     int scoreTime = timer.lock()->IsOverLimitTime() ? 0 : static_cast<int>(timer.lock()->GetRemainingTime());
     //スコアを計算して確定させる
-    FixScore(scoreTime, gameManager.lock()->GetPlayerObserver().lock()->GetCollectCount());
+    FixScore(scoreTime, player.lock()->GetCollectCount());
 }
 /// <summary>
 /// スコア所得
 /// </summary>
 /// <param name="scoreKind">欲しいスコアの種類</param>
-/// <returns>引数のスコア量</returns>
+/// <returns>引数の種類のスコア量</returns>
 int ResultScore::GetScore(ScoreKind scoreKind)
 {
-    switch (scoreKind)
+    switch (scoreKind)//引数の種類のスコアの量を返す
     {
     case ResultScore::timeBonus:
         return timeScore;
@@ -54,7 +53,7 @@ int ResultScore::GetScore(ScoreKind scoreKind)
 /// <returns>引数のスコアの倍率</returns>
 int ResultScore::GetScoreBonus(ScoreKind scoreKind)
 {
-    switch (scoreKind)
+    switch (scoreKind)//引数の種類のスコアの倍率を返す
     {
     case ResultScore::timeBonus:
         return clearTimeBonus;
@@ -90,6 +89,7 @@ int ResultScore::GetUpdateScore() const
 /// <param name="getCollectNum">プレイヤーの所得した収集アイテム数</param>
 void ResultScore::FixScore(int remainingTime, int getCollectNum)
 {
+    //スコアの記録線引き
     ScoreBorder score = StageDataManager::GetScoreBorder();
     //制限時間を超過してたら0
     timeScore = remainingTime * clearTimeBonus; 
@@ -107,5 +107,4 @@ void ResultScore::FixScore(int remainingTime, int getCollectNum)
         scoreRecordWriter->UpdateScoreRecord(this);
         SAFE_DELETE(scoreRecordWriter);
     }
-
 }

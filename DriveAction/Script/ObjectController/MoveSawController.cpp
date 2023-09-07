@@ -11,7 +11,7 @@ MoveSawController::MoveSawController()
     drawModel = new DrawModel(controllObjKind);
 }
 /// <summary>
-/// 更新。　破壊されたら破棄
+/// 回転のこぎりを移動させる　破壊されたら破棄
 /// </summary>
 void MoveSawController::Update()
 {

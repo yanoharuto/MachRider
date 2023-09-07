@@ -13,12 +13,6 @@ data/model/Player/Wheel.mv1
     //跳ね返りの大きさ
     bouncePower = 14
 0
-//マップの初期位置で使われている番号
-        mapTiledNum = 17
-0
-        //初期位置の情報が書いてあるファイル名
-        firstPosName = 20
-/
         //追加情報の置いてある場所
         addDataPass = 23
 /

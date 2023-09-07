@@ -16,7 +16,7 @@ public:
     /// <param name="editData">追加する位置などの情報</param>
     void AddObject(PlacementData editData)override;
     /// <summary>
-    /// 更新。　破壊されたら破棄
+    /// 回転させる　破壊されたら破棄
     /// </summary>
     void Update()override;
 };

@@ -9,10 +9,11 @@ ReusableTimer::ReusableTimer(double setLimitTime)
 {
  
 }
-/// <summary>
-/// 再利用
-/// </summary>
+///<summary>
+/// もう一度最初に設定した計測時間分計測開始
+///</summary>
 void ReusableTimer::Reuse()
 {
+    //計測開始時間を初期化
     startTime = Clock::GetNowGameTime();
 }

@@ -5,10 +5,10 @@
 #include "StageObjectController.h"
 class GameScreen;
 class StageSelect;
-class GameManager;
+class CollectItemObserver;
 class FlashUI;
 class TitleCamera;
-class TitleDemo;
+class TitleObject;
 class Timer;
 class TitleRanking;
 /// <summary>
@@ -69,7 +69,7 @@ private:
     //スペースキーを押してもらうためのUI
     FlashUI* spaceKeyUI;
     //タイトルの後ろで走らせる
-    TitleDemo* titleDemo;
+    TitleObject* titleObject;
     //タイトルの状態
     TitleState titleState;
     //描画した状態を保存する

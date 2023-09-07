@@ -2,7 +2,7 @@
 #include <iostream>
 #include <memory>
 #define SCORE_KIND_NUM 4
-class GameManager;
+class PlayerObserver;
 class Timer;
 /// <summary>
 /// 最終的なスコアの保存役
@@ -13,9 +13,9 @@ public:
     /// <summary>
     /// ゲームクリアしたときのスコアを計算する
     /// </summary>
-    /// <param name="gameManager">スコア計算に必要な情報をもらう</param>
+    /// <param name="player">集めたアイテムの数を教えてもらう</param>
     /// <param name="timer">クリアタイムを所得する</param>
-    ResultScore(std::weak_ptr<GameManager> gameManager, std::weak_ptr<Timer> timer);
+    ResultScore(std::weak_ptr<PlayerObserver> player, std::weak_ptr<Timer> timer);
     //スコアの種類
     enum ScoreKind
     {

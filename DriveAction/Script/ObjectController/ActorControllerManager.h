@@ -1,9 +1,14 @@
 #pragma once
 #include <list>
+#include <memory>
+#include <iostream>
 class AddableObjectController;
 class ActorController;
 class DamageObjectGenerator;
 class EnemyGenerator;
+class BomberController;
+class RotatingLaserController;
+class CollectItemObserver;
 /// <summary>
 /// actorの動きを制御している物を全部束ねて動かす
 /// </summary>
@@ -11,9 +16,10 @@ class ActorControllerManager final
 {
 public:
     /// <summary>
-    /// 敵などをNewして配置する
+    /// ゲーム中に使うオブジェクトの管理クラスの確保
     /// </summary>
-    ActorControllerManager();
+    /// <param name="collectItemObserver">収集アイテムが取られたりしたら教えてもらう</param>
+    ActorControllerManager(std::shared_ptr<CollectItemObserver> collectItemObserver);
     /// <summary>
     /// 敵の管理クラスやステージのオブジェクトなどをすべて解放
     /// </summary>
@@ -34,7 +40,7 @@ public:
     /// actor管理クラスを追加
     /// </summary>
     /// <param name="actorController">actor管理クラス</param>
-    void AddActorController(ActorController* actorController);
+    void AddActorController(std::shared_ptr<ActorController> actorController);
 private:
     /// <summary>
     /// 2つのActor管理クラスどちらでも使えるゲーム開始前更新
@@ -42,33 +48,35 @@ private:
     /// <typeparam name="controllerClass">Actor管理クラス</typeparam>
     /// <param name="controllerList">controllerClassを纏めたリスト</param>
     template<typename controllerClass>
-    void PrepareGame(std::list<controllerClass*> controllerList);
+    void PrepareGame(std::list<std::shared_ptr<controllerClass>> controllerList);
     /// <summary>
     /// 2つのActor管理クラスどちらでも使える更新
     /// </summary>
     /// <typeparam name="controllerClass">Actor管理クラス</typeparam>
     /// <param name="controllerList">controllerClassを纏めたリスト</param>
     template<typename controllerClass>
-    void Update(std::list<controllerClass*> controllerList);
+    void Update(std::list<std::shared_ptr<controllerClass>> controllerList);
     /// <summary>
     /// 2つのActor管理クラスどちらでも使える描画
     /// </summary>
     /// <typeparam name="controllerClass">Actor管理クラス</typeparam>
     /// <param name="controllerList">controllerClassを纏めたリスト</param>
     template<typename controllerClass>
-    void Draw(std::list<controllerClass*> controllerList)const;
+    void Draw(std::list<std::shared_ptr<controllerClass>> controllerList)const;
     /// <summary>
     ///　敵生成処理
     /// </summary>
     void GenerateEnemyProcess();
     //収集アイテムの数
     int collectNum = 0;
-    //actor管理クラスのリスト
-    std::list<ActorController*> actorControllerList;
+    //色んなオブジェクトの管理クラス
+    std::list<std::shared_ptr<ActorController>> actorControllerList;
     //追加可能クラスActor管理クラスのリスト
-    std::list<AddableObjectController*> addableActorControllerList;
+    std::list<std::shared_ptr<AddableObjectController>> addableActorControllerList;
     //敵が発射してきたりしたアイテムを作成
-    DamageObjectGenerator* damageObjGenerator;
+    std::shared_ptr<DamageObjectGenerator> damageObjGenerator;
+    //収集アイテムが回収されたかどうかを教えてもらう
+    std::shared_ptr<CollectItemObserver> collectObserver;
     //収集アイテムが回収されると増える敵を作成する
     EnemyGenerator* enemyGenerator;
 };

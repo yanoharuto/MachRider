@@ -8,13 +8,13 @@
 /// <summary>
 /// 収集アイテムの操作
 /// </summary>
-class CollectController final : public ActorController
+class CollectItemController final : public ActorController
 {
 public:
     /// <summary>
     /// コインを予めNewして最大枚数を保存
     /// </summary>
-    CollectController();
+    CollectItemController();
     /// <summary>
     /// actorListの先頭の収集アイテムだけ更新
     /// </summary>
@@ -28,46 +28,40 @@ public:
     /// </summary>
     void PrepareGame()override;
     /// <summary>
-    /// 引数の場所と収集アイテムの位置の距離ベクトルを出す
+    /// 引数と収集アイテムの距離
     /// </summary>
-    /// <param name="pos"></param>
-    /// <returns></returns>
-    static VECTOR GetCollectItemBetween(VECTOR pos);
+    /// <param name="pos">収集アイテムとの距離を調べたい位置</param>
+    /// <returns>引数と収集アイテムの距離ベクトル</returns>
+    VECTOR GetItemBetween(VECTOR pos)const;
     /// <summary>
-    /// 収集アイテムが動いているか
+    /// 最初にステージに配置される枚数
     /// </summary>
-    /// <returns></returns>
-    static bool IsActiveCollect();
+    /// <returns>ステージに配置された最大数</returns>
+    int GetTotalNum()const;
     /// <summary>
-    /// プレイヤーが集めなければいけないアイテムの数
+    /// アイテムの残り枚数
     /// </summary>
-    /// <returns></returns>
-    static int GetTotalCollectNum();
+    /// <returns>プレイヤーに取られると減る</returns>
+    int GetRemainingNum()const;
     /// <summary>
-    /// 残っているアイテムの数
+    /// 今の収集アイテムが何番目のアイテムか
     /// </summary>
-    /// <returns></returns>
-    static int GetRemainingCollectNum();
+    /// <returns>取られたら増える</returns>
+    int GetCollectCount()const;
     /// <summary>
-    /// プレイヤーが収集アイテムを集め終えたか
+    /// さっきまであったアイテムが回収されたか
     /// </summary>
-    /// <returns></returns>
-    static bool IsEndGame();
-    /// <summary>
-    /// 全アイテムが破壊されたか
-    /// </summary>
-    static bool IsDestroyAllItem();
+    /// <returns>回収されたらTrue</returns>
+    bool IsCollectNowItem()const;
 private:
-    //収集アイテムの状態
-    static Object::ObjectState objState;
-    //収集アイテムが全部Deleteされたか
-    static bool isDestroyAll;
-    //収集アイテムを取り終わった
-    static bool isGameEnd;
     //収集アイテムの最大数
-    static int totalCollectNum;
+    int totalCollectNum;
+    //今の収集アイテムが何番目か
+    int collectCount;
     //所得されたアイテムの数
-    static int remainingCollectNum;
+    int remainingCollectNum;
+    //今あるオブジェクトが取られたか
+    bool isCollectNowItem;
     /// 現在動いている収集アイテムの位置
-    static VECTOR nowActiveCollectItemPos;
+    VECTOR nowActiveCollectItemPos;
 };

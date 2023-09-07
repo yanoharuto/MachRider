@@ -12,7 +12,6 @@ public:
     /// プレイヤーの衝突処理実行役
     /// </summary>
     PlayerConflictProcessor(PlayerCar* const car);
-    ~PlayerConflictProcessor() {};
     /// <summary>
     /// 衝突結果実行役
     /// </summary>

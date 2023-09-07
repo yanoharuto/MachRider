@@ -7,14 +7,8 @@
 /// </summary>
 ActorController::~ActorController()
 {
-    for (auto ite = actorList.begin(); ite != actorList.end(); ite++)
-    {
-        SAFE_DELETE(*ite);
-    }
-    actorList.clear();
-    SAFE_DELETE(drawModel);
+    DeleteActorListAndDrawModel();
 }
-
 /// <summary>
 /// ƒQ[ƒ€ŠJn€”õˆ—
 /// </summary>
@@ -49,4 +43,19 @@ void ActorController::Draw() const
             drawModel->Draw((*ite));
         }
     }
+}
+/// <summary>
+/// •`‰æ–ğ‚ÆActorList‚Ì‰ğ•ú
+/// </summary>
+void ActorController::DeleteActorListAndDrawModel()
+{
+    if (!actorList.empty())
+    {
+        for (auto ite = actorList.begin(); ite != actorList.end(); ite++)
+        {
+            SAFE_DELETE(*ite);
+        }
+        actorList.clear();
+    }
+    SAFE_DELETE(drawModel);
 }

@@ -19,7 +19,7 @@ MoveSaw::MoveSaw(PlacementData editData)
 {   
     //追加情報から移動速度などを所得
     auto addDataLoader = new CSVFileLoader(InitActor::GetAddDataPass(moveSaw));
-    auto addStrDataVec = addDataLoader->GetLoadStringData();
+    auto addStrDataVec = addDataLoader->GeFileStringData();
     //タイマーが動いている間だけ動く
     moveLarpTimer = new ReusableTimer(SAFE_STR_TO_D(addStrDataVec[moveTime]));
     //前方方向に動く

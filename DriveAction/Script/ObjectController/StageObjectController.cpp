@@ -23,11 +23,9 @@ StageObjectController::StageObjectController()
     stageWall = new StageWall();
     drawModel = new DrawModel(wall);
 }
-
 /// <summary>
-/// 岩削除
+/// ステージを囲むオブジェクトの解放
 /// </summary>
-/// <returns></returns>
 StageObjectController::~StageObjectController()
 {
     SAFE_DELETE(stageWall);

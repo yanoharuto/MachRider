@@ -1,7 +1,9 @@
 #pragma once
+#include<memory>
+#include<iostream>
+#include <list>
 #include "DxLib.h"
 #include "InitObjKind.h"
-#include <list>
 #include "InitActor.h"
 #include "AddableObjectController.h"
 namespace FlyShipInit
@@ -46,6 +48,7 @@ namespace FlyShipInit
     };
 }
 class FlyShip;
+class DamageObjectGenerator;
 using namespace FlyShipInit;
 /// <summary>
 /// 空を飛ぶ船のまとめ役
@@ -54,10 +57,16 @@ class FlyShipController abstract : public AddableObjectController
 {
 public:
     /// <summary>
-    /// 初期化するために必要なデータを所得
+    /// 纏める飛行船の初期化するために必要なデータを所得 
+    /// 飛行船が発射する物を生成できるdamageObjGeneratorを所得
     /// </summary>
     /// <param name="kind">初期化したいFlyShipの種類</param>
-    FlyShipController(ObjectInit::InitObjKind kind);
+    /// <param name="damageObjGenerator">レーザーや爆弾を発射するのに使う</param>
+    FlyShipController(ObjectInit::InitObjKind kind, std::shared_ptr<DamageObjectGenerator> damageObjGenerator);
+    /// <summary>
+    /// actorListとDrawModelとdamageObjectGeneratorの解放
+    /// </summary>
+    ~FlyShipController()override;
 protected:
     /// <summary>
     /// 初期化するために必要なデータを所得
@@ -67,5 +76,6 @@ protected:
     InitFlyShipParamator GetInitData(ObjectInit::InitObjKind kind);
     //初期化情報
     InitFlyShipParamator param = {};
+    //レーザーや爆弾を発射するのに使う
+    std::shared_ptr<DamageObjectGenerator> damageObjectGenerator;
 };
-

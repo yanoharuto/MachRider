@@ -19,7 +19,7 @@ class NumUI;
 class FlashUI;
 class TimerUI;
 class ScoreNum;
-class GameManager;
+class PlayerObserver;
 using enum ResultScore::ScoreKind;
 /// <summary>
 /// ゴール後の演出をする
@@ -30,9 +30,9 @@ public:
     /// <summary>
     /// ゴール後の演出をする
     /// </summary>
-    /// <param name="gameManager">ResultScoreにプレイヤー情報を渡す</param>
+    /// <param name="player">プレイヤー情報を渡す</param>
     /// <param name="gameTimer">クリアタイムを受け取る</param>
-    PostGameEndStagingProcess(std::weak_ptr<GameManager> gameManager,std::shared_ptr<Timer> gameTimer);
+    PostGameEndStagingProcess(std::weak_ptr<PlayerObserver> player,std::shared_ptr<Timer> gameTimer);
     /// <summary>
     /// 各UIを削除する
     /// </summary>

@@ -20,19 +20,15 @@ namespace ObjectInit
         upDownLaserShip = 17,
         //円状に並ぶ機体
         circleLaserShip = 20,
-        //小回りレーザー
-        littleRadiusLaser = 23,
-        //大回りレーザー
-        bigRadiusLaser = 26,
-        //タイヤ
-        wheel = 29,
+        //レーザー
+        laser = 23,
         //コイン
-        collect = 32,
+        collect = 26,
         //床
-        stageFloor = 35,
+        stageFloor = 29,
         //スカイドーム
-        skyDome = 38,
+        skyDome = 32,
         //ステージの外に出ないようにする壁
-        wall = 41
+        wall = 35
     };
 }

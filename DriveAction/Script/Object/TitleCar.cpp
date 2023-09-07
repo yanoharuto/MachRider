@@ -1,13 +1,15 @@
-#include "DemoCar.h"
+#include "TitleCar.h"
 #include "EffectManager.h"
 #include "EffekseerForDXLib.h"
 #include "Utility.h"
+#include "OriginalMath.h"
+#include "Wheels.h"
 /// <summary>
 /// 位置などの初期化とエフェクトのロード
 /// </summary>
 /// <param name="setPos">初期位置</param>
 /// <param name="setDir">初期向き</param>
-DemoCar::DemoCar(VECTOR setPos, VECTOR setDir)
+TitleCar::TitleCar(VECTOR setPos, VECTOR setDir)
     :Car(ObjectInit::player)
 {
 	firstPosY = position.y;
@@ -22,9 +24,9 @@ DemoCar::DemoCar(VECTOR setPos, VECTOR setDir)
 	speedParamator.maxSpeed = setMaxSpeed;
 }
 /// <summary>
-/// タイヤとエフェクト削除
+/// タイヤとエフェクト解放
 /// </summary>
-DemoCar::~DemoCar()
+TitleCar::~TitleCar()
 {
 	SAFE_DELETE(wheels);
 
@@ -37,14 +39,14 @@ DemoCar::~DemoCar()
 /// <summary>
 /// 初期位置に戻す
 /// </summary>
-void DemoCar::InitPosition()
+void TitleCar::InitPosition()
 {
 	position = firstPos;
 }
 /// <summary>
-/// 更新
+/// 一定方向に走る
 /// </summary>
-void DemoCar::Update()
+void TitleCar::Update()
 {
 	//速度を更新
 	UpdateVelocity();
@@ -56,7 +58,7 @@ void DemoCar::Update()
 /// <summary>
 /// エフェクトの更新
 /// </summary>
-void DemoCar::EffectUpdate()
+void TitleCar::EffectUpdate()
 {
 	float degree = OriginalMath::GetDegreeMisalignment(VGet(1, 0, 0), direction);
 	//エフェクトが出てなかったら出す
@@ -80,7 +82,7 @@ void DemoCar::EffectUpdate()
 /// 走る速さベクトルの所得
 /// </summary>
 /// <returns></returns>
-void DemoCar::UpdateAccelPower()
+void TitleCar::UpdateAccelPower()
 {
 	// 加速処理.
 	accelPower += speedParamator.acceleSpeed;

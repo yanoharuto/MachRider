@@ -6,7 +6,14 @@
 #include "PostGameEndStagingProcess.h"
 #include "GamePrevProcess.h"
 #include "EffekseerForDXLib.h"
-#include "GameManager.h"
+#include "GameCamera.h"
+#include "GameScreen.h"
+#include "ShadowMap.h"
+#include "PlayerObserver.h"
+#include "PlayerCarController.h"
+#include "CollectController.h"
+#include "CollectItemObserver.h"
+
 /// <summary>
 /// ゲームしているときの流れ
 /// </summary>
@@ -17,9 +24,35 @@ PlaySceneFlow::PlaySceneFlow()
 	//ゴール後の処理とプレイヤーが操作する処理はまだ呼ばない
 	postGoalStaging = nullptr;
 	playGameProcess = nullptr;
+	//衝突判定管理
+	conflictManager = new ConflictManager();
+	//収集アイテム
+	std::shared_ptr<CollectItemController> collectController = std::make_shared<CollectItemController>();
+	collectItemObserver = std::make_shared<CollectItemObserver>(collectController);
+	//様々なオブジェクトの更新などをする
+	controllerManager = std::make_shared<ActorControllerManager>(collectItemObserver);
+	//収集アイテムを共有
+	controllerManager->AddActorController(collectController);
+	//共有し終わったので開放
+	collectController.reset();
+	//プレイヤー
+	std::shared_ptr<PlayerCarController> playerController = std::make_shared<PlayerCarController>();
+	//プレイヤーの情報を更新するオブザーバー
+	playerObserver = playerController->CreatePlayerObserver();
+	//プレイヤーを共有
+	controllerManager->AddActorController(playerController);
+	//解放
+	playerController.reset();
 	//ゴール前処理
-	gamePrevProcess = new GamePrevProcess();
-	gameManager = std::make_shared<GameManager>();
+	gamePrevProcess = new GamePrevProcess(collectItemObserver);
+	//カメラ
+	camera = new GameCamera(playerObserver);
+	//影
+	shadowMap = new ShadowMap(playerObserver);
+	//描画するたび保存出来るクラス
+	screen = new GameScreen();
+	//カメラの処理
+	camera->Update();
 	//書く処理を分ける
 	UpdateFunc[PlaySceneFlow::start] = &PlaySceneFlow::StartUpdate;
 	UpdateFunc[PlaySceneFlow::game] = &PlaySceneFlow::GameUpdate;
@@ -31,10 +64,14 @@ PlaySceneFlow::PlaySceneFlow()
 /// </summary>
 PlaySceneFlow::~PlaySceneFlow()
 {
+	SAFE_DELETE(conflictManager);
+	SAFE_DELETE(shadowMap);
+	SAFE_DELETE(screen);
+	SAFE_DELETE(camera);
 	SAFE_DELETE(postGoalStaging);
 	SAFE_DELETE(playGameProcess);
 	SAFE_DELETE(gamePrevProcess);
-	gameManager.reset();
+	controllerManager.reset();
 }
 /// <summary>
 /// 更新
@@ -59,23 +96,23 @@ void PlaySceneFlow::Draw()const
 	{
 		//スタート前のカウントダウン
 	case PlaySceneProgress::start:
-		gameManager->DrawActor();
+		controllerManager->Draw();
 		//エフェクト
 		DrawEffekseer3D();
 		DrawEffekseer2D();
 		gamePrevProcess->Draw();
 		//描画を保存
-		gameManager->SaveDrawScreen();
+		screen->ScreenUpdate();
 		break;
 		//遊んでいるとき
 	case PlaySceneProgress::game:
-		gameManager->DrawActor();
+		controllerManager->Draw();
 		//エフェクト
 		DrawEffekseer3D();
 		DrawEffekseer2D();
 		playGameProcess->Draw();
 		//描画を保存
-		gameManager->SaveDrawScreen();
+		screen->ScreenUpdate();
 		break;
 		//スコアの描画
 	case PlaySceneProgress::playerGoal:
@@ -89,11 +126,15 @@ void PlaySceneFlow::Draw()const
 void PlaySceneFlow::GameUpdate()
 {
 	//ゲームを遊んでいるときの処理
-	playGameProcess->Update(gameManager);
+	playGameProcess->Update(collectItemObserver);
+	controllerManager->Update();
+	conflictManager->Update();
+	camera->Update();
+	shadowMap->SetShadowMapErea();
 	//遊んでいるときの処理が終了したら
 	if(playGameProcess->IsEndProcess())
 	{
-		postGoalStaging = new PostGameEndStagingProcess(gameManager, playGameProcess->GetGameTimer());
+		postGoalStaging = new PostGameEndStagingProcess(playerObserver, playGameProcess->GetGameTimer());
 		SAFE_DELETE(playGameProcess);
 		nowProgress = PlaySceneProgress::playerGoal;
 	}
@@ -122,12 +163,15 @@ void PlaySceneFlow::PlayerGoalUpdate()
 /// </summary>
 void PlaySceneFlow::StartUpdate()
 {
-	gamePrevProcess->Update(gameManager);
+	gamePrevProcess->Update();
+	controllerManager->PrepareGame();
+	camera->Update();
+	shadowMap->SetShadowMapErea();
 	//処理が終わったら
 	if (gamePrevProcess->IsEndProcess())
 	{
 		nowProgress = PlaySceneProgress::game;
 		SAFE_DELETE(gamePrevProcess);
-		playGameProcess = new PlayGameProcess(gameManager);
+		playGameProcess = new PlayGameProcess(playerObserver,collectItemObserver);
 	}
 }

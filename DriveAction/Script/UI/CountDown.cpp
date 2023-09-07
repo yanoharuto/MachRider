@@ -15,7 +15,7 @@ CountDown::CountDown(std::weak_ptr<Timer> setTimer)
 	countDownUIData = UIManager::CreateUIData(countDownUI);
 	endUI = UIManager::CreateUIData(onGameStartCountDownEnd);
 	timer = setTimer;
-	SoundPlayer::LoadSound(countDown);
+	SoundPlayer::LoadAndInitSound(countDown);
 }
 /// <summary>
 /// タイマーの解放

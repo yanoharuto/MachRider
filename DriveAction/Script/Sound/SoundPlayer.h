@@ -97,15 +97,15 @@ public:
     /// </summary>
     static void StopAllSound();
     /// <summary>
-    /// 音をロードして使いまわせるようにする
+    /// 音をロードして音量を初期化して使いまわせるようにする
     /// </summary>
     /// <param name="kind">音の種類</param>
-    static void LoadSound(SoundKind kind);
+    static void LoadAndInitSound(SoundKind kind);
     /// <summary>
-    /// ３Dの音をロードして使いまわせるようにする
+    /// ３Dの音をロードして音量を初期化して使いまわせるようにする
     /// </summary>
     /// <param name="kind">音の種類</param>
-    static void Load3DSound(SoundKind kind);
+    static void LoadAndInit3DSound(SoundKind kind);
     /// <summary>
     /// その音が鳴ってるかどうか調べる
     /// </summary>

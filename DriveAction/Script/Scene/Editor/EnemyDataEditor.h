@@ -5,8 +5,7 @@
 /// <summary>
 /// “G‚Ì•ÒWƒNƒ‰ƒX
 /// </summary>
-class EnemyDataEditor :
-    public StageDataEditor
+class EnemyDataEditor final: public StageDataEditor
 {
 public:
     /// <summary>

@@ -1,24 +1,20 @@
 #include "CircleLaserFlyShip.h"
 #include "AssetManager.h"
 #include "DamageObjectGenerator.h"
-
+#include "ObjectObserver.h"
 /// <summary>
-/// 円状に陣形を作った飛行船
+/// 位置と向きを初期化してレーザーを発射
 /// </summary>
-CircleLaserFlyShip::CircleLaserFlyShip(VECTOR firstPos, VECTOR setDestinationPos)
-    :LaserFlyShip(ObjectInit::circleLaserShip)
+/// <param name="setPos">位置</param>
+/// <param name="setDestinationPos">向くべき方向の位置</param>
+/// <param name="damageObjectGenerator">レーザーを発射することを伝えるクラス</param>
+CircleLaserFlyShip::CircleLaserFlyShip(VECTOR firstPos, VECTOR setDestinationPos, std::weak_ptr<DamageObjectGenerator> damageObjectGenerator)
+    :Actor(ObjectInit::circleLaserShip)
 {
     position.x = firstPos.x;
     position.z = firstPos.z;
     setDestinationPos.y = position.y;
     direction = VNorm(VSub(setDestinationPos, position));
-    GenerateLaser(DamageObjectGenerator::littleRadLaser);
-}
-
-/// <summary>
-/// 描画できる段階になったらactiveになる
-/// </summary>
-void CircleLaserFlyShip::Update()
-{
-    objState = active;
+    //レーザーを発射
+    damageObjectGenerator.lock()->GenerateDamageObject(DamageObjectGenerator::laser, std::make_unique<ObjectObserver>(this));   
 }

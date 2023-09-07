@@ -25,21 +25,24 @@ void BomberController::OnGenerateDamageObject(std::unique_ptr<ObjectObserver> su
 /// </summary>
 void BomberController::Update()
 {
-    //破棄するリスト
-    std::list<std::list<Actor*>::iterator> brokenList;
-    //更新
-    for (auto ite = actorList.begin(); ite != actorList.end(); ite++)
+    if(!actorList.empty())
     {
-        (*ite)->Update();
-        if ((*ite)->GetObjectState() == Object::dead)//爆破終了後は破棄
+        //破棄するリスト
+        std::list<std::list<Actor*>::iterator> brokenList;
+        for (auto ite = actorList.begin(); ite != actorList.end(); ite++)
         {
-            brokenList.push_back(ite);
-            SAFE_DELETE(*ite);
+            (*ite)->Update();
+            //更新
+            if ((*ite)->GetObjectState() == Object::dead)//爆破終了後は破棄
+            {
+                brokenList.push_back(ite);
+                SAFE_DELETE(*ite);
+            }
         }
-    }
-    //actorListから削除
-    for (auto ite = brokenList.begin(); ite != brokenList.end(); ite++)
-    {
-        actorList.erase(*(ite));
+        //actorListから削除
+        for (auto ite = brokenList.begin(); ite != brokenList.end(); ite++)
+        {
+            actorList.erase(*(ite));
+        }
     }
 }

@@ -17,12 +17,12 @@ public:
     /// CSVファイルを読み込む
     /// </summary>
     /// <returns></returns>
-    std::vector <std::string> GetLoadStringData()const;
+    std::vector <std::string> GeFileStringData()const;
     /// <summary>
     /// CSVファイルを読み込む
     /// </summary>
     /// <returns></returns>
-    std::vector <const char*> GetLoadCharData()const;
+    std::vector <const char*> GetFileCharData()const;
     /// <summary>
     /// 読み込んだファイルの行
     /// </summary>

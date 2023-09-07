@@ -11,7 +11,7 @@ public:
     /// </summary>
     EditorCamera();
     /// <summary>
-    /// 上下キーで動かすことが出来る
+    /// 上下左右キーで動かすことが出来る
     /// </summary>
     void Update();
     /// <summary>

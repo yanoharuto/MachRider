@@ -1,5 +1,4 @@
 #pragma once
-
 //fps
 #define FLAME 60
 /// <summary>
@@ -12,7 +11,6 @@ public:
     /// ゲーム開始の瞬間を保存
     /// </summary>
     Clock();
-    ~Clock() {};
     /// <summary>
     /// タイマーを更新する
     /// </summary>

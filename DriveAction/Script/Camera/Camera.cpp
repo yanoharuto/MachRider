@@ -33,10 +33,10 @@ void Camera::LoadData(UseCameraSceneKind type)
 {
     //カメラ情報まとめファイルを所得
     CSVFileLoader* initFileLoader = new CSVFileLoader(initFileName);
-    auto strData = initFileLoader->GetLoadStringData();
+    auto strData = initFileLoader->GeFileStringData();
     //まとめファイルからシーンごとの情報を所得
     CSVFileLoader* initDataLoader = new CSVFileLoader(strData[type]);
-    strData = initDataLoader->GetLoadStringData();
+    strData = initDataLoader->GeFileStringData();
     SAFE_DELETE(initFileLoader);
     //カメラの有効範囲
     float nearValue = SAFE_STR_TO_F(strData[setNearValue]);

@@ -1,14 +1,10 @@
 #pragma once
 #include "Actor.h"
-#include "OriginalMath.h"
 #include "DxLib.h"
-#include "Wheels.h"
-
 struct CollisionResultInfo;
 struct HitCheckInfo;
 class Timer;
 class Wheels;
-
 /// <summary>
 /// 車の加速とか減速とかするよ。どの向きに加速するかとかはwheelsからとってくるよ
 /// </summary>
@@ -20,15 +16,10 @@ public:
 	/// </summary>
 	/// <param name="kind"> 欲しいオブジェクトの種類</param>
 	Car(ObjectInit::InitObjKind kind);
-	
+    /// <summary>
+    /// タイヤの開放
+    /// </summary>
     virtual ~Car();
-
-	/// <summary>
-	/// 移動する前のポジションを渡す
-	/// </summary>
-	/// <returns></returns>
-	virtual HitCheckInfo GetHitCheckExamineInfo() override;
-
 protected:
 	/// <summary>
 	/// 車がぶつかった時の関数
@@ -93,6 +84,14 @@ protected:
 		//急加速に必要な時間
 		turboChargeTime = 23
 	};
+	//衝突して吹っ飛ぶ時間を計る
+	Timer* bounceTimer = nullptr;
+	//タイヤ
+	Wheels* wheels;
+	//ぶつかった物体との方向
+	VECTOR conflictVec = {};
+	//ひとつ前のポジション
+	VECTOR prevPos = {};
 	//車のパラメーター
 	SpeedParamator speedParamator;
 	//速さ
@@ -105,12 +104,6 @@ protected:
 	static const float gripDecel;
 	// 障害物にぶつかったときの減速率.
 	static const float colideDecel;
-	//衝突して吹っ飛ぶ時間を計る
-	Timer* bounceTimer = nullptr;
-	//タイヤ
-	Wheels* wheels;
-	//ぶつかった物体との方向
-	VECTOR conflictVec = {};
-	//ひとつ前のポジション
-	VECTOR prevPos = {};
+	//ダメージ
+	bool isBounce = false;
 };

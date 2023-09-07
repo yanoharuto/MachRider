@@ -7,9 +7,10 @@ class BomberFlyShipController : public FlyShipController
 {
 public:
     /// <summary>
-    /// 爆撃機の管理の初期化
+    /// 爆撃機の初期化と爆弾発射準備
     /// </summary>
-    BomberFlyShipController();
+    /// <param name="generator">爆弾を発射できるクラス</param>
+    BomberFlyShipController(std::shared_ptr<DamageObjectGenerator> generator);
     /// <summary>
     /// 爆撃機を追加する
     /// </summary>
