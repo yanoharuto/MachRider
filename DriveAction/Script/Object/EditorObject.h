@@ -1,12 +1,14 @@
 #pragma once
+#include <iostream>
+#include <memory>
 #include "Object.h"
 #include "EditObjectData.h"
 #include "InitObjKind.h"
+class EditorCameraObserver;
 /// <summary>
 /// エディタ上で表示するオブジェクト
 /// </summary>
-class EditorObject :
-    public Object
+class EditorObject : public Object
 {
 public:
     /// <summary>
@@ -17,7 +19,7 @@ public:
     /// <summary>
     /// 各オブジェクトを動かしたり回転させたりする
     /// </summary>
-    void Update()override;
+    void Update(std::weak_ptr<EditorCameraObserver> cameraObserever);
     /// <summary>
     /// 描画に必要な構造体を渡す
     /// </summary>
@@ -32,7 +34,7 @@ protected:
     /// <summary>
     /// 入力を反映して移動と回転を更新
     /// </summary>
-    void ReflectInput();
+    void ReflectInput(std::weak_ptr<EditorCameraObserver> cameraObserever);
     //回転速度
     static const int rotaSpeed = 2;
     //移動速度

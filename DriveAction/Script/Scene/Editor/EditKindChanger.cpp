@@ -1,4 +1,4 @@
-#include "EditorSceneFlow.h"
+#include "EditKindChanger.h"
 #include "DxLib.h"
 #include "Utility.h"
 #include "UserInput.h"
@@ -11,63 +11,45 @@
 #include "EffekseerForDXLib.h"
 #include "EditManual.h"
 #include "EditorEffect.h"
+#include "EditorCameraObserver.h"
 /// <summary>
 /// 編集に必要なものを確保
 /// </summary>
-EditorSceneFlow::EditorSceneFlow()
+EditorManager::EditorManager()
 {
     //背景
     stage = new StageObjectController();
-    editState = editPlayer;
     //各オブジェクトのEditor
-    editorVec.push_back(new PlayerDataEditor());
-    editorVec.push_back(new CollectItemDataEditor());
-    editorVec.push_back(new EnemyDataEditor(saw));
-    editorVec.push_back(new EnemyDataEditor(moveSaw));
-    editorVec.push_back(new EnemyDataEditor(circleLaserShip));
-    editorVec.push_back(new EnemyDataEditor(upDownLaserShip));
-    editorVec.push_back(new EnemyDataEditor(bomberShip));
-    //カメラ
-    camera = new EditorCamera();
-    camera->Update();
-    //とりあえずタイトルに戻るようにする
-    nextSceneType=SceneType::TITLE;
+    editorVec.push_back(std::make_shared<PlayerDataEditor>());
+    editorVec.push_back(std::make_shared<CollectItemDataEditor>());
+    editorVec.push_back(std::make_shared<EnemyDataEditor>(saw));
+    editorVec.push_back(std::make_shared<EnemyDataEditor>(moveSaw));
+    editorVec.push_back(std::make_shared<EnemyDataEditor>(circleLaserShip));
+    editorVec.push_back(std::make_shared<EnemyDataEditor>(upDownLaserShip));
+    editorVec.push_back(std::make_shared<EnemyDataEditor>(bomberShip));
     //現在の編集クラス
     nowEditor = editorVec[0];
-    //操作説明説明
-    manual = new EditManual();
-    //エフェクト
-    editorEffect = new EditorEffect();
 }
 /// <summary>
 /// 編集物やステージの背景などを解放
 /// </summary>
-EditorSceneFlow::~EditorSceneFlow()
+EditorManager::~EditorManager()
 {
     SAFE_DELETE(stage);
-    SAFE_DELETE(manual);
-    SAFE_DELETE(editorEffect);
     for (unsigned int i = 0; i < editorVec.size(); i++)
     {
-        SAFE_DELETE(editorVec[i]);
+        editorVec[i].reset();
     }
-    SAFE_DELETE(camera);
 }
 /// <summary>
-/// 更新
+/// 編集する種類や各編集物の編集
 /// </summary>
-void EditorSceneFlow::Update()
+void EditorManager::Update(std::weak_ptr<EditorCameraObserver> cameraObserever)
 {
     //skeyで出てくるタイミングを変更
     if (UserInput::GetInputState(SKey) == Hold)
     {
         nowEditor->ChangeEditedCollectNum();
-    }
-    //aKey押してたら
-    else if (UserInput::GetInputState(AKey) == Hold)
-    {
-        //カメラの更新
-        camera->Update();
     }
     else//sとaKeyを押してない間は編集
     {
@@ -78,10 +60,8 @@ void EditorSceneFlow::Update()
             SelectEditKind();
         }
         //編集
-        nowEditor->Update();
+        nowEditor->Update(cameraObserever);
     }
-    //エフェクト更新
-    editorEffect->Update(nowEditor);
     Effekseer_Sync3DSetting();
     //エフェクト更新
     UpdateEffekseer3D();
@@ -89,7 +69,7 @@ void EditorSceneFlow::Update()
 /// <summary>
 /// 描画
 /// </summary>
-void EditorSceneFlow::Draw() const
+void EditorManager::Draw() const
 {
     //ステージに配置されている物
     stage->Draw();
@@ -98,15 +78,28 @@ void EditorSceneFlow::Draw() const
     {
         editorVec[i]->Draw();
     }
-    //操作説明
-    manual->Draw(nowEditor);
     //エフェクト
     DrawEffekseer3D();
 }
 /// <summary>
+/// 編集中かどうかを返す
+/// </summary>
+/// <returns>編集中ならTrue</returns>
+bool EditorManager::IsNowEdit() const
+{
+    return nowEditor->IsNowEdit();
+}
+/// <summary>
+/// 編集物の位置や向きを共有
+/// </summary>
+PlacementData EditorManager::GetNowEditObjPlaceData() const
+{
+    return nowEditor->GetEditObjPlacementData();
+}
+/// <summary>
 /// 次に何を編集するか選択する
 /// </summary>
-void EditorSceneFlow::SelectEditKind()
+void EditorManager::SelectEditKind()
 {
     //上下キーで編集できるオブジェクトの種類を変更
     if (UserInput::GetInputState(Up) == Push) 

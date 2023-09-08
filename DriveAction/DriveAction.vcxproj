@@ -80,8 +80,9 @@
     <ClCompile Include="Script\Observer\PlayerObserver.cpp" />
     <ClCompile Include="Script\Scene\Editor\CollectItemDataEditor.cpp" />
     <ClCompile Include="Script\Scene\Editor\EditDataSaver.cpp" />
+    <ClCompile Include="Script\Scene\Editor\EditorCameraObserver.cpp" />
     <ClCompile Include="Script\Scene\Editor\EditorScene.cpp" />
-    <ClCompile Include="Script\Scene\Editor\EditorSceneFlow.cpp" />
+    <ClCompile Include="Script\Scene\Editor\EditKindChanger.cpp" />
     <ClCompile Include="Script\Scene\Editor\EnemyDataEditor.cpp" />
     <ClCompile Include="Script\Scene\Editor\StageDataEditor.cpp" />
     <ClCompile Include="Script\Scene\Play\CollectItemObserver.cpp" />
@@ -89,9 +90,8 @@
     <ClCompile Include="Script\Scene\Play\PlayerDataEditor.cpp" />
     <ClCompile Include="Script\Scene\Play\PlayGameProcess.cpp" />
     <ClCompile Include="Script\Scene\Play\PlayScene.cpp" />
-    <ClCompile Include="Script\Scene\Play\PlaySceneFlow.cpp" />
     <ClCompile Include="Script\Scene\Play\PostGameEndStagingProcess.cpp" />
-    <ClCompile Include="Script\Scene\Play\GamePrevProcess.cpp" />
+    <ClCompile Include="Script\Scene\Play\PrePlayGameProcess.cpp" />
     <ClCompile Include="Script\Scene\SceneBase.cpp" />
     <ClCompile Include="Script\Scene\StageDataManager.cpp" />
     <ClCompile Include="Script\Scene\StageSelect.cpp" />
@@ -99,7 +99,6 @@
     <ClCompile Include="Script\Scene\Title\TitleHiScore.cpp" />
     <ClCompile Include="Script\Scene\Title\TitleRanking.cpp" />
     <ClCompile Include="Script\Scene\Title\TitleScene.cpp" />
-    <ClCompile Include="Script\Scene\Title\TitleSceneFlow.cpp" />
     <ClCompile Include="Script\Sound\SoundListener.cpp" />
     <ClCompile Include="Script\Sound\SoundPlayer.cpp" />
     <ClCompile Include="Script\UI\CollectCompass.cpp" />
@@ -231,8 +230,9 @@
     <ClInclude Include="Script\rapidjson\writer.h" />
     <ClInclude Include="Script\Scene\Editor\CollectItemDataEditor.h" />
     <ClInclude Include="Script\Scene\Editor\EditDataSaver.h" />
+    <ClInclude Include="Script\Scene\Editor\EditorCameraObserver.h" />
     <ClInclude Include="Script\Scene\Editor\EditorScene.h" />
-    <ClInclude Include="Script\Scene\Editor\EditorSceneFlow.h" />
+    <ClInclude Include="Script\Scene\Editor\EditKindChanger.h" />
     <ClInclude Include="Script\Scene\Editor\EnemyDataEditor.h" />
     <ClInclude Include="Script\Scene\Editor\StageDataEditor.h" />
     <ClInclude Include="Script\Scene\Play\CollectItemObserver.h" />
@@ -240,11 +240,9 @@
     <ClInclude Include="Script\Scene\Play\PlayerDataEditor.h" />
     <ClInclude Include="Script\Scene\Play\PlayGameProcess.h" />
     <ClInclude Include="Script\Scene\Play\PlayScene.h" />
-    <ClInclude Include="Script\Scene\Play\PlaySceneFlow.h" />
     <ClInclude Include="Script\Scene\Play\PostGameEndStagingProcess.h" />
-    <ClInclude Include="Script\Scene\Play\GamePrevProcess.h" />
+    <ClInclude Include="Script\Scene\Play\PrePlayGameProcess.h" />
     <ClInclude Include="Script\Scene\SceneBase.h" />
-    <ClInclude Include="Script\Scene\SceneFlowBase.h" />
     <ClInclude Include="Script\Scene\SceneType.h" />
     <ClInclude Include="Script\Scene\StageDataManager.h" />
     <ClInclude Include="Script\Scene\StageSelect.h" />
@@ -252,7 +250,6 @@
     <ClInclude Include="Script\Scene\Title\TitleHiScore.h" />
     <ClInclude Include="Script\Scene\Title\TitleRanking.h" />
     <ClInclude Include="Script\Scene\Title\TitleScene.h" />
-    <ClInclude Include="Script\Scene\Title\TitleSceneFlow.h" />
     <ClInclude Include="Script\Sound\SoundListener.h" />
     <ClInclude Include="Script\Sound\SoundPlayer.h" />
     <ClInclude Include="Script\UI\CollectCompass.h" />

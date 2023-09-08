@@ -4,7 +4,7 @@ class StageDataEditor;
 /// <summary>
 /// 編集中の操作説明
 /// </summary>
-class EditManual
+class EditManual final
 {
 public:
     /// <summary>
@@ -12,11 +12,20 @@ public:
     /// </summary>
     EditManual();
     /// <summary>
-    /// 操作説明表示
+    /// 編集操作説明表示
     /// </summary>
-    /// <param name="editor">今編集中か教えてもらう</param>
-    void Draw(StageDataEditor* const editor)const;
+    void DrawEditManualString()const;
+    /// <summary>
+    /// 何を編集するか選択中の操作説明表示
+    /// </summary>
+    void DrawSelectManualString()const;
 private:
+    /// <summary>
+    /// 編集時も選択中でも描画する操作説明
+    /// </summary>
+    /// <param name="x">描画開始X</param>
+    /// <param name="y">描画開始Y</param>
+    void DrawCommonString(int x, int y)const;
     /// <summary>
     /// 文字列を書くXの場所を決める
     /// </summary>

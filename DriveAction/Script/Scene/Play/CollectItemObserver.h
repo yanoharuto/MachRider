@@ -41,10 +41,10 @@ public:
     /// <returns>取られたら増える</returns>
     int GetCollectCount()const;
     /// <summary>
-    /// さっきまであったアイテムが回収されたか
+    /// 最後の一つのアイテムが回収されたか
     /// </summary>
     /// <returns>回収されたらTrue</returns>
-    bool IsCollectNowItem()const;
+    bool IsCollectLastOne()const;
 private:
     //収集アイテムの数や位置を教えてもらう
     std::shared_ptr<CollectItemController> collectController;

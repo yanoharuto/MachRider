@@ -43,7 +43,7 @@ void Camera::LoadData(UseCameraSceneKind type)
     float farValue = SAFE_STR_TO_F(strData[setFarValue]);
     SetCameraNearFar(nearValue, farValue);
     //ターゲットとの距離
-    targetBetween = SAFE_STR_TO_F(strData[setTargetBetween]);
+    targetBetweenSize = SAFE_STR_TO_F(strData[setTargetBetween]);
     //高度
     posY = SAFE_STR_TO_F(strData[setYPosition]);
     //カメラの速さ

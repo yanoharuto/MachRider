@@ -1,5 +1,8 @@
 #pragma once
+#include <iostream>
+#include <memory>
 #include "Car.h"
+class Timer;
 /// <summary>
 /// タイトル画面で走らせる車
 /// </summary>
@@ -11,15 +14,13 @@ public:
     /// </summary>
     /// <param name="setPos">初期位置</param>
     /// <param name="setDir">初期向き</param>
-    TitleCar(VECTOR setPos,VECTOR setDir);
+    /// <param name="initTimer">定期的に初期位置に戻すためのタイマー</param>
+    TitleCar(VECTOR setPos,VECTOR setDir ,std::weak_ptr<Timer> setInitTimer);
     /// <summary>
     /// タイヤとエフェクト解放
     /// </summary>
     ~TitleCar()override;
-    /// <summary>
-    /// 初期位置に戻す
-    /// </summary>
-    void InitPosition();
+
     /// <summary>
     /// 一定方向に走る
     /// </summary>
@@ -44,5 +45,6 @@ private:
     const float setAcceleSpeed = 2;
     //最大値
     const float setMaxSpeed = 5;
+    //初期化するのに必要なタイマー
+    std::weak_ptr<Timer> initTimer;
 };
-

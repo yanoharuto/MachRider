@@ -39,7 +39,7 @@ CollectItemController::CollectItemController()
     //今のアイテムの位置
     nowActiveCollectItemPos = {};
     //回収されているかどうかのフラグ
-    isCollectNowItem = false;
+    isCollectLastOne = false;
 }
 /// <summary>
 /// actorListの先頭の収集アイテムだけ更新
@@ -67,18 +67,11 @@ void CollectItemController::Update()
         SAFE_DELETE(brokenObj);
         //次のアイテムは何番目か
         collectCount = totalCollectNum - remainingCollectNum;
-        //収集アイテムは今取られている
-        isCollectNowItem = true;
     }
-    //取られてエフェクトを出している
-    else if (objState == Object::activeEnd)
+    //最後の一つが回収されたか
+    else if (objState == Object::activeEnd && static_cast<int>(actorList.size()) == 1)
     {
-        isCollectNowItem = true;
-    }
-    else
-    {
-        //収集アイテムは今取られていない
-        isCollectNowItem = false;
+        isCollectLastOne = true;
     }
 }
 /// <summary>
@@ -136,10 +129,10 @@ int CollectItemController::GetCollectCount()const
     return collectCount;
 }
 /// <summary>
-/// さっきまであったアイテムが回収されたか
+/// 最後の一つのアイテムが回収されたか
 /// </summary>
 /// <returns>回収されたらTrue</returns>
-bool CollectItemController::IsCollectNowItem()const
+bool CollectItemController::IsCollectLastOne()const
 {
-    return isCollectNowItem;
+    return isCollectLastOne;
 }

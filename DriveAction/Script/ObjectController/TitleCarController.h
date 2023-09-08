@@ -17,7 +17,8 @@ public:
     /// </summary>
     /// <param name="setPos">初期位置</param>
     /// <param name="setDir">初期向き</param>
-    TitlteCarController(VECTOR setPos,VECTOR setDir);
+    /// <param name="initTimer">定期的に初期位置に戻すためのタイマー</param>
+    TitlteCarController(VECTOR setPos, VECTOR setDir, std::shared_ptr<Timer> initTimer);
     /// <summary>
     /// 走っている車と描画役の開放
     /// </summary>
@@ -31,13 +32,9 @@ public:
     /// </summary>
     void Draw()const override;
     /// <summary>
-    /// 位置の初期化
-    /// </summary>
-    void InitPosition();
-    /// <summary>
     /// 車の位置などをカメラなどに渡せるようにする
     /// </summary>
-    /// <returns></returns>
+    /// <returns>車情報伝達役</returns>
     std::shared_ptr<ObjectObserver> CreateCarObserver();
 private:
     //タイトルで走る車

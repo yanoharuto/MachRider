@@ -42,7 +42,7 @@ private:
     //カメラ
     TitleCamera* camera;
     //このタイマーが切れると場面変換
-    ReusableTimer* initTimer;
+    std::shared_ptr <ReusableTimer> initTimer;
     //影
     ShadowMap* shadowMap;
     //影とカメラに渡す車のオブザーバ

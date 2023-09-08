@@ -1,4 +1,4 @@
-#include "GamePrevProcess.h"
+#include "PrePlayGameProcess.h"
 #include "DxLib.h"
 #include "SoundPlayer.h"
 #include "Utility.h"
@@ -14,7 +14,7 @@
 /// 操作説明やカウントダウン。音などを準備
 /// </summary>
 /// <param name="collectObserver">何個回収するか教えてもらう</param>
-GamePrevProcess::GamePrevProcess(std::weak_ptr<CollectItemObserver> collectObserver)
+PrePlayGameProcess::PrePlayGameProcess(std::weak_ptr<CollectItemObserver> collectObserver)
 {
     //音の確保
     SoundPlayer::LoadAndInitSound(fanfare);
@@ -33,7 +33,7 @@ GamePrevProcess::GamePrevProcess(std::weak_ptr<CollectItemObserver> collectObser
 /// <summary>
 /// カウントダウンなどを解放
 /// </summary>
-GamePrevProcess::~GamePrevProcess()
+PrePlayGameProcess::~PrePlayGameProcess()
 {
     SAFE_DELETE(frameByFrameTimer);
     SAFE_DELETE(countDown);
@@ -42,7 +42,7 @@ GamePrevProcess::~GamePrevProcess()
 /// <summary>
 /// 遊び方とカウントダウンの描画
 /// </summary>
-void GamePrevProcess::Update()
+void PrePlayGameProcess::Update()
 {
     fadeValue--;
     //描画する画像のコマ送り用　何秒かごとに次のコマに行く
@@ -71,7 +71,7 @@ void GamePrevProcess::Update()
 /// <summary>
 /// 遊び方とカウントダウンの描画
 /// </summary>
-void GamePrevProcess::Draw() const
+void PrePlayGameProcess::Draw() const
 {
     if (fadeValue > 0)//フェードアウト中なら操作説明と目標を伝える
     {
@@ -99,7 +99,7 @@ void GamePrevProcess::Draw() const
 /// 処理が終了したか
 /// </summary>
 /// <returns>処理が終了したならTrue</returns>
-bool GamePrevProcess::IsEndProcess()
+bool PrePlayGameProcess::IsEndProcess()
 {
     return processEnd;
 }

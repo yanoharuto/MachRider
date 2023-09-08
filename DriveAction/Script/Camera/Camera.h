@@ -76,7 +76,7 @@ protected:
     //描画しようとする範囲
     float farValue;
     //ターゲットとの距離
-    float targetBetween;
+    float targetBetweenSize;
     //高さ
     float posY;
     //カメラの追いつく速度

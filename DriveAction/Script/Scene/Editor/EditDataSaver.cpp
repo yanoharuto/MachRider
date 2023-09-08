@@ -9,6 +9,7 @@
 void EditDataSaver::SaveEditData(std::vector<PlacementData> editData, InitObjKind editObjKind)const
 {
     std::string saveFileName;
+    //í—Ş‚²‚Æ‚É•Û‘¶æ‚ğ•Ï‚¦‚é
     switch (editObjKind)
     {
     case player:

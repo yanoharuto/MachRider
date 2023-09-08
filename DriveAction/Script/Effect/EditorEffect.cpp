@@ -34,11 +34,11 @@ EditorEffect::~EditorEffect()
 /// <summary>
 /// エフェクトの向きと位置の変更
 /// </summary>
-/// <param name="editor">今編集しているEditor</param>
-void EditorEffect::Update(StageDataEditor* const editor)
+/// <param name="editObjPlaceData">今編集しているEditor</param>
+void EditorEffect::Update(PlacementData const editObjPlaceData)
 {
     //編集物の向き
-    VECTOR dir = editor->GetEditObjDir();
+    VECTOR dir = VGet(editObjPlaceData.dirX,0,editObjPlaceData.dirZ);
     //選択した物の方向が分かるエフェクトを回転する
     float degree = OriginalMath::GetDegreeMisalignment(VGet(1, 0, 0), dir);
     if (VCross(VGet(1, 0, 0), dir).y < 0)
@@ -50,7 +50,7 @@ void EditorEffect::Update(StageDataEditor* const editor)
         SetRotationPlayingEffekseer3DEffect(dirEffect, 0, degree * RAGE, 0);
     }
     //編集物の位置
-    VECTOR pos = editor->GetEditObjPos();
+    VECTOR pos = VGet(editObjPlaceData.posX, 0, editObjPlaceData.posZ);
     //編集物の位置が分かりやすくなるエフェクトの位置変更
     SetPosPlayingEffekseer3DEffect(posEffect, pos.x, 0, pos.z);
     SetPosPlayingEffekseer3DEffect(dirEffect, pos.x, 0, pos.z);

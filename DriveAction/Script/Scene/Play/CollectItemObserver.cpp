@@ -49,10 +49,10 @@ int CollectItemObserver::GetCollectCount() const
 	return collectController->GetCollectCount();
 }
 /// <summary>
-/// さっきまであったアイテムが回収されたか
+/// 最後の一つのアイテムが回収されたか
 /// </summary>
 /// <returns>回収されたらTrue</returns>
-bool CollectItemObserver::IsCollectNowItem() const
+bool CollectItemObserver::IsCollectLastOne() const
 {
-	return collectController->IsCollectNowItem();
+	return collectController->IsCollectLastOne();
 }

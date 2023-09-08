@@ -49,10 +49,10 @@ public:
     /// <returns>取られたら増える</returns>
     int GetCollectCount()const;
     /// <summary>
-    /// さっきまであったアイテムが回収されたか
+    /// 最後の一つのアイテムが回収されたか
     /// </summary>
     /// <returns>回収されたらTrue</returns>
-    bool IsCollectNowItem()const;
+    bool IsCollectLastOne()const;
 private:
     //収集アイテムの最大数
     int totalCollectNum;
@@ -61,7 +61,7 @@ private:
     //所得されたアイテムの数
     int remainingCollectNum;
     //今あるオブジェクトが取られたか
-    bool isCollectNowItem;
+    bool isCollectLastOne;
     /// 現在動いている収集アイテムの位置
     VECTOR nowActiveCollectItemPos;
 };

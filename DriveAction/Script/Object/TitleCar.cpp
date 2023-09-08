@@ -4,12 +4,14 @@
 #include "Utility.h"
 #include "OriginalMath.h"
 #include "Wheels.h"
+#include "Timer.h"
 /// <summary>
 /// 位置などの初期化とエフェクトのロード
 /// </summary>
 /// <param name="setPos">初期位置</param>
 /// <param name="setDir">初期向き</param>
-TitleCar::TitleCar(VECTOR setPos, VECTOR setDir)
+/// <param name="initTimer">定期的に初期位置に戻すためのタイマー</param>
+TitleCar::TitleCar(VECTOR setPos, VECTOR setDir, std::weak_ptr<Timer> setInitTimer)
     :Car(ObjectInit::player)
 {
 	firstPosY = position.y;
@@ -22,6 +24,7 @@ TitleCar::TitleCar(VECTOR setPos, VECTOR setDir)
 	EffectManager::LoadEffect(EffectInit::carWind);
 	speedParamator.acceleSpeed = setAcceleSpeed;
 	speedParamator.maxSpeed = setMaxSpeed;
+	initTimer = setInitTimer;
 }
 /// <summary>
 /// タイヤとエフェクト解放
@@ -37,17 +40,15 @@ TitleCar::~TitleCar()
 	}
 }
 /// <summary>
-/// 初期位置に戻す
-/// </summary>
-void TitleCar::InitPosition()
-{
-	position = firstPos;
-}
-/// <summary>
 /// 一定方向に走る
 /// </summary>
 void TitleCar::Update()
 {
+	//タイマーが計測終えたら初期位置に
+	if (initTimer.lock()->IsOverLimitTime())
+	{
+		position = firstPos;
+	}
 	//速度を更新
 	UpdateVelocity();
 	//位置の更新

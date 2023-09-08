@@ -147,8 +147,6 @@ void PostGameEndStagingProcess::Draw()const
             UIDrawer::DrawRotaUI(hiScoreUI);
         }
     }
-    //エフェクト
-    DrawEffekseer2D();
 }
 /// <summary>
 /// 処理を終了したか

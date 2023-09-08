@@ -291,10 +291,7 @@
     <ClCompile Include="Script\Scene\Editor\EditDataSaver.cpp">
       <Filter>ソース ファイル\Scene\Editor</Filter>
     </ClCompile>
-    <ClCompile Include="Script\Scene\Editor\EditorScene.cpp">
-      <Filter>ソース ファイル\Scene\Editor</Filter>
-    </ClCompile>
-    <ClCompile Include="Script\Scene\Editor\EditorSceneFlow.cpp">
+    <ClCompile Include="Script\Scene\Editor\EditKindChanger.cpp">
       <Filter>ソース ファイル\Scene\Editor</Filter>
     </ClCompile>
     <ClCompile Include="Script\Scene\Editor\EnemyDataEditor.cpp">
@@ -378,19 +375,13 @@
     <ClCompile Include="Script\Scene\Title\TitleScene.cpp">
       <Filter>ソース ファイル\Scene\Title</Filter>
     </ClCompile>
-    <ClCompile Include="Script\Scene\Title\TitleSceneFlow.cpp">
-      <Filter>ソース ファイル\Scene\Title</Filter>
-    </ClCompile>
     <ClCompile Include="Script\Scene\Play\Menu.cpp">
       <Filter>ソース ファイル\Scene\Play</Filter>
     </ClCompile>
     <ClCompile Include="Script\Scene\Play\PlayScene.cpp">
       <Filter>ソース ファイル\Scene\Play</Filter>
     </ClCompile>
-    <ClCompile Include="Script\Scene\Play\PlaySceneFlow.cpp">
-      <Filter>ソース ファイル\Scene\Play</Filter>
-    </ClCompile>
-    <ClCompile Include="Script\Scene\Play\GamePrevProcess.cpp">
+    <ClCompile Include="Script\Scene\Play\PrePlayGameProcess.cpp">
       <Filter>ソース ファイル\Scene\Play</Filter>
     </ClCompile>
     <ClCompile Include="Script\main.cpp">
@@ -428,6 +419,12 @@
     </ClCompile>
     <ClCompile Include="Script\Scene\Play\CollectItemObserver.cpp">
       <Filter>ソース ファイル\Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="Script\Scene\Editor\EditorCameraObserver.cpp">
+      <Filter>ソース ファイル\Scene\Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="Script\Scene\Editor\EditorScene.cpp">
+      <Filter>ソース ファイル\Scene\Editor</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -620,9 +617,6 @@
     <ClInclude Include="Script\Scene\SceneBase.h">
       <Filter>ヘッダー ファイル\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="Script\Scene\SceneFlowBase.h">
-      <Filter>ヘッダー ファイル\Scene</Filter>
-    </ClInclude>
     <ClInclude Include="Script\Scene\SceneType.h">
       <Filter>ヘッダー ファイル\Scene</Filter>
     </ClInclude>
@@ -641,7 +635,7 @@
     <ClInclude Include="Script\Scene\Editor\EditorScene.h">
       <Filter>ヘッダー ファイル\Scene\Editor</Filter>
     </ClInclude>
-    <ClInclude Include="Script\Scene\Editor\EditorSceneFlow.h">
+    <ClInclude Include="Script\Scene\Editor\EditKindChanger.h">
       <Filter>ヘッダー ファイル\Scene\Editor</Filter>
     </ClInclude>
     <ClInclude Include="Script\Scene\Editor\EnemyDataEditor.h">
@@ -725,10 +719,7 @@
     <ClInclude Include="Script\Scene\Play\Menu.h">
       <Filter>ヘッダー ファイル\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="Script\Scene\Play\GamePrevProcess.h">
-      <Filter>ヘッダー ファイル\Scene\Play</Filter>
-    </ClInclude>
-    <ClInclude Include="Script\Scene\Play\PlaySceneFlow.h">
+    <ClInclude Include="Script\Scene\Play\PrePlayGameProcess.h">
       <Filter>ヘッダー ファイル\Scene\Play</Filter>
     </ClInclude>
     <ClInclude Include="Script\Scene\Play\PlayScene.h">
@@ -747,9 +738,6 @@
       <Filter>ヘッダー ファイル\Scene\Title</Filter>
     </ClInclude>
     <ClInclude Include="Script\Scene\Title\TitleScene.h">
-      <Filter>ヘッダー ファイル\Scene\Title</Filter>
-    </ClInclude>
-    <ClInclude Include="Script\Scene\Title\TitleSceneFlow.h">
       <Filter>ヘッダー ファイル\Scene\Title</Filter>
     </ClInclude>
     <ClInclude Include="EditorEffect.h">
@@ -895,6 +883,9 @@
     </ClInclude>
     <ClInclude Include="Script\Scene\Play\CollectItemObserver.h">
       <Filter>ヘッダー ファイル\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Script\Scene\Editor\EditorCameraObserver.h">
+      <Filter>ヘッダー ファイル\Scene\Editor</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

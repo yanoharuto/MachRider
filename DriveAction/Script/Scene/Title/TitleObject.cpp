@@ -18,8 +18,10 @@
 /// </summary>
 TitleObject::TitleObject()
 {
+    //初期化タイマー
+    initTimer = std::make_shared<ReusableTimer>(initTime);
     //タイトルシーンの車
-    titleCarController = std::make_shared <TitlteCarController>(demoCarFirstPos, demoCarFirstDir);
+    titleCarController = std::make_shared <TitlteCarController>(demoCarFirstPos, demoCarFirstDir,initTimer);
     demoObserver = titleCarController->CreateCarObserver();
     //収集アイテム
     std::shared_ptr<CollectItemController> collectController = std::make_shared<CollectItemController>();
@@ -31,9 +33,6 @@ TitleObject::TitleObject()
     //共有後に開放
     collectController.reset();
     
-    //車とか収集アイテムなど動かす
-    //初期化タイマー
-    initTimer = new ReusableTimer(initTime);
     shadowMap = new ShadowMap(demoObserver);
     camera = new TitleCamera(demoObserver);
 }
@@ -42,7 +41,7 @@ TitleObject::TitleObject()
 /// </summary>
 TitleObject::~TitleObject()
 {
-    SAFE_DELETE(initTimer);
+    initTimer.reset();
     SAFE_DELETE(manager);
     SAFE_DELETE(camera);
     SAFE_DELETE(shadowMap);
@@ -66,10 +65,9 @@ void TitleObject::Update()
         {
             fadeValue += fadeSpeed;
 
-            if (fadeValue > MAX1BYTEVALUE)
+            if (fadeValue > MAX1BYTEVALUE)//限界まで来たら次は減らしていく
             {
                 isAValueIncrement = false;
-                titleCarController->InitPosition();
             }
         }
         else if (!isAValueIncrement)//フェードイン

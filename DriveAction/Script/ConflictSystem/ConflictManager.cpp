@@ -14,6 +14,9 @@ std::list<SphereHitChecker*> ConflictManager::hitCheckList;
 /// </summary>
 ConflictManager::ConflictManager()
 {
+    processorKeyMap.clear();
+    hitCheckerKeyMap.clear();
+    hitCheckList.clear();
 }
 /// <summary>
 /// “–‚½‚è”»’è“o˜^Map‘SÁ‚µ

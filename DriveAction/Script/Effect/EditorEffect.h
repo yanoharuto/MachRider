@@ -1,4 +1,5 @@
 #pragma once
+#include "EditObjectData.h"
 class StageDataEditor;
 /// <summary>
 /// Editorで使うエフェクト
@@ -17,8 +18,8 @@ public:
     /// <summary>
     /// エフェクトの向きと位置の変更
     /// </summary>
-    /// <param name="editor">今編集しているEditor</param>
-    void Update(StageDataEditor* const editor);
+    /// <param name="editObjPlaceData">今編集しているオブジェクトの位置</param>
+    void Update(PlacementData const editObjPlaceData);
 private:
     //配置中のオブジェクトの向きが分かるエフェクトのサイズ
     const float dirEffectSize = 5.0f;

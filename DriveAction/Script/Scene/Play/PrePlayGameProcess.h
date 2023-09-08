@@ -13,18 +13,18 @@ class CollectItemObserver;
 /// <summary>
 /// レース前の処理やってくれる
 /// </summary>
-class GamePrevProcess
+class PrePlayGameProcess
 {
 public:
     /// <summary>
     /// 操作説明やカウントダウン。音などを準備
     /// </summary>
     /// <param name="collectObserver">何個回収するか教えてもらう</param>
-    GamePrevProcess(std::weak_ptr<CollectItemObserver> collectObserver);
+    PrePlayGameProcess(std::weak_ptr<CollectItemObserver> collectObserver);
     /// <summary>
     /// カウントダウンなどを解放
     /// </summary>
-    ~GamePrevProcess();
+    ~PrePlayGameProcess();
     /// <summary>
     /// カウントダウンの更新
     /// </summary>

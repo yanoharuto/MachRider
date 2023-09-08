@@ -21,8 +21,8 @@ void TitleCamera::Update()
     //カメラの向く位置
     VECTOR aimPos = targetObserver.lock()->GetSubjectPos();
     //車の向きから若干ずらしてさらに離れる
-    VECTOR between = VScale(OriginalMath::GetYRotateVector(targetObserver.lock()->GetSubjectDir(),cameraRotate),targetBetween);
-    position = VAdd(VAdd(aimPos, VScale(targetObserver.lock()->GetSubjectDir(), targetBetween)), between);
+    VECTOR between = VScale(OriginalMath::GetYRotateVector(targetObserver.lock()->GetSubjectDir(),cameraRotate),targetBetweenSize);
+    position = VAdd(VAdd(aimPos, VScale(targetObserver.lock()->GetSubjectDir(), targetBetweenSize)), between);
     position.y = posY;
     //カメラの向きを変更
     SetCameraPositionAndTarget_UpVecY(position, aimPos);

@@ -1,7 +1,7 @@
 #include "EditorObject.h"
 #include "UserInput.h"
 #include "OriginalMath.h"
-#include "EditorCamera.h"
+#include "EditorCameraObserver.h"
 //移動速度
 const int EditorObject::moveSpeed;
 //回転速度
@@ -25,10 +25,10 @@ EditorObject::~EditorObject()
 /// <summary>
 /// 各オブジェクトを動かしたり回転させたりする
 /// </summary>
-void EditorObject::Update()
+void EditorObject::Update(std::weak_ptr<EditorCameraObserver> cameraObserever)
 {
     //入力情報を反映
-    ReflectInput();
+    ReflectInput(cameraObserever);
 }
 /// <summary>
 /// 描画に必要な構造体を渡す
@@ -57,11 +57,10 @@ void EditorObject::SetArrangementData(PlacementData setData)
 /// <summary>
 /// 入力を反映して移動と回転を更新
 /// </summary>
-void EditorObject::ReflectInput()
+void EditorObject::ReflectInput(std::weak_ptr<EditorCameraObserver> cameraObserever)
 {
     if (UserInput::GetInputState(WKey) == Hold)//ｗキーを押してたら回転モード
     {
-       
         //左右キーを押すと回転する
         if (UserInput::GetInputState(Left) == Hold)
         {
@@ -75,8 +74,8 @@ void EditorObject::ReflectInput()
     else //押してなかったら移動モード
     {
         //カメラの向きに合わせて移動
-        VECTOR cameraDir = EditorCamera::GetNormDirection();
-
+        VECTOR cameraDir = cameraObserever.lock()->GetCameraDir();
+        cameraDir.y = 0;//平行移動だけできる
         if (UserInput::GetInputState(Left) == Hold)//左移動
         {
             cameraDir = VCross(cameraDir, VGet(0, 1, 0));

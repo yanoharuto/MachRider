@@ -22,7 +22,7 @@ PlayerDataEditor::PlayerDataEditor()
 /// <summary>
 /// 更新
 /// </summary>
-void PlayerDataEditor::Update()
+void PlayerDataEditor::Update(std::weak_ptr<EditorCameraObserver> cameraObserever)
 {
     if (nowEditAction == select && UserInput::GetInputState(Space) == Push)
     {
@@ -32,7 +32,7 @@ void PlayerDataEditor::Update()
     else if (nowEditAction == edit)
     {
         //移動回転
-        editObject->Update();
+        editObject->Update(cameraObserever);
         //編集終了
         if (UserInput::GetInputState(Space) == Push)
         {
@@ -60,18 +60,18 @@ void PlayerDataEditor::Draw() const
     if (nowEditAction != select)
     {
         //今編集しているエネミー
-        drawer->SelectDraw(nowEditObjData);
+        drawer->SelectDraw(nowEditObjPlaceData);
     }
     else//編集していないいときは
     {
         //編集中じゃなくてもeditKindと同じものを選ぼうとしていたら描画
-        if (nowEditObjData.objKind == editKind)
+        if (nowEditObjPlaceData.objKind == editKind)
         {
-            drawer->SelectDraw(nowEditObjData);
+            drawer->SelectDraw(nowEditObjPlaceData);
         }
         else
         {
-            drawer->Draw(nowEditObjData);
+            drawer->Draw(nowEditObjPlaceData);
         }
     }
 }

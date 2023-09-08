@@ -6,12 +6,15 @@
 #include "Object.h"
 #include "DrawModel.h"
 /// <summary>
-/// タイトルで走らせる
+/// タイトルで走らせる車
 /// </summary>
-TitlteCarController::TitlteCarController(VECTOR setPos, VECTOR setDir)
+/// <param name="setPos">初期位置</param>
+/// <param name="setDir">初期向き</param>
+/// <param name="initTimer">定期的に初期位置に戻すためのタイマー</param>
+TitlteCarController::TitlteCarController(VECTOR setPos, VECTOR setDir, std::shared_ptr<Timer> initTimer)
     :ActorController(ObjectInit::player)
 {
-    titleCar = new TitleCar(setPos, setDir);
+    titleCar = new TitleCar(setPos, setDir,initTimer);
     observer = std::make_shared<ObjectObserver>(titleCar);
     drawModel = new DrawModel(ObjectInit::player);
 }
@@ -39,16 +42,9 @@ void TitlteCarController::Draw() const
     drawModel->Draw(titleCar);
 }
 /// <summary>
-/// 位置の初期化
-/// </summary>
-void TitlteCarController::InitPosition()
-{
-    titleCar->InitPosition();
-}
-/// <summary>
 /// 車の位置などをカメラなどに渡せるようにする
 /// </summary>
-/// <returns></returns>
+/// <returns>車情報伝達役</returns>
 std::shared_ptr<ObjectObserver> TitlteCarController::CreateCarObserver()
 {
     return observer;

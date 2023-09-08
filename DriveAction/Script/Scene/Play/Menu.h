@@ -43,7 +43,7 @@ public:
     /// メニュー画面を開いているかどうか
     /// </summary>
     /// <returns>開いていたらTrue</returns>
-    static bool IsMenuOpen();
+    bool IsMenuOpen();
     /// <summary>
     /// メニュー画面を開いている時間を所得
     /// </summary>

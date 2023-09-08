@@ -30,10 +30,10 @@ void GameCamera::Update()
     //カメラの位置の更新
     position = targetObserver.lock()->GetSubjectPos();
     position.y = posY;
-    position.x += -(direction.x * targetBetween);
-    position.z += -(direction.z * targetBetween);
+    position.x += -(direction.x * targetBetweenSize);
+    position.z += -(direction.z * targetBetweenSize);
     //カメラの狙ってる座標
-    VECTOR aimPos = VAdd(position, VScale(direction, targetBetween));
+    VECTOR aimPos = VAdd(position, VScale(direction, targetBetweenSize));
     //位置と向きを確定
     SetCameraPositionAndTarget_UpVecY(position, aimPos);
 }

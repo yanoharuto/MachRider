@@ -36,14 +36,13 @@ PlayGameProcess::~PlayGameProcess()
 /// <param name="collectObserver">収集アイテムの残り数を教えてもらう</param>
 void PlayGameProcess::Update(std::weak_ptr<CollectItemObserver> const collectObserver)
 {
-	//収集アイテムが全部消え終わった,制限時間の終了したなら終了
+	//収集アイテムが全部消え終わった,制限時間をオーバーしたなら終了
 	if (collectObserver.lock()->GetRemainingItemNum() == 0 || timer->IsOverLimitTime())
 	{
 		isEndProcess = true;
-		timer->Stop();
 	}
 	//最後の一つを回収したならタイマーを止める
-	if (collectObserver.lock()->GetRemainingItemNum() == 1 && collectObserver.lock()->IsCollectNowItem())
+	if (collectObserver.lock()->IsCollectLastOne())
 	{
 		//タイマーストップ
 		timer->Stop();

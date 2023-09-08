@@ -132,6 +132,5 @@ SceneBase* MakeScene(SceneType _NowSceneType)
 	default:
 		break;
 	}
-	
 	return retScene;
 }

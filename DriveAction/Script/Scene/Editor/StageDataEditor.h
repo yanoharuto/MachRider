@@ -1,12 +1,17 @@
 #pragma once
+#include <iostream>
+#include <memory>
 #include <string>
 #include <vector>
 #include "EditObjectData.h"
 #include "InitObjKind.h"
 #include "FirstPositionGetter.h"
+//新しく編集中ならselectEditNumが-1
 #define NEW_EDIT_NUM -1
+
 class EditorObject;
 class EditorDrawModel;
+class EditorCameraObserver;
 enum ActionKind;
 using namespace ObjectInit;
 /// <summary>
@@ -28,7 +33,7 @@ public:
     /// <summary>
     /// 新しく編集したり過去に編集したものを再編集したりする
     /// </summary>
-    virtual void Update();
+    virtual void Update(std::weak_ptr<EditorCameraObserver> cameraObserever);
     /// <summary>
     /// 編集中や編集し終えたオブジェクトの描画
     /// </summary>
@@ -37,26 +42,24 @@ public:
     /// 編集が終了したか
     /// </summary>
     /// <returns>編集が終了したらTrue</returns>
-    bool IsEndEditing()const { return nowEditAction == EditActionKind::select; };
+    bool IsEndEditing()const 
+    {
+        return nowEditAction == EditActionKind::select; 
+    };
     /// <summary>
-    /// 今編集しているオブジェクトのポジション
+    /// 編集しているオブジェクトの配置情報
     /// </summary>
-    /// <returns></returns>
-    static VECTOR GetEditObjPos();
+    /// <returns>編集しているオブジェクトの配置情報</returns>
+    PlacementData GetEditObjPlacementData()const;
     /// <summary>
-    /// 今編集しているオブジェクトの向き
+    /// 編集中かどうかを返す
     /// </summary>
-    /// <returns></returns>
-    VECTOR GetEditObjDir();
+    /// <returns>編集中ならTrue</returns>
+    bool IsNowEdit();
     /// <summary>
     /// 現在編集しているアイテムの出てくるタイミングを変更
     /// </summary>
     void ChangeEditedCollectNum();
-    /// <summary>
-    /// 編集済みデータの削除
-    /// </summary>
-    /// <param name="eraceNum">削除するのは先頭から何番目か</param>
-    void EraceEndEditData(int eraceNum);
     //編集で行う事
     enum EditActionKind
     {
@@ -69,21 +72,25 @@ public:
     };
 protected:
     /// <summary>
+    /// 編集済みデータの削除
+    /// </summary>
+    /// <param name="eraceNum">削除するのは先頭から何番目か</param>
+    void EraceEndEditData(int eraceNum);
+    /// <summary>
     /// 編集済みのオブジェクトを選択する
     /// </summary>
     void SelectEditedObject();
-
     /// <summary>
     /// 編集操作
     /// </summary>
-    void Edit();
+    void Edit(std::weak_ptr<EditorCameraObserver> cameraObserever);
     /// <summary>
     /// NowEditObjDataメンバ変数を更新する
     /// </summary>
     void UpdateNowEditObjData();
     
     //今編集しているオブジェクトの情報
-    static PlacementData nowEditObjData;
+    static PlacementData nowEditObjPlaceData;
     // 編集したいエネミーの種類
     InitObjKind editKind = saw;
     //編集終了フラグ
@@ -96,10 +103,6 @@ protected:
     static int getCollectNum;
     //オブジェクトの描画担当
     EditorDrawModel* drawer;
-    //選択エフェクト
-    static int selectAura;
-    //向きが分かりやすくなるエフェクト
-    static int dirEffect;
     //編集済みデータ
     std::vector<PlacementData> placementDataVec;
     //編集済みの物を左右キーで選ぼうとすると変動

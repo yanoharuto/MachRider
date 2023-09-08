@@ -21,21 +21,19 @@ public:
     /// <param name="_SceneType">現在のシーンの保存</param>
     SceneBase(SceneType _SceneType);    
     /// <summary>
-    /// SceneFlowの解放
+    /// デストラクタ
     /// </summary>
-    virtual ~SceneBase();
+    virtual ~SceneBase() {};
     /// <summary>
     /// シーンの更新
     /// </summary>
     /// <returns>次のシーン</returns>
-    virtual SceneType Update();
+    virtual SceneType Update() = 0;
     /// <summary>
     /// 描画
     /// </summary>
-    virtual void Draw() const;
+    virtual void Draw() const = 0;
 protected:
     //このシーンの種類
     SceneType nowSceneType;
-    //シーンの処理の流れ
-    SceneFlowBase* sceneFlow;
 };

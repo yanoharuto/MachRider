@@ -3,6 +3,7 @@
 #include "UserInput.h"
 #include "Utility.h"
 #include "EditorDrawModel.h"
+#include "EditorCameraObserver.h"
 //読み込む配置情報の書いてあるファイルのパス
 const std::string CollectItemDataEditor::loadEditFilePath = "collectData.csv";
 /// <summary>
@@ -13,11 +14,12 @@ CollectItemDataEditor::CollectItemDataEditor()
 {
 }
 /// <summary>
-/// 更新
+/// 親クラスと同じ更新と収集アイテムの数を更新する
 /// </summary>
-void CollectItemDataEditor::Update()
+void CollectItemDataEditor::Update(std::weak_ptr<EditorCameraObserver> cameraObserever)
 {
-    StageDataEditor::Update();
+    //親クラスと同じ更新
+    StageDataEditor::Update(cameraObserever);
 
     //収集アイテムの数を他のEditorにも反映
     if (!placementDataVec.empty())
