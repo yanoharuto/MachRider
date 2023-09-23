@@ -8,9 +8,16 @@
 /// <param name="uiKind"></param>
 FlashUI::FlashUI(UIKind uiKind)
 {
-    pressKeyData = UIManager::CreateUIData(uiKind);
+    pressKeyUIData = UIManager::CreateUIData(uiKind);
     aValue = lowtestAvalue;//最低値をセット
     isAValueIncrement = true;
+}
+/// <summary>
+/// pressKeyDataの削除
+/// </summary>
+FlashUI::~FlashUI()
+{
+    UIManager::DeleteUIGraph(&pressKeyUIData);
 }
 /// <summary>
 /// アルファ値の更新
@@ -33,6 +40,6 @@ void FlashUI::Update()
 void FlashUI::Draw() const
 {
     SetDrawBlendMode(DX_BLENDMODE_ALPHA, aValue);//α値をいじる
-    UIDrawer::DrawRotaUI(pressKeyData,0,0,true);
+    UIDrawer::DrawRotaUI(pressKeyUIData,0,0,true);
     SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);//元に戻す
 }

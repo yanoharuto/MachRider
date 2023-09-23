@@ -10,7 +10,7 @@ const std::string PlayerDataEditor::loadEditFilePath = "playerData.csv";
 /// プレイヤーの初期位置の編集
 /// </summary>
 PlayerDataEditor::PlayerDataEditor()
-    :StageDataEditor(loadEditFilePath,player)
+    :StageDataEditor(loadEditFilePath,InitObjKind::player)
 {
     if (!placementDataVec.empty())
     {
@@ -22,8 +22,9 @@ PlayerDataEditor::PlayerDataEditor()
 /// <summary>
 /// 更新
 /// </summary>
-void PlayerDataEditor::Update(std::weak_ptr<EditorCameraObserver> cameraObserever)
+void PlayerDataEditor::Update(std::weak_ptr<CameraObserver> cameraObserever)
 {
+    using enum EditActionKind;
     if (nowEditAction == select && UserInput::GetInputState(Space) == Push)
     {
         //スペースキーで編集開始
@@ -38,7 +39,7 @@ void PlayerDataEditor::Update(std::weak_ptr<EditorCameraObserver> cameraObsereve
         {
             nowEditAction = select;
             PlacementData editData = editObject->GePlacementData();
-            editData.objKind = editKind;
+            editData.objKind = CAST_I(editKind);
             if(placementDataVec.empty())
             {
                 placementDataVec.push_back(editData);
@@ -57,7 +58,7 @@ void PlayerDataEditor::Update(std::weak_ptr<EditorCameraObserver> cameraObsereve
 void PlayerDataEditor::Draw() const
 {
     //今現在編集中なら
-    if (nowEditAction != select)
+    if (nowEditAction != EditActionKind::select)
     {
         //今編集しているエネミー
         drawer->SelectDraw(nowEditObjPlaceData);
@@ -65,7 +66,7 @@ void PlayerDataEditor::Draw() const
     else//編集していないいときは
     {
         //編集中じゃなくてもeditKindと同じものを選ぼうとしていたら描画
-        if (nowEditObjPlaceData.objKind == editKind)
+        if (nowEditObjPlaceData.objKind == CAST_I(editKind))
         {
             drawer->SelectDraw(nowEditObjPlaceData);
         }

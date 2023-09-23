@@ -12,15 +12,15 @@ public:
     /// </summary>
     EditorCamera();
     /// <summary>
-    /// 上下左右キーで動かすことが出来る
+    /// カメラの見るべき向きを変更
     /// </summary>
     /// <param name="targetPlaceData">向きたい場所の配置情報</param>
-    void Update(PlacementData targetPlaceData);
+    void UpdatePositionAndTarget(PlacementData targetPlaceData);
     /// <summary>
-    /// カメラの向きを所得
+    /// 上下左右キーで向きとターゲットまでの距離を変更する
     /// </summary>
-    /// <returns>カメラの向きベクトル</returns>
-    VECTOR GetNormDirection();
+    void UpdateDirectionAndTargetBetween();
+
 private:
     //回転速度
     const float rotaSpeed = 3.0f;

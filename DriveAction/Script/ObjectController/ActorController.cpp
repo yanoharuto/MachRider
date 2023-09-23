@@ -2,6 +2,7 @@
 #include "Actor.h"
 #include "DrawModel.h"
 #include "Utility.h"
+#include "CameraObserver.h"
 /// <summary>
 /// 描画役とオブジェクトのデリート
 /// </summary>
@@ -33,14 +34,17 @@ void ActorController::Update()
 /// <summary>
 /// 描画処理
 /// </summary>
-void ActorController::Draw() const
+void ActorController::Draw(std::weak_ptr<CameraObserver> cameraObserever) const
 {
     if (drawModel != nullptr)
     {
         for (auto ite = actorList.begin(); ite != actorList.end(); ite++)
         {
-            //Drawerに渡して描画してもらう
-            drawModel->Draw((*ite));
+            if(cameraObserever.lock()->IsLookingCamera(*ite))//カメラの範囲内なら
+            {
+                //Drawerに渡して描画してもらう
+                drawModel->Draw((*ite));
+            }
         }
     }
 }

@@ -41,7 +41,7 @@ private:
     //3の順位UI
     NumUI* thirdRankUI;
     //ランキング
-    UIData rankUI;
+    UIData rankUIData;
 
     //一番いいスコアの色
     const VECTOR firstColor = VGet(255, 215, 0);
@@ -49,5 +49,4 @@ private:
     const VECTOR thirdColor = VGet(196, 112, 34);
     //二番目にいい時の色
     const VECTOR secondColor = VGet(192, 192, 192);
-
 };

@@ -19,7 +19,7 @@
 SceneBase* MakeScene(SceneType _NowSceneType);
 
 //ひとつ前のシーン
-SceneType prevSceneType = SceneType::TITLE;
+SceneType prevSceneType = SceneType::title;
 
 int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int nShowCmd)
 {
@@ -47,7 +47,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance, 
 	// 描画先を裏画面に変更
 	SetDrawScreen(DX_SCREEN_BACK);
 	//今のシーン
-	SceneType nowSceneType = SceneType::TITLE;
+	SceneType nowSceneType = SceneType::title;
 	
 	UIDrawer* uiDrawer = new UIDrawer();//画面サイズに合わせて描画できるようにする
 	UserInput* userInput = new UserInput();//ユーザーの入力を所得する
@@ -61,7 +61,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance, 
 	FadeInFadeOut::FadeIn();
 	
 	//ゲームループ
-	while (ProcessMessage() == 0 && nowSceneType != SceneType::ESCAPE)
+	while (ProcessMessage() == 0 && nowSceneType != SceneType::escape)
 	{
 
 #ifdef _DEBUG
@@ -114,20 +114,20 @@ SceneBase* MakeScene(SceneType _NowSceneType)
 	SceneBase* retScene = nullptr;
 	switch (_NowSceneType)
 	{
-	case SceneType::RELOAD:
+	case SceneType::reload:
 		retScene = MakeScene(prevSceneType);
 		break;
-	case SceneType::TITLE:
+	case SceneType::title:
 		retScene = new TitleScene;
-		prevSceneType = SceneType::TITLE;
+		prevSceneType = SceneType::title;
 		break;
-	case SceneType::PLAY:
+	case SceneType::play:
 		retScene = new PlayScene;
-		prevSceneType = SceneType::PLAY;
+		prevSceneType = SceneType::play;
 		break;
-	case SceneType::EDITOR:
+	case SceneType::editor:
 		retScene = new EditorScene;
-		prevSceneType = SceneType::EDITOR;
+		prevSceneType = SceneType::editor;
 		break;
 	default:
 		break;

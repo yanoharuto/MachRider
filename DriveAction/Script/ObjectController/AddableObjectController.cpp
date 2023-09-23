@@ -17,10 +17,10 @@ void AddableObjectController::OnAddObject(std::vector<PlacementData> placeDataVe
     if (!placeDataVec.empty())
     {
         //配置位置リストのサイズだけ追加
-        for (int i = 0; i < SAFE_GET_SIZE(placeDataVec); i++)
+        for (int i = 0; i < CONTAINER_GET_SIZE(placeDataVec); i++)
         {
             //同じ種類なら追加
-            if (placeDataVec[i].objKind == controllObjKind)
+            if (placeDataVec[i].objKind == CAST_I(controllObjKind))
             {
                 AddObject(placeDataVec[i]);
             }

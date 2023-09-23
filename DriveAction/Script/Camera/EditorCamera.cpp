@@ -6,50 +6,53 @@
 /// Editor画面のカメラ
 /// </summary>
 EditorCamera::EditorCamera()
-    :Camera(InitCamera::editor)
+    :Camera(InitCamera::UseCameraSceneKind::editor)
 {
     position = {};
     position.y = posY;
     direction = VGet(1,0,0);
 }
 /// <summary>
-/// 上下左右キーで動かすことが出来る
+/// カメラの見るべき向きを変更
 /// </summary>
 /// <param name="targetPlaceData">向きたい場所の配置情報</param>
-void EditorCamera::Update(PlacementData targetPlaceData)
+void EditorCamera::UpdatePositionAndTarget(PlacementData targetPlaceData)
+{
+    //カメラの狙ってる座標
+    VECTOR placePos = VGet(targetPlaceData.posX, 0, targetPlaceData.posZ);
+    position = VAdd(placePos, VScale(direction, targetBetweenSize));
+    position.y = posY;
+    //位置と向きを確定
+    SetCameraPositionAndTarget_UpVecY(position, placePos);
+}
+/// <summary>
+/// 上下左右キーで向きとターゲットまでの距離を変更する
+/// </summary>
+void EditorCamera::UpdateDirectionAndTargetBetween()
 {
     //右左で向き変更
     if (UserInput::GetInputState(Left))
     {
         direction = VNorm(OriginalMath::GetYRotateVector(direction, -rotaSpeed));
     }
-    if (UserInput::GetInputState(Right))
+    else if (UserInput::GetInputState(Right))
     {
         direction = VNorm(OriginalMath::GetYRotateVector(direction, rotaSpeed));
     }
+
     //上下で移動
     if (UserInput::GetInputState(Up))
     {
-        position = VAdd(position, VScale(direction, cameraSpeed));
+        //距離を縮める
+        targetBetweenSize -= cameraSpeed;
+        if (targetBetweenSize < cameraSpeed)
+        {
+            targetBetweenSize = cameraSpeed;
+        }
     }
-    if (UserInput::GetInputState(Down))
+    else if (UserInput::GetInputState(Down))
     {
-        position = VAdd(position, VScale(direction, -cameraSpeed));
+        //距離を話す
+        targetBetweenSize += cameraSpeed;
     }
-    VECTOR placePos = VGet(targetPlaceData.posX, 0, targetPlaceData.posZ);
-    VECTOR placeDir = VGet(targetPlaceData.dirX, 0, targetPlaceData.dirZ);
-    //カメラの狙ってる座標
-    VECTOR aimPos = VAdd(direction, VScale(placeDir, targetBetweenSize));
-    aimPos.y = 0;
-    //位置と向きを確定
-    SetCameraPositionAndTarget_UpVecY(position, aimPos);
-}
-
-/// <summary>
-/// カメラの向きを所得
-/// </summary>
-/// <returns>カメラの向きベクトル</returns>
-VECTOR EditorCamera::GetNormDirection()
-{
-    return direction;
 }

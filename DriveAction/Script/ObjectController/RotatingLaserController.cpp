@@ -6,7 +6,7 @@
 /// </summary>
 /// <param name="generator">ƒŒ[ƒU[¶¬–ğ</param>
 RotatingLaserController::RotatingLaserController()
-    :DamageObjectController(ObjectInit::laser)
+    :DamageObjectController(ObjectInit::InitObjKind::laser)
 {
 };
 /// <summary>

@@ -16,14 +16,14 @@
 /// 上から下に落とす爆弾
 /// </summary>
 Bomber::Bomber(std::unique_ptr<ObjectObserver> setObserver)
-    :DamageObject(ObjectInit::bomber,std::move(setObserver))
+    :DamageObject(ObjectInit::InitObjKind::bomber,std::move(setObserver))
 {
     //落下位置は発射したキャラの位置に準拠
     position = observer->GetSubjectPos();
     //初速をセット
     fallingSpeed = setFallingSpeed;
     //エフェクト
-    EffectManager::LoadEffect(bombExplosion);
+    EffectManager::LoadEffect(EffectKind::bombExplosion);
     //向きと速度
     velocity = VGet(0, 0, 0);
     direction = VGet(1, 0, 0);
@@ -57,7 +57,7 @@ void Bomber::Update()
         //地面にぶつかりそうになかったらエフェクトを出す
         if (position.y < 0.0f)
         {
-            burnEffect = EffectManager::GetPlayEffect3D(bombExplosion);
+            burnEffect = EffectManager::GetPlayEffect3D(EffectKind::bombExplosion);
             float positionY = position.y - radius;
             SetPosPlayingEffekseer3DEffect(burnEffect, position.x, positionY, position.z);
         }
@@ -67,7 +67,7 @@ void Bomber::Update()
         //エフェクトを描画し終わったら終了
         if (IsEffekseer3DEffectPlaying(burnEffect) == -1)
         {
-            objState = dead;
+            objState = ObjectState::dead;
         }
     }
 }
@@ -79,13 +79,13 @@ void Bomber::OnConflict(CollisionResultInfo resultInfo)
     if (resultInfo.tag != ObjectTag::damageObject && burnEffect == -1)
     {
         //ダメージ判定のあるオブジェクト以外に衝突後エフェクトを出す
-        burnEffect = EffectManager::GetPlayEffect3D(bombExplosion);
+        burnEffect = EffectManager::GetPlayEffect3D(EffectKind::bombExplosion);
         float positionY = position.y - radius;
         SetPosPlayingEffekseer3DEffect(burnEffect, position.x, positionY, position.z);
         //当たったのがプレイヤーだったら当たり判定消失
-        if (resultInfo.tag == player)
+        if (resultInfo.tag == ObjectTag::player)
         {
-            objState = activeEnd;
+            objState = ObjectState::activeEnd;
         }
     }
 }

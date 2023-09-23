@@ -1,11 +1,11 @@
 #include "EditorObject.h"
 #include "UserInput.h"
 #include "OriginalMath.h"
-#include "EditorCameraObserver.h"
+#include "CameraObserver.h"
 //移動速度
-const int EditorObject::moveSpeed;
+const int EditorObject::moveSpeed = 17;
 //回転速度
-const int EditorObject::rotaSpeed;
+const int EditorObject::rotaSpeed = 2;
 
 /// <summary>
 /// エディタ上で使用するオブジェクト
@@ -17,15 +17,10 @@ EditorObject::EditorObject()
     direction = VGet(1, 0, 0);
     
 }
-
-EditorObject::~EditorObject()
-{
-    
-}
 /// <summary>
 /// 各オブジェクトを動かしたり回転させたりする
 /// </summary>
-void EditorObject::Update(std::weak_ptr<EditorCameraObserver> cameraObserever)
+void EditorObject::Update(std::weak_ptr<CameraObserver> cameraObserever)
 {
     //入力情報を反映
     ReflectInput(cameraObserever);
@@ -57,7 +52,7 @@ void EditorObject::SetArrangementData(PlacementData setData)
 /// <summary>
 /// 入力を反映して移動と回転を更新
 /// </summary>
-void EditorObject::ReflectInput(std::weak_ptr<EditorCameraObserver> cameraObserever)
+void EditorObject::ReflectInput(std::weak_ptr<CameraObserver> cameraObserever)
 {
     if (UserInput::GetInputState(WKey) == Hold)//ｗキーを押してたら回転モード
     {
@@ -76,25 +71,27 @@ void EditorObject::ReflectInput(std::weak_ptr<EditorCameraObserver> cameraObsere
         //カメラの向きに合わせて移動
         VECTOR cameraDir = cameraObserever.lock()->GetCameraDir();
         cameraDir.y = 0;//平行移動だけできる
+        //移動量
+        VECTOR moveValue = {};
         if (UserInput::GetInputState(Left) == Hold)//左移動
         {
-            cameraDir = VCross(cameraDir, VGet(0, 1, 0));
-            position = VAdd(position, VScale(cameraDir, moveSpeed));
+            moveValue = VCross(cameraDir, VGet(0, -moveSpeed, 0));
+            position = VAdd(position, moveValue);
         }
         else if (UserInput::GetInputState(Right) == Hold)//右移動
         {
-            cameraDir = VCross(cameraDir, VGet(0, -1, 0));
-            position = VAdd(position, VScale(cameraDir, moveSpeed));
+            moveValue = VCross(cameraDir, VGet(0, moveSpeed, 0));
+            position = VAdd(position, moveValue);
         }
-        if (UserInput::GetInputState(Up) == Hold)//前移動
+        else if (UserInput::GetInputState(Up) == Hold)//前移動
         {
-            cameraDir = VScale(cameraDir, moveSpeed);
-            position = VAdd(position, VScale(cameraDir, moveSpeed));
+            moveValue = VScale(cameraDir, -moveSpeed);
+            position = VAdd(position, moveValue);
         }
         else if (UserInput::GetInputState(Down) == Hold)//後ろ移動
         {
-            cameraDir = VScale(cameraDir, -moveSpeed);
-            position = VAdd(position, VScale(cameraDir, moveSpeed));
+            moveValue = VScale(cameraDir, moveSpeed);
+            position = VAdd(position, moveValue);
         }
     }
 }

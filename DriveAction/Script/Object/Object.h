@@ -8,7 +8,7 @@ public:
     /// <summary>
     /// オブジェクトの種類
     /// </summary>
-    enum ObjectTag
+    enum class ObjectTag
     {
         //プレイヤー
         player,
@@ -26,7 +26,7 @@ public:
     /// <summary>
     /// オブジェクトの状態
     /// </summary>
-    enum ObjectState
+    enum class ObjectState
     {
         //動く前　初期化しただけとか
         sleep,
@@ -121,7 +121,7 @@ protected:
     //跳ね返す力
     float bouncePower = 0;
     //生存フラグ
-    ObjectState objState = sleep;
+    ObjectState objState = ObjectState::sleep;
     //自分が何なのか
     ObjectTag tag = ObjectTag::stage;
     //方向

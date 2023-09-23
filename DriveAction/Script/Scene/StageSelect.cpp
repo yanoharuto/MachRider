@@ -4,22 +4,27 @@
 #include "Utility.h"
 #include "StageDataManager.h"
 /// <summary>
-/// ステージごとに必要なアセットのアドレスが
-/// 書いてあるファイルの
-/// アドレスが書いてあるファイルを読み込む
+/// ステージ選択UIの読み込み
+/// 一番最初のステージに変更
 /// </summary>
-/// <returns></returns>
 StageSelect::StageSelect()
 {
     selectStageNum = 0;
     StageDataManager::ChangeStageData(this);
-    stageNameUI = UIManager::CreateUIData(stageName);
-    selectButtonUI = UIManager::CreateUIData(stageSelectButton);
+    stageNameUIData = UIManager::CreateUIData(UIKind::stageName);
+    selectButtonUIData = UIManager::CreateUIData(UIKind::stageSelectButton);
 }
 /// <summary>
-/// 遊ぶステージ変更するときに使う
+/// UIの削除
 /// </summary>
-/// <param name="next">次のステージTrue前のステージかfalse</param>
+StageSelect::~StageSelect()
+{
+    UIManager::DeleteUIGraph(&selectButtonUIData);
+    UIManager::DeleteUIGraph(&stageNameUIData);
+}
+/// <summary>
+/// 十字キーで遊ぶステージ変更
+/// </summary>
 void StageSelect::Update()
 {
     //上下に押したら変更
@@ -50,25 +55,25 @@ void StageSelect::Update()
 void StageSelect::Draw() const
 {
     //stageNameUIのCopy
-    UIData stageNameData = stageNameUI;
-    for (int i = 0; i < SAFE_GET_SIZE(stageNameData.dataHandle); i++)
+    UIData stageNameUI = stageNameUIData;
+    for (int i = 0; i < CONTAINER_GET_SIZE(stageNameUIData.dataHandle); i++)
     {
         if (i == selectStageNum)//現在選んでいるステージは大きくちょっとずらして表示
         {
-            stageNameData.x -= stageNameData.width / 2;
-            stageNameData.size *= selectSizeCoefficient;
+            stageNameUI.x -= stageNameUIData.width / 2;
+            stageNameUI.size *= selectSizeCoefficient;
         }
         else
         {
-            stageNameData.x = stageNameUI.x;
-            stageNameData.size = stageNameUI.size;
+            stageNameUI.x = stageNameUIData.x;
+            stageNameUI.size = stageNameUIData.size;
         }
         //各ステージの選択UIを描画
-        UIDrawer::DrawRotaUI(stageNameData, i);
-        stageNameData.y += stageNameData.height;
+        UIDrawer::DrawRotaUI(stageNameUI, i);
+        stageNameUI.y += stageNameUIData.height;
     }
     //選択するときのボタンを表示
-    UIDrawer::DrawRotaUI(selectButtonUI);
+    UIDrawer::DrawRotaUI(selectButtonUIData);
 }
 /// <summary>
 /// ステージの番号所得

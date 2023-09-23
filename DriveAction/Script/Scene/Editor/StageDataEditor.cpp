@@ -24,7 +24,7 @@ StageDataEditor::StageDataEditor(std::string setFileName, InitObjKind objKind)
 {
     editKind = objKind;
     //もしすでにファイルがあるならデータを取ってくる
-    placementDataVec = FirstPositionGetter::CSVConvertFirstData(setFileName,objKind);
+    placementDataVec = FirstPositionGetter::GetPlaceData(setFileName,objKind);
     //編集オブジェクト
     editObject = new EditorObject();
     drawer = new EditorDrawModel(editKind);
@@ -44,9 +44,10 @@ StageDataEditor::~StageDataEditor()
 /// <summary>
 /// 新しく編集したり過去に編集したものを再編集したりする
 /// </summary>
-void StageDataEditor::Update(std::weak_ptr<EditorCameraObserver> cameraObserever)
+void StageDataEditor::Update(std::weak_ptr<CameraObserver> cameraObserever)
 {
-    if (nowEditAction == select)
+    using enum EditActionKind;
+    if (nowEditAction == EditActionKind::select)
     {
         SelectEditedObject();
         //スペースキーで編集開始
@@ -80,6 +81,7 @@ void StageDataEditor::Update(std::weak_ptr<EditorCameraObserver> cameraObserever
 /// </summary>
 void StageDataEditor::Draw() const
 {
+    using enum EditActionKind;
     if (!placementDataVec.empty())
     {
         //編集済みのオブジェクト全て描画
@@ -101,7 +103,7 @@ void StageDataEditor::Draw() const
         drawer->SelectDraw(editData);
     }
     //編集中じゃなくてもeditKindと同じものを選ぼうとしていたら描画
-    if (nowEditObjPlaceData.objKind == editKind)
+    if (nowEditObjPlaceData.objKind == CAST_I(editKind))
     {
         drawer->SelectDraw(nowEditObjPlaceData);
     }
@@ -120,7 +122,7 @@ PlacementData StageDataEditor::GetEditObjPlacementData() const
 /// <returns>編集中ならTrue</returns>
 bool StageDataEditor::IsNowEdit()
 {
-    return nowEditAction != select;
+    return nowEditAction != EditActionKind::select;
 }
 /// <summary>
 /// 現在編集しているアイテムの出てくるタイミングを変更
@@ -166,8 +168,9 @@ void StageDataEditor::EraceEndEditData(int eraceNum)
 /// <summary>
 /// 編集操作
 /// </summary>
-void StageDataEditor::Edit(std::weak_ptr<EditorCameraObserver> cameraObserever)
+void StageDataEditor::Edit(std::weak_ptr<CameraObserver> cameraObserever)
 {
+    using enum EditActionKind;
     //移動回転
     editObject->Update(cameraObserever);
     //スペースキーを押したら
@@ -175,7 +178,7 @@ void StageDataEditor::Edit(std::weak_ptr<EditorCameraObserver> cameraObserever)
     {
         //編集したオブジェクトの位置と向きと種類
         PlacementData editData = editObject->GePlacementData();
-        editData.objKind = editKind;
+        editData.objKind = CAST_I(editKind);
         //何個目のアイテムを回収したかで出てくるか設定する
         editData.collectNum = getCollectNum;
         //過去に編集していたオブジェクトを再編集していたら

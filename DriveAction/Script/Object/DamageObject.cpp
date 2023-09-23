@@ -9,7 +9,7 @@ DamageObject::DamageObject(ObjectInit::InitObjKind kind, std::unique_ptr<ObjectO
     :Actor(kind)
 {
     observer = std::move(setObserver);
-    tag = damageObject;
+    tag = ObjectTag::damageObject;
 }
 /// <summary>
 /// 発射したオブジェクトのユニークポインタの開放

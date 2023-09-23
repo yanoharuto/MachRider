@@ -23,11 +23,11 @@ public:
     /// <summary>
     /// ‰e‚Ì•`‰æ”ÍˆÍ‚Ì•ÏX
     /// </summary>
-    void SetShadowMapErea();
+    void SetShadowMapArea();
     /// <summary>
     /// ‚±‚ê‚©‚ç•`‰æ‚·‚é‰e‚Ì€”õ
     /// </summary>
-    void SetUPDrawShadow();
+    void SetUpDrawShadow();
     /// <summary>
     /// ‰e‚ğ•`‰æ‚·‚é‚ÌI—¹
     /// </summary>

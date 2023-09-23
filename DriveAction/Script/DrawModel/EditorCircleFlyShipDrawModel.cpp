@@ -11,7 +11,7 @@
 /// そのために必要な情報を初期化
 /// </summary>
 EditorCircleFlyShipDrawModel::EditorCircleFlyShipDrawModel()
-    :EditorDrawModel(ObjectInit::circleLaserShip)
+    :EditorDrawModel(ObjectInit::InitObjKind::circleLaserShip)
 {
     Init();
 }
@@ -64,12 +64,13 @@ void EditorCircleFlyShipDrawModel::SelectDraw(PlacementData data) const
 void EditorCircleFlyShipDrawModel::Init()
 {
     //配置に必要な情報
-    using namespace FlyShipInit;
+    using enum FlyShipInit::FlyShipParamator;
+
     //FlyShip用のデータをロード
-    CSVFileLoader* addDataLoader = new CSVFileLoader(InitActor::GetAddDataPass(circleLaserShip));
+    CSVFileLoader* addDataLoader = new CSVFileLoader(InitActor::GetAddDataPass(InitObjKind::circleLaserShip));
     auto addData = addDataLoader->GeFileStringData();
-    uniNum = SAFE_STR_TO_I(addData[unitNum]);
-    uniBetween = SAFE_STR_TO_F(addData[unitBetween]);
+    uniNum = STR_TO_I(addData[CAST_I(unitNum)]);
+    uniBetween = STR_TO_F(addData[CAST_I(unitBetween)]);
     //機体の数だけ割る
     uniDirRota = 360.0f / uniNum;
 }

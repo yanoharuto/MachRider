@@ -14,7 +14,7 @@ const float Saw::addRotate = 20.0f;
 /// </summary>
 /// <param name="arrangementData">配置情報</param>
 Saw::Saw(PlacementData arrangementData)
-    :Actor(saw)
+    :Actor(InitObjKind::saw)
 {
     //当たり判定
     collider = new SphereHitChecker(this);
@@ -22,7 +22,7 @@ Saw::Saw(PlacementData arrangementData)
     ConflictManager::AddConflictProcessor(conflictProcessor,collider);
     
     //破壊時のエフェクト
-    EffectManager::LoadEffect(bombExplosion);
+    EffectManager::LoadEffect(EffectKind::bombExplosion);
     //初期化処理
     Init(arrangementData);
 }
@@ -54,10 +54,10 @@ void Saw::Update()
     //破壊エフェクトが出たら終了
     if (breakExplosionEffect != -1 && IsEffekseer3DEffectPlaying(breakExplosionEffect) == -1)
     {
-        objState = dead;
+        objState = ObjectState::dead;
     }
     //衝突直後、当たり判定削除
-    if (objState == activeEnd && collider != nullptr)
+    if (objState == ObjectState::activeEnd && collider != nullptr)
     {
         ConflictManager::EraceConflictProcessor(conflictProcessor, collider);
         SAFE_DELETE(collider);
@@ -69,11 +69,11 @@ void Saw::Update()
 /// </summary>
 void Saw::OnConflict(const CollisionResultInfo conflictInfo)
 {
-    if (conflictInfo.tag == player && objState != activeEnd)
+    if (conflictInfo.tag == ObjectTag::player && objState != ObjectState::activeEnd)
     {
-        objState = activeEnd;
+        objState = ObjectState::activeEnd;
         //爆破エフェクトを出す
-        breakExplosionEffect = EffectManager::GetPlayEffect3D(bombExplosion);
+        breakExplosionEffect = EffectManager::GetPlayEffect3D(EffectKind::bombExplosion);
         SetPosPlayingEffekseer3DEffect(breakExplosionEffect, position.x, position.y, position.z);
     }
 }
@@ -85,6 +85,6 @@ void Saw::Init(PlacementData arrangementData)
 {
     position.x = arrangementData.posX;
     position.z = arrangementData.posZ;
-    tag = damageObject;
+    tag = ObjectTag::damageObject;
     direction = VGet(arrangementData.dirX, 0, arrangementData.dirZ);
 }

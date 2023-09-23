@@ -10,17 +10,17 @@ const int MiniMap::iconSize;
 //ミニマップに表示する点
 std::list<std::unique_ptr<ObjectObserver>> MiniMap::markerObserverList;
 //ミニマップのデータ
-UIData MiniMap::miniMap;
+UIData MiniMap::miniMapUIData;
 /// <summary>
 /// 収集アイテムとかを描画するための奴
 /// </summary>
 MiniMap::MiniMap(std::weak_ptr<ObjectObserver> player)
 {
     //UI読み込み
-    miniMap = UIManager::CreateUIData(radar);
+    miniMapUIData = UIManager::CreateUIData(UIKind::radar);
     //ミニマップの縦幅
     int mapGraphLength;
-    GetGraphSize(miniMap.dataHandle[0], &mapGraphWidth, &mapGraphLength);
+    GetGraphSize(miniMapUIData.dataHandle[0], &mapGraphWidth, &mapGraphLength);
     
     playerObserver = player;
     betweenSize = mapGraphWidth / StageWall::GetStageWidth() * betweenSize;
@@ -36,6 +36,7 @@ MiniMap::~MiniMap()
         (*itr).reset();
     }
     markerObserverList.clear();
+    UIManager::DeleteUIGraph(&miniMapUIData);
 }
 /// <summary>
 /// 収集アイテムの位置を更新
@@ -49,7 +50,7 @@ void MiniMap::Update()
     for (auto ite = markerObserverList.begin(); ite != markerObserverList.end(); ite++)
     {
         //アクティブなオブジェクトなら
-        if ((*ite)->GetSubjectState() == Object::active)
+        if ((*ite)->GetSubjectState() == Object::ObjectState::active)
         {
             VECTOR itePos = (*ite)->GetSubjectPos();
             //DrawPosListにオブジェクトの位置を追加していく
@@ -57,7 +58,7 @@ void MiniMap::Update()
         }
     }
     //北の位置をmapに反映
-    northPos = VGet(mapGraphWidth / 2 * miniMap.size / betweenSize, 0, 0);
+    northPos = VGet(mapGraphWidth / 2 * miniMapUIData.size / betweenSize, 0, 0);
     northPos = ConvertPosition(northPos);
 }
 /// <summary>
@@ -66,9 +67,9 @@ void MiniMap::Update()
 void MiniMap::Draw()const
 {
     //枠描画
-    UIDrawer::DrawRotaUI(miniMap);
+    UIDrawer::DrawRotaUI(miniMapUIData);
     //プレイヤーアイコンの描画
-    DrawCircle(miniMap.x, miniMap.y, iconSize, playerColor, 1, 1);
+    DrawCircle(miniMapUIData.x, miniMapUIData.y, iconSize, playerColor, 1, 1);
     //収集アイテムの描画
     for (auto ite = drawPosList.begin(); ite != drawPosList.end(); ite++)
     {
@@ -102,8 +103,8 @@ VECTOR MiniMap::ConvertPosition(VECTOR between)
     between = VTransform(VGet(0, 0, -VSize(between)), pM);
     //ミニマップの大きさに変換
     VECTOR convertPos;
-    convertPos.x = -between.x * betweenSize + miniMap.x;
-    convertPos.y = between.z * betweenSize + miniMap.y;
+    convertPos.x = -between.x * betweenSize + miniMapUIData.x;
+    convertPos.y = between.z * betweenSize + miniMapUIData.y;
     return convertPos;
 }
 /// <summary>

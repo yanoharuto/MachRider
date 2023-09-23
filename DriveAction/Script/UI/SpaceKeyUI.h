@@ -12,6 +12,10 @@ public:
     /// <param name="uiKind"></param>
     FlashUI(UIKind uiKind);
     /// <summary>
+    /// pressKeyDataの削除
+    /// </summary>
+    ~FlashUI();
+    /// <summary>
     /// アルファ値の更新
     /// </summary>
     void Update();
@@ -21,7 +25,7 @@ public:
     void Draw()const;
 private:
     //スペースキーUI
-    UIData pressKeyData;
+    UIData pressKeyUIData;
     //アルファ値
     int aValue;
     //アルファ値の増加速度

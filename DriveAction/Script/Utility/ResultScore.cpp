@@ -30,15 +30,16 @@ ResultScore::ResultScore(std::weak_ptr<PlayerObserver> player, std::weak_ptr<Tim
 /// <returns>引数の種類のスコア量</returns>
 int ResultScore::GetScore(ScoreKind scoreKind)
 {
+    using enum ResultScore::ScoreKind;
     switch (scoreKind)//引数の種類のスコアの量を返す
     {
-    case ResultScore::timeBonus:
+    case timeBonus:
         return timeScore;
         break;
-    case ResultScore::collectBonus:
+    case collectBonus:
         return collectScore;
         break;
-    case ResultScore::total:
+    case total:
         return timeScore + collectScore;
         break;
     default:
@@ -53,12 +54,13 @@ int ResultScore::GetScore(ScoreKind scoreKind)
 /// <returns>引数のスコアの倍率</returns>
 int ResultScore::GetScoreBonus(ScoreKind scoreKind)
 {
+    using enum ResultScore::ScoreKind;
     switch (scoreKind)//引数の種類のスコアの倍率を返す
     {
-    case ResultScore::timeBonus:
+    case timeBonus:
         return clearTimeBonus;
         break;
-    case ResultScore::collectBonus:
+    case collectBonus:
         return getCollectBonus;
         break;
     default:

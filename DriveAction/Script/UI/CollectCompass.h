@@ -13,7 +13,8 @@ public:
     /// <summary>
     /// playerObserverとcollectControllerの所得
     /// </summary>
-    /// <param name="player">playerの位置情報</param>
+    /// <param name="player">プレイヤーの位置や向きが分かるやつ</param>
+    /// <param name="collectItemObserver">収集アイテムの距離などが分かるやつ</param>
     CollectCompass(std::weak_ptr<PlayerObserver> player,std::shared_ptr<CollectItemObserver> collectItemObserver);
     /// <summary>
     /// エフェクト終了

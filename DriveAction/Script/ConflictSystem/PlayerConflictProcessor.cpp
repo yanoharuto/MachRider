@@ -18,7 +18,7 @@ void PlayerConflictProcessor::OnConflict(CollisionResultInfo resultInfo)
         //当たった時の処理を行う
         object->OnConflict(resultInfo);
         //コレクトアイテムならカウント
-        if (resultInfo.tag == Object::collect)
+        if (resultInfo.tag == Object::ObjectTag::collect)
         {
             getCollectNum++;
         }

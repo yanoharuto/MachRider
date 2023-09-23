@@ -23,7 +23,7 @@ ShadowMap::~ShadowMap()
 /// <summary>
 /// ‰e‚Ì•`‰æ”ÍˆÍ‚Ì•ÏX
 /// </summary>
-void ShadowMap::SetShadowMapErea()
+void ShadowMap::SetShadowMapArea()
 {
     VECTOR targetPos = playerObserber.lock()->GetSubjectPos();
     VECTOR minPos = VAdd(targetPos, DrawAreaMinPos);
@@ -33,7 +33,7 @@ void ShadowMap::SetShadowMapErea()
 /// <summary>
 /// ‚±‚ê‚©‚ç•`‰æ‚·‚é‰e‚Ì€”õ
 /// </summary>
-void ShadowMap::SetUPDrawShadow()
+void ShadowMap::SetUpDrawShadow()
 {
     ShadowMap_DrawSetup(shadowMap);
 }

@@ -9,7 +9,7 @@ namespace SoundInit
     /// <summary>
     /// 音を鳴らすのに必要なパラメータ-
     /// </summary>
-    enum SoundParamator
+    enum class SoundParamator
     {
         //音の相対パス
         soundPass = 2,
@@ -21,7 +21,7 @@ namespace SoundInit
     /// <summary>
     /// 音の種類
     /// </summary>
-    enum SoundKind
+    enum class SoundKind
     {
         //爆撃機の飛ぶ音
         bomberShipFlight = 2,

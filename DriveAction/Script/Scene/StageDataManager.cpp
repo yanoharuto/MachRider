@@ -30,8 +30,8 @@ void StageDataManager::ChangeStageData(StageSelect* const select)
     //選んでいるステージのアドレスを保存
     fileAddres = dataVector[select->GetSelectStageNum()];
 
-    stageWidth = SAFE_STR_TO_I(GetSelectStageData(InitStage::width));
-    stageLength = SAFE_STR_TO_I(GetSelectStageData(InitStage::length));
+    stageWidth = STR_TO_I(GetSelectStageData(InitStage::width));
+    stageLength = STR_TO_I(GetSelectStageData(InitStage::length));
 }
 /// <summary>
 /// ステージの数
@@ -78,12 +78,12 @@ ScoreBorder StageDataManager::GetScoreBorder()
     auto scoreStrInfoVec = fileLoader->GeFileStringData();
     //ステージのスコアの線引き
     ScoreBorder scoreBorder = {};
-    scoreBorder.gold = SAFE_STR_TO_I(scoreStrInfoVec[StageScore::goldScore]);
-    scoreBorder.silver = SAFE_STR_TO_I(scoreStrInfoVec[StageScore::silverScore]);
-    scoreBorder.bronze = SAFE_STR_TO_I(scoreStrInfoVec[StageScore::bronzeScore]);
-    scoreBorder.highScore = SAFE_STR_TO_I(scoreStrInfoVec[StageScore::highScore]);
-    scoreBorder.second = SAFE_STR_TO_I(scoreStrInfoVec[StageScore::secondScore]);
-    scoreBorder.third = SAFE_STR_TO_I(scoreStrInfoVec[StageScore::thirdScore]);
+    scoreBorder.gold = STR_TO_I(scoreStrInfoVec[StageScore::goldScore]);
+    scoreBorder.silver = STR_TO_I(scoreStrInfoVec[StageScore::silverScore]);
+    scoreBorder.bronze = STR_TO_I(scoreStrInfoVec[StageScore::bronzeScore]);
+    scoreBorder.highScore = STR_TO_I(scoreStrInfoVec[StageScore::highScore]);
+    scoreBorder.second = STR_TO_I(scoreStrInfoVec[StageScore::secondScore]);
+    scoreBorder.third = STR_TO_I(scoreStrInfoVec[StageScore::thirdScore]);
     return scoreBorder;
 }
 /// <summary>
@@ -95,13 +95,14 @@ std::vector<std::string> StageDataManager::GetPlaceStrData(Object::ObjectTag tag
 {
     ///今選択しているステージの初期位置の入ったファイルのパス
     std::string selectStageFirstPlaceFilePath;
+    using enum Object::ObjectTag;
     //各オブジェクトの初期位置のファイルまでのパスを所得
     switch (tag)
     {
-    case Object::player:
+    case player:
         selectStageFirstPlaceFilePath = GetSelectStageData(playerPositionFilePass);
         break;
-    case Object::collect:
+    case collect:
         selectStageFirstPlaceFilePath = GetSelectStageData(collectFilePass);
         break;
     default:
@@ -118,7 +119,7 @@ std::vector<std::string> StageDataManager::GetPlaceStrData(Object::ObjectTag tag
 /// <returns>ゲーム制限時間タイマー</returns>
 std::shared_ptr<StopTimer> StageDataManager::CreateGameTimer()
 {
-    double gameLimitTime = SAFE_STR_TO_F(GetSelectStageData(gameTime));
+    double gameLimitTime = STR_TO_F(GetSelectStageData(gameTime));
     return std::make_shared<StopTimer>(gameLimitTime);
 }
 /// <summary>

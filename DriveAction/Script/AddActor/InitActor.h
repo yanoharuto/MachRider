@@ -100,7 +100,6 @@ public:
     /// <param name="obj">追加情報が欲しいオブジェクト</param>
     /// <returns>追加情報の入ったファイルまでのパス</returns>
     static std::string GetAddDataPass (InitObjKind obj);
-
 private:
     /// <summary>
     /// 初期化に必要な色々なパスを所得

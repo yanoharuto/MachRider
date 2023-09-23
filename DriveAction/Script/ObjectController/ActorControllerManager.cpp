@@ -14,6 +14,7 @@
 #include "RotatingLaserController.h"
 #include "BomberController.h"
 #include "StageObjectController.h"
+#include "CameraObserver.h"
 /// <summary>
 /// ゲーム中に使うオブジェクトの管理クラスの確保
 /// </summary>
@@ -84,10 +85,10 @@ void ActorControllerManager::PrepareGame()
 /// <summary>
 /// 各アクターの描画
 /// </summary>
-void ActorControllerManager::Draw()const
+void ActorControllerManager::Draw(std::weak_ptr<CameraObserver> cameraObserever)const
 {
-    Draw(actorControllerList);
-    Draw(addableActorControllerList);
+    Draw(actorControllerList,cameraObserever);
+    Draw(addableActorControllerList,cameraObserever);
 }
 /// <summary>
 /// actor管理クラスを追加
@@ -133,11 +134,11 @@ void ActorControllerManager::Update(std::list<std::shared_ptr<controllerClass>> 
 /// <typeparam name="controllerClass">Actor管理クラス</typeparam>
 /// <param name="controllerList">controllerClassを纏めたリスト</param>
 template<typename controllerClass>
-void ActorControllerManager::Draw(std::list<std::shared_ptr<controllerClass>> controllerList)const
+void ActorControllerManager::Draw(std::list<std::shared_ptr<controllerClass>> controllerList, std::weak_ptr<CameraObserver> cameraObserever)const
 {
     for (auto objIte = controllerList.begin(); objIte != controllerList.end(); objIte++)
     {
-        (*objIte)->Draw();
+        (*objIte)->Draw(cameraObserever);
     }
 }
 /// <summary>

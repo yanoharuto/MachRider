@@ -8,12 +8,16 @@
 #include "Utility.h"
 #include "CollectItemObserver.h"
 
-
+/// <summary>
+/// playerObserverとcollectControllerの所得
+/// </summary>
+/// <param name="player">プレイヤーの位置や向きが分かるやつ</param>
+/// <param name="collectItemObserver">収集アイテムの距離などが分かるやつ</param>
 CollectCompass::CollectCompass(std::weak_ptr<PlayerObserver> player, std::shared_ptr<CollectItemObserver> collectItemObserver)
 {
     collectObserver= collectItemObserver;
     playerObserver = player;
-    EffectManager::LoadEffect(compass);
+    EffectManager::LoadEffect(EffectKind::compass);
 }
 /// <summary>
 /// エフェクト終了
@@ -30,7 +34,7 @@ void CollectCompass::Update()
     //エフェクトが止まってたらもう一度再生
     if (IsEffekseer3DEffectPlaying(compassEffect) == -1)
     {
-        compassEffect = EffectManager::GetPlayEffect3D(EffectInit::compass);
+        compassEffect = EffectManager::GetPlayEffect3D(EffectKind::compass);
     }
     //エフェクトはプレイヤーの足元に表示
     VECTOR pos = playerObserver.lock()->GetSubjectPos();

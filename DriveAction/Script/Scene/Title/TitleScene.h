@@ -1,4 +1,6 @@
 #pragma once
+#include <iostream>
+#include <memory>
 #include "SceneBase.h"
 #include "UIManager.h"
 class GameScreen;
@@ -7,6 +9,7 @@ class FlashUI;
 class TitleCamera;
 class TitleObject;
 class TitleRanking;
+class CameraObserver;
 /// <summary>
 /// タイトル
 /// </summary>
@@ -68,7 +71,7 @@ private:
     //タイトル画面に表示するハイスコア
     TitleRanking* titleScore;
     //タイトルロゴ
-    UIData titleLogoUI;
+    UIData titleLogoUIData;
     //タイトルの状態
     TitleState titleState;
 };

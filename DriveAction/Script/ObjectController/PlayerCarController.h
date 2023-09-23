@@ -33,7 +33,7 @@ public:
     /// <summary>
     /// •`‰æ
     /// </summary>
-    void Draw() const override;
+    void Draw(std::weak_ptr<CameraObserver> cameraObserever) const override;
 private:
     //ƒvƒŒƒCƒ„[‚ÌÔ‚Ì“–‚½‚è”»’è
     SphereHitChecker* collider;

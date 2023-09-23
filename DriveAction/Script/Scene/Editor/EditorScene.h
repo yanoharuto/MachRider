@@ -4,7 +4,7 @@
 #include "SceneBase.h"
 
 class Menu;
-class EditorCameraObserver;
+class CameraObserver;
 class EditorManager;
 class EditManual;
 class EditorEffect;
@@ -44,5 +44,5 @@ private:
     //カメラ
     std::shared_ptr<EditorCamera> camera;
     //カメラの向きを編集オブジェクトに伝えるクラス
-    std::shared_ptr<EditorCameraObserver> cameraObserver;
+    std::shared_ptr<CameraObserver> cameraObserver;
 };

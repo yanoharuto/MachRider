@@ -6,9 +6,9 @@
 /// </summary>
 /// <param name="generator">”š’e‚ð”­ŽË‚Å‚«‚éƒNƒ‰ƒX</param>
 BomberFlyShipController::BomberFlyShipController(std::shared_ptr<DamageObjectGenerator> generator)
-    :FlyShipController(bomberShip,generator)
+    :FlyShipController(InitObjKind::bomberShip,generator)
 {
-    drawModel = new DrawModel(bomberShip);
+    drawModel = new DrawModel(InitObjKind::bomberShip);
 }
 /// <summary>
 /// ”šŒ‚‹@‚ð’Ç‰Á‚·‚é

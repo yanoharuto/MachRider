@@ -13,6 +13,10 @@ public:
     /// </summary>
     NumUI(UIKind kind);
     /// <summary>
+    /// UI削除
+    /// </summary>
+    ~NumUI();
+    /// <summary>
     /// 整数の描画
     /// </summary>
     /// <param name="num">整数</param>
@@ -38,7 +42,7 @@ protected:
     /// <returns>左端の座標</returns>
     int Draw(UIData data, int num)const;
     //数字のデータ
-    UIData numData;
+    UIData numUIData;
     //小数点の画像
-    UIData pointData;
+    UIData pointUIData;
 };

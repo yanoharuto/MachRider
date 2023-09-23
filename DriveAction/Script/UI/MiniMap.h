@@ -59,7 +59,7 @@ private:
     //収集物の位置の縮尺
     float betweenSize = 0.25f;
     //ミニマップ
-    static UIData miniMap;
+    static UIData miniMapUIData;
     //マップの中心軸にする
     std::weak_ptr<ObjectObserver> playerObserver;
     //マーカーの位置を更新するためのリスト

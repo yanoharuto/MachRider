@@ -9,7 +9,7 @@ float StageWall::stageWidth;
 /// s“®”ÍˆÍ‚ğ‹·‚ß‚é•Ç
 /// </summary>
 StageWall::StageWall()
-    :Actor(ObjectInit::wall)
+    :Actor(ObjectInit::InitObjKind::wall)
 {
     tag = ObjectTag::obstacle;
     position = setFirstPos;

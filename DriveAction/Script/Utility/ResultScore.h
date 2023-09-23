@@ -17,7 +17,7 @@ public:
     /// <param name="timer">クリアタイムを所得する</param>
     ResultScore(std::weak_ptr<PlayerObserver> player, std::weak_ptr<Timer> timer);
     //スコアの種類
-    enum ScoreKind
+    enum class ScoreKind
     {
         //残り時間ボーナス
         timeBonus = 0,

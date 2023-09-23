@@ -34,8 +34,6 @@ private:
     void SetLaserTrack();
     //レーザーの跡の位置
     VECTOR laserTrackPos = {};
-    //レーザーの種類
-    EffectInit::EffectKind laserKind = laser;
     //線状当たり判定
     LaserCollider* collider;
     //エフェクトハンドル

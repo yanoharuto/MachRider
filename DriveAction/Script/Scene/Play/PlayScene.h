@@ -17,6 +17,7 @@ class ConflictManager;
 class GameScreen;
 class PlayerObserver;
 class CollectItemObserver;
+class CameraObserver;
 /// <summary>
 /// ゲームを遊ぶシーン
 /// </summary>
@@ -48,15 +49,27 @@ private:
     /// <summary>
     /// カウントダウン終了までの処理
     /// </summary>
-    void UpdatePreCountdownEnd();
+    void UpdatePreStartCountdownEnd();
     /// <summary>
     /// 遊んでいるときの処理
     /// </summary>
     void UpdatePlayGame();
     /// <summary>
-    /// 全部回収後の処理
+    /// 全部アイテムを回収した後の処理
     /// </summary>
-    void UpdatePoatGameEndProcess();
+    void UpdatePostGameEndProcess();
+    /// <summary>
+    /// カウントダウン終了までの描画
+    /// </summary>
+    void DrawPreStartCountdownEnd()const;
+    /// <summary>
+    /// 遊んでいるときの描画
+    /// </summary>
+    void DrawPlayGame()const;
+    /// <summary>
+    /// 全部アイテムを回収した後の処理
+    /// </summary>
+    void DrawPostGameEndProcess()const;
     //ゲーム中断機能
     Menu* menu;
     //ゴール後の処理
@@ -65,8 +78,6 @@ private:
     PlayGameProcess* playGameProcess;
     //レース前の処理
     PrePlayGameProcess* gamePrevProcess;
-    //カメラ
-    GameCamera* camera;
     //シャドウマップ
     ShadowMap* shadowMap;
     //衝突判判定クラス
@@ -77,12 +88,16 @@ private:
     std::shared_ptr<PlayerObserver> playerObserver;
     //収集アイテムの管理クラス
     std::shared_ptr<CollectItemObserver>  collectItemObserver;
+    //カメラの向きを伝えるクラス
+    std::shared_ptr<CameraObserver>  cameraObserver;
+    //カメラ
+    std::shared_ptr<GameCamera> camera;
     //描画状況を保存する
     GameScreen* screen;
     /// <summary>
     /// プレイシーンの段階
     /// </summary>
-    enum PlaySceneProgress
+    enum class PlaySceneProgress
     {
         start,//最初の処理
         game,//遊んでいるときの処理
@@ -91,5 +106,7 @@ private:
     //今何の処理を行うか決める変数
     PlaySceneProgress nowProgress;
     //各シーンの処理の関数ポインタ
-    void (PlayScene::* UpdateFunc[PlaySceneProcess])();
+    void (PlayScene::* UpdateFunc[PlaySceneProcess])() = { &PlayScene::UpdatePreStartCountdownEnd ,&PlayScene::UpdatePlayGame ,&PlayScene::UpdatePostGameEndProcess };
+    //描画処理
+    void (PlayScene::* DrawFunc[PlaySceneProcess])()const = { &PlayScene::DrawPreStartCountdownEnd ,&PlayScene::DrawPlayGame ,&PlayScene::DrawPostGameEndProcess };
 };

@@ -6,7 +6,7 @@
 /// ˆÚ“®‚·‚é‰ñ“]‚Ì‚±‚¬‚è‚ÌŠÇ—Ò
 /// </summary>
 MoveSawController::MoveSawController()
-    :AddableObjectController(ObjectInit::moveSaw)
+    :AddableObjectController(ObjectInit::InitObjKind::moveSaw)
 {
     drawModel = new DrawModel(controllObjKind);
 }
@@ -21,7 +21,7 @@ void MoveSawController::Update()
     for (auto ite = actorList.begin(); ite != actorList.end(); ite++)
     {
         (*ite)->Update();
-        if ((*ite)->GetObjectState() == Object::dead)//”š”jI—¹Œã‚Í”jŠü
+        if ((*ite)->GetObjectState() == Object::ObjectState::dead)//”š”jI—¹Œã‚Í”jŠü
         {
             brokenList.push_back(ite);
             SAFE_DELETE(*ite);

@@ -13,12 +13,14 @@
 #include "ReusableTimer.h"
 #include "CollectItemObserver.h"
 /// <summary>
-/// 遊んでいるときのUI　制限時間とか
+/// プレイヤーや制限時間、収集アイテムの数などを表示できるようにする
 /// </summary>
-/// <param name="setTimer"></param>
-/// <param name="setFirstCoinNum"></param>
+/// <param name="player">プレイヤーの位置</param>
+/// <param name="timer">制限時間</param>
+/// <param name="collectItemObserver">収集アイテム情報</param>
 GamePlayUI::GamePlayUI(std::weak_ptr<PlayerObserver> player, std::weak_ptr<Timer> timer, std::shared_ptr<CollectItemObserver> collectItemObserver)
 {
+    using enum UIKind;
     //残り時間
     gameTimerUI = new TimerUI(timer);
     //ミニマップ
@@ -30,9 +32,9 @@ GamePlayUI::GamePlayUI(std::weak_ptr<PlayerObserver> player, std::weak_ptr<Timer
     getNumUI = new NumUI(getCollectItemNum);
     remainingNumUI = new NumUI(remainingCollectItemNum);
     //収集アイテムに関するUIの枠
-    frameUI = UIManager::CreateUIData(collectItemFrameUI);
+    frameUIData = UIManager::CreateUIData(collectItemFrameUI);
     //残り収集アイテムについてのコメントUI
-    remainingFrazeUI = UIManager::CreateUIData(remainingCollectItemPhrase);
+    remainingFrazeUIData = UIManager::CreateUIData(remainingCollectItemPhrase);
     //プレイヤーのアイテム所得情報を教えてもらう
     playerObserver = player;
     //収集アイテムの方向を出す
@@ -60,6 +62,8 @@ GamePlayUI::~GamePlayUI()
     SAFE_DELETE(remainingNumDrawTimer);
     SAFE_DELETE(playManual);
     playerObserver.reset();
+    UIManager::DeleteUIGraph(&remainingFrazeUIData);
+    UIManager::DeleteUIGraph(&frameUIData);
 }
 /// <summary>
 /// ミニマップの更新や収集アイテムの枚数を更新
@@ -104,20 +108,20 @@ void GamePlayUI::Draw()const
         case 1:
             safeNum = 1;
             //残りの収集アイテムについてのメッセージ
-            safeNum %= remainingFrazeUI.dataHandle.size();
-            UIDrawer::DrawRotaUI(remainingFrazeUI, safeNum);
+            safeNum %= remainingFrazeUIData.dataHandle.size();
+            UIDrawer::DrawRotaUI(remainingFrazeUIData, safeNum);
             break;
         default:
             //残りの収集アイテムについてのメッセージ
-            safeNum %= remainingFrazeUI.dataHandle.size();
-            UIDrawer::DrawRotaUI(remainingFrazeUI, safeNum);
+            safeNum %= remainingFrazeUIData.dataHandle.size();
+            UIDrawer::DrawRotaUI(remainingFrazeUIData, safeNum);
             remainingNumUI->Draw(firstCoinNum - nowGetCoinNum);
             break;
         }
         
     }
     //収集アイテムの数等を表示
-    UIDrawer::DrawRotaUI(frameUI);
+    UIDrawer::DrawRotaUI(frameUIData);
     firstCollectNumUI->Draw(firstCoinNum);
     getNumUI->Draw(nowGetCoinNum);
     //残り時間

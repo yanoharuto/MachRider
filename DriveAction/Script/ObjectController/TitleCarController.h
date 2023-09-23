@@ -30,7 +30,7 @@ public:
     /// <summary>
     /// •`‰æ
     /// </summary>
-    void Draw()const override;
+    void Draw(std::weak_ptr<CameraObserver> cameraObserever)const override;
     /// <summary>
     /// Ô‚ÌˆÊ’u‚È‚Ç‚ğƒJƒƒ‰‚È‚Ç‚É“n‚¹‚é‚æ‚¤‚É‚·‚é
     /// </summary>

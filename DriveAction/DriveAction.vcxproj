@@ -19,6 +19,12 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="JsonFileLoader.cpp" />
+    <ClCompile Include="Script\AddActor\AssetManager.cpp" />
+    <ClCompile Include="Script\AddActor\DamageObjectGenerator.cpp" />
+    <ClCompile Include="Script\AddActor\EnemyGenerator.cpp" />
+    <ClCompile Include="Script\AddActor\FirstPositionGetter.cpp" />
+    <ClCompile Include="Script\AddActor\InitActor.cpp" />
     <ClCompile Include="Script\Camera\Camera.cpp" />
     <ClCompile Include="Script\Camera\EditorCamera.cpp" />
     <ClCompile Include="Script\Camera\GameCamera.cpp" />
@@ -36,11 +42,6 @@
     <ClCompile Include="Script\Effect\EditorEffect.cpp" />
     <ClCompile Include="Script\Effect\Effect.cpp" />
     <ClCompile Include="Script\Effect\EffectManager.cpp" />
-    <ClCompile Include="Script\Initialize\AssetManager.cpp" />
-    <ClCompile Include="Script\Initialize\DamageObjectGenerator.cpp" />
-    <ClCompile Include="Script\Initialize\EnemyGenerator.cpp" />
-    <ClCompile Include="Script\Initialize\FirstPositionGetter.cpp" />
-    <ClCompile Include="Script\Initialize\InitActor.cpp" />
     <ClCompile Include="Script\main.cpp" />
     <ClCompile Include="Script\ObjectController\ActorController.cpp" />
     <ClCompile Include="Script\ObjectController\ActorControllerManager.cpp" />
@@ -76,13 +77,13 @@
     <ClCompile Include="Script\Object\StageWall.cpp" />
     <ClCompile Include="Script\Object\UpDownLaserFlyShip.cpp" />
     <ClCompile Include="Script\Object\Wheels.cpp" />
+    <ClCompile Include="Script\Observer\CameraObserver.cpp" />
     <ClCompile Include="Script\Observer\ObjectObserver.cpp" />
     <ClCompile Include="Script\Observer\PlayerObserver.cpp" />
     <ClCompile Include="Script\Scene\Editor\CollectItemDataEditor.cpp" />
     <ClCompile Include="Script\Scene\Editor\EditDataSaver.cpp" />
-    <ClCompile Include="Script\Scene\Editor\EditorCameraObserver.cpp" />
     <ClCompile Include="Script\Scene\Editor\EditorScene.cpp" />
-    <ClCompile Include="Script\Scene\Editor\EditKindChanger.cpp" />
+    <ClCompile Include="Script\Scene\Editor\EditorManager.cpp" />
     <ClCompile Include="Script\Scene\Editor\EnemyDataEditor.cpp" />
     <ClCompile Include="Script\Scene\Editor\StageDataEditor.cpp" />
     <ClCompile Include="Script\Scene\Play\CollectItemObserver.cpp" />
@@ -96,7 +97,6 @@
     <ClCompile Include="Script\Scene\StageDataManager.cpp" />
     <ClCompile Include="Script\Scene\StageSelect.cpp" />
     <ClCompile Include="Script\Scene\Title\TitleObject.cpp" />
-    <ClCompile Include="Script\Scene\Title\TitleHiScore.cpp" />
     <ClCompile Include="Script\Scene\Title\TitleRanking.cpp" />
     <ClCompile Include="Script\Scene\Title\TitleScene.cpp" />
     <ClCompile Include="Script\Sound\SoundListener.cpp" />
@@ -128,6 +128,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EditorEffect.h" />
+    <ClInclude Include="JsonFileLoader.h" />
+    <ClInclude Include="Script\AddActor\AssetManager.h" />
+    <ClInclude Include="Script\AddActor\DamageObjectGenerator.h" />
+    <ClInclude Include="Script\AddActor\EnemyGenerator.h" />
+    <ClInclude Include="Script\AddActor\FirstPositionGetter.h" />
+    <ClInclude Include="Script\AddActor\InitActor.h" />
+    <ClInclude Include="Script\AddActor\InitObjKind.h" />
     <ClInclude Include="Script\Camera\Camera.h" />
     <ClInclude Include="Script\Camera\EditorCamera.h" />
     <ClInclude Include="Script\Camera\GameCamera.h" />
@@ -146,12 +153,6 @@
     <ClInclude Include="Script\DrawModel\PlayerDrawModel.h" />
     <ClInclude Include="Script\Effect\Effect.h" />
     <ClInclude Include="Script\Effect\EffectManager.h" />
-    <ClInclude Include="Script\Initialize\AssetManager.h" />
-    <ClInclude Include="Script\Initialize\DamageObjectGenerator.h" />
-    <ClInclude Include="Script\Initialize\EnemyGenerator.h" />
-    <ClInclude Include="Script\Initialize\FirstPositionGetter.h" />
-    <ClInclude Include="Script\Initialize\InitActor.h" />
-    <ClInclude Include="Script\Initialize\InitObjKind.h" />
     <ClInclude Include="Script\ObjectController\ActorController.h" />
     <ClInclude Include="Script\ObjectController\ActorControllerManager.h" />
     <ClInclude Include="Script\ObjectController\RotatingLaserController.h" />
@@ -188,6 +189,7 @@
     <ClInclude Include="Script\Object\StageWall.h" />
     <ClInclude Include="Script\Object\UpDownLaserFlyShip.h" />
     <ClInclude Include="Script\Object\Wheels.h" />
+    <ClInclude Include="Script\Observer\CameraObserver.h" />
     <ClInclude Include="Script\Observer\ObjectObserver.h" />
     <ClInclude Include="Script\Observer\PlayerObserver.h" />
     <ClInclude Include="Script\rapidjson\allocators.h" />
@@ -230,9 +232,8 @@
     <ClInclude Include="Script\rapidjson\writer.h" />
     <ClInclude Include="Script\Scene\Editor\CollectItemDataEditor.h" />
     <ClInclude Include="Script\Scene\Editor\EditDataSaver.h" />
-    <ClInclude Include="Script\Scene\Editor\EditorCameraObserver.h" />
     <ClInclude Include="Script\Scene\Editor\EditorScene.h" />
-    <ClInclude Include="Script\Scene\Editor\EditKindChanger.h" />
+    <ClInclude Include="Script\Scene\Editor\EditorManager.h" />
     <ClInclude Include="Script\Scene\Editor\EnemyDataEditor.h" />
     <ClInclude Include="Script\Scene\Editor\StageDataEditor.h" />
     <ClInclude Include="Script\Scene\Play\CollectItemObserver.h" />
@@ -247,7 +248,6 @@
     <ClInclude Include="Script\Scene\StageDataManager.h" />
     <ClInclude Include="Script\Scene\StageSelect.h" />
     <ClInclude Include="Script\Scene\Title\TitleObject.h" />
-    <ClInclude Include="Script\Scene\Title\TitleHiScore.h" />
     <ClInclude Include="Script\Scene\Title\TitleRanking.h" />
     <ClInclude Include="Script\Scene\Title\TitleScene.h" />
     <ClInclude Include="Script\Sound\SoundListener.h" />
@@ -268,7 +268,6 @@
     <ClInclude Include="Script\Utility\Clock.h" />
     <ClInclude Include="Script\Utility\CSVFileLoader.h" />
     <ClInclude Include="Script\Utility\FadeInFadeOut.h" />
-    <ClInclude Include="Script\Utility\json.hpp" />
     <ClInclude Include="Script\Utility\StopTimer.h" />
     <ClInclude Include="Script\Utility\ListUtility.h" />
     <ClInclude Include="Script\Utility\OriginalMath.h" />
@@ -338,19 +337,19 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>Script/Camera;Script/ConflictSystem;Script/DrawModel;Script/Effect;Script/Initialize;Script/Object;Script/ObjectController;Script/Observer;Script/Scene;Script/Sound;Script/UI;Script/Utility;Script/Scene/Editor;Script/Scene/Play;Script/Scene/Title;Script/rapidjson;$(IncludePath)</IncludePath>
+    <IncludePath>Script/Scene;Script/Sound;Script/Scene/Play;Script/UI;Script/Scene/Title;Script/Observer;Script/AddActor;Script/Camera;Script/ObjectController;Script/Scene/Editor;Script/DrawModel;Script/ConflictSystem;Script/Utility;Script/Effect;Script/Object;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>Script/Camera;Script/ConflictSystem;Script/DrawModel;Script/Effect;Script/Initialize;Script/Object;Script/ObjectController;Script/Observer;Script/Scene;Script/Sound;Script/UI;Script/Utility;Script/Scene/Editor;Script/Scene/Play;Script/Scene/Title;Script/rapidjson;$(IncludePath)</IncludePath>
+    <IncludePath>Script/Scene;Script/Sound;Script/Scene/Play;Script/UI;Script/Scene/Title;Script/Observer;Script/AddActor;Script/Camera;Script/ObjectController;Script/Scene/Editor;Script/DrawModel;Script/ConflictSystem;Script/Utility;Script/Effect;Script/Object;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>Script/Camera;Script/ConflictSystem;Script/DrawModel;Script/Effect;Script/Initialize;Script/Object;Script/ObjectController;Script/Observer;Script/Scene;Script/Sound;Script/UI;Script/Utility;Script/Scene/Editor;Script/Scene/Play;Script/Scene/Title;Script/rapidjson;$(IncludePath)</IncludePath>
+    <IncludePath>Script/Scene;Script/Sound;Script/Scene/Play;Script/UI;Script/Scene/Title;Script/Observer;Script/AddActor;Script/Camera;Script/ObjectController;Script/Scene/Editor;Script/DrawModel;Script/ConflictSystem;Script/Utility;Script/Effect;Script/Object;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>Script/Camera;Script/ConflictSystem;Script/DrawModel;Script/Effect;Script/Initialize;Script/Object;Script/ObjectController;Script/Observer;Script/Scene;Script/Sound;Script/UI;Script/Utility;Script/Scene/Editor;Script/Scene/Play;Script/Scene/Title;Script/rapidjson;$(IncludePath)</IncludePath>
+    <IncludePath>Script/Scene;Script/Sound;Script/Scene/Play;Script/UI;Script/Scene/Title;Script/Observer;Script/AddActor;Script/Camera;Script/ObjectController;Script/Scene/Editor;Script/DrawModel;Script/ConflictSystem;Script/Utility;Script/Effect;Script/Object;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

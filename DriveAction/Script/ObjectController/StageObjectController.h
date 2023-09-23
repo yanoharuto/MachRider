@@ -22,7 +22,7 @@ public:
     /// <summary>
     /// コースのモデルを描画
     /// </summary>
-    void Draw()const override;
+    void Draw(std::weak_ptr<CameraObserver> cameraObserever)const override;
 private:
     //地面
     int floorModelHandle;

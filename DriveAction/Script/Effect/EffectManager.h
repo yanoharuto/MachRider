@@ -6,7 +6,7 @@ namespace EffectInit
     /// <summary>
     /// エフェクトの種類
     /// </summary>
-    enum EffectKind
+    enum class EffectKind
     {
         //車がぶつかった時のエフェクト
         carConflict = 2,
@@ -44,7 +44,7 @@ namespace EffectInit
     /// <summary>
     /// エフェクトの初期化に必要なもの
     /// </summary>
-    enum EffectInitData
+    enum class EffectInitData
     {
         effectPass = 2,//エフェクトのパス
         effectSize = 5//エフェクトの大きさ

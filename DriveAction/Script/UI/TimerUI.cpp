@@ -12,18 +12,20 @@
 TimerUI::TimerUI(std::weak_ptr<Timer> setTimer)
 {
     timer = setTimer;
-    frameUI = UIManager::CreateUIData(timerFrame);
-    pointUI = UIManager::CreateUIData(point);
-    numUI = new NumUI(timeNum);
+    frameUIData = UIManager::CreateUIData(UIKind:: timerFrame);
+    pointUIData = UIManager::CreateUIData(UIKind::point);
+    numUI = new NumUI(UIKind::timeNum);
     //タイマーの枠の横位置
-    frameX = frameUI.x + numUI->GetNumWidthSize() * 2;
+    frameX = frameUIData.x + numUI->GetNumWidthSize() * 2;
 }
 /// <summary>
-/// タイマーのロック解除
+/// タイマーのロック解除　UI削除
 /// </summary>
 TimerUI::~TimerUI()
 {
     timer.reset();
+    UIManager::DeleteUIGraph(&frameUIData);
+    UIManager::DeleteUIGraph(&pointUIData);
 }
 /// <summary>
 /// タイマーの残り時間を描画
@@ -31,7 +33,7 @@ TimerUI::~TimerUI()
 void TimerUI::Draw()
 {
     //タイマーの枠を描画　中央にするために
-    DrawRotaGraph( frameX , frameUI.y, frameUI.size, 0, frameUI.dataHandle[0], true);
+    DrawRotaGraph( frameX , frameUIData.y, frameUIData.size, 0, frameUIData.dataHandle[0], true);
     //残り時間の描画
     float limit = static_cast<float>(timer.lock()->GetRemainingTime());
     numUI->Draw(limit);

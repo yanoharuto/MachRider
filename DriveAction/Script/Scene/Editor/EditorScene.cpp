@@ -2,21 +2,21 @@
 #include "DxLib.h"
 #include "Utility.h"
 #include "Menu.h"
-#include "EditKindChanger.h"
+#include "EditorManager.h"
 #include "UserInput.h"
 #include "EditorCamera.h"
 #include "EditorEffect.h"
 #include "EditManual.h"
-#include "EditorCameraObserver.h"
+#include "CameraObserver.h"
 /// <summary>
 /// メニュー画面やカメラ、編集クラスなどを確保
 /// </summary>
 EditorScene::EditorScene()
-    :SceneBase(SceneType::EDITOR)
+    :SceneBase(SceneType::editor)
 {
     //カメラ
     camera = std::make_shared<EditorCamera>();
-    cameraObserver = std::make_shared<EditorCameraObserver>(camera);
+    cameraObserver = std::make_unique<CameraObserver>(camera);
     //編集オブジェクトの種類を変更するクラス
     editManager = new EditorManager();
     //メニュー画面
@@ -44,17 +44,19 @@ EditorScene::~EditorScene()
 SceneType EditorScene::Update()
 {
     menu->Update();//メニュー画面の更新
+
+    using enum Menu::MenuOptions;
     switch (menu->GetMenuState())
     {
         //メニューUIの選択ごとにシーンを新しく読み込む
     case retry:
-        return SceneType::RELOAD;//再読み込み
+        return SceneType::reload;//再読み込み
         break;
     case returnTitle:
-        return SceneType::TITLE;//タイトル
+        return SceneType::title;//タイトル
         break;
     case exitGame:
-        return SceneType::ESCAPE;//ゲーム終了
+        return SceneType::escape;//ゲーム終了
         break;
     }
     //メニュー画面開いてなかったら
@@ -62,16 +64,18 @@ SceneType EditorScene::Update()
     {
         if (UserInput::GetInputState(AKey) == Hold)
         {
-            //カメラの更新
-            camera->Update(editManager->GetNowEditObjPlaceData());
+            camera->UpdateDirectionAndTargetBetween();
         }
         else
         {
             //シーンごとの処理
             editManager->Update(cameraObserver);
-            //エフェクト更新
-            editorEffect->Update(editManager->GetNowEditObjPlaceData());
         }
+
+        //カメラの更新
+        camera->UpdatePositionAndTarget(editManager->GetNowEditObjPlaceData());
+        //エフェクト更新
+        editorEffect->Update(editManager->GetNowEditObjPlaceData());
     }
     return nowSceneType;
 }
@@ -87,7 +91,7 @@ void EditorScene::Draw() const
     }
     else
     {
-        editManager->Draw();
+        editManager->Draw(cameraObserver);
         //今編集している稼動かで操作説明変更
         if(editManager->IsNowEdit())
         {

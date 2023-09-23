@@ -13,6 +13,10 @@ public:
     /// </summary>
     ScoreNum();
     /// <summary>
+    /// highScoreUIの削除
+    /// </summary>
+    ~ScoreNum();
+    /// <summary>
     /// スコアによって大きさ変更
     /// </summary>
     /// <param name="num">合計score</param>
@@ -33,7 +37,7 @@ private:
     //thirdより下のスコアになった時の文字のフォント
     float thirdUnderFontSize = 0.8f;
     //ハイスコアの表記
-    UIData hiScoreUI;
+    UIData highScoreUIData;
     //一番いいスコアの色
     VECTOR firstColor = VGet(255,215,0);
     //ちょっといいときの色

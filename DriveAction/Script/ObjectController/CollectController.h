@@ -22,7 +22,7 @@ public:
     /// <summary>
     /// 収集アイテムの描画
     /// </summary>
-    void Draw()const override;
+    void Draw(std::weak_ptr<CameraObserver> cameraObserever)const override;
     /// <summary>
     /// ゲームが始まる前の処理
     /// </summary>

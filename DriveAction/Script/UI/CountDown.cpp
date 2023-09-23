@@ -12,17 +12,19 @@ CountDown::CountDown(std::weak_ptr<Timer> setTimer)
 {
 	isCountDownEnd = false;
 	isPlayedCountSE = false;
-	countDownUIData = UIManager::CreateUIData(countDownUI);
-	endUI = UIManager::CreateUIData(onGameStartCountDownEnd);
+	countDownUIData = UIManager::CreateUIData(UIKind::countDownUI);
+	endUIData = UIManager::CreateUIData(UIKind::onGameStartCountDownEnd);
 	timer = setTimer;
-	SoundPlayer::LoadAndInitSound(countDown);
+	SoundPlayer::LoadAndInitSound(SoundKind::countDown);
 }
 /// <summary>
-/// タイマーの解放
+/// タイマーの解放　UI削除
 /// </summary>
 CountDown::~CountDown()
 {
 	timer.reset();
+	UIManager::DeleteUIGraph(&countDownUIData);
+	UIManager::DeleteUIGraph(&endUIData);
 }
 
 /// <summary>
@@ -46,7 +48,7 @@ void CountDown::Update()
 		{
 			uiHIndex = 2;
 			isPlayedCountSE = true;
-			SoundPlayer::Play2DSE(countDown);
+			SoundPlayer::Play2DSE(SoundKind::countDown);
 		}
 		break;
 	} 
@@ -58,7 +60,7 @@ void CountDown::DrawUI()const
 {
 	if (isCountDownEnd)//終了後startとかendとか出す
 	{
-		UIDrawer::DrawRotaUI(endUI);
+		UIDrawer::DrawRotaUI(endUIData);
 	}
 	else if (isPlayedCountSE)//3.2.1と数字を出していく
 	{
@@ -71,7 +73,7 @@ void CountDown::DrawUI()const
 /// <returns></returns>
 bool CountDown::IsPlayCountDownSound() const
 {
-	return SoundPlayer::IsPlaySound(countDown);
+	return SoundPlayer::IsPlaySound(SoundKind::countDown);
 }
 /// <summary>
 /// カウントダウン処理が終わったら

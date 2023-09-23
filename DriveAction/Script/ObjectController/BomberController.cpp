@@ -8,9 +8,9 @@
 /// </summary>
 /// <param name="sub"></param>
 BomberController::BomberController()
-    :DamageObjectController(ObjectInit::bomber)
+    :DamageObjectController(ObjectInit::InitObjKind::bomber)
 {
-    drawModel = new DrawModel(ObjectInit::bomber);
+    drawModel = new DrawModel(ObjectInit::InitObjKind::bomber);
 }
 /// <summary>
 /// îöíeÇçXêVÇ≈Ç´ÇÈÇÊÇ§Ç…Ç∑ÇÈ
@@ -33,7 +33,7 @@ void BomberController::Update()
         {
             (*ite)->Update();
             //çXêV
-            if ((*ite)->GetObjectState() == Object::dead)//îöîjèIóπå„ÇÕîjä¸
+            if ((*ite)->GetObjectState() == Object::ObjectState::dead)//îöîjèIóπå„ÇÕîjä¸
             {
                 brokenList.push_back(ite);
                 SAFE_DELETE(*ite);

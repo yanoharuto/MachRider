@@ -4,7 +4,7 @@
 #include "Object.h"
 #include "EditObjectData.h"
 #include "InitObjKind.h"
-class EditorCameraObserver;
+class CameraObserver;
 /// <summary>
 /// エディタ上で表示するオブジェクト
 /// </summary>
@@ -15,11 +15,10 @@ public:
     /// 編集したいものを引数に下さい
     /// </summary>
     EditorObject();
-    ~EditorObject();
     /// <summary>
     /// 各オブジェクトを動かしたり回転させたりする
     /// </summary>
-    void Update(std::weak_ptr<EditorCameraObserver> cameraObserever);
+    void Update(std::weak_ptr<CameraObserver> cameraObserever);
     /// <summary>
     /// 描画に必要な構造体を渡す
     /// </summary>
@@ -34,9 +33,9 @@ protected:
     /// <summary>
     /// 入力を反映して移動と回転を更新
     /// </summary>
-    void ReflectInput(std::weak_ptr<EditorCameraObserver> cameraObserever);
+    void ReflectInput(std::weak_ptr<CameraObserver> cameraObserever);
     //回転速度
-    static const int rotaSpeed = 2;
+    static const int rotaSpeed;
     //移動速度
-    static const int moveSpeed = 5;
+    static const int moveSpeed;
 };

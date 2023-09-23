@@ -17,16 +17,16 @@ public:
     /// <param name="setTimer">残り時間タイマー</param>
     TimerUI(std::weak_ptr<Timer> setTimer);
     /// <summary>
-    /// タイマーのロック解除
+    /// タイマーのロック解除 UI削除
     /// </summary>
     ~TimerUI();
     //残り時間を描画する
     void Draw();
 private:
     //数字のフォント画像
-    UIData frameUI;
+    UIData frameUIData;
     //小数点
-    UIData pointUI;
+    UIData pointUIData;
     //タイマーの枠の横位置
     int frameX;
     //残り時間を所得する用

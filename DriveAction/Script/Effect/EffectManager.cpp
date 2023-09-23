@@ -38,15 +38,16 @@ void EffectManager::LoadEffect(EffectKind kind)
     if (!effectMap.contains(kind))
     {
         //データ読み取り
-        CSVFileLoader* initDataFile = new CSVFileLoader(initDataVec[kind]);
-
+        CSVFileLoader* initDataFile = new CSVFileLoader(initDataVec[static_cast<int>(kind)]);
+        
         std::vector<std::string> dataVec = initDataFile->GeFileStringData();
+        using enum EffectInitData;
         //エフェクトのアセットのパス
-        const char* effectPass = dataVec[EffectInitData::effectPass].c_str();
+        const char* effectPassStr = dataVec[static_cast<int>(effectPass)].c_str();
         //エフェクトの大きさ
-        float size = SAFE_STR_TO_F(dataVec[EffectInitData::effectSize]);
+        float size = STR_TO_F(dataVec[static_cast<int>(effectSize)]);
         //エフェクトの読み込みと大きさをセット
-        int effectHandle = LoadEffekseerEffect(effectPass, size);
+        int effectHandle = LoadEffekseerEffect(effectPassStr, size);
         effectMap.insert(std::make_pair(kind, effectHandle));
     }
 }

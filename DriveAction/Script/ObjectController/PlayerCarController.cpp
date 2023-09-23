@@ -11,10 +11,10 @@
 /// プレイヤーの車の初期化
 /// </summary>
 PlayerCarController::PlayerCarController()
-    :ActorController(ObjectInit::player)
+    :ActorController(ObjectInit::InitObjKind::player)
 {
     //初期位置
-    std::vector<PlacementData> editData = FirstPositionGetter::GetPlaceData(Object::player);
+    std::vector<PlacementData> editData = FirstPositionGetter::GetPlaceData(Object::ObjectTag::player);
     //車の開放
     car = new PlayerCar(editData[0]);
     playerObserver = std::make_shared<PlayerObserver>(car);
@@ -50,7 +50,7 @@ void PlayerCarController::Update()
 /// <summary>
 /// 描画
 /// </summary>
-void PlayerCarController::Draw() const
+void PlayerCarController::Draw(std::weak_ptr<CameraObserver> cameraObserever) const
 {
     playerDrawer->Draw(car);
 }

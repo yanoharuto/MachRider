@@ -11,15 +11,15 @@ class MoveSaw :
 {
 public:
     /// <summary>
-/// ˆÚ“®‚·‚é‰ñ“]‚Ì‚±‚¬‚è
-/// </summary>
+    /// ˆÚ“®‚·‚é‰ñ“]‚Ì‚±‚¬‚è
+    /// </summary>
     MoveSaw(PlacementData editData);
     /// <summary>
     /// ˆÚ“®‚µ‚È‚ª‚ç‰ñ“]‚·‚é
     /// </summary>
     void Update()override;
 private:
-    enum MoveParam
+    enum class MoveParametor
     {
         //ˆÚ“®‘¬“x
         moveSpeed = 1,

@@ -15,22 +15,22 @@
 /// </summary>
 /// <param name="editData"></param>
 MoveSaw::MoveSaw(PlacementData editData)
-    :Saw(moveSaw,editData)
+    :Saw(InitObjKind::moveSaw,editData)
 {   
     //追加情報から移動速度などを所得
-    auto addDataLoader = new CSVFileLoader(InitActor::GetAddDataPass(moveSaw));
+    auto addDataLoader = new CSVFileLoader(InitActor::GetAddDataPass(InitObjKind::moveSaw));
     auto addStrDataVec = addDataLoader->GeFileStringData();
+    using enum MoveParametor;
     //タイマーが動いている間だけ動く
-    moveLarpTimer = new ReusableTimer(SAFE_STR_TO_D(addStrDataVec[moveTime]));
+    moveLarpTimer = new ReusableTimer(STR_TO_D(addStrDataVec[CAST_I(moveTime)]));
     //前方方向に動く
-    velocity = VScale(direction, SAFE_STR_TO_F(addStrDataVec[moveSpeed]));
+    velocity = VScale(direction, STR_TO_F(addStrDataVec[CAST_I(moveSpeed)]));
     //当たり判定
     collider = new SphereHitChecker(this);
     conflictProcessor = new ConflictProcessor(this);
     ConflictManager::AddConflictProcessor(conflictProcessor, collider);
     //破壊時のエフェクト
-    EffectManager::LoadEffect(bombExplosion);
-    
+    EffectManager::LoadEffect(EffectKind::bombExplosion);
 }
 /// <summary>
 /// 移動しながら回転する

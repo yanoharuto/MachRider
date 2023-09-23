@@ -17,7 +17,7 @@ public:
     /// <param name="setTimer">このタイマーの残り時間の3秒前からカウントダウンする</param>
     CountDown(std::weak_ptr<Timer> setTimer);
     /// <summary>
-    /// タイマーの解放
+    /// タイマーの解放 UI削除
     /// </summary>
     ~CountDown();
     /// <summary>
@@ -44,7 +44,7 @@ protected:
     //カウントダウンのUI
     UIData countDownUIData;
     //終わり時のUI
-    UIData endUI;
+    UIData endUIData;
     //カウントダウンが終わったか
     bool isCountDownEnd = false;
     //カウントダウン効果音を鳴らしたか

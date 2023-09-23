@@ -3,19 +3,19 @@
 /// <summary>
 /// タイトルで表示するハイスコア
 /// </summary>
-class TitleHiScore:private NumUI
+class TitleHighScore : private NumUI
 {
 public:
     /// <summary>
     /// タイトルで表示するハイスコア
     /// </summary>
-    TitleHiScore();
+    TitleHighScore();
     /// <summary>
     /// 現在選ばれているステージのハイスコア表示
     /// </summary>
     void Draw()const;
 private:
     //各ステージのハイスコア
-    UIData hiScoreUI;
+    UIData highScoreUI;
 };
 

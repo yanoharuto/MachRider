@@ -7,13 +7,15 @@
 #include "InitActor.h"
 #include "StageWall.h"
 #include "DrawModel.h"
+#include "CameraObserver.h"
 /// <summary>
 /// 初期化
 /// </summary>
 /// <returns></returns>
 StageObjectController::StageObjectController()
-    :ActorController(ObjectInit::wall)
+    :ActorController(ObjectInit::InitObjKind::wall)
 {   
+    using enum InitObjKind;
     //床の設定
     floorModelHandle = InitActor::GetModelHandle(stageFloor);
     auto param = InitActor::GetActorParamator(stageFloor);
@@ -35,7 +37,7 @@ StageObjectController::~StageObjectController()
 /// <summary>
 /// コースのモデルを描画
 /// </summary>
-void StageObjectController::Draw() const
+void StageObjectController::Draw(std::weak_ptr<CameraObserver> cameraObserever) const
 {
     //壁と床
     drawModel->Draw(stageWall);

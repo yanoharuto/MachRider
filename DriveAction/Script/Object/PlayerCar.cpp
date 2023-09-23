@@ -20,7 +20,7 @@
 /// <param name="firstPos"></param>
 /// <param name="setDirection"></param>
 PlayerCar::PlayerCar(PlacementData arrangementData)
-	:Car(ObjectInit::player)
+	:Car(ObjectInit::InitObjKind::player)
 {
 	//初期位置設定
 	firstPosY = position.y;
@@ -29,18 +29,19 @@ PlayerCar::PlayerCar(PlacementData arrangementData)
 	position.y = firstPosY;
 	prevPos = position;
 	direction = VGet(arrangementData.dirX,0,arrangementData.dirZ);
+	using enum EffectKind;
 	//エフェクトを読み込ませる
-	EffectManager::LoadEffect(EffectInit::carConflict);
-	EffectManager::LoadEffect(EffectInit::carWind);
-	EffectManager::LoadEffect(EffectInit::carDamage);
-	EffectManager::LoadEffect(EffectInit::turboCourse);
-	EffectManager::LoadEffect(EffectInit::burner);
-	EffectManager::LoadEffect(EffectInit::chargeBurner);
-	EffectManager::LoadEffect(EffectInit::turboBurner);
+	EffectManager::LoadEffect(carConflict);
+	EffectManager::LoadEffect(carWind);
+	EffectManager::LoadEffect(carDamage);
+	EffectManager::LoadEffect(turboCourse);
+	EffectManager::LoadEffect(burner);
+	EffectManager::LoadEffect(chargeBurner);
+	EffectManager::LoadEffect(turboBurner);
 	//音を読み込ませる
-	SoundPlayer::LoadAndInitSound(playerFlight);
-	SoundPlayer::LoadAndInitSound(playerCharge);
-	SoundPlayer::LoadAndInitSound(playerDamage);
+	SoundPlayer::LoadAndInitSound(SoundKind::playerFlight);
+	SoundPlayer::LoadAndInitSound(SoundKind::playerCharge);
+	SoundPlayer::LoadAndInitSound(SoundKind::playerDamage);
 	//衝突処理呼び役
 	conflictProcessor = new PlayerConflictProcessor(this);
 	hitChecker = new SphereHitChecker(this);
@@ -61,8 +62,8 @@ PlayerCar::~PlayerCar()
 	SAFE_DELETE(conflictProcessor);
 	SAFE_DELETE(hitChecker);
 	//音消す
-	SoundPlayer::StopSound(playerFlight);
-	SoundPlayer::StopSound(playerDamage);
+	SoundPlayer::StopSound(SoundKind::playerFlight);
+	SoundPlayer::StopSound(SoundKind::playerDamage);
 	//まだエフェクトが出ていたら終了
 	DeleteEffect(defaultBurnerEffect);
 	DeleteEffect(turboBurnerEffect);
@@ -97,11 +98,11 @@ void PlayerCar::OnConflict(CollisionResultInfo conflictInfo)
 {
 	if (conflictInfo.hit == HitSituation::Enter)
 	{
-		if (conflictInfo.tag == damageObject)//ダメージを受けた
+		if (conflictInfo.tag == ObjectTag::damageObject)//ダメージを受けた
 		{
 			ReactionDamage(conflictInfo);
 		}
-		else if (conflictInfo.tag != collect)//ぶつかった
+		else if (conflictInfo.tag != ObjectTag::collect)//ぶつかった
 		{
 			ReactionConflict(conflictInfo);
 		}
@@ -212,6 +213,7 @@ void PlayerCar::UpdateEffects()
 	}
 	else
 	{
+		using enum EffectKind;
 		if (isTurbo)//急加速中に出るエフェクト
 		{
 			UpdateEffect(&windEffect, VGet(position.x, 0, position.z), VGet(0, degree * RAGE, 0), carWind);
@@ -265,9 +267,9 @@ void PlayerCar::ReactionDamage(CollisionResultInfo conflictInfo)
 	if (!isBounce)
 	{
 		//ダメージを受けた時のエフェクトと音
-		damageEffect = EffectManager::GetPlayEffect3D(EffectInit::carDamage);
+		damageEffect = EffectManager::GetPlayEffect3D(EffectKind::carDamage);
 		SetPosPlayingEffekseer3DEffect(damageEffect, position.x, position.y, position.z);
-		SoundPlayer::Play3DSE(playerDamage);
+		SoundPlayer::Play3DSE(SoundKind::playerDamage);
 		isBounce = true;
 		twistZRota = 0.0f;
 		//加速も終了
@@ -290,9 +292,9 @@ void PlayerCar::ReactionConflict(CollisionResultInfo conflictInfo)
 	if (isTurbo)
 	{
 		//ぶつかった時の音とエフェクト
-		clashEffect = EffectManager::GetPlayEffect3D(EffectInit::carConflict);
+		clashEffect = EffectManager::GetPlayEffect3D(EffectKind::carConflict);
 		SetPosPlayingEffekseer3DEffect(clashEffect, position.x, position.y, position.z);
-		SoundPlayer::Play3DSE(playerDamage); 
+		SoundPlayer::Play3DSE(SoundKind::playerDamage);
 	}
 	
 	//減速
@@ -326,9 +328,9 @@ float PlayerCar::GetTurboPower()
 		{
 			//チャージ中バーナーに変更して終了
 			StopEffekseer3DEffect(defaultBurnerEffect);
-			chargeBurnerEffect = EffectManager::GetPlayEffect3D(chargeBurner);
+			chargeBurnerEffect = EffectManager::GetPlayEffect3D(EffectKind::chargeBurner);
 			isTurboReserve = true;
-			SoundPlayer::Play3DSE(playerCharge);
+			SoundPlayer::Play3DSE(SoundKind::playerCharge);
 		}
 		return 0;
 	}
@@ -345,12 +347,13 @@ float PlayerCar::GetTurboPower()
 				isTurbo = true;
 				//加速するときはエフェクトと音が発生
 				StopEffekseer3DEffect(chargeBurnerEffect);
-				turboBurnerEffect = EffectManager::GetPlayEffect3D(turboBurner);
-				SoundPlayer::Play3DSE(playerFlight);
+				turboBurnerEffect = EffectManager::GetPlayEffect3D(EffectKind::turboBurner);
+				SoundPlayer::Play3DSE(SoundKind::playerFlight);
 			}
+			//終了したら音を消す
 			isTurboReserve = false;
 			turboChargeTime = 0;
-			SoundPlayer::StopSound(playerCharge);
+			SoundPlayer::StopSound(SoundKind::playerCharge);
 		}
 	}
 	//ターボ期間中

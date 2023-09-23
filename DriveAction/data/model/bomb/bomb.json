@@ -1,9 +1,5 @@
 {
-  "player": "data/model/Player/iceBrades.json",
-  "assetPass": "data/model/bomb/Rocket04_Grey.mv1",
-  "modelSize": 4,
-  "firstPosY": 0,
-  "collRadius": 40,
   "bouncePower": 0.6,
-  "addDataPass": ""
+  "collRadius": 40,
+  "firstPosY": 0
 }

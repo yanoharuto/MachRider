@@ -9,6 +9,7 @@ class EnemyGenerator;
 class BomberController;
 class RotatingLaserController;
 class CollectItemObserver;
+class CameraObserver;
 /// <summary>
 /// actorの動きを制御している物を全部束ねて動かす
 /// </summary>
@@ -35,7 +36,7 @@ public:
     /// <summary>
     /// 各アクターの描画
     /// </summary>
-    void Draw()const;
+    void Draw(std::weak_ptr<CameraObserver> cameraObserever)const;
     /// <summary>
     /// actor管理クラスを追加
     /// </summary>
@@ -62,7 +63,7 @@ private:
     /// <typeparam name="controllerClass">Actor管理クラス</typeparam>
     /// <param name="controllerList">controllerClassを纏めたリスト</param>
     template<typename controllerClass>
-    void Draw(std::list<std::shared_ptr<controllerClass>> controllerList)const;
+    void Draw(std::list<std::shared_ptr<controllerClass>> controllerList, std::weak_ptr<CameraObserver> cameraObserever)const;
     /// <summary>
     ///　敵生成処理
     /// </summary>

@@ -16,19 +16,21 @@
 /// 車とかフェードインフェードアウトクラスの確保
 /// </summary>
 TitleScene::TitleScene()
-    :SceneBase(SceneType::TITLE)
+    :SceneBase(SceneType::title)
 {
-    SoundPlayer::LoadAndInitSound(titleBGM);
+    //ステージ選択
     stageSelect = new StageSelect();
-    spaceKeyUI = new FlashUI(titlePressSpaceKey);
+    //UIの所得
+    spaceKeyUI = new FlashUI(UIKind::titlePressSpaceKey);
     titleObject = new TitleObject();
     titleScore = new TitleRanking();
-    titleLogoUI = UIManager::CreateUIData(tilteLogo);
-
-    SoundPlayer::LoadAndInitSound(sceneNextSE);
+    titleLogoUIData = UIManager::CreateUIData(UIKind::tilteLogo);
+    //音を所得
+    SoundPlayer::LoadAndInitSound(SoundKind::titleBGM);
+    SoundPlayer::LoadAndInitSound(SoundKind::sceneNextSE);
 }
 /// <summary>
-/// デストラクタ
+/// デストラクタ 
 /// </summary>
 TitleScene::~TitleScene()
 {
@@ -36,6 +38,7 @@ TitleScene::~TitleScene()
     SAFE_DELETE(spaceKeyUI);
     SAFE_DELETE(titleObject);
     SAFE_DELETE(titleScore);
+    UIManager::DeleteUIGraph(&titleLogoUIData);
 }
 /// <summary>
 /// タイトルでの処理
@@ -45,24 +48,25 @@ SceneType TitleScene::Update()
 {
     //タイトルでの処理//車が勝手に動いたりする
     titleObject->Update();
-
+    using enum SoundKind;
     //BGM長しっぱ
     if (!SoundPlayer::IsPlaySound(titleBGM) && titleState != TitleState::processEnd)
     {
         SoundPlayer::Play2DSE(titleBGM);
     }
+    using enum TitleScene::TitleState;
     //状況によってやるべき処理を変更
     switch (titleState)
     {
-    case TitleScene::TitleState::waitSpaceKey:
+    case waitSpaceKey:
         WaitPressSpaceKey();//スペースキー待ち
         break;
-    case TitleScene::TitleState::stageSelect:
+    case stageSelect:
         SelectStageProcess();//ステージ選択
         break;
-    case TitleScene::TitleState::processEnd:
+    case processEnd:
         SoundPlayer::StopSound(titleBGM);
-        return SceneType::PLAY;//処理終了
+        return SceneType::play;//処理終了
         break;
     default:
         break;
@@ -71,12 +75,12 @@ SceneType TitleScene::Update()
     //エスケープキーを押したら終了
     if (UserInput::GetInputState(EscapeKey) == Push)
     {
-        return SceneType::ESCAPE;
+        return SceneType::escape;
     }
     //WキーでEditorモード
     else if (UserInput::GetInputState(WKey) == Push)
     {
-        return SceneType::EDITOR;
+        return SceneType::editor;
     }
     return nowSceneType;
 }
@@ -88,7 +92,7 @@ void TitleScene::Draw() const
     //車やステージを描画
     titleObject->Draw();
     //タイトルロゴの描画
-    UIDrawer::DrawRotaUI(titleLogoUI, 0, 0, true);
+    UIDrawer::DrawRotaUI(titleLogoUIData, 0, 0, true);
 
     if (titleState == TitleState::waitSpaceKey)
     {
@@ -110,7 +114,7 @@ void TitleScene::OnPressSpaceKeyProcess(TitleState changedState)
 {
     if (UserInput::GetInputState(Space) == Push)
     {
-        SoundPlayer::Play2DSE(sceneNextSE);
+        SoundPlayer::Play2DSE(SoundKind::sceneNextSE);
         titleState = changedState;
     }
 }

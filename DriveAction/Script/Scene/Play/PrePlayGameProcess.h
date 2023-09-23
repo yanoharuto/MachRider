@@ -40,11 +40,11 @@ public:
     bool IsEndProcess();
 private:
     //収集物のアイコン
-    UIData collectIconData;
+    UIData collectIconUIData;
     //操作説明のUI
     PlayManual* playManual;
     //ゲームの目標
-    UIData gamePuroseData;
+    UIData gamePuroseUIData;
     //収集アイテムの集める数
     NumUI* collectItemNum;
     //コマ送り用タイマー
@@ -60,7 +60,7 @@ private:
     //ゲームの目標説明をしている間は周りを白くする
     int fadeValue = 0;
     //収集アイテムの数
-    int allCollectItemNum = 0;
+    int remainingCollectNum = 0;
     //スタートのカウントダウンは5秒
     const float startTimerLimit = 5;
 };

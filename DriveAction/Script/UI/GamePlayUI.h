@@ -19,6 +19,12 @@ class ReusableTimer;
 class GamePlayUI final
 {
 public:
+    /// <summary>
+    /// プレイヤーや制限時間、収集アイテムの数などを表示できるようにする
+    /// </summary>
+    /// <param name="player">プレイヤーの位置</param>
+    /// <param name="timer">制限時間</param>
+    /// <param name="collectItemObserver">収集アイテム情報</param>
     GamePlayUI(std::weak_ptr<PlayerObserver> player, std::weak_ptr<Timer> timer, std::shared_ptr<CollectItemObserver> collectItemObserver);
     /// <summary>
     /// 各UIを解放
@@ -54,11 +60,9 @@ private:
     //残った収集アイテムの数
     NumUI* remainingNumUI;
     //残り収集アイテムについてのフレーズ
-    UIData remainingFrazeUI;
+    UIData remainingFrazeUIData;
     //数字の間に置くスラッシュ
-    UIData frameUI;  
-    //収集アイテムのマーカー
-    UIData collectSignData;
+    UIData frameUIData;  
     //カウントダウン
     EndCountDown* countDown;
     //プレイヤーの位置とか収集アイテムの所得数などを教えてくれる奴

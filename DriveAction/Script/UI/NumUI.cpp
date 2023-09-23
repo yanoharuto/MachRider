@@ -8,10 +8,18 @@
 /// </summary>
 NumUI::NumUI(UIKind kind)
 {
-    numData = UIManager::CreateUIData(kind);
-    pointData = UIManager::CreateUIData(point);
-    pointData.y = numData.y;
-    pointData.size = numData.size;
+    numUIData = UIManager::CreateUIData(kind);
+    pointUIData = UIManager::CreateUIData(UIKind::point);
+    pointUIData.y = numUIData.y;
+    pointUIData.size = numUIData.size;
+}
+/// <summary>
+/// UIíœ
+/// </summary>
+NumUI::~NumUI()
+{
+    UIManager::DeleteUIGraph(&numUIData);
+    UIManager::DeleteUIGraph(&pointUIData);
 }
 /// <summary>
 /// ®”‚Ì•`‰æ
@@ -19,7 +27,7 @@ NumUI::NumUI(UIKind kind)
 /// <param name="num">®”</param>
 void NumUI::Draw(int num) const
 {
-    Draw(numData, num);
+    Draw(numUIData, num);
 }
 
 /// <summary>
@@ -40,7 +48,7 @@ int NumUI::Draw(UIData data, int num) const
     for (int i = digits; i > 0; i--)
     {
         //10‚Ì‚¯‚½‚ÅŠ„‚Á‚½‚Ì‚ ‚Ü‚è
-        int drawNum = (static_cast<int>(num / pow(TIMER_FONT_NUM, i - 1))) % numData.dataHandle.size();
+        int drawNum = (static_cast<int>(num / pow(TIMER_FONT_NUM, i - 1))) % numUIData.dataHandle.size();
         //•`‰æ
         UIDrawer::DrawRotaUI(data,drawNum);
         //ˆÊ’u‚ğ‚¸‚ç‚·
@@ -66,17 +74,17 @@ void NumUI::Draw(float num) const
     int decimalNum1 = static_cast<int>((num - iNum) * 10);
     //¬”•”•ª‘æ“ñˆÊ
     int decimalNum2 = static_cast<int>(((num - iNum) * 100 - decimalNum1 * 10));
-    UIData data = numData;
+    UIData data = numUIData;
     //•`‰æI—¹‚µ‚½êŠ‚ğedge‚É“n‚·
     data.x = Draw(data, decimalNum2);
-    data.x -= static_cast<int> (numData.size * numData.width);
+    data.x -= static_cast<int> (numUIData.size * numUIData.width);
     data.x = Draw(data, decimalNum1);
-    data.x -= static_cast<int> (numData.size * numData.width);
+    data.x -= static_cast<int> (numUIData.size * numUIData.width);
     //®”•”•ª‚ğ•`‰æ
     Draw(data, iNum);
-    data.x -= static_cast<int> (numData.size * numData.width);
+    data.x -= static_cast<int> (numUIData.size * numUIData.width);
     //¬”“_
-    UIData pData = pointData;
+    UIData pData = pointUIData;
     pData.x = data.x;
     UIDrawer::DrawRotaUI(pData);
 }
@@ -86,5 +94,5 @@ void NumUI::Draw(float num) const
 /// <returns></returns>
 int NumUI::GetNumWidthSize()
 {
-    return numData.width;
+    return numUIData.width;
 }

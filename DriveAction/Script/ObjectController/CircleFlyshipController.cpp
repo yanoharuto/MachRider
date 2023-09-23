@@ -10,14 +10,16 @@
 /// </summary>
 /// <param name="generator">レーザー発射に必要なクラス</param>
 CircleFlyShipController::CircleFlyShipController(std::shared_ptr<DamageObjectGenerator> generator)
-    :FlyShipController(circleLaserShip,generator)
+    :FlyShipController(InitObjKind::circleLaserShip,generator)
 {
-    drawModel = new DrawModel(circleLaserShip);
+    drawModel = new DrawModel(InitObjKind::circleLaserShip);
     generator.reset();
 }
+
 /// <summary>
 /// 輪になっているレーザー照射機の配置と追加
 /// </summary>
+/// <param name="arrangementData">配置に必要な情報</param>
 void CircleFlyShipController::AddObject(PlacementData arrangementData)
 {
     //機体が囲んでいる中心座標

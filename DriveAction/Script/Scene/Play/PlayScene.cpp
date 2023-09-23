@@ -16,13 +16,14 @@
 #include "PlayerCarController.h"
 #include "CollectController.h"
 #include "CollectItemObserver.h"
-
+#include "CameraObserver.h"
 /// <summary>
 /// メニュー画面とゲームの流れの確保と音をロード
 /// </summary>
 PlayScene::PlayScene()
-    :SceneBase(SceneType::PLAY)
+    :SceneBase(SceneType::play)
 {
+    
     //現在の処理
     nowProgress = PlaySceneProgress::start;
     //ゴール後の処理とプレイヤーが操作する処理はまだ呼ばない
@@ -50,7 +51,8 @@ PlayScene::PlayScene()
     //ゴール前処理
     gamePrevProcess = new PrePlayGameProcess(collectItemObserver);
     //カメラ
-    camera = new GameCamera(playerObserver);
+    camera = std::make_shared<GameCamera>(playerObserver);
+    cameraObserver = std::make_shared<CameraObserver>(camera);
     //影
     shadowMap = new ShadowMap(playerObserver);
     //描画するたび保存出来るクラス
@@ -59,10 +61,6 @@ PlayScene::PlayScene()
     camera->Update();
     //メニュー画面の開放
     menu = new Menu();
-    //書く処理を分ける
-    UpdateFunc[PlayScene::start] = &PlayScene::UpdatePreCountdownEnd;
-    UpdateFunc[PlayScene::game] = &PlayScene::UpdatePlayGame;
-    UpdateFunc[PlayScene::postGameEnd] = &PlayScene::UpdatePoatGameEndProcess;
 }
 /// <summary>
 /// メニューとゲームの開放
@@ -73,11 +71,11 @@ PlayScene::~PlayScene()
     SAFE_DELETE(conflictManager);
     SAFE_DELETE(shadowMap);
     SAFE_DELETE(screen);
-    SAFE_DELETE(camera);
     SAFE_DELETE(postGameEndProcess);
     SAFE_DELETE(playGameProcess);
     SAFE_DELETE(gamePrevProcess);
     controllerManager.reset();
+    camera.reset();
 }
 /// <summary>
 /// ゲームを遊ぶ
@@ -87,27 +85,28 @@ SceneType PlayScene::Update()
 {
     //メニューでプレイヤーが何を選んだか
     menu->Update();
+    using enum Menu::MenuOptions;
     //メニューの状態によって次のシーンを変更    
     switch (menu->GetMenuState())
     {
         //ゲームをやり直す
     case retry:
-        nowSceneType = SceneType::RELOAD;
+        nowSceneType = SceneType::reload;
         break;
         //タイトルに戻る
     case returnTitle:
-        nowSceneType = SceneType::TITLE;
+        nowSceneType = SceneType::title;
         break;
         //ゲーム終了
     case exitGame:
-        nowSceneType = SceneType::ESCAPE;
+        nowSceneType = SceneType::escape;
         break;
     }
 
     //menu画面が開いてないなら普通の処理
-    if (menu->IsMenuOpen() == false)
+    if (!menu->IsMenuOpen())
     {
-        (this->*UpdateFunc[nowProgress])();
+        (this->*UpdateFunc[CAST_I(nowProgress)])();
     }
    
     return nowSceneType;
@@ -117,41 +116,7 @@ SceneType PlayScene::Update()
 /// </summary>
 void PlayScene::Draw()const
 {
-    if (menu->IsMenuOpen())//メニューを開いていたらメニュー画面を描画
-    {
-         menu->Draw();
-    }
-    else//遊んでいるときの状態を描画
-    {
-        //各オブジェクトを描画
-        if (nowProgress != postGameEnd)
-        {
-            controllerManager->Draw();
-        }
-        //エフェクト
-        DrawEffekseer3D();
-        DrawEffekseer2D();
-        //各場面の描画処理
-        switch (nowProgress)
-        {
-            //スタート前のカウントダウン
-        case PlaySceneProgress::start:
-            gamePrevProcess->Draw();
-            //描画を保存
-            screen->ScreenUpdate();
-            break;
-            //遊んでいるとき
-        case PlaySceneProgress::game:
-            playGameProcess->Draw();
-            //描画を保存
-            screen->ScreenUpdate();
-            break;
-            //スコアなどの描画
-        case PlaySceneProgress::postGameEnd:
-            postGameEndProcess->Draw();
-            break;
-        }
-    }
+   (this->*DrawFunc[CAST_I(nowProgress)])();
 }
 
 /// <summary>
@@ -168,12 +133,12 @@ void PlayScene::UpdateEffect()
 /// <summary>
 /// カウントダウン終了までの処理
 /// </summary>
-void PlayScene::UpdatePreCountdownEnd()
+void PlayScene::UpdatePreStartCountdownEnd()
 {
     gamePrevProcess->Update();
     controllerManager->PrepareGame();
     camera->Update();
-    shadowMap->SetShadowMapErea();
+    shadowMap->SetShadowMapArea();
     //エフェクトの更新
     UpdateEffect();
     //処理が終わったら
@@ -194,7 +159,7 @@ void PlayScene::UpdatePlayGame()
     controllerManager->Update();
     conflictManager->Update();
     camera->Update();
-    shadowMap->SetShadowMapErea();
+    shadowMap->SetShadowMapArea();
     //エフェクトの更新
     UpdateEffect();
     //遊んでいるときの処理が終了したら
@@ -209,13 +174,70 @@ void PlayScene::UpdatePlayGame()
 /// <summary>
 /// 全部回収後の処理
 /// </summary>
-void PlayScene::UpdatePoatGameEndProcess()
+void PlayScene::UpdatePostGameEndProcess()
 {
     postGameEndProcess->Update();
     //エフェクトの更新
     UpdateEffect();
     if (postGameEndProcess->IsEndProcess())
     {
-        nowSceneType = SceneType::TITLE;
+        nowSceneType = SceneType::title;
+    }
+}
+/// <summary>
+/// カウントダウン終了までの描画
+/// </summary>
+void PlayScene::DrawPreStartCountdownEnd()const
+{
+    if (menu->IsMenuOpen())//メニューを開いていたらメニュー画面を描画
+    {
+        menu->Draw();
+    }
+    else//遊んでいるときの状態を描画
+    {
+        controllerManager->Draw(cameraObserver);
+        //エフェクト
+        DrawEffekseer3D();
+        DrawEffekseer2D();
+        gamePrevProcess->Draw();
+        //描画を保存
+        screen->ScreenUpdate();
+    }
+}
+/// <summary>
+/// 遊んでいるときの描画
+/// </summary>
+void PlayScene::DrawPlayGame()const
+{
+    if (menu->IsMenuOpen())//メニューを開いていたらメニュー画面を描画
+    {
+        menu->Draw();
+    }
+    else//遊んでいるときの状態を描画
+    {
+        controllerManager->Draw(cameraObserver);
+        //エフェクト
+        DrawEffekseer3D();
+        DrawEffekseer2D();
+        playGameProcess->Draw();
+        //描画を保存
+        screen->ScreenUpdate();
+    }
+}
+/// <summary>
+/// 全部アイテムを回収した後の処理
+/// </summary>
+void PlayScene::DrawPostGameEndProcess()const
+{
+    if (menu->IsMenuOpen())//メニューを開いていたらメニュー画面を描画
+    {
+        menu->Draw();
+    }
+    else
+    {
+        //エフェクト
+        DrawEffekseer3D();
+        DrawEffekseer2D();
+        postGameEndProcess->Draw();
     }
 }

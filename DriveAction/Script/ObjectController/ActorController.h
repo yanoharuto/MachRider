@@ -1,10 +1,13 @@
 #pragma once
+#include <iostream>
+#include <memory>
 #include <list>
 #include <vector>
 #include "EditObjectData.h"
 #include "InitObjKind.h"
 class Actor;
 class DrawModel;
+class CameraObserver;
 /// <summary>
 /// 1つの種類のactorの子クラスを動かすために使う
 /// </summary>
@@ -30,7 +33,7 @@ public:
     /// <summary>
     /// 描画処理
     /// </summary>
-    virtual void Draw()const;
+    virtual void Draw(std::weak_ptr<CameraObserver> cameraObserever)const;
 protected:
     /// <summary>
     /// 描画役とActorListの解放

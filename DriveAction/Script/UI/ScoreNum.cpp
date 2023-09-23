@@ -8,12 +8,19 @@
 /// スコアの評価の線引きを所得
 /// </summary>
 ScoreNum::ScoreNum()
-    :NumUI(totalScoreNum)
+    :NumUI(UIKind::totalScoreNum)
 {
     ScoreBorder info = StageDataManager::GetScoreBorder();
     first = info.gold;
     second = info.silver;
     third = info.bronze;
+}
+/// <summary>
+/// highScoreUIの削除
+/// </summary>
+ScoreNum::~ScoreNum()
+{
+    UIManager::DeleteUIGraph(&highScoreUIData);
 }
 /// <summary>
 /// スコアによって大きさ変更
@@ -22,22 +29,22 @@ ScoreNum::ScoreNum()
 void ScoreNum::Draw(int num)const
 {
     VECTOR numColor = firstColor;
-    UIData data = numData;
+    UIData data = numUIData;
     //スコアの段階によって色と大きさを変更する
     if (num < third)
     {
         numColor = thirdUnderColor;
-        data.size = numData.size * thirdUnderFontSize;
+        data.size = numUIData.size * thirdUnderFontSize;
     }
     else if (num < second)
     {
         numColor = thirdColor;
-        data.size = numData.size * thirdBorderFontSize;
+        data.size = numUIData.size * thirdBorderFontSize;
     }
     else if (num < first)
     {
         numColor = secondColor;
-        data.size = numData.size * secondBorderFontSize;
+        data.size = numUIData.size * secondBorderFontSize;
     }
     //スコアの描画
     SetDrawBright(static_cast<int>(numColor.x), static_cast<int>(numColor.y), static_cast<int>(numColor.z));

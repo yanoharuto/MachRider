@@ -13,7 +13,7 @@ public:
     /// <summary>
     /// 更新
     /// </summary>
-    void Update(std::weak_ptr<EditorCameraObserver> cameraObserever)override;
+    void Update(std::weak_ptr<CameraObserver> cameraObserever)override;
     /// <summary>
     /// 編集中、編集済みのプレイヤーを描画
     /// </summary>

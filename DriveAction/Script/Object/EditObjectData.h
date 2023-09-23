@@ -21,13 +21,19 @@ struct PlacementData
 /// <summary>
 /// 保存したい情報の種類
 /// </summary>
-enum EditArrangementDataKind
+enum class EditArrangementDataKind
 {
+    //保存するオブジェクトの種類
     objectKindNum = 0,
-    missionTurnNum = 1,
+    //出てくるタイミングの収集アイテムの数
+    appearCollectNum = 1,
+    //初期座標X
     positionX = 2,
+    //初期座標Y
     positionZ = 3,
+    //初期向きX
     directionX = 4,
+    //初期向きZ
     directionZ = 5,
 };
 //初期化データの種類の数

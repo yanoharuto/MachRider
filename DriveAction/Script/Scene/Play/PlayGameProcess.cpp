@@ -20,7 +20,7 @@ PlayGameProcess::PlayGameProcess(std::weak_ptr<PlayerObserver> player, std::shar
 	timer = StageDataManager::CreateGameTimer();
 	playUI = new GamePlayUI(player, timer, collectItemObserver);
 	isEndProcess = false;
-	SoundPlayer::LoadAndInitSound(playBGM);
+	SoundPlayer::LoadAndInitSound(SoundKind::playBGM);
 }
 /// <summary>
 /// UIとタイマーの解放
@@ -48,9 +48,9 @@ void PlayGameProcess::Update(std::weak_ptr<CollectItemObserver> const collectObs
 		timer->Stop();
 	}
 	//BGMが鳴ってなかったら再生
-	if (!SoundPlayer::IsPlaySound(playBGM))
+	if (!SoundPlayer::IsPlaySound(SoundKind::playBGM))
 	{
-		SoundPlayer::Play2DSE(playBGM);
+		SoundPlayer::Play2DSE(SoundKind::playBGM);
 	}
 	playUI->Update();
 }

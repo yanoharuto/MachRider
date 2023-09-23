@@ -95,7 +95,7 @@ HitCheckInfo SphereHitChecker::GetHitExamineCheckInfo() const
 /// <returns>動いていないならTrue</returns>
 bool SphereHitChecker::IsDead()
 {
-    return (object->GetObjectState() == Object::dead || object->GetObjectState() == Object::activeEnd);
+    return (object->GetObjectState() == Object::ObjectState::dead || object->GetObjectState() == Object::ObjectState::activeEnd);
 }
 /// <summary>
 /// 当たったかどうか調べるときの共通処理

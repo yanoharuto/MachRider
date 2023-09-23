@@ -6,7 +6,7 @@
 /// タイトル画面のカメラ　車の斜め正面を映す
 /// </summary>
 TitleCamera::TitleCamera(std::shared_ptr<ObjectObserver> target)
-    :Camera(InitCamera::title)
+    :Camera(InitCamera::UseCameraSceneKind::title)
 {
     targetObserver = target;
     VECTOR pos = targetObserver.lock()->GetSubjectPos();

@@ -6,7 +6,7 @@
 	/// プレイヤーの機体の傾きなどに対応する
 	/// </summary>
 PlayerDrawModel::PlayerDrawModel()
-	:DrawModel(ObjectInit::player)
+	:DrawModel(ObjectInit::InitObjKind::player)
 {
 }
 /// <summary>

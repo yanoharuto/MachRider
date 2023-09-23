@@ -6,7 +6,7 @@
 /// プレイヤーをはじき飛ばす丸鋸
 /// </summary>
 SawController::SawController()
-    :AddableObjectController(ObjectInit::saw)
+    :AddableObjectController(ObjectInit::InitObjKind::saw)
 {
     drawModel = new DrawModel(controllObjKind);
 }
@@ -29,7 +29,7 @@ void SawController::Update()
     for (auto ite = actorList.begin(); ite != actorList.end(); ite++)
     {
         (*ite)->Update();
-        if ((*ite)->GetObjectState() == Object::dead)//爆破終了後は破棄
+        if ((*ite)->GetObjectState() == Object::ObjectState::dead)//爆破終了後は破棄
         {
             brokenList.push_back(ite);
             SAFE_DELETE(*ite);

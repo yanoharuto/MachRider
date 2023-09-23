@@ -1,10 +1,10 @@
-#include "TitleHiScore.h"
+#include "TitleHighScore.h"
 #include "StageDataManager.h"
 #include "UIDrawer.h"
 /// <summary>
 /// タイトルで表示するハイスコア
 /// </summary>
-TitleHiScore::TitleHiScore()
+TitleHighScore::TitleHighScore()
     :NumUI(titleHiScoreNum)
 {
     
@@ -14,7 +14,7 @@ TitleHiScore::TitleHiScore()
 /// 現在選ばれているステージのハイスコア表示
 /// </summary>
 /// <param name="num"></param>
-void TitleHiScore::Draw() const
+void TitleHighScore::Draw() const
 {
     int prevHiScore = StageDataManager::GetScoreBorder().highScore;
 

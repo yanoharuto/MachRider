@@ -9,7 +9,7 @@
 /// <param name="setDestinationPos">向くべき方向の位置</param>
 /// <param name="damageObjectGenerator">レーザーを発射することを伝えるクラス</param>
 CircleLaserFlyShip::CircleLaserFlyShip(VECTOR firstPos, VECTOR setDestinationPos, std::weak_ptr<DamageObjectGenerator> damageObjectGenerator)
-    :Actor(ObjectInit::circleLaserShip)
+    :Actor(ObjectInit::InitObjKind::circleLaserShip)
 {
     position.x = firstPos.x;
     position.z = firstPos.z;

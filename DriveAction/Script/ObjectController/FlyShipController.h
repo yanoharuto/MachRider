@@ -29,7 +29,7 @@ namespace FlyShipInit
     /// <summary>
     /// 空を飛ぶ船のパラメータ情報
     /// </summary>
-    enum FlyShipParamator
+    enum class FlyShipParamator
     {
         //生存時間
         aliveTime = 2,

@@ -13,7 +13,7 @@ public:
     /// <summary>
     ///  親クラスと同じ更新と収集アイテムの数を更新する
     /// </summary>
-    void Update(std::weak_ptr<EditorCameraObserver> cameraObserever)override;
+    void Update(std::weak_ptr<CameraObserver> cameraObserever)override;
     /// <summary>
     /// 編集中や編集し終えたオブジェクトの描画
     /// </summary>

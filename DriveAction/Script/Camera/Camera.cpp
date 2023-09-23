@@ -1,10 +1,9 @@
 #include "Camera.h"
 #include "Actor.h"
-#include "OriginalMath.h"
 #include "CSVFileLoader.h"
 #include "Utility.h"
 //カメラの画角
-float Camera::lookingDeg = 0;
+float Camera::lookingAngle = 0;
 using namespace InitCamera;
 /// <summary>
 /// カメラの速度や高さの初期化
@@ -15,15 +14,30 @@ Camera::Camera(UseCameraSceneKind type)
     //初期化
     LoadData(type);
 }
+
 /// <summary>
-/// 引数のものがカメラの範囲内か調べる
+/// カメラの向きを所得
 /// </summary>
-/// <param name="actor">調べたいオブジェクト</param>
-/// <returns>カメラの範囲内ならTrue</returns>
-bool Camera::IsLookingCamera(const Actor* const actor) const
+/// <returns>カメラの向きベクトル</returns>
+VECTOR Camera::GetNormDirection()const
 {
-    VECTOR between = VSub(actor->GetPos(), position);
-    return OriginalMath::GetDegreeMisalignment(between, direction) < lookingDeg;
+    return direction;
+}
+/// <summary>
+/// カメラの位置
+/// </summary>
+/// <returns>カメラの座標</returns>
+VECTOR Camera::GetPosition() const
+{
+    return position;
+}
+/// <summary>
+/// 見える角度を所得
+/// </summary>
+/// <returns></returns>
+float Camera::GetLookingAngle() const
+{
+    return lookingAngle;
 }
 /// <summary>
 /// 初期化情報所得
@@ -35,21 +49,22 @@ void Camera::LoadData(UseCameraSceneKind type)
     CSVFileLoader* initFileLoader = new CSVFileLoader(initFileName);
     auto strData = initFileLoader->GeFileStringData();
     //まとめファイルからシーンごとの情報を所得
-    CSVFileLoader* initDataLoader = new CSVFileLoader(strData[type]);
+    CSVFileLoader* initDataLoader = new CSVFileLoader(strData[static_cast<int>(type)]);
     strData = initDataLoader->GeFileStringData();
     SAFE_DELETE(initFileLoader);
+    using enum CameraParameter;
     //カメラの有効範囲
-    float nearValue = SAFE_STR_TO_F(strData[setNearValue]);
-    float farValue = SAFE_STR_TO_F(strData[setFarValue]);
+    float nearValue = STR_TO_F(strData[static_cast<int>(setNearValue)]);
+    float farValue = STR_TO_F(strData[static_cast<int>(setFarValue)]);
     SetCameraNearFar(nearValue, farValue);
     //ターゲットとの距離
-    targetBetweenSize = SAFE_STR_TO_F(strData[setTargetBetween]);
+    targetBetweenSize = STR_TO_F(strData[static_cast<int>(setTargetBetween)]);
     //高度
-    posY = SAFE_STR_TO_F(strData[setYPosition]);
+    posY = STR_TO_F(strData[static_cast<int>(setYPosition)]);
     //カメラの速さ
-    cameraSpeed = SAFE_STR_TO_F(strData[setCameraSpeed]);
+    cameraSpeed = STR_TO_F(strData[static_cast<int>(setCameraSpeed)]);
     //カメラの見えている範囲
-    lookingDeg = SAFE_STR_TO_F(strData[setLookingDegree]);
+    lookingAngle = STR_TO_F(strData[static_cast<int>(setLookingAngle)]);
 
     SAFE_DELETE(initDataLoader);
 }

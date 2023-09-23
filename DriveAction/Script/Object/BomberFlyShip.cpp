@@ -13,7 +13,7 @@
 /// <param name="initParam">爆弾発射クールタイムを所得</param>
 /// <param name="damageObjGenerator">爆弾発射に必要なクラス</param>
 BomberFlyShip::BomberFlyShip(PlacementData data, FlyShipInit::InitFlyShipParamator initParam, std::shared_ptr<DamageObjectGenerator> damageObjGenerator)
-    :Actor(bomberShip)
+    :Actor(InitObjKind::bomberShip)
 {
     position.x = data.posX;
     position.z = data.posZ;

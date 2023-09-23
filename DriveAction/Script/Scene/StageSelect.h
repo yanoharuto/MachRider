@@ -8,16 +8,17 @@ class StageSelect
 {
 public:
     /// <summary>
-    /// ステージごとに必要なアセットのアドレスが
-    /// 書いてあるファイルの
-    /// アドレスが書いてあるファイルを読み込む
+    /// ステージ選択UIの読み込み
+    /// 一番最初のステージに変更
     /// </summary>
-    /// <returns></returns>
     StageSelect();
     /// <summary>
-    /// 遊ぶステージ変更するときに使う
+    /// UIの削除
     /// </summary>
-    /// <param name="next">次のステージTrue前のステージかfalse</param>
+    ~StageSelect();
+    /// <summary>
+    /// 十字キーで遊ぶステージ変更
+    /// </summary>
     void Update();
     /// <summary>
     /// 現在選んでいるステージを表示
@@ -34,8 +35,8 @@ private:
     //選択しているステージだけ強調表示
     const float selectSizeCoefficient = 1.4f;
     //選んでいるステージの名前を表示
-    UIData stageNameUI;
+    UIData stageNameUIData;
     //ステージを決定するときのボタンを表示
-    UIData selectButtonUI;
+    UIData selectButtonUIData;
 };
 

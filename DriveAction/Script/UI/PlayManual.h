@@ -12,6 +12,10 @@ public:
     /// </summary>
     PlayManual();
     /// <summary>
+    /// UI削除
+    /// </summary>
+    ~PlayManual();
+    /// <summary>
     /// プレイヤーの入力によって操作説明を変える
     /// </summary>
     void Update();
@@ -21,11 +25,11 @@ public:
     void Draw()const;
 private:
     //描画する操作方法データ
-    UIData playManualData = {};
+    UIData playManualUIData = {};
     //操作方法の下に引く枠
-    UIData sheatData = {};
+    UIData sheatUIData = {};
     //描画したい操作方法
-    UIKind nowUIKind = manual;
+    UIKind nowUIKind = UIKind::manual;
     //各キーの操作方法
     struct ButtonUI
     {

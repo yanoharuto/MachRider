@@ -5,13 +5,13 @@
 enum class SceneType
 {
     //再ロード
-    RELOAD,
+    reload,
     //タイトル
-    TITLE,
+    title,
     //ゲームプレイ
-    PLAY,
+    play,
     //編集
-    EDITOR,
+    editor,
     //ゲーム終了
-    ESCAPE
+    escape
 };

@@ -5,16 +5,28 @@
 /// </summary>
 PlayManual::PlayManual()
 {
+	using enum UIKind;
 	//操作方法で出来ることが書いてある
-    playManualData = UIManager::CreateUIData(manual);
+    playManualUIData = UIManager::CreateUIData(manual);
 	//操作方法で下に引いてある枠
-    sheatData = UIManager::CreateUIData(playManualSheat);
+    sheatUIData = UIManager::CreateUIData(playManualSheat);
 	//左ボタン
 	leftBUI.data = UIManager::CreateUIData(leftButton);
 	//右ボタン
 	rightBUI.data = UIManager::CreateUIData(rightButton);
 	//ジョイパッドならUI変更
 	downBUI.data = UIManager::CreateUIData((UserInput::IsInputPad()) ? xDownButton : downButton);
+}
+/// <summary>
+/// UI削除
+/// </summary>
+PlayManual::~PlayManual()
+{
+	UIManager::DeleteUIGraph(&playManualUIData);
+	UIManager::DeleteUIGraph(&sheatUIData);
+	UIManager::DeleteUIGraph(&leftBUI.data);
+	UIManager::DeleteUIGraph(&rightBUI.data);
+	UIManager::DeleteUIGraph(&downBUI.data);
 }
 /// <summary>
 /// プレイヤーの入力によって操作説明を変える
@@ -26,16 +38,16 @@ void PlayManual::Update()
 	rightBUI.push = UserInput::GetInputState(Right) == Hold;
 	downBUI.push = UserInput::GetInputState((UserInput::IsInputPad()) ? Space : Down) == Hold;
 
-	UIKind nextUIKind = manual;
+	UIKind nextUIKind = UIKind::manual;
 	//下方向に入力するとターボ準備完了
 	if (downBUI.push)
 	{
-		nextUIKind = turboManual;
+		nextUIKind = UIKind::turboManual;
 	}
 	//表示するUIが変更されたらデータを持ってくる
 	if (nextUIKind != nowUIKind)
 	{
-		playManualData= UIManager::CreateUIData(nextUIKind);
+		playManualUIData= UIManager::CreateUIData(nextUIKind);
 		nowUIKind = nextUIKind;
 	}
 }
@@ -44,8 +56,8 @@ void PlayManual::Update()
 /// </summary>
 void PlayManual::Draw() const
 {
-	UIDrawer::DrawRotaUI(sheatData);
-	UIDrawer::DrawRotaUI(playManualData);
+	UIDrawer::DrawRotaUI(sheatUIData);
+	UIDrawer::DrawRotaUI(playManualUIData);
 	//ボタン押してたら押した状態のUIに変更
 	UIDrawer::DrawRotaUI(leftBUI.data, leftBUI.push ? 1 : 0);
 	UIDrawer::DrawRotaUI(rightBUI.data, rightBUI.push ? 1 : 0);

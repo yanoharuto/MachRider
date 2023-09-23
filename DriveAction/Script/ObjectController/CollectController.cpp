@@ -14,11 +14,11 @@
 /// 収集アイテムを予めNewして最大枚数を保存
 /// </summary>
 CollectItemController::CollectItemController()
-    :ActorController(collect)
+    :ActorController(InitObjKind::collect)
 {
     //配置情報所得
     auto positionGetter = new FirstPositionGetter();
-    auto editDataVec = positionGetter->GetPlaceData(Object::collect);
+    auto editDataVec = positionGetter->GetPlaceData(Object::ObjectTag::collect);
     //配置情報に基づいてNewしていく
     for (unsigned int i = 0; i < editDataVec.size(); i++)
     {
@@ -35,7 +35,7 @@ CollectItemController::CollectItemController()
     //今出てきている収集アイテムの数
     collectCount = 0;
     //描画役
-    drawModel = new DrawModel(collect);
+    drawModel = new DrawModel(InitObjKind::collect);
     //今のアイテムの位置
     nowActiveCollectItemPos = {};
     //回収されているかどうかのフラグ
@@ -53,10 +53,12 @@ void CollectItemController::Update()
     (*objIte)->Update();
     //今現在動いているアイテムの場所を更新
     nowActiveCollectItemPos = (*objIte)->GetPos();
+
+    using enum Object::ObjectState;
     //取っているけどエフェクトを出している途中なら現存数をへらす
     Object::ObjectState objState = (*objIte)->GetObjectState();
     //プレイヤーにぶつかって取られたならアクティブ以外の状態になっている
-    if (objState == Object::dead)
+    if (objState == dead)
     {
         //残り数を全体から1減らす
         remainingCollectNum = actorList.size() - 1;
@@ -69,7 +71,7 @@ void CollectItemController::Update()
         collectCount = totalCollectNum - remainingCollectNum;
     }
     //最後の一つが回収されたか
-    else if (objState == Object::activeEnd && static_cast<int>(actorList.size()) == 1)
+    else if (objState == activeEnd && static_cast<int>(actorList.size()) == 1)
     {
         isCollectLastOne = true;
     }
@@ -77,7 +79,7 @@ void CollectItemController::Update()
 /// <summary>
 /// 収集アイテムの描画
 /// </summary>
-void CollectItemController::Draw() const
+void CollectItemController::Draw(std::weak_ptr<CameraObserver> cameraObserever) const
 {
     if (!actorList.empty())
     {

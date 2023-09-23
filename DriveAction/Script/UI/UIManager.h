@@ -7,7 +7,7 @@ namespace UIInit
     /// <summary>
     /// UIの種類
     /// </summary>
-    enum UIKind
+    enum class UIKind
     {
         //ゲームの目標
         gamePurose = 2,
@@ -62,7 +62,7 @@ namespace UIInit
         //タイトルスペースキー催促
         titlePressSpaceKey = 77,
         //タイトル画面に表示するハイスコア
-        titleHiScore = 80,
+        titleHighScore = 80,
         //タイトル画面に表示するハイスコア数字
         titleHiScoreNum = 83,
         //カウントダウン終了時
@@ -116,7 +116,7 @@ namespace UIInit
     /// <summary>
     /// UIの初期化情報　数字は読み込み段数
     /// </summary>
-    enum InitUIData
+    enum class InitUIData
     {
         //描画場所X
         drawX = 1,
@@ -170,7 +170,6 @@ public:
     /// </summary>
     /// <returns></returns>
     UIManager();
-    ~UIManager();
     /// <summary>
     /// UIを所得
     /// </summary>
@@ -178,16 +177,19 @@ public:
     /// <returns>UIの描画に必要な情報を返す</returns>
     static UIData CreateUIData(UIKind uiKind);
     /// <summary>
-    /// UIの情報を所得
+    /// 引数のUIの画像を削除する
     /// </summary>
-    /// <param name="uiKind">所得したいUI</param>
-    /// <returns>UIの情報をまとめた構造体</returns>
-    static UIData CreateUIData(int kindNum);
+    /// <param name="ui">消したいUI画像</param>
+    static void DeleteUIGraph(UIData* ui);
  private:
+     /// <summary>
+     /// UIの情報を所得
+     /// </summary>
+     /// <param name="uiKind">所得したいUI</param>
+     /// <returns>UIの情報をまとめた構造体</returns>
+     static UIData CreateUIData(int kindNum);
      //全てのUIのパス
     static std::vector<std::string> uiPathVec;
-    //読み込んだ画像
-    static std::unordered_map<int,UIData> loadUIDataMap;
     //uiの情報を纏めておいてあるファイル
     const std::string initUIDataPassFile = "data/UI/InitUIPass.csv";
 };

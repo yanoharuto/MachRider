@@ -13,7 +13,7 @@ EnemyDataEditor::EnemyDataEditor(InitObjKind enemyKind)
     :StageDataEditor(loadEditFilePath,enemyKind)
 {
     //円形飛行艇クラスは描画方法を変更
-    if (enemyKind == circleLaserShip)
+    if (enemyKind == InitObjKind::circleLaserShip)
     {
         SAFE_DELETE(drawer);
         drawer = new EditorCircleFlyShipDrawModel();

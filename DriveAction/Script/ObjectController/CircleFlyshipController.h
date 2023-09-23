@@ -16,6 +16,7 @@ private:
     /// <summary>
     /// 輪になっているレーザー照射機の配置と追加
     /// </summary>
+    /// <param name="arrangementData">配置に必要な情報</param>
     void AddObject(PlacementData arrangementData);
 };
 

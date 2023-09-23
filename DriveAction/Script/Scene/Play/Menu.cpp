@@ -6,7 +6,7 @@
 #include "UIDrawer.h"
 #include "Clock.h"
 //メニューの状態
-MenuState Menu::menuState=continueGame;
+Menu::MenuOptions Menu::menuOption = Menu::MenuOptions::continueGame;
 //メニューを開いているか
 bool Menu::isOpenMenu = false;
 //メニューを開いている時間
@@ -16,13 +16,17 @@ double Menu::openMenuTime=0;
 /// </summary>
 Menu::Menu()
 {
+    using enum Menu::MenuOptions;
+    using enum UIKind;
     //ゲーム続行状態
-    menuState = continueGame;
+    menuOption = continueGame;
+    //項目を移動するカーソルのUI
     cursorUIData = UIManager::CreateUIData(menuCursor);
-    uiDatas[continueGame] = UIManager::CreateUIData(playUI);
-    uiDatas[exitGame] = UIManager::CreateUIData(exitUI);
-    uiDatas[retry] = UIManager::CreateUIData(retryUI);
-    uiDatas[returnTitle] = UIManager::CreateUIData(returnTitleBottonUI);
+    //各項目のUI準備
+    uiDatas[static_cast<int>(continueGame)] = UIManager::CreateUIData(playUI);
+    uiDatas[static_cast<int>(exitGame)] = UIManager::CreateUIData(exitUI);
+    uiDatas[static_cast<int>(retry)] = UIManager::CreateUIData(retryUI);
+    uiDatas[static_cast<int>(returnTitle)] = UIManager::CreateUIData(returnTitleBottonUI);
     isOpenMenu = false;
     openMenuTime = 0;
 }
@@ -32,40 +36,49 @@ Menu::Menu()
 Menu::~Menu()
 {
     openMenuTime = 0;
+    UIManager::DeleteUIGraph(&cursorUIData);
+    for (int i = 0; i < MENU_STATE_KIND_NUM; i++)
+    {
+        UIManager::DeleteUIGraph(&uiDatas[i]);
+    }
 }
 /// <summary>
 /// 項目の変更など
 /// </summary>
 void Menu::Update()
 {    
+    using enum Menu::MenuOptions;
+    
     //開いているときに上下に押すと項目を変更
     if (isOpenMenu)
     {
-        if (UserInput::GetInputState(Up)==Push)
+        if (UserInput::GetInputState(Up) == Push)
         {
             selectUI--;
+
             //一番上の項目からさらに上に行く場合そのまま
-            if (selectUI  < continueGame) 
+            if (selectUI == 0)
             {
-                selectUI = continueGame;
+                selectUI = 0;
             }
         }
-        else if (UserInput::GetInputState(Down)==Push)
+        else if (UserInput::GetInputState(Down) == Push)
         {
             selectUI++;
             //一番下の項目からさらに下に行く場合そのまま
-            if (selectUI > exitGame)
+            if (selectUI > MENU_STATE_KIND_NUM)
             {
-                selectUI = exitGame;
+                selectUI = MENU_STATE_KIND_NUM;
             }
         }
         //移動後のカーソル
-        cursorUIData.y = uiDatas[selectUI].y;
+        cursorUIData.y = uiDatas[selectUI % MENU_STATE_KIND_NUM].y;
+
         //メニューを開いた状態でスペースキーを押したら押した項目を保存
         if (UserInput::GetInputState(Input::Space) == Push)
         {
-            menuState = static_cast<MenuState>(selectUI);
-            isOpenMenu = !(menuState == continueGame);
+            menuOption = static_cast<MenuOptions>(selectUI);
+            isOpenMenu = !(menuOption == continueGame);
             openMenuTime += Clock::GetNowGameTime() - startTime;
         }
     }
@@ -74,7 +87,7 @@ void Menu::Update()
     {
         //メニュー画面を開いたり閉じたり
         isOpenMenu = !isOpenMenu;
-        selectUI = continueGame;
+        selectUI = 0;
 
         if (isOpenMenu)
         {
@@ -93,9 +106,9 @@ void Menu::Update()
 /// 現在のメニューの状態
 /// </summary>
 /// <returns>プレイヤーがやり直したいかゲームを続行したいか返す</returns>
-MenuState Menu::GetMenuState()const
+Menu::MenuOptions Menu::GetMenuState()const
 {
-    return menuState;
+    return menuOption;
 }
 /// <summary>
 /// メニュー画面を開いているかどうか
@@ -125,9 +138,18 @@ void Menu::Draw() const
         SetDrawBright(MAX1BYTEVALUE, MAX1BYTEVALUE, MAX1BYTEVALUE);
         //各UIを描画  選択中なら二枚目の状態にする
         UIDrawer::DrawRotaUI(cursorUIData);
-        UIDrawer::DrawRotaUI(uiDatas[continueGame], selectUI == continueGame ? 0 : 1);
-        UIDrawer::DrawRotaUI(uiDatas[retry], selectUI == retry ? 0 : 1);
-        UIDrawer::DrawRotaUI(uiDatas[exitGame], selectUI == exitGame ? 0 : 1);
-        UIDrawer::DrawRotaUI(uiDatas[returnTitle], selectUI == returnTitle ? 0 : 1);
+        DrawUI(MenuOptions::continueGame);
+        DrawUI(MenuOptions::retry);
+        DrawUI(MenuOptions::returnTitle);
+        DrawUI(MenuOptions::exitGame);
     }
+}
+/// <summary>
+/// メニューUIを表示
+/// </summary>
+/// <param name="option">表示したい項目 </param>
+void Menu::DrawUI(Menu::MenuOptions state) const
+{
+    int menuKind = static_cast<int>(state);
+    UIDrawer::DrawRotaUI(uiDatas[menuKind], selectUI == menuKind ? 0 : 1);
 }

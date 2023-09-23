@@ -23,7 +23,9 @@ PostGameEndStagingProcess::PostGameEndStagingProcess(std::weak_ptr<PlayerObserve
 {
     //スコアを確定
     resultScore = new ResultScore(player,gameTimer);
-
+    //音を所得
+    using enum SoundKind;
+    using enum UIKind;
     SoundPlayer::StopAllSound();
     SoundPlayer::LoadAndInitSound(clap);
     SoundPlayer::LoadAndInitSound(scoreEndSE);
@@ -41,12 +43,12 @@ PostGameEndStagingProcess::PostGameEndStagingProcess(std::weak_ptr<PlayerObserve
     
     //収集アイテムボーナス
     collectScoreUI = GetScoreUI(collectScore);
-    collectData = UIManager::CreateUIData(collectScoreIcon);
+    collectUIData = UIManager::CreateUIData(collectScoreIcon);
     //合計スコア
     totalScoreUI = GetScoreUI(totalScore);
     totalScoreNumUI = new ScoreNum();
     //ハイスコア更新UI
-    hiScoreUI = UIManager::CreateUIData(PraiseWord);
+    highScoreUIData = UIManager::CreateUIData(PraiseWord);
     //ゲーム終了時画面
     gameEndScreen = GameScreen::GetScreen();
     //スペースキー催促
@@ -56,11 +58,11 @@ PostGameEndStagingProcess::PostGameEndStagingProcess(std::weak_ptr<PlayerObserve
     drawClearTime = clearTime;
     clearTimeUI = new NumUI(timeScoreNum);
     //ゲーム終了アナウンス
-    finishAnnounceData = UIManager::CreateUIData(finishAnnounce);
-    finishAnnounceData.x = SCREEN_WIDTH;
+    finishAnnounceUIData = UIManager::CreateUIData(finishAnnounce);
+    finishAnnounceUIData.x = SCREEN_WIDTH;
     larpMoveAnnounceTimer = new Timer(finishAnounceTime);
     //花吹雪
-    EffectManager::LoadEffect(confetti);
+    EffectManager::LoadEffect(EffectKind::confetti);
 }
 /// <summary>
 /// 各UIを削除する
@@ -73,6 +75,9 @@ PostGameEndStagingProcess::~PostGameEndStagingProcess()
     SAFE_DELETE(larpMoveAnnounceTimer);
     SAFE_DELETE(totalScoreNumUI);
     SAFE_DELETE(resultScore);
+    UIManager::DeleteUIGraph(&highScoreUIData);
+    UIManager::DeleteUIGraph(&finishAnnounceUIData);
+    UIManager::DeleteUIGraph(&collectUIData);
     StopEffekseer2DEffect(confettiEffect);
 }
 /// <summary>
@@ -87,13 +92,13 @@ void PostGameEndStagingProcess::Update()
     }
     else if (isEndConvertScore)//加算処理終了後は加算音を消す
     {
-        SoundPlayer::StopSound(scoreEndSE);
+        SoundPlayer::StopSound(SoundKind::scoreEndSE);
 
         pressSpaceKeyUI->Update();
         //スペースキーを押して終了
         if (UserInput::GetInputState(Space) == Push)
         {
-            SoundPlayer::Play2DSE(sceneNextSE);
+            SoundPlayer::Play2DSE(SoundKind::sceneNextSE);
             isEndProcess = true;
         }
     }
@@ -125,8 +130,8 @@ void PostGameEndStagingProcess::Draw()const
     //終了アナウンス
     if (!isEndFinishAnnounce) 
     {
-        int safeNum = static_cast<int>(larpMoveAnnounceTimer->GetElaspedTime()) % finishAnnounceData.dataHandle.size();
-        UIDrawer::DrawRotaUI(finishAnnounceData,safeNum);
+        int safeNum = static_cast<int>(larpMoveAnnounceTimer->GetElaspedTime()) % finishAnnounceUIData.dataHandle.size();
+        UIDrawer::DrawRotaUI(finishAnnounceUIData,safeNum);
     }
     else//各スコアの描画
     {
@@ -144,7 +149,7 @@ void PostGameEndStagingProcess::Draw()const
         if (resultScore->IsUpdateHiScore())
         {
             //ハイスコア更新の文字
-            UIDrawer::DrawRotaUI(hiScoreUI);
+            UIDrawer::DrawRotaUI(highScoreUIData);
         }
     }
 }
@@ -161,6 +166,7 @@ bool PostGameEndStagingProcess::IsEndProcess() const
 /// </summary>
 void PostGameEndStagingProcess::ConvertTimeScotre()
 {
+    using enum SoundKind;
     if (!SoundPlayer::IsPlaySound(sceneNextSE))
     {
         //スコアを換算し終えたか、スペースキーを押したら終了
@@ -197,6 +203,7 @@ void PostGameEndStagingProcess::ConvertTimeScotre()
 /// </summary>
 void PostGameEndStagingProcess::ConvertCollectScotre()
 {
+    using enum SoundKind;
     //一つ一つスコアに変換する工程をスキップ
     bool isSkip = UserInput::GetInputState(Space) == Push;
     //効果音が鳴り終わったタイミングで入手した宝石をスコアに変換する
@@ -210,7 +217,7 @@ void PostGameEndStagingProcess::ConvertCollectScotre()
             drawCollectIconNum = getCollectNum;
             isEndConvertScore = true;
             ////花吹雪エフェクト開始
-            confettiEffect = EffectManager::GetPlayEffect2D(confetti);
+            confettiEffect = EffectManager::GetPlayEffect2D(EffectKind::confetti);
             SetPosPlayingEffekseer2DEffect(confettiEffect, SCREEN_WIDTH / 2, SCREEN_HEIGHT, 5);
             //ファンファーレ効果音
             SoundPlayer::Play2DSE(gameEndFanfare);
@@ -230,6 +237,8 @@ void PostGameEndStagingProcess::ConvertCollectScotre()
 /// </summary>
 void PostGameEndStagingProcess::EndAnnounceProcess()
 {
+    using enum SoundKind;
+    //最初の一回だけ拍手する
     if (!isSoundClapSE)
     {
         SoundPlayer::Play2DSE(clap);
@@ -246,9 +255,9 @@ void PostGameEndStagingProcess::EndAnnounceProcess()
     {
         float larpTime = static_cast<float>(larpMoveAnnounceTimer->GetElaspedTime() / finishAnounceTime);
         //総数移動距離
-        float graphWidth = finishAnnounceData.width / finishAnnounceData.dataHandle.size() * finishAnnounceData.size;
+        float graphWidth = finishAnnounceUIData.width / finishAnnounceUIData.dataHandle.size() * finishAnnounceUIData.size;
         float moveBetween = (SCREEN_WIDTH + graphWidth) * UIDrawer::GetScreenRaito();
-        finishAnnounceData.x = static_cast<int>(SCREEN_WIDTH * UIDrawer::GetScreenRaito() - larpTime * (moveBetween));
+        finishAnnounceUIData.x = static_cast<int>(SCREEN_WIDTH * UIDrawer::GetScreenRaito() - larpTime * (moveBetween));
     }
 }
 /// <summary>
@@ -282,8 +291,8 @@ void PostGameEndStagingProcess::CollectScoreDraw() const
     //所得したアイテムを少しずつ描画
     for (int i = 1; i <= drawCollectIconNum; i++)
     {
-        UIData icon = collectData;
-        icon.x += static_cast<int>(collectData.width * UIDrawer::GetScreenRaito() * icon.size * i);//右にずらしていく
+        UIData icon = collectUIData;
+        icon.x += static_cast<int>(collectUIData.width * UIDrawer::GetScreenRaito() * icon.size * i);//右にずらしていく
         UIDrawer::DrawRotaUI(icon);
     }
 }

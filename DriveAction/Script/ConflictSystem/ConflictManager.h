@@ -21,12 +21,12 @@ public:
     /// <summary>
     /// “–‚½‚è”»’è’Ç‰Á
     /// </summary>
-    /// <param name="hitChecker"></param>
+    /// <param name="hitChecker">“–‚½‚è”»’è</param>
     static void AddHitChecker(SphereHitChecker* const hitChecker);
     /// <summary>
     /// “–‚½‚è”»’èÁ‹
     /// </summary>
-    /// <param name="hitChecker"></param>
+    /// <param name="hitChecker">“–‚½‚è”»’è</param>
     static void EraceHitChecker(SphereHitChecker* const hitChecker);
     /// <summary>
     /// Õ“Ëˆ—‚ğŒÄ‚ÔConflictProcessor‚ğ’Ç‰Á

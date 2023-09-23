@@ -99,11 +99,11 @@ private:
     //残り時間ボーナススコア
     ScoreUI timeScoreUI;
     //ハイスコアの更新
-    UIData hiScoreUI;
+    UIData highScoreUIData;
     //終わりのアナウンス
-    UIData finishAnnounceData;
+    UIData finishAnnounceUIData;
     //収集アイテムのデータ
-    UIData collectData;
+    UIData collectUIData;
     //今何の処理を行っているか
     ResultScore::ScoreKind nowConvertScore;
     //終了アナウンス

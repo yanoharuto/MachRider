@@ -43,12 +43,6 @@
     <Filter Include="ヘッダー ファイル\Object">
       <UniqueIdentifier>{f94ca07e-66fd-4416-a3d4-34f0ad829f74}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Initialize">
-      <UniqueIdentifier>{94df990c-b92f-4a2c-82ab-a4628d639aef}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Initialize">
-      <UniqueIdentifier>{92006d5e-d214-477e-85f6-96de0c20a523}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\ObjectController">
       <UniqueIdentifier>{841bac1a-8224-4cac-9c34-061933e6709b}</UniqueIdentifier>
     </Filter>
@@ -105,6 +99,12 @@
     </Filter>
     <Filter Include="ヘッダー ファイル\rapidjson">
       <UniqueIdentifier>{a4b6db58-3338-47cb-a7a5-345d851b3924}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\AddActor">
+      <UniqueIdentifier>{94df990c-b92f-4a2c-82ab-a4628d639aef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\AddActor">
+      <UniqueIdentifier>{92006d5e-d214-477e-85f6-96de0c20a523}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -210,21 +210,6 @@
     <ClCompile Include="Script\Object\Wheels.cpp">
       <Filter>ソース ファイル\Object</Filter>
     </ClCompile>
-    <ClCompile Include="Script\Initialize\AssetManager.cpp">
-      <Filter>ソース ファイル\Initialize</Filter>
-    </ClCompile>
-    <ClCompile Include="Script\Initialize\DamageObjectGenerator.cpp">
-      <Filter>ソース ファイル\Initialize</Filter>
-    </ClCompile>
-    <ClCompile Include="Script\Initialize\EnemyGenerator.cpp">
-      <Filter>ソース ファイル\Initialize</Filter>
-    </ClCompile>
-    <ClCompile Include="Script\Initialize\FirstPositionGetter.cpp">
-      <Filter>ソース ファイル\Initialize</Filter>
-    </ClCompile>
-    <ClCompile Include="Script\Initialize\InitActor.cpp">
-      <Filter>ソース ファイル\Initialize</Filter>
-    </ClCompile>
     <ClCompile Include="Script\ObjectController\ActorController.cpp">
       <Filter>ソース ファイル\ObjectController</Filter>
     </ClCompile>
@@ -291,7 +276,7 @@
     <ClCompile Include="Script\Scene\Editor\EditDataSaver.cpp">
       <Filter>ソース ファイル\Scene\Editor</Filter>
     </ClCompile>
-    <ClCompile Include="Script\Scene\Editor\EditKindChanger.cpp">
+    <ClCompile Include="Script\Scene\Editor\EditorManager.cpp">
       <Filter>ソース ファイル\Scene\Editor</Filter>
     </ClCompile>
     <ClCompile Include="Script\Scene\Editor\EnemyDataEditor.cpp">
@@ -366,9 +351,6 @@
     <ClCompile Include="Script\Scene\Title\TitleObject.cpp">
       <Filter>ソース ファイル\Scene\Title</Filter>
     </ClCompile>
-    <ClCompile Include="Script\Scene\Title\TitleHiScore.cpp">
-      <Filter>ソース ファイル\Scene\Title</Filter>
-    </ClCompile>
     <ClCompile Include="Script\Scene\Title\TitleRanking.cpp">
       <Filter>ソース ファイル\Scene\Title</Filter>
     </ClCompile>
@@ -420,11 +402,29 @@
     <ClCompile Include="Script\Scene\Play\CollectItemObserver.cpp">
       <Filter>ソース ファイル\Utility</Filter>
     </ClCompile>
-    <ClCompile Include="Script\Scene\Editor\EditorCameraObserver.cpp">
-      <Filter>ソース ファイル\Scene\Editor</Filter>
-    </ClCompile>
     <ClCompile Include="Script\Scene\Editor\EditorScene.cpp">
       <Filter>ソース ファイル\Scene\Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="Script\AddActor\AssetManager.cpp">
+      <Filter>ソース ファイル\AddActor</Filter>
+    </ClCompile>
+    <ClCompile Include="Script\AddActor\DamageObjectGenerator.cpp">
+      <Filter>ソース ファイル\AddActor</Filter>
+    </ClCompile>
+    <ClCompile Include="Script\AddActor\EnemyGenerator.cpp">
+      <Filter>ソース ファイル\AddActor</Filter>
+    </ClCompile>
+    <ClCompile Include="Script\AddActor\FirstPositionGetter.cpp">
+      <Filter>ソース ファイル\AddActor</Filter>
+    </ClCompile>
+    <ClCompile Include="Script\AddActor\InitActor.cpp">
+      <Filter>ソース ファイル\AddActor</Filter>
+    </ClCompile>
+    <ClCompile Include="JsonFileLoader.cpp">
+      <Filter>ソース ファイル\AddActor</Filter>
+    </ClCompile>
+    <ClCompile Include="Script\Observer\CameraObserver.cpp">
+      <Filter>ソース ファイル\Observer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -542,24 +542,6 @@
     <ClInclude Include="Script\Object\DamageObject.h">
       <Filter>ヘッダー ファイル\Object</Filter>
     </ClInclude>
-    <ClInclude Include="Script\Initialize\DamageObjectGenerator.h">
-      <Filter>ヘッダー ファイル\Initialize</Filter>
-    </ClInclude>
-    <ClInclude Include="Script\Initialize\EnemyGenerator.h">
-      <Filter>ヘッダー ファイル\Initialize</Filter>
-    </ClInclude>
-    <ClInclude Include="Script\Initialize\FirstPositionGetter.h">
-      <Filter>ヘッダー ファイル\Initialize</Filter>
-    </ClInclude>
-    <ClInclude Include="Script\Initialize\InitActor.h">
-      <Filter>ヘッダー ファイル\Initialize</Filter>
-    </ClInclude>
-    <ClInclude Include="Script\Initialize\InitObjKind.h">
-      <Filter>ヘッダー ファイル\Initialize</Filter>
-    </ClInclude>
-    <ClInclude Include="Script\Initialize\AssetManager.h">
-      <Filter>ヘッダー ファイル\Initialize</Filter>
-    </ClInclude>
     <ClInclude Include="Script\ObjectController\ActorController.h">
       <Filter>ヘッダー ファイル\ObjectController</Filter>
     </ClInclude>
@@ -635,7 +617,7 @@
     <ClInclude Include="Script\Scene\Editor\EditorScene.h">
       <Filter>ヘッダー ファイル\Scene\Editor</Filter>
     </ClInclude>
-    <ClInclude Include="Script\Scene\Editor\EditKindChanger.h">
+    <ClInclude Include="Script\Scene\Editor\EditorManager.h">
       <Filter>ヘッダー ファイル\Scene\Editor</Filter>
     </ClInclude>
     <ClInclude Include="Script\Scene\Editor\EnemyDataEditor.h">
@@ -729,9 +711,6 @@
       <Filter>ヘッダー ファイル\Scene\Editor</Filter>
     </ClInclude>
     <ClInclude Include="Script\Scene\Title\TitleObject.h">
-      <Filter>ヘッダー ファイル\Scene\Title</Filter>
-    </ClInclude>
-    <ClInclude Include="Script\Scene\Title\TitleHiScore.h">
       <Filter>ヘッダー ファイル\Scene\Title</Filter>
     </ClInclude>
     <ClInclude Include="Script\Scene\Title\TitleRanking.h">
@@ -878,14 +857,32 @@
     <ClInclude Include="Script\rapidjson\msinttypes\stdint.h">
       <Filter>ヘッダー ファイル\rapidjson</Filter>
     </ClInclude>
-    <ClInclude Include="Script\Utility\json.hpp">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="Script\Scene\Play\CollectItemObserver.h">
       <Filter>ヘッダー ファイル\Utility</Filter>
     </ClInclude>
-    <ClInclude Include="Script\Scene\Editor\EditorCameraObserver.h">
-      <Filter>ヘッダー ファイル\Scene\Editor</Filter>
+    <ClInclude Include="Script\AddActor\AssetManager.h">
+      <Filter>ヘッダー ファイル\AddActor</Filter>
+    </ClInclude>
+    <ClInclude Include="Script\AddActor\DamageObjectGenerator.h">
+      <Filter>ヘッダー ファイル\AddActor</Filter>
+    </ClInclude>
+    <ClInclude Include="Script\AddActor\EnemyGenerator.h">
+      <Filter>ヘッダー ファイル\AddActor</Filter>
+    </ClInclude>
+    <ClInclude Include="Script\AddActor\FirstPositionGetter.h">
+      <Filter>ヘッダー ファイル\AddActor</Filter>
+    </ClInclude>
+    <ClInclude Include="Script\AddActor\InitActor.h">
+      <Filter>ヘッダー ファイル\AddActor</Filter>
+    </ClInclude>
+    <ClInclude Include="Script\AddActor\InitObjKind.h">
+      <Filter>ヘッダー ファイル\AddActor</Filter>
+    </ClInclude>
+    <ClInclude Include="JsonFileLoader.h">
+      <Filter>ヘッダー ファイル\AddActor</Filter>
+    </ClInclude>
+    <ClInclude Include="Script\Observer\CameraObserver.h">
+      <Filter>ヘッダー ファイル\Observer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

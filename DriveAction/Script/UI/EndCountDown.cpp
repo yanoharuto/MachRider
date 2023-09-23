@@ -9,7 +9,7 @@
 EndCountDown::EndCountDown(std::weak_ptr<Timer> timer)
 	:CountDown(timer)
 {
-	endUI = UIManager::CreateUIData(onGameEndCountDownEnd);
+	endUIData = UIManager::CreateUIData(UIKind::onGameEndCountDownEnd);
 }
 /// <summary>
 /// カウントダウンの数字と終わりを表示
@@ -26,6 +26,6 @@ void EndCountDown::DrawUI() const
 	}
 	else if (isCountDownEnd)//終わった時のUI
 	{
-		UIDrawer::DrawRotaUI(endUI);
+		UIDrawer::DrawRotaUI(endUIData);
 	}
 }

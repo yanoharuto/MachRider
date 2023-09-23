@@ -32,15 +32,16 @@ InitFlyShipParamator FlyShipController::GetInitData(ObjectInit::InitObjKind kind
     //FlyShip用のデータをロード
     CSVFileLoader* addDataLoader = new CSVFileLoader(InitActor::GetAddDataPass(kind));
     auto addData = addDataLoader->GeFileStringData();
+    using enum FlyShipParamator;
     //移動速度
-    param.moveSpeed = SAFE_STR_TO_F(addData[moveSpeed]);
+    param.moveSpeed = STR_TO_F(addData[CAST_I(moveSpeed)]);
     //生存時間
-    param.setAliveTime = SAFE_STR_TO_F(addData[aliveTime]);
+    param.setAliveTime = STR_TO_F(addData[CAST_I(aliveTime)]);
     //クールタイム
-    param.setCoolTime = SAFE_STR_TO_F(addData[coolTime]);
+    param.setCoolTime = STR_TO_F(addData[CAST_I(coolTime)]);
     //１グループ何体か
-    param.unitNum = SAFE_STR_TO_I(addData[unitNum]);
+    param.unitNum = STR_TO_I(addData[CAST_I(unitNum)]);
     //個体間距離
-    param.unitBetween = SAFE_STR_TO_F(addData[unitBetween]);
+    param.unitBetween = STR_TO_F(addData[CAST_I(unitBetween)]);
     return param;
 }

@@ -65,7 +65,7 @@ protected:
 		float turboChargeTime;
 	};
 	//Ô‚Ì‰Šú‰»‚Ìí—Ş
-	enum CarInitKind
+	enum class CarInitKind
 	{
 		//‰Á‘¬—Ê
 		acceleSpeed = 2,

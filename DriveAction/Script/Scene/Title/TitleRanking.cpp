@@ -8,6 +8,7 @@
 /// </summary>
 TitleRanking::TitleRanking()
 {
+    using enum UIKind;
     //スコアUI
     highUI = new NumUI(titleHiScoreNum);
     secondUI = new NumUI(titleSecondScoreNum);
@@ -17,7 +18,7 @@ TitleRanking::TitleRanking()
     secondRankUI = new NumUI(rank2);
     thirdRankUI = new NumUI(rank3);
     //HighScoreの文字
-    rankUI = UIManager::CreateUIData(titleHiScore);
+    rankUIData = UIManager::CreateUIData(titleHighScore);
 }
 /// <summary>
 /// ランキングを構成する数字UIを消去
@@ -30,6 +31,7 @@ TitleRanking::~TitleRanking()
     SAFE_DELETE(highRankUI);
     SAFE_DELETE(secondRankUI);
     SAFE_DELETE(thirdRankUI);
+    UIManager::DeleteUIGraph(&rankUIData);
 }
 /// <summary>
 /// ランキングの上位三名を描画
@@ -47,7 +49,7 @@ void TitleRanking::Draw() const
     Draw(thirdUI, borders.third, thirdColor);
     Draw(thirdRankUI, 3, thirdColor);
     //HighScoreの文字
-    UIDrawer::DrawRotaUI(rankUI);
+    UIDrawer::DrawRotaUI(rankUIData);
 }
 /// <summary>
 /// 引数の要素を使って描画

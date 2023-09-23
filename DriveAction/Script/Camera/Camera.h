@@ -12,14 +12,14 @@ namespace InitCamera
     /// <summary>
     /// カメラに必要なパラメータ
     /// </summary>
-    enum CameraParameter
+    enum class CameraParameter
     {
         //描画範囲の開始距離
         setNearValue = 2,
         //描画範囲の最終距離
         setFarValue = 5,
         //オブジェクトの見える範囲角
-        setLookingDegree = 8,
+        setLookingAngle = 8,
         //描画対象との距離
         setTargetBetween = 11,
         //カメラのY距離
@@ -30,7 +30,7 @@ namespace InitCamera
     /// <summary>
     /// カメラが使われるシーンの種類
     /// </summary>
-    enum UseCameraSceneKind
+    enum class UseCameraSceneKind
     {
         //タイトルシーンのカメラ
         title = 2,
@@ -52,11 +52,20 @@ public:
     /// <param name="type">どのタイミングで使うか教えて</param>
     Camera(InitCamera::UseCameraSceneKind type);
     /// <summary>
-    /// 引数のものがカメラの範囲内か調べる
+    /// カメラの向きを所得
     /// </summary>
-    /// <param name="actor">調べたいオブジェクト</param>
-    /// <returns>カメラの範囲内ならTrue</returns>
-    bool IsLookingCamera(const Actor* const actor) const;
+    /// <returns>カメラの向きベクトル</returns>
+    VECTOR GetNormDirection()const;
+    /// <summary>
+    /// カメラの位置を所得
+    /// </summary>
+    /// <returns>カメラの座標</returns>
+    VECTOR GetPosition()const;
+    /// <summary>
+    /// 見える角度を所得
+    /// </summary>
+    /// <returns></returns>
+    float GetLookingAngle()const;
 protected:
     /// <summary>
     /// カメラのパラメータ等を読み取る
@@ -82,5 +91,5 @@ protected:
     //カメラの追いつく速度
     float cameraSpeed;
     //カメラの見える範囲角
-    static float lookingDeg;
+    static float lookingAngle;
 };

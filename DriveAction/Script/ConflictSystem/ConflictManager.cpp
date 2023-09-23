@@ -3,6 +3,7 @@
 #include "HitCheckExamineObjectInfo.h"
 #include "ConflictProcessor.h"
 #include "SphereHitChecker.h"
+#include "Utility.h"
 //当たった結果を反映させるクラスのマップ
 std::unordered_map<ConflictProcessor*,SphereHitChecker*> ConflictManager::processorKeyMap;
 //conflictProcessor持ちの当たり判定か調べるためのマップ
@@ -103,7 +104,7 @@ void ConflictManager::DrawCollisionSphere()
     for (auto objIte = hitCheckList.begin(); objIte != hitCheckList.end(); objIte++)
     {
        HitCheckInfo info = (*objIte)->GetHitExamineCheckInfo();
-        DrawSphere3D(info.pos, info.radius, 4, GetColor(200, 200, 200), GetColor(200, 200, 200), false);
+       DrawSphere3D(info.pos, info.radius, 4, GetColor(MAX1BYTEVALUE, MAX1BYTEVALUE, MAX1BYTEVALUE), GetColor(MAX1BYTEVALUE, MAX1BYTEVALUE, MAX1BYTEVALUE), false);
     }
 }
 /// <summary>

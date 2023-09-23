@@ -6,9 +6,9 @@
 /// </summary>
 /// <param name="damageObjeGenerator">レーザーを発射できるようにする</param>
 UpDownFlyShipController::UpDownFlyShipController(std::shared_ptr<DamageObjectGenerator> damageObjeGenerator)
-    :FlyShipController(upDownLaserShip,damageObjeGenerator)
+    :FlyShipController(InitObjKind::upDownLaserShip,damageObjeGenerator)
 {
-    drawModel = new DrawModel(upDownLaserShip);
+    drawModel = new DrawModel(InitObjKind::upDownLaserShip);
 }
 /// <summary>
 /// 上下に対空する飛行船を引数の位置に追加

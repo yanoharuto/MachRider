@@ -4,7 +4,7 @@ namespace ObjectInit
     /// <summary>
     /// 初期化するオブジェクトの種類
     /// </summary>
-    enum InitObjKind
+    enum class InitObjKind
     {
         //プレイヤー機
         player = 2,

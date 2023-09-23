@@ -11,7 +11,7 @@
 
 class EditorObject;
 class EditorDrawModel;
-class EditorCameraObserver;
+class CameraObserver;
 enum ActionKind;
 using namespace ObjectInit;
 /// <summary>
@@ -33,7 +33,7 @@ public:
     /// <summary>
     /// 新しく編集したり過去に編集したものを再編集したりする
     /// </summary>
-    virtual void Update(std::weak_ptr<EditorCameraObserver> cameraObserever);
+    virtual void Update(std::weak_ptr<CameraObserver> cameraObserever);
     /// <summary>
     /// 編集中や編集し終えたオブジェクトの描画
     /// </summary>
@@ -61,7 +61,7 @@ public:
     /// </summary>
     void ChangeEditedCollectNum();
     //編集で行う事
-    enum EditActionKind
+    enum class EditActionKind
     {
         //編集中
         edit,
@@ -83,7 +83,7 @@ protected:
     /// <summary>
     /// 編集操作
     /// </summary>
-    void Edit(std::weak_ptr<EditorCameraObserver> cameraObserever);
+    void Edit(std::weak_ptr<CameraObserver> cameraObserever);
     /// <summary>
     /// NowEditObjDataメンバ変数を更新する
     /// </summary>
@@ -92,9 +92,9 @@ protected:
     //今編集しているオブジェクトの情報
     static PlacementData nowEditObjPlaceData;
     // 編集したいエネミーの種類
-    InitObjKind editKind = saw;
+    InitObjKind editKind = InitObjKind::saw;
     //編集終了フラグ
-    EditActionKind nowEditAction = select;
+    EditActionKind nowEditAction = EditActionKind::select;
     //現在編集中のオブジェクト
     EditorObject* editObject;
     /// 収集アイテムの数

@@ -10,7 +10,7 @@
 /// </summary>
 EnemyGenerator::EnemyGenerator()
 {
-    editDataVec = FirstPositionGetter::GetPlaceData(Object::damageObject);
+    editDataVec = FirstPositionGetter::GetPlaceData(Object::ObjectTag::damageObject);
 }
 /// <summary>
 /// 敵コントローラーに位置情報を教えて追加する

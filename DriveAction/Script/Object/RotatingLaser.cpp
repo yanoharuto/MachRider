@@ -17,11 +17,11 @@ const float RotatingLaser::rotateRadius = 1.333f;
 /// </summary>
 /// <param name="setObserver">発射オブジェクトの位置等を通達してもらう</param>
 RotatingLaser::RotatingLaser(std::unique_ptr<ObjectObserver> setObserver)
-    :DamageObject(ObjectInit::laser, std::move(setObserver))
+    :DamageObject(ObjectInit::InitObjKind::laser, std::move(setObserver))
 {
-    EffectManager::LoadEffect(EffectInit::laser);
+    EffectManager::LoadEffect(EffectKind::laser);
     //向きとエフェクト
-    EffectManager::LoadEffect(laserTrack);
+    EffectManager::LoadEffect(EffectKind::laserTrack);
     direction = observer->GetSubjectDir();
     //当たり判定
     collider = new LaserCollider(this, rotateRadius);
@@ -49,7 +49,7 @@ void RotatingLaser::Update()
     //エフェクト終了したらもう一回撃つ
     if (laserEffect == -1 || IsEffekseer3DEffectPlaying(laserEffect) == -1)
     {
-        laserEffect = EffectManager::GetPlayEffect3D(laserKind);
+        laserEffect = EffectManager::GetPlayEffect3D(EffectKind::laser);
     }
     //y軸回転
     YRotate();
@@ -88,7 +88,7 @@ void RotatingLaser::SetLaserTrack()
     //レーザー跡のエフェクトが表示し終えたら
     if (IsEffekseer3DEffectPlaying(trackEffect) == -1)
     {
-        trackEffect = EffectManager::GetPlayEffect3D(laserTrack);
+        trackEffect = EffectManager::GetPlayEffect3D(EffectKind::laserTrack);
     }
     SetPosPlayingEffekseer3DEffect(trackEffect, laserTrackPos.x, 0, laserTrackPos.z);
 }

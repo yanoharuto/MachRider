@@ -10,6 +10,7 @@ class ObjectObserver;
 class ShadowMap;
 class ReusableTimer;
 class CollectItemObserver;
+class CameraObserver;
 /// <summary>
 /// タイトルの後ろで動かす
 /// </summary>
@@ -40,13 +41,15 @@ private:
     //収集アイテムの監視クラス
     std::shared_ptr<CollectItemObserver> collectItemObserver;
     //カメラ
-    TitleCamera* camera;
+    std::shared_ptr<TitleCamera> camera;
     //このタイマーが切れると場面変換
     std::shared_ptr <ReusableTimer> initTimer;
     //影
     ShadowMap* shadowMap;
     //影とカメラに渡す車のオブザーバ
-    std::shared_ptr<ObjectObserver> demoObserver;
+    std::shared_ptr<ObjectObserver> demoObserver; 
+    //カメラの向きなどを知らせる
+    std::shared_ptr<CameraObserver> cameraObserever;
     //場面変換周期
     const float initTime = 15.0f;
     //場面変換速度

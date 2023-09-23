@@ -21,16 +21,16 @@ const float Coin::moveYSpeed = 4.0f;
 /// </summary>
 /// <param name="arrangementData"></param>
 Coin::Coin(PlacementData arrangementData)
-    :Actor(ObjectInit::collect)
+    :Actor(ObjectInit::InitObjKind::collect)
 {
     //位置
     position.x = arrangementData.posX;
     position.z = arrangementData.posZ;
     firstY = position.y;
     //エフェクトと音
-    SoundPlayer::LoadAndInitSound(coinGet);
-    EffectManager::LoadEffect(getCollect);
-    EffectManager::LoadEffect(collectAura);
+    SoundPlayer::LoadAndInitSound(SoundKind::coinGet);
+    EffectManager::LoadEffect(EffectKind::getCollect);
+    EffectManager::LoadEffect(EffectKind::collectAura);
     tag = ObjectTag::collect;
     //当たり判定
     conflictProcessor = new ConflictProcessor(this);
@@ -60,10 +60,10 @@ Coin::~Coin()
 /// </summary>
 void Coin::Update()
 {
-    if (objState == sleep)//初めて動くとき当たり判定を付ける
+    if (objState == ObjectState::sleep)//初めて動くとき当たり判定を付ける
     {
         ConflictManager::AddConflictProcessor(conflictProcessor, collider);
-        objState = active;
+        objState = ObjectState::active;
     }
     //上下に回転しながら移動
     MoveAndRotate();
@@ -77,15 +77,15 @@ void Coin::Update()
             SAFE_DELETE(collider);
         }
         //効果音がなり終わって終了
-        if(!SoundPlayer::IsPlaySound(coinGet))
+        if(!SoundPlayer::IsPlaySound(SoundKind::coinGet))
         {
-            objState = dead;
+            objState = ObjectState::dead;
         }
     }
     //コインの出すオーラが途切れたら再開させる
     if (IsEffekseer3DEffectPlaying(coinAuraEffect) == -1)
     {
-        coinAuraEffect = EffectManager::GetPlayEffect3D(collectAura);
+        coinAuraEffect = EffectManager::GetPlayEffect3D(EffectKind::collectAura);
         SetPosPlayingEffekseer3DEffect(coinAuraEffect, position.x, position.y - radius, position.z);
     }
     //Velocityを反映
@@ -100,13 +100,13 @@ void Coin::OnConflict(const CollisionResultInfo conflictInfo)
     if (conflictInfo.tag == ObjectTag::player)
     {
        //エフェクトと音を出す
-       coinGetEffect = EffectManager::GetPlayEffect2D(getCollect);
+       coinGetEffect = EffectManager::GetPlayEffect2D(EffectKind::getCollect);
        float effectX = SCREEN_WIDTH / 2;
        float effectY = SCREEN_HEIGHT / 2;
        SetPosPlayingEffekseer2DEffect(coinGetEffect,effectX, effectY, 5);
-       SoundPlayer::Play3DSE(coinGet);
+       SoundPlayer::Play3DSE(SoundKind::coinGet);
        isCarConflict = true;
-       objState = activeEnd;
+       objState = ObjectState::activeEnd;
     }
 }
 /// <summary>

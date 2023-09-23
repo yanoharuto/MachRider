@@ -5,8 +5,7 @@
 #include "EditObjectData.h"
 class StageDataEditor;
 class StageObjectController;
-class EditorCameraObserver;
-
+class CameraObserver;
 /// <summary>
 /// 編集処理の流れ
 /// </summary>
@@ -24,11 +23,11 @@ public:
     /// <summary>
     /// 編集する種類や各編集物の編集
     /// </summary>
-    void Update(std::weak_ptr<EditorCameraObserver> cameraObserever);
+    void Update(std::weak_ptr<CameraObserver> cameraObserever);
     /// <summary>
     /// 描画
     /// </summary>
-    void Draw() const;
+    void Draw(std::weak_ptr<CameraObserver> cameraObserever) const;
     /// <summary>
     /// 編集中かどうかを返す
     /// </summary>

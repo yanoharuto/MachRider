@@ -12,7 +12,7 @@
 /// <param name="setDir">初期向き</param>
 /// <param name="initTimer">定期的に初期位置に戻すためのタイマー</param>
 TitleCar::TitleCar(VECTOR setPos, VECTOR setDir, std::weak_ptr<Timer> setInitTimer)
-    :Car(ObjectInit::player)
+    :Car(ObjectInit::InitObjKind::player)
 {
 	firstPosY = position.y;
 	position = setPos;
@@ -21,7 +21,7 @@ TitleCar::TitleCar(VECTOR setPos, VECTOR setDir, std::weak_ptr<Timer> setInitTim
 	prevPos = position;
 	direction = setDir;
 	firstDir = setDir;
-	EffectManager::LoadEffect(EffectInit::carWind);
+	EffectManager::LoadEffect(EffectKind::carWind);
 	speedParamator.acceleSpeed = setAcceleSpeed;
 	speedParamator.maxSpeed = setMaxSpeed;
 	initTimer = setInitTimer;
@@ -66,7 +66,7 @@ void TitleCar::EffectUpdate()
 	if (runEffect == -1)
 	{
 		//エフェクトが消えてたら出す
-		runEffect = EffectManager::GetPlayEffect3D(EffectInit::carWind);
+		runEffect = EffectManager::GetPlayEffect3D(EffectKind::carWind);
 	}
 	//車の場所と回転に合わせる
 	SetPosPlayingEffekseer3DEffect(runEffect, position.x, 0, position.z);

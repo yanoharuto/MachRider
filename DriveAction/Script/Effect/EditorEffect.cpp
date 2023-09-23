@@ -9,6 +9,7 @@
 /// </summary>
 EditorEffect::EditorEffect()
 {
+    using enum EffectKind;
     //選択エフェクト
     if (posEffect == -1)
     {
@@ -54,4 +55,7 @@ void EditorEffect::Update(PlacementData const editObjPlaceData)
     //編集物の位置が分かりやすくなるエフェクトの位置変更
     SetPosPlayingEffekseer3DEffect(posEffect, pos.x, 0, pos.z);
     SetPosPlayingEffekseer3DEffect(dirEffect, pos.x, 0, pos.z);
+    Effekseer_Sync3DSetting();
+    //エフェクト更新
+    UpdateEffekseer3D();
 }

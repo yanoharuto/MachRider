@@ -20,7 +20,7 @@ SoundPlayer::SoundPlayer()
 /// </summary>
 SoundPlayer::~SoundPlayer()
 {
-    for (int i = 0; i < SAFE_GET_SIZE(soundHandleMap); i++)
+    for (int i = 0; i < CONTAINER_GET_SIZE(soundHandleMap); i++)
     {
         int success = StopSoundMem((*soundHandleMap.begin()).second);
         success = DeleteSoundMem((*soundHandleMap.begin()).second);
@@ -115,11 +115,13 @@ void SoundPlayer::LoadAndInitSound(SoundKind kind)
         CSVFileLoader* initDataLoader = new CSVFileLoader(initFilePassData[num]);
         std::vector<const char*> initData = initDataLoader->GetFileCharData();
         //読み取った文字列からパスを受け取り音データを所得
-        int loadSoundHandleNum = LoadSoundMem(initData[soundPass]);
+        int passNum = static_cast<int>(SoundInit::SoundParamator::soundPass);
+        int loadSoundHandleNum = LoadSoundMem(initData[passNum]);
         //mapに追加
         soundHandleMap.insert(std::make_pair(kind, loadSoundHandleNum));
         //音量を設定
-        ChangeVolumeSoundMem(atoi(initData[soundVolume]), loadSoundHandleNum);
+        int volumeNum = static_cast<int>(SoundInit::SoundParamator::soundVolume);
+        ChangeVolumeSoundMem(atoi(initData[volumeNum]), loadSoundHandleNum);
         //読み取りクラスの開放
         SAFE_DELETE(initDataLoader);
     }
@@ -140,7 +142,9 @@ void SoundPlayer::LoadAndInit3DSound(SoundKind kind)
         CSVFileLoader* initDataLoader = new CSVFileLoader(initFilePassData[num]);
         //読み取ったデータから聞こえる半径を設定
         auto initStrDataVec = initDataLoader->GeFileStringData();
-        Set3DRadiusSoundMem(SAFE_STR_TO_F(initStrDataVec[soundRadius]), soundHandleMap[kind]);
+        //聞こえる半径の大きさ
+        int radiusNum = static_cast<int>(SoundInit::SoundParamator::soundRadius);
+        Set3DRadiusSoundMem(STR_TO_F(initStrDataVec[radiusNum]), soundHandleMap[kind]);
         //読み取りクラスの開放
         SAFE_DELETE(initDataLoader);
     }

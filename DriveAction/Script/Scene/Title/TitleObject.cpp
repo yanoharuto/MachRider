@@ -12,7 +12,7 @@
 #include "EffekseerForDXLib.h"
 #include "ReusableTimer.h"
 #include "CollectItemObserver.h"
-
+#include "CameraObserver.h"
 /// <summary>
 /// タイトル画面の裏で車を走らせる
 /// </summary>
@@ -34,7 +34,8 @@ TitleObject::TitleObject()
     collectController.reset();
     
     shadowMap = new ShadowMap(demoObserver);
-    camera = new TitleCamera(demoObserver);
+    camera = std::make_shared<TitleCamera>(demoObserver);
+    cameraObserever = std::make_shared<CameraObserver>(camera);
 }
 /// <summary>
 /// 初期化周期タイマーや走っている車などの解放
@@ -42,8 +43,9 @@ TitleObject::TitleObject()
 TitleObject::~TitleObject()
 {
     initTimer.reset();
+    camera.reset(); 
+    cameraObserever.reset();
     SAFE_DELETE(manager);
-    SAFE_DELETE(camera);
     SAFE_DELETE(shadowMap);
 }
 /// <summary>
@@ -52,7 +54,7 @@ TitleObject::~TitleObject()
 void TitleObject::Update()
 {
     manager->Update();
-    shadowMap->SetShadowMapErea();
+    shadowMap->SetShadowMapArea();
     camera->Update();
     //エフェクトの位置を現在のカメラに合わせる
     Effekseer_Sync3DSetting();
@@ -88,10 +90,10 @@ void TitleObject::Update()
 void TitleObject::Draw() const
 {
     //影とオブジェクトを描画
-    shadowMap->SetUPDrawShadow();
-    manager->Draw();
+    shadowMap->SetUpDrawShadow();
+    manager->Draw(cameraObserever);
     shadowMap->EndDrawShadow();
-    manager->Draw();
+    manager->Draw(cameraObserever);
     shadowMap->Use();
 
     DrawEffekseer3D();

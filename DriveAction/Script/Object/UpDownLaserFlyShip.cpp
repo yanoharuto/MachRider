@@ -13,7 +13,7 @@ float UpDownLaserFlyShip::firstPosY = 0.0f;
 /// <param name="editData">初期位置</param>
 /// <param name="damageObjGenerator">レーザーを発射することを伝えるクラス</param>
 UpDownLaserFlyShip::UpDownLaserFlyShip(PlacementData editData, std::weak_ptr<DamageObjectGenerator> damageObjGenerator)
-    :Actor(ObjectInit::upDownLaserShip)
+    :Actor(ObjectInit::InitObjKind::upDownLaserShip)
 {
     firstPosY = position.y;
     //位置と向きの初期化

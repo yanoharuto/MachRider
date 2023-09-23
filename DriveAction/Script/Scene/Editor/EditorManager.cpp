@@ -1,4 +1,4 @@
-#include "EditKindChanger.h"
+#include "EditorManager.h"
 #include "DxLib.h"
 #include "Utility.h"
 #include "UserInput.h"
@@ -7,11 +7,11 @@
 #include "EnemyDataEditor.h"
 #include "CollectItemDataEditor.h"
 #include "PlayerDataEditor.h"
-#include "EditorCamera.h"
 #include "EffekseerForDXLib.h"
 #include "EditManual.h"
 #include "EditorEffect.h"
-#include "EditorCameraObserver.h"
+#include "CameraObserver.h"
+
 /// <summary>
 /// 編集に必要なものを確保
 /// </summary>
@@ -19,6 +19,7 @@ EditorManager::EditorManager()
 {
     //背景
     stage = new StageObjectController();
+    using enum InitObjKind;
     //各オブジェクトのEditor
     editorVec.push_back(std::make_shared<PlayerDataEditor>());
     editorVec.push_back(std::make_shared<CollectItemDataEditor>());
@@ -44,7 +45,7 @@ EditorManager::~EditorManager()
 /// <summary>
 /// 編集する種類や各編集物の編集
 /// </summary>
-void EditorManager::Update(std::weak_ptr<EditorCameraObserver> cameraObserever)
+void EditorManager::Update(std::weak_ptr<CameraObserver> cameraObserever)
 {
     //skeyで出てくるタイミングを変更
     if (UserInput::GetInputState(SKey) == Hold)
@@ -62,17 +63,14 @@ void EditorManager::Update(std::weak_ptr<EditorCameraObserver> cameraObserever)
         //編集
         nowEditor->Update(cameraObserever);
     }
-    Effekseer_Sync3DSetting();
-    //エフェクト更新
-    UpdateEffekseer3D();
 }
 /// <summary>
 /// 描画
 /// </summary>
-void EditorManager::Draw() const
+void EditorManager::Draw(std::weak_ptr<CameraObserver> cameraObserever) const
 {
     //ステージに配置されている物
-    stage->Draw();
+    stage->Draw(cameraObserever);
     //各オブジェクトの描画
     for (unsigned int i = 0; i < editorVec.size(); i++)
     {

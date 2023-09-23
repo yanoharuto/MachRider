@@ -16,19 +16,20 @@
 /// <param name="collectObserver">何個回収するか教えてもらう</param>
 PrePlayGameProcess::PrePlayGameProcess(std::weak_ptr<CollectItemObserver> collectObserver)
 {
+    using enum UIKind;
     //音の確保
-    SoundPlayer::LoadAndInitSound(fanfare);
-    SoundPlayer::Play2DSE(fanfare);
+    SoundPlayer::LoadAndInitSound(SoundKind::fanfare);
+    SoundPlayer::Play2DSE(SoundKind::fanfare);
     //UIの準備
-    gamePuroseData = UIManager::CreateUIData(gamePurose);
-    collectIconData = UIManager::CreateUIData(collectIcon);
+    gamePuroseUIData = UIManager::CreateUIData(gamePurose);
+    collectIconUIData = UIManager::CreateUIData(collectIcon);
     collectItemNum = new NumUI(collectTargetNumberUI);
     playManual = new PlayManual();
     //フェードインフェードアウト用のタイマー
-    frameByFrameTimer = new ReusableTimer(gamePuroseData.frameSpeed);
+    frameByFrameTimer = new ReusableTimer(gamePuroseUIData.frameSpeed);
     fadeValue = MAX1BYTEVALUE;
     //アイテムの数を保存
-    allCollectItemNum = collectObserver.lock()->GetTotalItemNum();
+    remainingCollectNum = collectObserver.lock()->GetTotalItemNum();
 }
 /// <summary>
 /// カウントダウンなどを解放
@@ -37,6 +38,8 @@ PrePlayGameProcess::~PrePlayGameProcess()
 {
     SAFE_DELETE(frameByFrameTimer);
     SAFE_DELETE(countDown);
+    UIManager::DeleteUIGraph(&collectIconUIData);
+    UIManager::DeleteUIGraph(&gamePuroseUIData);
     countDownTimer.reset();
 }
 /// <summary>
@@ -81,11 +84,11 @@ void PrePlayGameProcess::Draw() const
         DrawBox(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, GetColor(colorValue, colorValue, colorValue), true);
         SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);//元に戻す
         //目標を説明
-        UIDrawer::DrawRotaUI(gamePuroseData);
-        int num = iconGHIndex % collectIconData.dataHandle.size();
-        UIDrawer::DrawRotaUI(collectIconData,num);
+        UIDrawer::DrawRotaUI(gamePuroseUIData);
+        int num = iconGHIndex % collectIconUIData.dataHandle.size();
+        UIDrawer::DrawRotaUI(collectIconUIData,num);
         //何個集めるか
-        collectItemNum->Draw(allCollectItemNum);
+        collectItemNum->Draw(remainingCollectNum);
     }
     else
     {

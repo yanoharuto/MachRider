@@ -10,7 +10,7 @@
 Actor::Actor(ObjectInit::InitObjKind kind)
     :Object(kind)
 {
-    objState = sleep;
+    objState = ObjectState::sleep;
 }
 
 /// <summary>

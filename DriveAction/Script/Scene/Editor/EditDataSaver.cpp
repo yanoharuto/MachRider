@@ -1,5 +1,6 @@
-#include "EditDataSaver.h"
 #include <fstream>
+#include "EditDataSaver.h"
+#include "Utility.h"
 
 /// <summary>
 /// 編集した情報を保存する
@@ -9,6 +10,7 @@
 void EditDataSaver::SaveEditData(std::vector<PlacementData> editData, InitObjKind editObjKind)const
 {
     std::string saveFileName;
+    using enum InitObjKind;
     //種類ごとに保存先を変える
     switch (editObjKind)
     {
@@ -23,7 +25,7 @@ void EditDataSaver::SaveEditData(std::vector<PlacementData> editData, InitObjKin
         break;
     }
     //配置した収集アイテムを保存
-    for (int i = 0; i < editData.size(); i++)
+    for (int i = 0; i < CONTAINER_GET_SIZE(editData); i++)
     {
         SaveEditData(editData[i], saveFileName);
     }
