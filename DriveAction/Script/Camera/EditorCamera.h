@@ -20,7 +20,6 @@ public:
     /// 上下左右キーで向きとターゲットまでの距離を変更する
     /// </summary>
     void UpdateDirectionAndTargetBetween();
-
 private:
     //回転速度
     const float rotaSpeed = 3.0f;

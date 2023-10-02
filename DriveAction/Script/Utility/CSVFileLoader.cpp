@@ -14,6 +14,7 @@ CSVFileLoader::CSVFileLoader(std::string filePass)
     //ファイルを開いて
     lineCount = 0;
     ifstream ifs(filePass.c_str());
+    isOpen = static_cast<bool>(ifs);
     //1行ずつ読み込む
     string line;
     while (getline(ifs, line)) 
@@ -53,6 +54,14 @@ std::vector<const char*> CSVFileLoader::GetFileCharData()const
 int CSVFileLoader::GetLineCount()const
 {
     return lineCount;
+}
+/// <summary>
+/// ファイルが開けたかどうか
+/// </summary>
+/// <returns>正常に開けたならTrue</returns>
+bool CSVFileLoader::IsOpenFile() const
+{
+    return isOpen;
 }
 /// <summary>
 /// 読み込んだファイルの各行のデータを抽出

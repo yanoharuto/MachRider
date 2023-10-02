@@ -28,6 +28,11 @@ public:
     /// </summary>
     /// <returns></returns>
     int GetLineCount()const;
+    /// <summary>
+    /// ファイルが開けたかどうか
+    /// </summary>
+    /// <returns>正常に開けたならTrue</returns>
+    bool IsOpenFile()const;
 private:
     /// <summary>
     /// 読み込んだファイルの各行のデータを抽出
@@ -39,5 +44,7 @@ private:
     std::vector <std::string> loadData;
     //読み込んだファイルの行
     int lineCount;
+    //ファイルが正常に開けたならTrue
+    bool isOpen;
 };
 

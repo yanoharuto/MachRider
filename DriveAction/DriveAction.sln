@@ -6,29 +6,6 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DriveAction", "DriveAction.vcxproj", "{ED942629-C9C9-4A15-B546-F0EA5B1CA83F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ソリューション項目", "ソリューション項目", "{1A08D8C9-9B4B-4C2D-90F2-093CF2AA58E0}"
-	ProjectSection(SolutionItems) = preProject
-		Script\rapidjson\allocators.h = Script\rapidjson\allocators.h
-		Script\rapidjson\cursorstreamwrapper.h = Script\rapidjson\cursorstreamwrapper.h
-		Script\rapidjson\document.h = Script\rapidjson\document.h
-		Script\rapidjson\encodedstream.h = Script\rapidjson\encodedstream.h
-		Script\rapidjson\encodings.h = Script\rapidjson\encodings.h
-		Script\rapidjson\filereadstream.h = Script\rapidjson\filereadstream.h
-		Script\rapidjson\filewritestream.h = Script\rapidjson\filewritestream.h
-		Script\rapidjson\fwd.h = Script\rapidjson\fwd.h
-		Script\rapidjson\istreamwrapper.h = Script\rapidjson\istreamwrapper.h
-		Script\rapidjson\memorybuffer.h = Script\rapidjson\memorybuffer.h
-		Script\rapidjson\memorystream.h = Script\rapidjson\memorystream.h
-		Script\rapidjson\ostreamwrapper.h = Script\rapidjson\ostreamwrapper.h
-		Script\rapidjson\pointer.h = Script\rapidjson\pointer.h
-		Script\rapidjson\prettywriter.h = Script\rapidjson\prettywriter.h
-		Script\rapidjson\rapidjson.h = Script\rapidjson\rapidjson.h
-		Script\rapidjson\reader.h = Script\rapidjson\reader.h
-		Script\rapidjson\schema.h = Script\rapidjson\schema.h
-		Script\rapidjson\stream.h = Script\rapidjson\stream.h
-		Script\rapidjson\stringbuffer.h = Script\rapidjson\stringbuffer.h
-		Script\rapidjson\uri.h = Script\rapidjson\uri.h
-		Script\rapidjson\writer.h = Script\rapidjson\writer.h
-	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

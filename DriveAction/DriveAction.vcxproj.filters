@@ -420,11 +420,11 @@
     <ClCompile Include="Script\AddActor\InitActor.cpp">
       <Filter>ソース ファイル\AddActor</Filter>
     </ClCompile>
-    <ClCompile Include="JsonFileLoader.cpp">
-      <Filter>ソース ファイル\AddActor</Filter>
-    </ClCompile>
     <ClCompile Include="Script\Observer\CameraObserver.cpp">
       <Filter>ソース ファイル\Observer</Filter>
+    </ClCompile>
+    <ClCompile Include="Script\Utility\JsonFileLoader.cpp">
+      <Filter>ソース ファイル\Utility</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -883,6 +883,9 @@
     </ClInclude>
     <ClInclude Include="Script\Observer\CameraObserver.h">
       <Filter>ヘッダー ファイル\Observer</Filter>
+    </ClInclude>
+    <ClInclude Include="Script\Utility\JsonFileLoader.h">
+      <Filter>ヘッダー ファイル\Utility</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -19,7 +19,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="JsonFileLoader.cpp" />
     <ClCompile Include="Script\AddActor\AssetManager.cpp" />
     <ClCompile Include="Script\AddActor\DamageObjectGenerator.cpp" />
     <ClCompile Include="Script\AddActor\EnemyGenerator.cpp" />
@@ -117,6 +116,7 @@
     <ClCompile Include="Script\Utility\Clock.cpp" />
     <ClCompile Include="Script\Utility\CSVFileLoader.cpp" />
     <ClCompile Include="Script\Utility\FadeInFadeOut.cpp" />
+    <ClCompile Include="Script\Utility\JsonFileLoader.cpp" />
     <ClCompile Include="Script\Utility\StopTimer.cpp" />
     <ClCompile Include="Script\Utility\GameScreen.cpp" />
     <ClCompile Include="Script\Utility\ResultScore.cpp" />
@@ -268,6 +268,7 @@
     <ClInclude Include="Script\Utility\Clock.h" />
     <ClInclude Include="Script\Utility\CSVFileLoader.h" />
     <ClInclude Include="Script\Utility\FadeInFadeOut.h" />
+    <ClInclude Include="Script\Utility\JsonFileLoader.h" />
     <ClInclude Include="Script\Utility\StopTimer.h" />
     <ClInclude Include="Script\Utility\ListUtility.h" />
     <ClInclude Include="Script\Utility\OriginalMath.h" />
@@ -337,19 +338,19 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>Script/Scene;Script/Sound;Script/Scene/Play;Script/UI;Script/Scene/Title;Script/Observer;Script/AddActor;Script/Camera;Script/ObjectController;Script/Scene/Editor;Script/DrawModel;Script/ConflictSystem;Script/Utility;Script/Effect;Script/Object;$(IncludePath)</IncludePath>
+    <IncludePath>Script/Scene;Script/Sound;Script/Scene/Play;Script/UI;Script/Scene/Title;Script/Observer;Script/AddActor;Script/Camera;Script/ObjectController;Script/Scene/Editor;Script/DrawModel;Script/ConflictSystem;Script/Utility;Script/Effect;Script/Object;Script/rapidjson;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>Script/Scene;Script/Sound;Script/Scene/Play;Script/UI;Script/Scene/Title;Script/Observer;Script/AddActor;Script/Camera;Script/ObjectController;Script/Scene/Editor;Script/DrawModel;Script/ConflictSystem;Script/Utility;Script/Effect;Script/Object;$(IncludePath)</IncludePath>
+    <IncludePath>Script/Scene;Script/Sound;Script/Scene/Play;Script/UI;Script/Scene/Title;Script/Observer;Script/AddActor;Script/Camera;Script/ObjectController;Script/Scene/Editor;Script/DrawModel;Script/ConflictSystem;Script/Utility;Script/Effect;Script/Object;Script/rapidjson;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>Script/Scene;Script/Sound;Script/Scene/Play;Script/UI;Script/Scene/Title;Script/Observer;Script/AddActor;Script/Camera;Script/ObjectController;Script/Scene/Editor;Script/DrawModel;Script/ConflictSystem;Script/Utility;Script/Effect;Script/Object;$(IncludePath)</IncludePath>
+    <IncludePath>Script/Scene;Script/Sound;Script/Scene/Play;Script/UI;Script/Scene/Title;Script/Observer;Script/AddActor;Script/Camera;Script/ObjectController;Script/Scene/Editor;Script/DrawModel;Script/ConflictSystem;Script/Utility;Script/Effect;Script/Object;Script/rapidjson;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>Script/Scene;Script/Sound;Script/Scene/Play;Script/UI;Script/Scene/Title;Script/Observer;Script/AddActor;Script/Camera;Script/ObjectController;Script/Scene/Editor;Script/DrawModel;Script/ConflictSystem;Script/Utility;Script/Effect;Script/Object;$(IncludePath)</IncludePath>
+    <IncludePath>Script/Scene;Script/Sound;Script/Scene/Play;Script/UI;Script/Scene/Title;Script/Observer;Script/AddActor;Script/Camera;Script/ObjectController;Script/Scene/Editor;Script/DrawModel;Script/ConflictSystem;Script/Utility;Script/Effect;Script/Object;Script/rapidjson;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

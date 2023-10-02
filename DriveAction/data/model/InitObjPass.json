@@ -10,5 +10,5 @@
   "collect": "data/model/Coin/coin.json",
   "floor": "data/model/Stage/floor.json",
   "skyDome": "data/model/SkyDome/SkyDome.json",
-  "stage": "data/model/Stage/wall.json"
+  "wall": "data/model/Stage/wall.json"
 }

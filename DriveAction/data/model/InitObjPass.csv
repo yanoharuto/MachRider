@@ -1,36 +1,12 @@
-﻿//プレイヤー機
-    player
 data/model/Player/iceBrades.csv
-    //移動丸鋸
-moveSaw
 data/model/Saw/moveSaw.csv
-    //回転丸鋸
-    saw
 data/model/Saw/saw.csv
-    //爆撃機
-    bomberShip
 data/model/BomberShip/bomberShip.csv
-    //爆弾
-    bomber
 data/model/bomb/bomb.csv
-//上下にレーザー撃つ飛行船
-    upDownLaserShip
 data/model/LaserShip/upDownLaserShip.csv
-    //円状に並ぶ機体
-    circleLaserShip
 data/model/LaserShip/circleLaserShip.csv
-    //大回りレーザー
-    bigRadiusLaser
 data/model/LaserShip/bigRadiusLaser.csv
-//収集アイテム
-collect
 data/model/Coin/coin.csv
-//床
-    floor
 data/model/Stage/floor.csv
-    //スカイドーム
-    skyDome
 data/model/SkyDome/skyDome.csv
-//ステージの外に出ないようにする壁
-stageWall
 data/model/Stage/wall.csv

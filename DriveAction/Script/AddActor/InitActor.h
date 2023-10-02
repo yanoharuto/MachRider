@@ -102,10 +102,10 @@ public:
     static std::string GetAddDataPass (InitObjKind obj);
 private:
     /// <summary>
-    /// 初期化に必要な色々なパスを所得
+    /// 引数のオブジェクトの初期化に必要な色々なパスを所得
     /// </summary>
-    /// <param name="obj"></param>
-    /// <returns></returns>
+    /// <param name="obj">初期化したいオブジェクトの種類</param>
+    /// <returns>初期化に使うパス</returns>
     static InitDataPass GetActorInitPassData(InitObjKind obj);
     /// <summary>
     /// 初期化したいパラメータを文字列で所得
@@ -115,8 +115,14 @@ private:
     static std::vector<std::string> GetActorParametorStrVec(InitObjKind obj);
     //initActorFileNameの先のファイルから所得したデータをまとめたVector
     static std::vector<std::string> objectInitDataPassVec;
-    //初期化するパスを纏めているファイルの名前
-    static std::string initActorFileName; 
+    //初期化するオブジェクトのパスを纏めているCSVのパス
+    static std::string initActorCSVFilePass; 
+    //初期化するオブジェクトのパスを纏めているJsonのパス
+    static std::string initActorJsonFilePass; 
+    //initActorJsonFilePassのJsonSchemaのパス
+    static std::string initActorSchemaPass; 
+    //初期化要素のJsonSchemaのパス
+    static std::string initObjParamatorSchemaPass; 
     //描画モデルハンドル所得役
     static AssetManager* assetManager;
 };
