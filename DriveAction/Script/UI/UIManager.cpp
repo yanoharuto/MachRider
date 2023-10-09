@@ -9,7 +9,7 @@ std::vector<std::string> UIManager::uiPathVec;
 /// </summary>
 UIManager::UIManager()
 {
-    CSVFileLoader* initDataFile = new CSVFileLoader(initUIDataPassFile);
+    CSVFileLoader* initDataFile = new CSVFileLoader(GetInitFilePass(AssetList::ui));
     uiPathVec = initDataFile->GeFileStringData();
     SAFE_DELETE(initDataFile);
 }
@@ -18,9 +18,9 @@ UIManager::UIManager()
 /// </summary>
 /// <param name="uiKind">所得したいUIの種類</param>
 /// <returns>UIの描画に必要な情報を返す</returns>
-UIData UIManager::CreateUIData(UIKind uiKind)
+UIData UIManager::CreateUIData(UIInit::UIKind uiKind)
 {
-    return CreateUIData(static_cast<int>(uiKind));
+    return CreateUIData(CAST_I(uiKind));
 }
 /// <summary>
 /// 引数のUIの画像を削除する
@@ -48,24 +48,24 @@ UIData UIManager::CreateUIData(int kindNum)
     CSVFileLoader* initDataFile = new CSVFileLoader(uiPathVec[kindNum]);
     std::vector<std::string> dataVec = initDataFile->GeFileStringData();
     //位置とか幅とか分割数を読み取る
-    data.x = STR_TO_I(dataVec[static_cast<int>(drawX)]);
-    data.y = STR_TO_I(dataVec[static_cast<int>(drawY)]);
+    data.x = STR_TO_I(dataVec[CAST_I(drawX)]);
+    data.y = STR_TO_I(dataVec[CAST_I(drawY)]);
     //横分割数
-    int divXNum = STR_TO_I(dataVec[static_cast<int>(xNum)]);
+    int divXNum = STR_TO_I(dataVec[CAST_I(xNum)]);
     //縦分割数
-    int divYNum = STR_TO_I(dataVec[static_cast<int>(yNum)]);
-    data.width = STR_TO_I(dataVec[static_cast<int>(width)]) / divXNum;
-    data.height = STR_TO_I(dataVec[static_cast<int>(height)]) / divYNum;
+    int divYNum = STR_TO_I(dataVec[CAST_I(yNum)]);
+    data.width = STR_TO_I(dataVec[CAST_I(width)]) / divXNum;
+    data.height = STR_TO_I(dataVec[CAST_I(height)]) / divYNum;
     //画像を分割読み込み
     int graphArray[1000];
-    LoadDivGraph(dataVec[static_cast<int>(graphPass)].c_str(), divXNum * divYNum, divXNum, divYNum, data.width, data.height, graphArray);
+    LoadDivGraph(dataVec[CAST_I(graphPass)].c_str(), divXNum * divYNum, divXNum, divYNum, data.width, data.height, graphArray);
     for (int i = 0; i < divXNum + divYNum - 1; i++)
     {
         data.dataHandle.push_back(graphArray[i]);
     }
     //大きさとコマ送り速度
-    data.size = STR_TO_F(dataVec[static_cast<int>(UISize)]);
-    data.frameSpeed = STR_TO_F(dataVec[static_cast<int>(frameSpeed)]);
+    data.size = STR_TO_F(dataVec[CAST_I(UISize)]);
+    data.frameSpeed = STR_TO_F(dataVec[CAST_I(frameSpeed)]);
     //初期化データを消す
     SAFE_DELETE(initDataFile);
 

@@ -25,7 +25,7 @@ const float Car::gripDecel = 0.2f;
 Car::Car(ObjectInit::InitObjKind kind)
 	:Actor(kind)
 {
-	InitSpeedParamater(kind);
+	InitSpeedParamater(AddDataObject::playerSpeed);
 	tag = ObjectTag::player;
 	ReflectsVelocity();
 	wheels = new Wheels();
@@ -142,7 +142,7 @@ void Car::UpdateAccelPower()
 /// 移動速度などの初期化
 /// </summary>
 /// <param name="kind"></param>
-void Car::InitSpeedParamater(ObjectInit::InitObjKind kind)
+void Car::InitSpeedParamater(ObjectInit::AddDataObject kind)
 {
 	//速さ関連の情報を所得
 	auto loader = new CSVFileLoader(InitActor::GetAddDataPass(kind));

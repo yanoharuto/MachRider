@@ -405,9 +405,6 @@
     <ClCompile Include="Script\Scene\Editor\EditorScene.cpp">
       <Filter>ソース ファイル\Scene\Editor</Filter>
     </ClCompile>
-    <ClCompile Include="Script\AddActor\AssetManager.cpp">
-      <Filter>ソース ファイル\AddActor</Filter>
-    </ClCompile>
     <ClCompile Include="Script\AddActor\DamageObjectGenerator.cpp">
       <Filter>ソース ファイル\AddActor</Filter>
     </ClCompile>
@@ -425,6 +422,15 @@
     </ClCompile>
     <ClCompile Include="Script\Utility\JsonFileLoader.cpp">
       <Filter>ソース ファイル\Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="Script\AssetManager.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Script\Camera\CameraManager.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Script\AddActor\DrawModelManager.cpp">
+      <Filter>ソース ファイル\AddActor</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -860,9 +866,6 @@
     <ClInclude Include="Script\Scene\Play\CollectItemObserver.h">
       <Filter>ヘッダー ファイル\Utility</Filter>
     </ClInclude>
-    <ClInclude Include="Script\AddActor\AssetManager.h">
-      <Filter>ヘッダー ファイル\AddActor</Filter>
-    </ClInclude>
     <ClInclude Include="Script\AddActor\DamageObjectGenerator.h">
       <Filter>ヘッダー ファイル\AddActor</Filter>
     </ClInclude>
@@ -886,6 +889,18 @@
     </ClInclude>
     <ClInclude Include="Script\Utility\JsonFileLoader.h">
       <Filter>ヘッダー ファイル\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Script\AddActor\AddObjectDataLoader.h">
+      <Filter>ヘッダー ファイル\AddActor</Filter>
+    </ClInclude>
+    <ClInclude Include="Script\AddActor\DrawModelManager.h">
+      <Filter>ヘッダー ファイル\AddActor</Filter>
+    </ClInclude>
+    <ClInclude Include="Script\AssetManager.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Script\Camera\CameraManager.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

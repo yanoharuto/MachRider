@@ -1,6 +1,6 @@
 #include "Camera.h"
 #include "Actor.h"
-#include "CSVFileLoader.h"
+#include "CameraManager.h"
 #include "Utility.h"
 //カメラの画角
 float Camera::lookingAngle = 0;
@@ -46,25 +46,18 @@ float Camera::GetLookingAngle() const
 void Camera::LoadData(UseCameraSceneKind type)
 {
     //カメラ情報まとめファイルを所得
-    CSVFileLoader* initFileLoader = new CSVFileLoader(initFileName);
-    auto strData = initFileLoader->GeFileStringData();
-    //まとめファイルからシーンごとの情報を所得
-    CSVFileLoader* initDataLoader = new CSVFileLoader(strData[static_cast<int>(type)]);
-    strData = initDataLoader->GeFileStringData();
-    SAFE_DELETE(initFileLoader);
-    using enum CameraParameter;
+    CameraManager* manager = new CameraManager();
+    CameraManager::CameraParamater paramater = manager->GetCameraParamator(type);
     //カメラの有効範囲
-    float nearValue = STR_TO_F(strData[static_cast<int>(setNearValue)]);
-    float farValue = STR_TO_F(strData[static_cast<int>(setFarValue)]);
+    float nearValue = paramater.nearValue;
+    float farValue = paramater.farValue;
     SetCameraNearFar(nearValue, farValue);
     //ターゲットとの距離
-    targetBetweenSize = STR_TO_F(strData[static_cast<int>(setTargetBetween)]);
+    targetBetweenSize = paramater.targetBetween;
     //高度
-    posY = STR_TO_F(strData[static_cast<int>(setYPosition)]);
+    posY = paramater.setYPos;
     //カメラの速さ
-    cameraSpeed = STR_TO_F(strData[static_cast<int>(setCameraSpeed)]);
+    cameraSpeed = paramater.speed;
     //カメラの見えている範囲
-    lookingAngle = STR_TO_F(strData[static_cast<int>(setLookingAngle)]);
-
-    SAFE_DELETE(initDataLoader);
+    lookingAngle = paramater.lookAngle;
 }

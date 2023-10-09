@@ -11,7 +11,7 @@ std::vector <std::string> SoundPlayer::initFilePassData;
 /// </summary>
 SoundPlayer::SoundPlayer()
 {
-    CSVFileLoader* initDataLoader = new CSVFileLoader(initSoundFileName);
+    CSVFileLoader* initDataLoader = new CSVFileLoader(GetInitFilePass(AssetList::sound));
     initFilePassData = initDataLoader->GeFileStringData();
     SAFE_DELETE(initDataLoader);
 }

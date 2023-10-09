@@ -14,7 +14,7 @@ std::vector<std::string> EffectManager::initDataVec;
 EffectManager::EffectManager()
 {
     effectMap.clear();
-    CSVFileLoader* initDataFile = new CSVFileLoader(initDataPassFile);
+    CSVFileLoader* initDataFile = new CSVFileLoader(GetInitFilePass(AssetList::effect));
     initDataVec = initDataFile->GeFileStringData();
     SAFE_DELETE(initDataFile);
 }

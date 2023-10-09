@@ -10,8 +10,7 @@
 std::string StageDataManager::fileAddres = "-1";
 //ステージのデータ
 std::vector<std::string> StageDataManager::dataVector;
-//全ステージのリストのパスが入ったファイルのパス
-const std::string StageDataManager::allStageFilePath = "data/stageData/stageDataList.csv";
+
 //ステージの横幅
 int StageDataManager::stageWidth;
 //ステージの縦幅
@@ -135,7 +134,7 @@ ScoreRecordWriter* StageDataManager::GetScoreRecordWriter()
 /// </summary>
 void StageDataManager::InitStageData()
 {
-    auto fileLoader = new CSVFileLoader(allStageFilePath);//全ステージのデータリストを読み取る
+    auto fileLoader = new CSVFileLoader(GetInitFilePass(AssetList::stageData));//全ステージのデータリストを読み取る
     dataVector = fileLoader->GeFileStringData();
     SAFE_DELETE(fileLoader);
     fileAddres = dataVector[0];//とりあえず先頭を渡す

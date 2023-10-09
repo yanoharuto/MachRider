@@ -67,7 +67,7 @@ void EditorCircleFlyShipDrawModel::Init()
     using enum FlyShipInit::FlyShipParamator;
 
     //FlyShip用のデータをロード
-    CSVFileLoader* addDataLoader = new CSVFileLoader(InitActor::GetAddDataPass(InitObjKind::circleLaserShip));
+    CSVFileLoader* addDataLoader = new CSVFileLoader(InitActor::GetAddDataPass(AddDataObject::circleFlyShip));
     auto addData = addDataLoader->GeFileStringData();
     uniNum = STR_TO_I(addData[CAST_I(unitNum)]);
     uniBetween = STR_TO_F(addData[CAST_I(unitBetween)]);

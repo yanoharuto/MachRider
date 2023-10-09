@@ -4,26 +4,36 @@
 #include <string>
 #include "DxLib.h"
 #include "InitObjKind.h"
+#include "AssetManager.h"
 
 namespace ObjectInit
 {
     /// <summary>
     ///初期化する要素
     /// </summary>
-    enum InitObjParamator
+    enum class InitObjParamator
     {
         //modelの相対パス
-        assetPass = 2,
+        assetPass = 0,
         //大きさ
-        modelSize = 5,
+        modelSize = 1,
         //最初のポジション
-        firstPosY = 8,
+        firstPosY = 2,
         //modelの当たり半径
-        collRadius = 11,
+        collRadius = 3,
         //跳ね返りの大きさ
-        bouncePower = 14,
-        //追加情報の置いてある場所
-        addDataPass = 17
+        bouncePower = 4
+    };
+    /// <summary>
+    /// 各オブジェクトの追加情報
+    /// </summary>
+    enum class AddDataObject
+    {
+        playerSpeed = 0,
+        circleFlyShip = 1,
+        upDownFlyShip = 2,
+        bomberShip = 3,
+        moveSaw = 4
     };
     /// <summary>
     /// ゲームキャラの初期位置とか当たり判定の大きさとか
@@ -37,41 +47,13 @@ namespace ObjectInit
         //跳ね返り力
         float setBouncePow;
     };
-    /// <summary>
-    /// 初期化するのに必要なデータのパス
-    /// </summary>
-    struct InitDataPass
-    {
-        //描画モデルのファイルのパス
-        std::string modelPass;
-        //追加情報のファイルのパス
-        std::string addData;
-        /// <summary>
-        /// 引数から抽出
-        /// </summary>
-        /// <param name="pathStr"></param>
-        void GetExtractParamator(std::vector<std::string> pathStr)
-        {
-            modelPass = pathStr[InitObjParamator::assetPass];
-            addData = pathStr[InitObjParamator::addDataPass];
-        }
-        /// <summary>
-        /// 引数から抽出
-        /// </summary>
-        /// <param name="pathStr"></param>
-        void GetExtractParamator(std::vector <const char*> pathStr)
-        {
-            modelPass = pathStr[InitObjParamator::assetPass];
-            addData = pathStr[InitObjParamator::addDataPass];
-        }
-    };
 }
-class AssetManager;
+class DrawModelManager;
 using namespace ObjectInit;
 /// <summary>
 /// actorの初期化をする
 /// </summary>
-class InitActor final
+class InitActor final:public AssetManager
 {
 public:
     /// <summary>
@@ -99,14 +81,8 @@ public:
     /// </summary>
     /// <param name="obj">追加情報が欲しいオブジェクト</param>
     /// <returns>追加情報の入ったファイルまでのパス</returns>
-    static std::string GetAddDataPass (InitObjKind obj);
+    static std::string GetAddDataPass (AddDataObject obj);
 private:
-    /// <summary>
-    /// 引数のオブジェクトの初期化に必要な色々なパスを所得
-    /// </summary>
-    /// <param name="obj">初期化したいオブジェクトの種類</param>
-    /// <returns>初期化に使うパス</returns>
-    static InitDataPass GetActorInitPassData(InitObjKind obj);
     /// <summary>
     /// 初期化したいパラメータを文字列で所得
     /// </summary>
@@ -115,14 +91,10 @@ private:
     static std::vector<std::string> GetActorParametorStrVec(InitObjKind obj);
     //initActorFileNameの先のファイルから所得したデータをまとめたVector
     static std::vector<std::string> objectInitDataPassVec;
-    //初期化するオブジェクトのパスを纏めているCSVのパス
-    static std::string initActorCSVFilePass; 
-    //初期化するオブジェクトのパスを纏めているJsonのパス
-    static std::string initActorJsonFilePass; 
     //initActorJsonFilePassのJsonSchemaのパス
     static std::string initActorSchemaPass; 
     //初期化要素のJsonSchemaのパス
     static std::string initObjParamatorSchemaPass; 
     //描画モデルハンドル所得役
-    static AssetManager* assetManager;
+    static DrawModelManager* drawModelManager;
 };

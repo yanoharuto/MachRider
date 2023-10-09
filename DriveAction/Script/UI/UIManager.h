@@ -2,6 +2,7 @@
 #include <vector>
 #include <string>
 #include <unordered_map>
+#include "AssetManager.h"
 namespace UIInit
 {
     /// <summary>
@@ -10,107 +11,107 @@ namespace UIInit
     enum class UIKind
     {
         //ゲームの目標
-        gamePurose = 2,
+        gamePurose ,
         //カウントダウン
-        countDownUI = 5,
+        countDownUI,
         //コレクトアイテムの残り数などのUI
-        collectItemFrameUI = 8,
+        collectItemFrameUI,
         //収集物のスコアの文字
-        collectScore = 11,
+        collectScore,
         //収集物のスコア
-        collectScoreIcon = 14,
+        collectScoreIcon,
         //ダメージを受けると減少するスコアの文字
-        damageScore = 17,
+        damageScore,
         //ダメージを受けると減少するスコア
-        damageScoreNum = 20,
+        damageScoreNum,
         //収集アイテムの最初の数についてのUI
-        allCollectItemNum = 23,
+        allCollectItemNum,
         //操作説明
-        manual = 26,
+        manual,
         //小数点
-        point = 29,
+        point,
         //レーダー
-        radar = 32,
+        radar,
         //タイトルロゴ
-        tilteLogo = 35,
+        tilteLogo,
         //タイマーの枠
-        timerFrame = 38,
+        timerFrame,
         //残り時間スコアの文字
-        timeScore = 41,
+        timeScore,
         //残り時間のスコア
-        timeScoreNum = 44,
+        timeScoreNum,
         //合計スコアの文字
-        totalScore = 47,
+        totalScore,
         //合計スコア
-        totalScoreNum = 50,
+        totalScoreNum,
         //収集アイテムのもうゲットした数について
-        getCollectItemNum = 53,
+        getCollectItemNum,
         //残り時間
-        timeNum = 56,
+        timeNum,
         //メニュー画面の枠
-        menuFrame = 59,
+        menuFrame,
         //プレイ続行
-        playUI = 62,
+        playUI,
         //リトライ
-        retryUI = 65,
+        retryUI,
         //メニュー画面のカーソル
-        menuCursor = 68,
+        menuCursor,
         //ゲーム終了UI
-        exitUI = 71,
+        exitUI,
         //タイトル画面でステージ選択をするときに使う
-        stageName = 74,
+        stageName,
         //タイトルスペースキー催促
-        titlePressSpaceKey = 77,
+        titlePressSpaceKey,
         //タイトル画面に表示するハイスコア
-        titleHighScore = 80,
+        titleHighScore,
         //タイトル画面に表示するハイスコア数字
-        titleHiScoreNum = 83,
+        titleHiScoreNum,
         //カウントダウン終了時
-        onGameStartCountDownEnd = 86,
+        onGameStartCountDownEnd,
         //誉め言葉
-        PraiseWord = 89,
+        PraiseWord,
         //ゲーム終了時のカウントダウン
-        onGameEndCountDownEnd = 92,
+        onGameEndCountDownEnd,
         //残りの収集アイテムの数
-        remainingCollectItemNum = 95,
+        remainingCollectItemNum,
         //残りの収集アイテムについてのフレーズ
-        remainingCollectItemPhrase = 98,
+        remainingCollectItemPhrase,
         //収集アイテムのアイコン
-        collectIcon = 101,
+        collectIcon,
         //収集アイテムの集める数
-        collectTargetNumberUI = 104,
+        collectTargetNumberUI,
         //リザルトスペースキー催促
-        resultSpaceKey = 107,
+        resultSpaceKey,
         //チャージ方法説明マニュアル
-        chargeManual = 110,
+        chargeManual,
         //ターボ説明マニュアル
-        turboManual = 113,
+        turboManual,
         //左ボタン
-        leftButton = 116,
+        leftButton,
         //右のボタン
-        rightButton = 119,
+        rightButton,
         //下ボタン
-        downButton = 122,
+        downButton,
         //ゲーム終了アナウンス
-        finishAnnounce = 125,
+        finishAnnounce,
         //タイトルに戻るボタン
-        returnTitleBottonUI = 128,
+        returnTitleBottonUI,
         //操作方法の後ろに置いておくシート
-        playManualSheat = 131,
+        playManualSheat,
         //タイトルでステージを決定するときのボタン
-        stageSelectButton = 134,
+        stageSelectButton,
         //パッドで遊ぶ場合の下ボタン
-        xDownButton = 137,
+        xDownButton,
         //そのステージで二番目にいいスコア
-        titleSecondScoreNum = 140,
+        titleSecondScoreNum,
         //そのステージで3番目にいいスコア
-        titleThirdScoreNum = 143,
+        titleThirdScoreNum,
         //ランキングの１
-        rank1 = 146,
+        rank1,
         //ランキングの２
-        rank2 = 149,
+        rank2,
         //ランキングの３
-        rank3 = 152,
+        rank3,
     };
 
     /// <summary>
@@ -119,23 +120,23 @@ namespace UIInit
     enum class InitUIData
     {
         //描画場所X
-        drawX = 1,
+        drawX ,
         //Y
-        drawY = 3,
+        drawY ,
         //画像横幅
-        width = 5,
+        width ,
         //画像縦幅
-        height = 7,
+        height,
         //横幅分割数
-        xNum = 9,
+        xNum,
         //縦分割数
-        yNum = 11,
+        yNum,
         //画像の相対パス
-        graphPass = 13,
+        graphPass,
         //大きさ
-        UISize = 15,
+        UISize,
         //分割してある場合のコマ送りスピード
-        frameSpeed = 17
+        frameSpeed
     };
     /// <summary>
     /// UIで実際に使う情報
@@ -162,7 +163,7 @@ using namespace UIInit;
 /// <summary>
 /// UIを纏めるマネージャー
 /// </summary>
-class UIManager
+class UIManager final:public AssetManager
 {
 public:
     /// <summary>
@@ -190,6 +191,5 @@ public:
      static UIData CreateUIData(int kindNum);
      //全てのUIのパス
     static std::vector<std::string> uiPathVec;
-    //uiの情報を纏めておいてあるファイル
-    const std::string initUIDataPassFile = "data/UI/InitUIPass.csv";
+
 };

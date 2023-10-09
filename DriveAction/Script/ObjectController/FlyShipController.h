@@ -32,19 +32,19 @@ namespace FlyShipInit
     enum class FlyShipParamator
     {
         //生存時間
-        aliveTime = 2,
+        aliveTime ,
 
         //移動速度
-        moveSpeed = 5,
+        moveSpeed,
 
         //何かしら発射する時間
-        coolTime = 8,
+        coolTime,
 
         //構成数
-        unitNum = 11,
+        unitNum,
 
         //攻勢ユニット同士の距離
-        unitBetween = 14
+        unitBetween
     };
 }
 class FlyShip;
@@ -72,8 +72,7 @@ protected:
     /// 初期化するために必要なデータを所得
     /// </summary>
     /// <param name="kind">初期化したいFlyShipの種類</param>
-    /// <returns>初期化データ</returns>
-    InitFlyShipParamator GetInitData(ObjectInit::InitObjKind kind);
+    void GetInitAddData(ObjectInit::AddDataObject kind);
     //初期化情報
     InitFlyShipParamator param = {};
     //レーザーや爆弾を発射するのに使う

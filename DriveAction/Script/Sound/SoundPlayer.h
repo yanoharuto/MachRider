@@ -2,8 +2,8 @@
 #include <map>
 #include <string>
 #include <vector>
-#include"DxLib.h"
-
+#include "DxLib.h"
+#include "AssetManager.h"
 namespace SoundInit
 {
     /// <summary>
@@ -12,11 +12,11 @@ namespace SoundInit
     enum class SoundParamator
     {
         //音の相対パス
-        soundPass = 2,
+        soundPass ,
         //音量
-        soundVolume = 5,
+        soundVolume,
         //音が聞こえる範囲
-        soundRadius = 8
+        soundRadius
     };
     /// <summary>
     /// 音の種類
@@ -24,37 +24,37 @@ namespace SoundInit
     enum class SoundKind
     {
         //爆撃機の飛ぶ音
-        bomberShipFlight = 2,
+        bomberShipFlight,
         //プレイヤーの動くときの音
-        playerFlight = 5,
+        playerFlight,
         //プレイヤーのダメージを受けた時の音
-        playerDamage = 8,
+        playerDamage,
         //コインをゲットしたときの音
-        coinGet = 11,
+        coinGet,
         //カウントダウン
-        countDown = 14,
+        countDown,
         //遊んでいるときのBGM
-        playBGM = 17,
+        playBGM,
         //拍手
-        clap = 20,
+        clap,
         //ゲーム開始
-        fanfare = 23,
+        fanfare,
         //タイトルのBGM
-        titleBGM = 26,
+        titleBGM,
         //スコアを表示するときに鳴る音
-        scoreStartSE = 29,
+        scoreStartSE,
         //スコアを表示し終わったときに鳴る音
-        scoreEndSE = 32,
+        scoreEndSE,
         //次のシーンに行く時の音
-        sceneNextSE = 35,
+        sceneNextSE,
         //スコア表示したときのファンファーレ
-        gameEndFanfare = 38,
+        gameEndFanfare,
         //プレイヤーがチャージしたときの音
-        playerCharge = 41, 
+        playerCharge 
     };
 }
 using namespace SoundInit;
-class SoundPlayer
+class SoundPlayer final :public AssetManager
 {
 public:
     /// <summary>
@@ -114,11 +114,8 @@ public:
     static bool IsPlaySound(SoundKind kind);
     
 private:
-    //音にをEnum型で呼び出すためのマップ
+    //modelのアドレスを貰うとモデルハンドルを返す
     static std::map<SoundKind, int> soundHandleMap;
     //初期化ファイルに入っている音の情報パスのコンテナ
     static std::vector <std::string> initFilePassData;
-    //初期化ファイルへのパス
-    std::string initSoundFileName = "data/Sound/SoundInitPass.csv";
 };
-

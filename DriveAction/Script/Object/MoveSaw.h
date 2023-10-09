@@ -22,9 +22,9 @@ private:
     enum class MoveParametor
     {
         //ˆÚ“®‘¬“x
-        moveSpeed = 1,
+        moveSpeed ,
         //ˆÚ“®ŽžŠÔ
-        moveTime=3
+        moveTime
     };
     //ˆÚ“®ŽžŠÔ
     ReusableTimer* moveLarpTimer;   

@@ -19,12 +19,14 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Script\AddActor\AssetManager.cpp" />
     <ClCompile Include="Script\AddActor\DamageObjectGenerator.cpp" />
+    <ClCompile Include="Script\AddActor\DrawModelManager.cpp" />
     <ClCompile Include="Script\AddActor\EnemyGenerator.cpp" />
     <ClCompile Include="Script\AddActor\FirstPositionGetter.cpp" />
     <ClCompile Include="Script\AddActor\InitActor.cpp" />
+    <ClCompile Include="Script\AssetManager.cpp" />
     <ClCompile Include="Script\Camera\Camera.cpp" />
+    <ClCompile Include="Script\Camera\CameraManager.cpp" />
     <ClCompile Include="Script\Camera\EditorCamera.cpp" />
     <ClCompile Include="Script\Camera\GameCamera.cpp" />
     <ClCompile Include="Script\Camera\TitleCamera.cpp" />
@@ -129,13 +131,16 @@
   <ItemGroup>
     <ClInclude Include="EditorEffect.h" />
     <ClInclude Include="JsonFileLoader.h" />
-    <ClInclude Include="Script\AddActor\AssetManager.h" />
+    <ClInclude Include="Script\AddActor\AddObjectDataLoader.h" />
     <ClInclude Include="Script\AddActor\DamageObjectGenerator.h" />
+    <ClInclude Include="Script\AddActor\DrawModelManager.h" />
     <ClInclude Include="Script\AddActor\EnemyGenerator.h" />
     <ClInclude Include="Script\AddActor\FirstPositionGetter.h" />
     <ClInclude Include="Script\AddActor\InitActor.h" />
     <ClInclude Include="Script\AddActor\InitObjKind.h" />
+    <ClInclude Include="Script\AssetManager.h" />
     <ClInclude Include="Script\Camera\Camera.h" />
+    <ClInclude Include="Script\Camera\CameraManager.h" />
     <ClInclude Include="Script\Camera\EditorCamera.h" />
     <ClInclude Include="Script\Camera\GameCamera.h" />
     <ClInclude Include="Script\Camera\TitleCamera.h" />
@@ -338,11 +343,11 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>Script/Scene;Script/Sound;Script/Scene/Play;Script/UI;Script/Scene/Title;Script/Observer;Script/AddActor;Script/Camera;Script/ObjectController;Script/Scene/Editor;Script/DrawModel;Script/ConflictSystem;Script/Utility;Script/Effect;Script/Object;Script/rapidjson;$(IncludePath)</IncludePath>
+    <IncludePath>Script;Script/Scene;Script/Sound;Script/Scene/Play;Script/UI;Script/Scene/Title;Script/Observer;Script/AddActor;Script/Camera;Script/ObjectController;Script/Scene/Editor;Script/DrawModel;Script/ConflictSystem;Script/Utility;Script/Effect;Script/Object;Script/rapidjson;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>Script/Scene;Script/Sound;Script/Scene/Play;Script/UI;Script/Scene/Title;Script/Observer;Script/AddActor;Script/Camera;Script/ObjectController;Script/Scene/Editor;Script/DrawModel;Script/ConflictSystem;Script/Utility;Script/Effect;Script/Object;Script/rapidjson;$(IncludePath)</IncludePath>
+    <IncludePath>Script;Script/Scene;Script/Sound;Script/Scene/Play;Script/UI;Script/Scene/Title;Script/Observer;Script/AddActor;Script/Camera;Script/ObjectController;Script/Scene/Editor;Script/DrawModel;Script/ConflictSystem;Script/Utility;Script/Effect;Script/Object;Script/rapidjson;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>

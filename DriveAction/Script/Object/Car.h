@@ -1,6 +1,7 @@
 #pragma once
 #include "Actor.h"
 #include "DxLib.h"
+#include "InitActor.h"
 struct CollisionResultInfo;
 struct HitCheckInfo;
 class Timer;
@@ -43,7 +44,7 @@ protected:
 	/// 移動速度などの初期化
 	/// </summary>
 	/// <param name="kind">この車の種類</param>
-	void InitSpeedParamater(ObjectInit::InitObjKind kind);
+	void InitSpeedParamater(ObjectInit::AddDataObject kind);
 	//スピードのパラメータ
 	struct SpeedParamator
 	{
@@ -68,21 +69,21 @@ protected:
 	enum class CarInitKind
 	{
 		//加速量
-		acceleSpeed = 2,
+		acceleSpeed = 0,
 		//最低速度
-		lowestSpeed = 5,
+		lowestSpeed = 1,
 		//最高速度
-		maxSpeed = 8,
+		maxSpeed = 2,
 		//急加速速度
-		turboSpeed = 11,
+		turboSpeed = 3,
 		//急加速時間
-		turboTime = 14,
+		turboTime = 4,
 		//曲がる力
-		gripPower = 17,
+		gripPower = 5,
 		//止まる力
-		breakePower = 20,
+		breakePower = 6,
 		//急加速に必要な時間
-		turboChargeTime = 23
+		turboChargeTime 
 	};
 	//衝突して吹っ飛ぶ時間を計る
 	Timer* bounceTimer = nullptr;

@@ -5,33 +5,30 @@
 #include "CSVFileLoader.h"
 #include "Utility.h"
 #include "InitObjKind.h"
-#include "AssetManager.h"
+#include "DrawModelManager.h"
 #include "JsonFileLoader.h"
 //initActorFileNameの先のファイルから所得したデータをまとめたVector
 std::vector<std::string> InitActor::objectInitDataPassVec;
-//初期化するパスを纏めているファイルの名前
-std::string InitActor::initActorCSVFilePass = "data/model/InitObjPass.csv";
-//初期化するオブジェクトのパスを纏めているJsonのパス
-std::string InitActor::initActorJsonFilePass = "data/model/InitObjPass.json";
+
 //initActorJsonFilePassのJsonSchemaのパス
 std::string InitActor::initActorSchemaPass = "data/model/InitObjPassSchema.json";
 //初期化要素のJsonSchemaのパス
 std::string InitActor::initObjParamatorSchemaPass = "data/model/InitObjParamatorSchema.json";
 //描画モデルの管理担当
-AssetManager* InitActor::assetManager;
+DrawModelManager* InitActor::drawModelManager;
 /// <summary>
 /// 全てのactorの初期化をするためのパスが入ったファイルを読み込む
 /// </summary>
 InitActor::InitActor()
 {
-    CSVFileLoader* initDataLoader = new CSVFileLoader(initActorCSVFilePass);
+    CSVFileLoader* initDataLoader = new CSVFileLoader(GetInitFilePass(AssetList::object));
     if (initDataLoader->IsOpenFile())//ファイルが見つかったかどうか
     {
         objectInitDataPassVec = initDataLoader->GeFileStringData();
     }
     else
     {
-        JsonFileLoader* initJsonFileLoader= new JsonFileLoader(initActorJsonFilePass,initActorSchemaPass);
+        JsonFileLoader* initJsonFileLoader= new JsonFileLoader(GetInitFilePass(AssetList::object),initActorSchemaPass);
         if (initJsonFileLoader->IsAccept())//スキーマと読み込むファイルのバリデーションチェック
         {
             objectInitDataPassVec.push_back(initJsonFileLoader->GetLoadString("player"));
@@ -49,15 +46,15 @@ InitActor::InitActor()
         }
         SAFE_DELETE(initJsonFileLoader);
     }
-    //SAFE_DELETE(initDataLoader);
-    assetManager = new AssetManager();
+    SAFE_DELETE(initDataLoader);
+    drawModelManager = new DrawModelManager();
 }
 /// <summary>
 /// 描画モデル管理担当の解放
 /// </summary>
 InitActor::~InitActor()
 {
-    SAFE_DELETE(assetManager);
+    SAFE_DELETE(drawModelManager);
 }
 /// <summary>
 /// 初期化に必要な情報を所得
@@ -72,9 +69,9 @@ ActorParameter InitActor::GetActorParamator(InitObjKind kind)
     char* end;
 
     //各情報をString型からfloat型に置き換え
-    initParam.firstPosY = strtof(initData[firstPosY].c_str(), &end);
-    initParam.setBouncePow = strtof(initData[bouncePower].c_str(), &end);
-    initParam.setRadius = strtof(initData[collRadius].c_str(), &end);
+    initParam.firstPosY = strtof(initData[CAST_I(InitObjParamator::firstPosY)].c_str(), &end);
+    initParam.setBouncePow = strtof(initData[CAST_I(InitObjParamator::bouncePower)].c_str(), &end);
+    initParam.setRadius = strtof(initData[CAST_I(InitObjParamator::collRadius)].c_str(), &end);
     return initParam;
 }
 /// <summary>
@@ -84,11 +81,12 @@ ActorParameter InitActor::GetActorParamator(InitObjKind kind)
 /// <returns>描画モデルハンドル</returns>
 int InitActor::GetModelHandle(InitObjKind kind)
 {
+    auto initData = GetActorParametorStrVec(kind);
     //描画モデル
-    int modelHandle = assetManager->Get3DModelAssetHandle(GetActorInitPassData(kind).modelPass);
+    int modelHandle = drawModelManager->Get3DModelAssetHandle(initData[CAST_I(InitObjParamator::assetPass)]);
     char* end;
     //modelの大きさを変更
-    float modelScale = strtof(GetActorParametorStrVec(kind)[InitObjParamator::modelSize].c_str(), &end);
+    float modelScale = strtof(GetActorParametorStrVec(kind)[CAST_I(InitObjParamator::modelSize)].c_str(), &end);
     MV1SetScale(modelHandle, VGet(modelScale, modelScale, modelScale));
     return modelHandle;
 }
@@ -97,23 +95,13 @@ int InitActor::GetModelHandle(InitObjKind kind)
 /// </summary>
 /// <param name="obj">追加情報が欲しいオブジェクト</param>
 /// <returns>追加情報の入ったファイルまでのパス</returns>
-std::string InitActor::GetAddDataPass(InitObjKind kind)
+std::string InitActor::GetAddDataPass(AddDataObject kind)
 {
     //各オブジェクト毎に必要な追加データ
-    auto dataPass = GetActorInitPassData(kind);
-    return dataPass.addData;
-}
-/// <summary>
-/// 引数のオブジェクトの初期化に必要な色々なパスを所得
-/// </summary>
-/// <param name="obj">初期化したいオブジェクトの種類</param>
-/// <returns>初期化に使うパス</returns>
-InitDataPass InitActor::GetActorInitPassData(InitObjKind obj)
-{
-    auto initData = GetActorParametorStrVec(obj);
-    InitDataPass passData = {};
-    passData.GetExtractParamator(initData);
-    return passData;
+    auto dataPass = new CSVFileLoader(GetInitFilePass(AssetList::objectAddData));
+    auto loadPass = dataPass->GeFileStringData();
+    SAFE_DELETE(dataPass);
+    return loadPass[CAST_I(kind)];
 }
 /// <summary>
 /// 初期化したいパラメータを文字列で所得

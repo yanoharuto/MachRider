@@ -17,7 +17,7 @@ UIData MiniMap::miniMapUIData;
 MiniMap::MiniMap(std::weak_ptr<ObjectObserver> player)
 {
     //UI読み込み
-    miniMapUIData = UIManager::CreateUIData(UIKind::radar);
+    miniMapUIData = UIManager::CreateUIData(UIInit::UIKind::radar);
     //ミニマップの縦幅
     int mapGraphLength;
     GetGraphSize(miniMapUIData.dataHandle[0], &mapGraphWidth, &mapGraphLength);

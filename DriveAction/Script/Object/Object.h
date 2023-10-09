@@ -8,6 +8,7 @@ public:
     /// <summary>
     /// オブジェクトの種類
     /// </summary>
+    
     enum class ObjectTag
     {
         //プレイヤー

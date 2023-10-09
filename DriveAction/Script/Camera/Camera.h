@@ -5,41 +5,10 @@
 #include <memory>
 #include "DxLib.h"
 #include "Camera.h"
+#include "CameraManager.h"
 class ObjectObserver;
 class Actor;
-namespace InitCamera
-{
-    /// <summary>
-    /// カメラに必要なパラメータ
-    /// </summary>
-    enum class CameraParameter
-    {
-        //描画範囲の開始距離
-        setNearValue = 2,
-        //描画範囲の最終距離
-        setFarValue = 5,
-        //オブジェクトの見える範囲角
-        setLookingAngle = 8,
-        //描画対象との距離
-        setTargetBetween = 11,
-        //カメラのY距離
-        setYPosition = 14,
-        //カメラの移動速度
-        setCameraSpeed = 17,
-    };
-    /// <summary>
-    /// カメラが使われるシーンの種類
-    /// </summary>
-    enum class UseCameraSceneKind
-    {
-        //タイトルシーンのカメラ
-        title = 2,
-        //遊んでる時のカメラ
-        game = 5,
-        //リザルト画面でのカメラ
-        editor = 8
-    };
-}
+
 /// <summary>
 /// カメラ
 /// </summary>
@@ -74,8 +43,6 @@ protected:
     void LoadData(InitCamera::UseCameraSceneKind type);
     //見たいものの位置等を教えてくれるやつ
     std::weak_ptr<ObjectObserver> targetObserver;
-    //初期化に必要なパラメーターへのパス
-    std::string initFileName= "data/Camera/CameraInitPass.csv";
     //カメラの位置
     VECTOR position;
     //カメラの方向

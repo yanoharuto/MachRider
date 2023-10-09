@@ -1,29 +1,25 @@
 #pragma once
-#include <string>
-#include <map>
-
+#include "AssetManager.h"
 /// <summary>
-/// モデルハンドル供給役
+/// 描画モデルの保存
 /// </summary>
-class AssetManager final
+class DrawModelManager final:AssetManager
 {
 public:
-    /// <summary>
-    /// 描画モデルハンドル供給準備
-    /// </summary>
-    AssetManager();
+    //複製準備
+    DrawModelManager();
     /// <summary>
     /// 各モデルの情報をデリート
     /// </summary>
-    ~AssetManager();
+    ~DrawModelManager()override;
     /// <summary>
     /// modelをロードして渡す
     /// </summary>
     /// <param name="assetPass"></param>
     /// <returns>すでにロードしてたら複製</returns>
     int Get3DModelAssetHandle(std::string assetPass);
-private :
-
-    //modelのアドレスを貰うとモデルハンドルを返す
-    static std::map<std::string, int> assetMap;
+private:
+    
+    /// 描画モデルハンドル
+    static std::unordered_map <std::string, int> modelMap;
 };

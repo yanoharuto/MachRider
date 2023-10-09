@@ -1,6 +1,5 @@
 ﻿#pragma once
-#include <string>
-#include <unordered_map>
+#include "AssetManager.h"
 namespace EffectInit
 {
     /// <summary>
@@ -9,52 +8,52 @@ namespace EffectInit
     enum class EffectKind
     {
         //車がぶつかった時のエフェクト
-        carConflict = 2,
+        carConflict ,
         //車が風を切っているときのエフェクト
-        carWind = 5,
+        carWind ,
         //車が加速したときのエフェクト
-        carTurbo = 8,
+        carTurbo,
         //車がダメージを受けた時のエフェクト
-        carDamage = 11,
+        carDamage,
         //回転半径が小さいレーザー
-        littleRadiusLaserEffect = 14,
+        littleRadiusLaserEffect ,
         //回転半径が大きいレーザー
-        laser = 17,
+        laser ,
         //レーザーの跡
-        laserTrack = 20,
+        laserTrack ,
         //コインをゲットしたときのエフェクト
-        getCollect = 23,
+        getCollect,
         //爆弾の爆発
-        bombExplosion = 26,
+        bombExplosion,
         //コインの出すオーラ
-        collectAura = 29,
+        collectAura,
         //収集アイテムの方角を指すエフェクト
-        compass = 32,
+        compass,
         //車の後ろから出すエフェクト
-        burner = 35,
+        burner,
         //車が速くなる前に出すエフェクト
-        turboCourse = 38,
+        turboCourse,
         //勝利後の紙吹雪
-        confetti = 41,
+        confetti,
         //ターボ前段階のバーナーエフェクト
-        chargeBurner = 44, 
+        chargeBurner, 
         //高速移動中のバーナー
-        turboBurner = 47
+        turboBurner
     };
     /// <summary>
     /// エフェクトの初期化に必要なもの
     /// </summary>
     enum class EffectInitData
     {
-        effectPass = 2,//エフェクトのパス
-        effectSize = 5//エフェクトの大きさ
+        effectPass,//エフェクトのパス
+        effectSize//エフェクトの大きさ
     };
 }
 using namespace EffectInit;
 /// <summary>
 /// エフェクトの保管庫
 /// </summary>
-class EffectManager
+class EffectManager final:public AssetManager
 {
 public:
     /// <summary>
@@ -87,6 +86,4 @@ private:
     static std::unordered_map <EffectKind, int> effectMap;
     //エフェクトのパスが入る文字列
     static std::vector<std::string> initDataVec;
-    //各エフェクトのパスが入っているファイル
-    const std::string initDataPassFile = "data/effect/initEffectPass.csv";
 };

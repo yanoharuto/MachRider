@@ -3,7 +3,6 @@
 #include "ConflictExamineResultInfo.h"
 #include "HitCheckExamineObjectInfo.h"
 
-
 /// <summary>
 /// “®‚­‚â‚Â
 /// </summary>

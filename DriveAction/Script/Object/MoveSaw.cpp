@@ -18,7 +18,7 @@ MoveSaw::MoveSaw(PlacementData editData)
     :Saw(InitObjKind::moveSaw,editData)
 {   
     //追加情報から移動速度などを所得
-    auto addDataLoader = new CSVFileLoader(InitActor::GetAddDataPass(InitObjKind::moveSaw));
+    auto addDataLoader = new CSVFileLoader(InitActor::GetAddDataPass(AddDataObject::moveSaw));
     auto addStrDataVec = addDataLoader->GeFileStringData();
     using enum MoveParametor;
     //タイマーが動いている間だけ動く

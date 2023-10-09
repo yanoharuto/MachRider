@@ -8,7 +8,23 @@
 FlyShipController::FlyShipController(ObjectInit::InitObjKind kind, std::shared_ptr<DamageObjectGenerator> damageObjGenerator)
     :AddableObjectController(kind)
 {
-    param = GetInitData(kind);
+    param.actorParam = InitActor::GetActorParamator(kind);
+    ObjectInit::AddDataObject addKind = AddDataObject::circleFlyShip;
+    switch (kind)//欲しい追加データの種類
+    {
+    case InitObjKind::upDownLaserShip:
+        addKind = AddDataObject::upDownFlyShip;
+        break;
+    case InitObjKind::bomberShip:
+        addKind = AddDataObject::bomberShip;
+        break;
+    case InitObjKind::circleLaserShip:
+        addKind = AddDataObject::circleFlyShip;
+        break;
+    default:
+        break;
+    }
+    GetInitAddData(addKind);//追加データ所得
     damageObjectGenerator = damageObjGenerator;
 }
 /// <summary>
@@ -24,11 +40,8 @@ FlyShipController::~FlyShipController()
 /// </summary>
 /// <param name="kind"></param>
 /// <returns></returns>
-InitFlyShipParamator FlyShipController::GetInitData(ObjectInit::InitObjKind kind)
+void FlyShipController::GetInitAddData(ObjectInit::AddDataObject kind)
 {
-    //modelの当たり判定とか取ってくる
-    InitFlyShipParamator param = {};
-    param.actorParam = InitActor::GetActorParamator(kind);
     //FlyShip用のデータをロード
     CSVFileLoader* addDataLoader = new CSVFileLoader(InitActor::GetAddDataPass(kind));
     auto addData = addDataLoader->GeFileStringData();
@@ -43,5 +56,4 @@ InitFlyShipParamator FlyShipController::GetInitData(ObjectInit::InitObjKind kind
     param.unitNum = STR_TO_I(addData[CAST_I(unitNum)]);
     //個体間距離
     param.unitBetween = STR_TO_F(addData[CAST_I(unitBetween)]);
-    return param;
 }

@@ -6,6 +6,7 @@
 #include <iostream>
 #include "DxLib.h"
 #include "Object.h"
+#include "AssetManager.h"
 namespace InitStage
 {
     /// <summary>
@@ -14,19 +15,19 @@ namespace InitStage
     enum StageData
     {
         //横幅
-        width = 1,
+        width ,
         //縦幅
-        length = 3,
+        length,
         //障害物の位置のファイルパス
-        enemyFilePass = 5,
+        enemyFilePass,
         //収集アイテムと敵の位置のファイルパス
-        collectFilePass = 7,
+        collectFilePass,
         //プレイヤーの初期位置のファイルパス
-        playerPositionFilePass = 9,
+        playerPositionFilePass,
         //制限時間
-        gameTime = 11,
+        gameTime,
         //ステージのスコア
-        stageScoreFilePass = 13
+        stageScoreFilePass
     };
     /// <summary>
     /// スコアの線引き
@@ -73,7 +74,7 @@ class ScoreRecordWriter;
 /// <summary>
 /// 遊ぶステージのデータを渡す
 /// </summary>
-class StageDataManager
+class StageDataManager :public AssetManager
 {
 public:
     /// <summary>
@@ -127,8 +128,6 @@ private:
     /// 初期化
     /// </summary>
     static void InitStageData();
-    //全ステージのリストのパスが入ったファイルのパス
-    static const std::string allStageFilePath;
     //ステージのデータ
     static std::vector<std::string> dataVector;
     //各ステージのデータのパス
