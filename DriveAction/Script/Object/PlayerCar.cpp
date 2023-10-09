@@ -322,7 +322,7 @@ float PlayerCar::GetTurboPower()
 	//下方向に入力するとターボ準備完了
 	if (turboInput == Hold && ! isTurbo)
 	{
-		turboChargeTime += DELTATIME;
+		turboChargeTime += Utility::DELTATIME;
 		//初めてターボ準備中
 		if (!isTurboReserve)
 		{

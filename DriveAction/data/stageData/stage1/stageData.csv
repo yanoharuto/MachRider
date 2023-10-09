@@ -1,7 +1,0 @@
-﻿    width,6000
-length,6000
-enemyFilePass,data/stageData/stage1/enemyData.csv
-collectFilePass,data/stageData/stage1/collectData.csv
-playerPositionFilePass,data/stageData/stage1/playerData.csv
-time,75
-scoreRanking,data/stageData/stage1/stageScore.csv

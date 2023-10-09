@@ -12,11 +12,11 @@ std::vector<PlacementData> FirstPositionGetter::GetPlaceData(Object::ObjectTag t
     return CSVConvertFirstData(StageDataManager::GetPlaceStrData(tag));
 }
 /// <summary>
-/// Editor用　初期位置情報を渡す
+/// 引数のファイルから読み取って初期位置を渡す
 /// </summary>
 /// <param name="fileName">配置情報ファイルの名前</param>
 /// <param name="kind">配置したいオブジェクトの種類</param>
-/// <returns>配置情報</returns>
+/// <returns>配置情報のコンテナ</returns>
 std::vector<PlacementData> FirstPositionGetter::GetPlaceData(std::string fileName, ObjectInit::InitObjKind kind)
 {
     //初期化文字列をファイルから所得し
@@ -26,7 +26,7 @@ std::vector<PlacementData> FirstPositionGetter::GetPlaceData(std::string fileNam
     
     //同じ種類のオブジェクトだけ選定して返り値にする
     std::vector<PlacementData> returnData = {};
-    for (int i = 0; i < placeData.size(); i++)
+    for (int i = 0; i < CONTAINER_GET_SIZE(placeData); i++)
     {
         if (placeData[i].objKind == static_cast<int>(kind))
         {

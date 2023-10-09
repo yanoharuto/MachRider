@@ -21,7 +21,7 @@ void Clock::Update()
     // １７ミリ秒(約秒間６０フレームだった時の１フレームあたりの経過時間)
    double temp =  static_cast<double>(GetNowHiPerformanceCount()) - timeD;
    // 経過するまでここで待つ
-    while (temp < DELTATIME)
+    while (temp < Utility::DELTATIME)
     {
         temp =  static_cast<double>(GetNowHiPerformanceCount()) - timeD;
     }

@@ -135,7 +135,7 @@ void Menu::Draw() const
     {
         SetDrawBright(backScreenBright, backScreenBright, backScreenBright);
         DrawGraph(0, 0, backScreen, false);
-        SetDrawBright(MAX1BYTEVALUE, MAX1BYTEVALUE, MAX1BYTEVALUE);
+        SetDrawBright(Utility::MAX1BYTEVALUE, Utility::MAX1BYTEVALUE, Utility::MAX1BYTEVALUE);
         //ŠeUI‚ğ•`‰æ  ‘I‘ğ’†‚È‚ç“ñ–‡–Ú‚Ìó‘Ô‚É‚·‚é
         UIDrawer::DrawRotaUI(cursorUIData);
         DrawUI(MenuOptions::continueGame);

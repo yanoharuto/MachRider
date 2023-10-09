@@ -67,7 +67,7 @@ void TitleObject::Update()
         {
             fadeValue += fadeSpeed;
 
-            if (fadeValue > MAX1BYTEVALUE)//ŒÀŠE‚Ü‚Å—ˆ‚½‚çŽŸ‚ÍŒ¸‚ç‚µ‚Ä‚¢‚­
+            if (fadeValue > Utility::MAX1BYTEVALUE)//ŒÀŠE‚Ü‚Å—ˆ‚½‚çŽŸ‚ÍŒ¸‚ç‚µ‚Ä‚¢‚­
             {
                 isAValueIncrement = false;
             }
@@ -102,8 +102,8 @@ void TitleObject::Draw() const
     if (initTimer->IsOverLimitTime())
     {
         SetDrawBlendMode(DX_BLENDMODE_ALPHA, static_cast<int> (fadeValue));//ƒ¿’l‚ð‚¢‚¶‚é
-        int colorValue = MAX1BYTEVALUE;
-        DrawBox(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, GetColor(colorValue, colorValue, colorValue), true);
+        int colorValue = Utility::MAX1BYTEVALUE;
+        DrawBox(0, 0, Utility::SCREEN_WIDTH, Utility::SCREEN_HEIGHT, GetColor(colorValue, colorValue, colorValue), true);
         SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);//Œ³‚É–ß‚·
     }
 }

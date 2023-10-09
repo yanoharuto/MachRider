@@ -59,7 +59,7 @@ PostGameEndStagingProcess::PostGameEndStagingProcess(std::weak_ptr<PlayerObserve
     clearTimeUI = new NumUI(timeScoreNum);
     //ゲーム終了アナウンス
     finishAnnounceUIData = UIManager::CreateUIData(finishAnnounce);
-    finishAnnounceUIData.x = SCREEN_WIDTH;
+    finishAnnounceUIData.x = Utility::SCREEN_WIDTH;
     larpMoveAnnounceTimer = new Timer(finishAnounceTime);
     //花吹雪
     EffectManager::LoadEffect(EffectKind::confetti);
@@ -125,7 +125,7 @@ void PostGameEndStagingProcess::Draw()const
     //ゲーム終了時の画面を暗く表示
     SetDrawBright(backScreenBright, backScreenBright, backScreenBright);
     DrawGraph(0, 0, gameEndScreen, false);
-    SetDrawBright(MAX1BYTEVALUE, MAX1BYTEVALUE, MAX1BYTEVALUE);
+    SetDrawBright(Utility::MAX1BYTEVALUE, Utility::MAX1BYTEVALUE, Utility::MAX1BYTEVALUE);
 
     //終了アナウンス
     if (!isEndFinishAnnounce) 
@@ -218,7 +218,7 @@ void PostGameEndStagingProcess::ConvertCollectScotre()
             isEndConvertScore = true;
             ////花吹雪エフェクト開始
             confettiEffect = EffectManager::GetPlayEffect2D(EffectKind::confetti);
-            SetPosPlayingEffekseer2DEffect(confettiEffect, SCREEN_WIDTH / 2, SCREEN_HEIGHT, 5);
+            SetPosPlayingEffekseer2DEffect(confettiEffect, Utility::SCREEN_WIDTH / 2, Utility::SCREEN_HEIGHT, 5);
             //ファンファーレ効果音
             SoundPlayer::Play2DSE(gameEndFanfare);
         }
@@ -256,8 +256,8 @@ void PostGameEndStagingProcess::EndAnnounceProcess()
         float larpTime = static_cast<float>(larpMoveAnnounceTimer->GetElaspedTime() / finishAnounceTime);
         //総数移動距離
         float graphWidth = finishAnnounceUIData.width / finishAnnounceUIData.dataHandle.size() * finishAnnounceUIData.size;
-        float moveBetween = (SCREEN_WIDTH + graphWidth) * UIDrawer::GetScreenRaito();
-        finishAnnounceUIData.x = static_cast<int>(SCREEN_WIDTH * UIDrawer::GetScreenRaito() - larpTime * (moveBetween));
+        float moveBetween = (Utility::SCREEN_WIDTH + graphWidth) * UIDrawer::GetScreenRaito();
+        finishAnnounceUIData.x = static_cast<int>(Utility::SCREEN_WIDTH * UIDrawer::GetScreenRaito() - larpTime * (moveBetween));
     }
 }
 /// <summary>

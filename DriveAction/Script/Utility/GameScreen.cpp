@@ -31,6 +31,6 @@ void GameScreen::ScreenUpdate()
     //¡•Û‘¶‚µ‚Ä‚¢‚é‰æ–Ê‚ğíœ
     DeleteGraph(screen);
     //¡‚Ì‰æ–Ê‚ğ•Û‘¶
-    screen = MakeGraph(SCREEN_WIDTH, SCREEN_HEIGHT);
-    GetDrawScreenGraph(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, screen);
+    screen = MakeGraph(Utility::SCREEN_WIDTH, Utility::SCREEN_HEIGHT);
+    GetDrawScreenGraph(0, 0, Utility::SCREEN_WIDTH, Utility::SCREEN_HEIGHT, screen);
 }

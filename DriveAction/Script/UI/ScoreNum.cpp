@@ -49,5 +49,5 @@ void ScoreNum::Draw(int num)const
     //ÉXÉRÉAÇÃï`âÊ
     SetDrawBright(static_cast<int>(numColor.x), static_cast<int>(numColor.y), static_cast<int>(numColor.z));
     NumUI::Draw(data, num);
-    SetDrawBright(MAX1BYTEVALUE, MAX1BYTEVALUE, MAX1BYTEVALUE);
+    SetDrawBright(Utility::MAX1BYTEVALUE, Utility::MAX1BYTEVALUE, Utility::MAX1BYTEVALUE);
 }

@@ -27,7 +27,7 @@ PrePlayGameProcess::PrePlayGameProcess(std::weak_ptr<CollectItemObserver> collec
     playManual = new PlayManual();
     //フェードインフェードアウト用のタイマー
     frameByFrameTimer = new ReusableTimer(gamePuroseUIData.frameSpeed);
-    fadeValue = MAX1BYTEVALUE;
+    fadeValue = Utility::MAX1BYTEVALUE;
     //アイテムの数を保存
     remainingCollectNum = collectObserver.lock()->GetTotalItemNum();
 }
@@ -79,9 +79,9 @@ void PrePlayGameProcess::Draw() const
     if (fadeValue > 0)//フェードアウト中なら操作説明と目標を伝える
     {
         //ゲームの目的が見えにくいのでいったん後ろを白で埋める
-        int colorValue = MAX1BYTEVALUE;
+        int colorValue = Utility::MAX1BYTEVALUE;
         SetDrawBlendMode(DX_BLENDMODE_ALPHA, fadeValue);//α値をいじる
-        DrawBox(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, GetColor(colorValue, colorValue, colorValue), true);
+        DrawBox(0, 0, Utility::SCREEN_WIDTH, Utility::SCREEN_HEIGHT, GetColor(colorValue, colorValue, colorValue), true);
         SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);//元に戻す
         //目標を説明
         UIDrawer::DrawRotaUI(gamePuroseUIData);

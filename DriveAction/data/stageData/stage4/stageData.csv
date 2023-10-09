@@ -1,7 +1,0 @@
-﻿    width,6000
-length,6000
-    rockFilePass,data/stageData/stage4/enemyData.csv
-    challengesListFilePass,data/stageData/stage4/collectData.csv
-    playerPositionFilePass,data/stageData/stage4/playerData.csv
-time,45
-scoreRanking,data/stageData/stage4/stageScore.csv

@@ -28,7 +28,7 @@ int Effect_Initialize() {
     // Effekseerを使用する場合、2DゲームでもZバッファを使用する。
     SetWriteZBuffer3D(TRUE);
 
-    Effekseer_Set2DSetting(SCREEN_WIDTH,SCREEN_HEIGHT);
+    Effekseer_Set2DSetting(Utility::SCREEN_WIDTH,Utility::SCREEN_HEIGHT);
     return 0;
 }
 /// <summary>

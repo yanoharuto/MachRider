@@ -9,7 +9,7 @@
 /// </summary>
 EditManual::EditManual()
 {
-    screenHeight = static_cast<int>(SCREEN_HEIGHT * UIDrawer::GetScreenRaito() - fontSize);
+    screenHeight = static_cast<int>(Utility::SCREEN_HEIGHT * UIDrawer::GetScreenRaito() - fontSize);
     SetFontSize(fontSize);
 }
 /// <summary>

@@ -28,7 +28,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance, 
 	SetUseDirect3DVersion(DX_DIRECT3D_11);
 
 	// 画面の解像度と色ビット深度を設定
-	SetGraphMode(SCREEN_WIDTH, SCREEN_HEIGHT, 32);
+	SetGraphMode(Utility::SCREEN_WIDTH, Utility::SCREEN_HEIGHT, 32);
 	SetZBufferBitDepth(24);
 	ChangeWindowMode(true);
 	// １メートルに相当する値を設定する

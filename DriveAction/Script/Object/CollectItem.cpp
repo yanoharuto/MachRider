@@ -101,8 +101,8 @@ void Coin::OnConflict(const CollisionResultInfo conflictInfo)
     {
        //エフェクトと音を出す
        coinGetEffect = EffectManager::GetPlayEffect2D(EffectKind::getCollect);
-       float effectX = SCREEN_WIDTH / 2;
-       float effectY = SCREEN_HEIGHT / 2;
+       float effectX = Utility::SCREEN_WIDTH / 2;
+       float effectY = Utility::SCREEN_HEIGHT / 2;
        SetPosPlayingEffekseer2DEffect(coinGetEffect,effectX, effectY, 5);
        SoundPlayer::Play3DSE(SoundKind::coinGet);
        isCarConflict = true;

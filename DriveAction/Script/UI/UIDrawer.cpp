@@ -3,9 +3,9 @@
 #include "Utility.h"
 
 //â°ïù
- int UIDrawer::screenWidth = SCREEN_WIDTH;
+ int UIDrawer::screenWidth = Utility::SCREEN_WIDTH;
 //ècïù
- int UIDrawer::screenHeight = SCREEN_HEIGHT;
+ int UIDrawer::screenHeight = Utility::SCREEN_HEIGHT;
 //â°ïùî‰ó¶
  float UIDrawer:: widthRaito = 0.0f;
 //ècïùî‰ó¶
@@ -47,9 +47,9 @@ UIDrawer::UIDrawer()
     //âÊñ ÉTÉCÉY
     GetScreenState(&screenWidth, &screenHeight, &color);
     //â°ïùî‰ó¶
-    widthRaito = static_cast<float>(screenWidth / SCREEN_WIDTH);
+    widthRaito = static_cast<float>(screenWidth / Utility::SCREEN_WIDTH);
     //ècïùî‰ó¶
-    heightRaito = static_cast<float>(screenHeight / SCREEN_HEIGHT);
+    heightRaito = static_cast<float>(screenHeight / Utility::SCREEN_HEIGHT);
     //HDÇÃëÂÇ´Ç≥Ç∆î‰ärÇµÇΩëÂÇ´Ç≥
-    screenSizeRaito = static_cast<float>((screenWidth + screenHeight) / (SCREEN_WIDTH + SCREEN_HEIGHT));
+    screenSizeRaito = static_cast<float>((screenWidth + screenHeight) / (Utility::SCREEN_WIDTH + Utility::SCREEN_HEIGHT));
 }
