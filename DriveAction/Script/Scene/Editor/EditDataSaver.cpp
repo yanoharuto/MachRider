@@ -1,84 +1,127 @@
-#include <fstream>
-#include <rapidjson.h>
-#include <document.h>
-#include <ostreamwrapper.h>
+#include <iostream>
+#include <cassert>
+#include <vector>
 #include "EditDataSaver.h"
 #include "Utility.h"
 #include "writer.h"
+#include "StageDataEditor.h"
+
+EditDataSaver::EditDataSaver()
+{
+}
+/// <summary>
+/// 編集データを保存する
+/// </summary>
+EditDataSaver::~EditDataSaver()
+{
+    //プレイヤーの編集データを保存する
+    SaveEditDataForCSV(playerPlaceData,playerSaveFileName);
+    SaveEditDataForJSON(playerPlaceData,playerSaveFileName);
+    //収集アイテムの編集データを保存する
+    SaveEditDataForCSV(collectPlaceData, collectSaveFileName);
+    SaveEditDataForJSON(collectPlaceData, collectSaveFileName);
+    //敵の編集データを保存する
+    SaveEditDataForCSV(enemyPlaceData, enemySaveFileName);
+    SaveEditDataForJSON(enemyPlaceData, enemySaveFileName);
+}
 /// <summary>
 /// 編集した情報を保存する
 /// </summary>
 /// <param name="editData">編集した情報を纏めたVector</param>
 /// <param name="editObjKind">編集した情報</param>
-void EditDataSaver::SaveEditData(std::vector<PlacementData> editData, InitObjKind editObjKind)const
+void EditDataSaver::SaveEditData(std::weak_ptr<StageDataEditor> editor)
 {
     std::string saveFileName;
     using enum InitObjKind;
+    auto placeVector = editor.lock()->GetPlacementDataVector();
+
     //種類ごとに保存先を変える
-    switch (editObjKind)
+    switch (editor.lock()->GetEditObjectKind())
     {
     case player:
-        saveFileName = playerSaveFileName;
+        playerPlaceData = placeVector;
         break;
     case collect:
-        saveFileName = collectSaveFileName;
+        collectPlaceData = placeVector;
         break;
     default:
-        saveFileName = enemySaveFileName;
+        enemyPlaceData.insert(enemyPlaceData.end(),placeVector.begin(),placeVector.end());
         break;
     }
+
+}
+
+/// <summary>
+/// 編集した情報を保存する
+/// </summary>
+/// <param name="editData">編集した情報</param>
+/// <param name="saveFileName">保存するファイル</param>
+void EditDataSaver::SaveEditDataForCSV(std::vector<PlacementData> editData, std::string saveFileName) const
+{
     //配置した収集アイテムを保存
     for (int i = 0; i < CONTAINER_GET_SIZE(editData); i++)
     {
-        SaveEditData(editData[i], saveFileName);
-        SaveEditDataForJson(editData[i], saveFileName);
+        std::ofstream writing_file;
+        auto data = editData[i];
+        // ファイルを開いて
+        writing_file.open(saveFileName + csvFile, std::ios::app);
+        //区切り文字
+        std::string colon = ",";
+        //オブジェクトの種類と
+        writing_file << std::to_string(data.objKind) + colon << std::endl;
+        //何番目の収集アイテムの時か
+        writing_file << std::to_string(data.collectNum) + colon << std::endl;
+        //位置
+        writing_file << std::to_string(data.posX) + colon << std::endl;
+        writing_file << std::to_string(data.posZ) + colon << std::endl;
+        //向き
+        writing_file << std::to_string(data.dirX) + colon << std::endl;
+        writing_file << std::to_string(data.dirZ) + colon << std::endl;
+        writing_file.close();
     }
 }
-
 /// <summary>
-/// 編集した情報を保存する
+/// 引数の編集情報をJsonに保存できるようにする
 /// </summary>
-/// <param name="editData">編集した情報</param>
-/// <param name="saveFileName">保存するファイル</param>
-void EditDataSaver::SaveEditData(PlacementData editData, std::string saveFileName) const
+/// <param name="editData">編集情報</param>
+/// <param name="allocator">編集のために必要なallocator</param>
+/// <returns>Jsonに保存できるようにしたもの</returns>
+rapidjson::Value EditDataSaver::GetEditPlaceData(PlacementData editData, rapidjson::Document::AllocatorType& allocator) const
 {
-    std::ofstream writing_file;
-    // ファイルを開いて
-    writing_file.open(saveFileName + csvFIle, std::ios::app);
-    //区切り文字
-    std::string colon = ",";
-    //オブジェクトの種類と
-    writing_file << std::to_string(editData.objKind) + colon << std::endl;
-    //何番目の収集アイテムの時か
-    writing_file << std::to_string(editData.collectNum) + colon << std::endl;
-    //位置
-    writing_file << std::to_string(editData.posX) + colon << std::endl;
-    writing_file << std::to_string(editData.posZ) + colon << std::endl;
-    //向き
-    writing_file << std::to_string(editData.dirX) + colon << std::endl;
-    writing_file << std::to_string(editData.dirZ) + colon << std::endl;
-    writing_file.close();
+    //編集内容をメンバに登録
+    rapidjson::Value objValue;
+    objValue.SetObject();
+    objValue.AddMember("objNum", editData.objKind, allocator);
+    objValue.AddMember("collectNum", editData.collectNum, allocator);
+    objValue.AddMember("posX", editData.posX, allocator);
+    objValue.AddMember("posZ", editData.posZ, allocator);
+    objValue.AddMember("dirX", editData.dirX, allocator);
+    objValue.AddMember("dirZ", editData.dirZ, allocator);
+    return objValue;
 }
 /// <summary>
-/// 編集した情報を保存する
+/// Json形式で保存する
 /// </summary>
-/// <param name="editData">編集した情報</param>
-/// <param name="saveFileName">保存するファイル</param>
-void EditDataSaver::SaveEditDataForJson(PlacementData editData, std::string saveFileName) const
+/// <param name="editData">編集したい情報纏め</param>
+/// <param name="saveFileName">保存先のファイルの名前</param>
+void EditDataSaver::SaveEditDataForJSON(std::vector<PlacementData> editData, std::string saveFileName)const
 {
-    using namespace rapidjson;
-    Document doc(kObjectType);
-    doc.AddMember("objectKindNum", editData.objKind, doc.GetAllocator());
-
-    doc.AddMember("appearCollectNum", editData.collectNum,doc.GetAllocator());
-    doc.AddMember("positionX", editData.collectNum,doc.GetAllocator());
-    doc.AddMember("positionZ", editData.collectNum,doc.GetAllocator());
-    doc.AddMember("directionX", editData.collectNum,doc.GetAllocator());
-    doc.AddMember("directionZ", editData.collectNum,doc.GetAllocator());
-
+    //ドキュメント作成
+    rapidjson::Document jsonDoc;
+    jsonDoc.SetObject();
+    rapidjson::Document::AllocatorType& allocator = jsonDoc.GetAllocator();    //jsonに書き込む準備
+    //配列にして詰め込む
+    rapidjson::Value myArray(rapidjson::kArrayType);
+    //配置した収集アイテムを保存
+    for (int i = 0; i < CONTAINER_GET_SIZE(editData); i++)
+    {
+        myArray.PushBack(GetEditPlaceData( editData[i], allocator),allocator);
+    }
+    //編集内容をsaveFileNameのファイルに書き込む
+    jsonDoc.AddMember("arrangeData", myArray, allocator);
+    //ファイルの中身を全部消した状態で書き込む
     std::ofstream ofs(saveFileName + jsonFile);
-    OStreamWrapper osw(ofs);
-
-    Writer<OStreamWrapper> writer(osw);
-    doc.Accept(writer);
+    rapidjson::OStreamWrapper osw(ofs);
+    rapidjson::Writer<rapidjson::OStreamWrapper> writer(osw);
+    jsonDoc.Accept(writer);
 }

@@ -1,6 +1,11 @@
 #pragma once
 #include <vector>
+#include <rapidjson.h>
+#include <string>
 #include "document.h"
+#include "istreamwrapper.h"
+#include "schema.h"
+#include "stringbuffer.h"
 /// <summary>
 /// Jsonファイル読み取りクラス
 /// </summary>
@@ -19,17 +24,29 @@ public:
     /// <returns>適応したならTrue</returns>
     bool IsAccept()const;
     /// <summary>
-    /// float型
+    /// integer型を読み取る
     /// </summary>
-    /// <param name="dataName">読み取りたいデータ</param>
-    /// <returns>取りたいデータ</returns>
-    float GetLoadFloat(std::string dataName)const;
+    /// <param name="dataName">読み取りたいメンバの名前</param>
+    /// <returns>欲しいデータ</returns>
+    inline int GetLoadInt(std::string dataName)const;
     /// <summary>
-    /// 必要なデータ文字列を読み取る
+    /// 必要なfloat型を読み取る
     /// </summary>
-    /// <param name="dataName">読み取りたいデータの名前</param>
+    /// <param name="dataName">読み取りたいメンバの名前</param>
     /// <returns>取りたいデータ</returns>
-    std::string GetLoadString(std::string dataName)const;
+    inline float GetLoadFloat(std::string dataName)const;
+    /// <summary>
+    /// 必要な文字列を読み取る
+    /// </summary>
+    /// <param name="dataName">読み取りたいメンバの名前</param>
+    /// <returns>取りたいデータ</returns>
+    inline std::string GetLoadString(std::string dataName)const;
+    /// <summary>
+    /// 必要な配列を読み取る
+    /// </summary>
+    /// <param name="dataName">欲しい配列の名前</param>
+    /// <returns>rapidjson::Value型の配列</returns>
+    const rapidjson::Value& GetLoadArray(std::string dataName)const;
 private:
     //Schemaと開きたいファイルが適応しているなら
     bool isAccept;

@@ -34,4 +34,12 @@ private:
     /// <param name="kind">所得したい配置物の種類</param>
     /// <returns>CSVファイルからステージに配置するための情報</returns>
     static std::vector<PlacementData> CSVConvertFirstData(std::vector<std::string> placeStrData);
+    /// <summary>
+    /// Jsonファイルからステージに配置するための情報を所得
+    /// </summary>
+    /// <param name="fileName">初期位置までのファイルパス</param>
+    /// <returns>ステージ配置情報</returns>
+    static std::vector<PlacementData> JsonConvertFirstData(std::string fileName);
+    //Jsonのスキーマのパス
+    static std::string schemaPass;
 };

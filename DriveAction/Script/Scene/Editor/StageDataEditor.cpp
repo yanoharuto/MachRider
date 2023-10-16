@@ -8,7 +8,6 @@
 #include "EditorObject.h"
 #include "EditorDrawModel.h"
 #include "Utility.h"
-#include "EditDataSaver.h"
 //今編集しているオブジェクトのポジション
 PlacementData StageDataEditor::nowEditObjPlaceData = {};
 /// 収集アイテムの数
@@ -24,7 +23,7 @@ StageDataEditor::StageDataEditor(std::string setFileName, InitObjKind objKind)
 {
     editKind = objKind;
     //もしすでにファイルがあるならデータを取ってくる
-    placementDataVec = FirstPositionGetter::GetPlaceData(setFileName,objKind);
+    editedPlacementDataVec = FirstPositionGetter::GetPlaceData(setFileName,objKind);
     //編集オブジェクト
     editObject = new EditorObject();
     drawer = new EditorDrawModel(editKind);
@@ -34,8 +33,6 @@ StageDataEditor::StageDataEditor(std::string setFileName, InitObjKind objKind)
 /// </summary>
 StageDataEditor::~StageDataEditor()
 {
-    EditDataSaver dataSaver;
-    dataSaver.SaveEditData(placementDataVec, editKind);
     //描画役削除
     SAFE_DELETE(drawer);
     //編集オブジェクト
@@ -82,15 +79,15 @@ void StageDataEditor::Update(std::weak_ptr<CameraObserver> cameraObserever)
 void StageDataEditor::Draw() const
 {
     using enum EditActionKind;
-    if (!placementDataVec.empty())
+    if (!editedPlacementDataVec.empty())
     {
         //編集済みのオブジェクト全て描画
-        for (unsigned int i = 0; i < placementDataVec.size(); i++)
+        for (unsigned int i = 0; i < editedPlacementDataVec.size(); i++)
         {
             //描画するオブジェクトの種類
-            InitObjKind drawKind = static_cast<InitObjKind>(placementDataVec[i].objKind);
+            InitObjKind drawKind = static_cast<InitObjKind>(editedPlacementDataVec[i].objKind);
             //編集済みのオブジェクトの配置や向き
-            PlacementData editData = placementDataVec[i];
+            PlacementData editData = editedPlacementDataVec[i];
             //DrawKindの種類のオブジェクトの描画役
             drawer->Draw(editData);
         }
@@ -108,22 +105,8 @@ void StageDataEditor::Draw() const
         drawer->SelectDraw(nowEditObjPlaceData);
     }
 }
-/// <summary>
-/// 編集しているオブジェクトの配置情報
-/// </summary>
-/// <returns>編集しているオブジェクトの配置情報</returns>
-PlacementData StageDataEditor::GetEditObjPlacementData() const
-{
-    return nowEditObjPlaceData;
-}
-/// <summary>
-/// 編集中かどうかを返す
-/// </summary>
-/// <returns>編集中ならTrue</returns>
-bool StageDataEditor::IsNowEdit()
-{
-    return nowEditAction != EditActionKind::select;
-}
+
+
 /// <summary>
 /// 現在編集しているアイテムの出てくるタイミングを変更
 /// </summary>
@@ -160,9 +143,9 @@ void StageDataEditor::ChangeEditedCollectNum()
 /// <param name="eraceNum">削除するのは先頭から何番目か</param>
 void StageDataEditor::EraceEndEditData(int eraceNum)
 {
-    auto editData = placementDataVec.begin();
+    auto editData = editedPlacementDataVec.begin();
     editData += eraceNum;
-    placementDataVec.erase(editData);
+    editedPlacementDataVec.erase(editData);
 }
 
 /// <summary>
@@ -185,13 +168,13 @@ void StageDataEditor::Edit(std::weak_ptr<CameraObserver> cameraObserever)
         if (nowEditAction == reEdit)
         {
             //配置情報を再保存
-            placementDataVec[selectEditedNum] = editData;
+            editedPlacementDataVec[selectEditedNum] = editData;
             selectEditedNum = NEW_EDIT_NUM;
         }
         else
         {
             //新しい編集オブジェクトをコンテナに納品
-            placementDataVec.push_back(editData);
+            editedPlacementDataVec.push_back(editData);
         }
         //スペースキーを押したら編集終了
         nowEditAction = select;
@@ -212,7 +195,7 @@ void StageDataEditor::UpdateNowEditObjData()
 void StageDataEditor::SelectEditedObject()
 {
     //編集済みアイテムがあるなら
-    if (!placementDataVec.empty())
+    if (!editedPlacementDataVec.empty())
     {
         int prevNum = selectEditedNum;
         //左キーで古い保存されたオブジェクトを引き出せるようになる
@@ -223,7 +206,7 @@ void StageDataEditor::SelectEditedObject()
             if (selectEditedNum < 0)
             {
                 selectEditedNum = NEW_EDIT_NUM;
-                return;
+                return;//処理を中断する
             }
         }
         //右キーで一番新しい保存されたオブジェクトを引き出せるようになる
@@ -231,16 +214,16 @@ void StageDataEditor::SelectEditedObject()
         {
             selectEditedNum++;
             //過去に編集したアイテムの数より少なくなっているか
-            if (selectEditedNum >= static_cast<int>(placementDataVec.size()))
+            if (selectEditedNum >= static_cast<int>(editedPlacementDataVec.size()))
             {
-                selectEditedNum = placementDataVec.size() - 1;
+                selectEditedNum = editedPlacementDataVec.size() - 1;
             }
         }
         //過去のアイテムを左右キーで選択したら
         if (selectEditedNum != prevNum)
         {
             //過去に編集したデータを所得
-            PlacementData editedData = placementDataVec[selectEditedNum];
+            PlacementData editedData = editedPlacementDataVec[selectEditedNum];
             editObject->SetArrangementData(editedData);
             getCollectNum = editedData.collectNum;
         }

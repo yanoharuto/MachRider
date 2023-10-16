@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Script\AddActor\AddObjectDataLoader.cpp" />
     <ClCompile Include="Script\AddActor\DamageObjectGenerator.cpp" />
     <ClCompile Include="Script\AddActor\DrawModelManager.cpp" />
     <ClCompile Include="Script\AddActor\EnemyGenerator.cpp" />

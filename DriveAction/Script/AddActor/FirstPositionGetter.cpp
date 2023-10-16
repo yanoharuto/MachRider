@@ -1,7 +1,9 @@
 #include "FirstPositionGetter.h"
 #include "CSVFileLoader.h"
 #include "Utility.h"
+#include "JsonFileLoader.h"
 #include "StageDataManager.h"
+std::string FirstPositionGetter::schemaPass = "";
 /// <summary>
 /// 初期位置を渡す
 /// </summary>
@@ -66,4 +68,32 @@ std::vector<PlacementData> FirstPositionGetter::CSVConvertFirstData(std::vector<
         dataVec.push_back(initData);
     }
     return dataVec;
+}
+/// <summary>
+/// Jsonファイルからステージに配置するための情報を所得
+/// </summary>
+/// <param name="fileName">初期位置までのファイルパス</param>
+/// <returns>ステージ配置情報</returns>
+std::vector<PlacementData> FirstPositionGetter::JsonConvertFirstData(std::string fileName)
+{
+    std::vector<PlacementData> returnValue;
+    JsonFileLoader* fileLoader = new JsonFileLoader(fileName,schemaPass);
+    if (fileLoader->IsAccept())//スキーマと読み込むファイルのバリデーションチェック
+    {
+        const rapidjson::Value& list = fileLoader->GetLoadArray("arrangeData");
+        auto array = list.Begin();
+        //各オブジェクトの初期位置情報を所得
+        for (int i = 0; i < static_cast<int>(list.Size()); i++)
+        {
+            PlacementData firstPlaceData;
+            firstPlaceData.objKind = array->FindMember("objNum")->value.GetFloat();
+            firstPlaceData.collectNum = array->FindMember("collectNum")->value.GetFloat();
+            firstPlaceData.posX = array->FindMember("x")->value.GetFloat();
+            firstPlaceData.posZ = array->FindMember("z")->value.GetFloat();
+            firstPlaceData.dirX = array->FindMember("dirX")->value.GetFloat();
+            firstPlaceData.dirZ = array->FindMember("dirZ")->value.GetFloat();
+            array++;
+        }
+    }
+    return returnValue;
 }

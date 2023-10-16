@@ -1,9 +1,7 @@
 #include <fstream>
 #include <iostream>
 #include "JsonFileLoader.h"
-#include "istreamwrapper.h"
-#include "schema.h"
-#include "stringbuffer.h"
+
 /// <summary>
 /// Json形式のファイルを開く
 /// </summary>
@@ -41,11 +39,20 @@ bool JsonFileLoader::IsAccept() const
     return isAccept;
 }
 /// <summary>
+/// integer型を読み取る
+/// </summary>
+/// <param name="dataName">読み取りたいメンバの名前</param>
+/// <returns>欲しいデータ</returns>
+inline int JsonFileLoader::GetLoadInt(std::string dataName) const
+{
+    return loadDoc[dataName.c_str()].GetInt();
+}
+/// <summary>
 /// float型
 /// </summary>
 /// <param name="dataName">読み取りたいデータ</param>
 /// <returns>取りたいデータ</returns>
-float JsonFileLoader::GetLoadFloat(std::string dataName)const
+inline float JsonFileLoader::GetLoadFloat(std::string dataName)const
 {
     return loadDoc[dataName.c_str()].GetFloat();
 }
@@ -54,7 +61,16 @@ float JsonFileLoader::GetLoadFloat(std::string dataName)const
 /// </summary>
 /// <param name="dataName">読み取りたいデータの名前</param>
 /// <returns>取りたいデータ</returns>
-std::string JsonFileLoader::GetLoadString(std::string dataName) const
+inline std::string JsonFileLoader::GetLoadString(std::string dataName) const
 {
     return loadDoc[dataName.c_str()].GetString();
+}
+/// <summary>
+/// 必要な配列を読み取る
+/// </summary>
+/// <param name="dataName">欲しい配列の名前</param>
+/// <returns>rapidjson::Value型の配列</returns>
+const rapidjson::Value& JsonFileLoader::GetLoadArray(std::string dataName) const
+{
+    return loadDoc[dataName.c_str()].GetArray();
 }

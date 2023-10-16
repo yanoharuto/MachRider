@@ -9,7 +9,7 @@ std::vector<std::string> UIManager::uiPathVec;
 /// </summary>
 UIManager::UIManager()
 {
-    CSVFileLoader* initDataFile = new CSVFileLoader(GetInitFilePass(AssetList::ui));
+    CSVFileLoader* initDataFile = new CSVFileLoader(GetInitCsvFilePass(AssetList::ui));
     uiPathVec = initDataFile->GeFileStringData();
     SAFE_DELETE(initDataFile);
 }
@@ -64,7 +64,7 @@ UIData UIManager::CreateUIData(int kindNum)
         data.dataHandle.push_back(graphArray[i]);
     }
     //大きさとコマ送り速度
-    data.size = STR_TO_F(dataVec[CAST_I(UISize)]);
+    data.size = STR_TO_F(dataVec[CAST_I(size)]);
     data.frameSpeed = STR_TO_F(dataVec[CAST_I(frameSpeed)]);
     //初期化データを消す
     SAFE_DELETE(initDataFile);

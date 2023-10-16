@@ -432,6 +432,9 @@
     <ClCompile Include="Script\AddActor\DrawModelManager.cpp">
       <Filter>ソース ファイル\AddActor</Filter>
     </ClCompile>
+    <ClCompile Include="Script\AddActor\AddObjectDataLoader.cpp">
+      <Filter>ソース ファイル\AddActor</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Script\DrawModel\EditorCircleFlyShipDrawModel.h">

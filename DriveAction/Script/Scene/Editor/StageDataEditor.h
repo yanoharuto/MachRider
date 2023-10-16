@@ -20,11 +20,12 @@ using namespace ObjectInit;
 class StageDataEditor abstract
 {
 
-public:
+public: 
     /// <summary>
     ///ステージに配置するオブジェクトの位置などを保存する
     /// </summary>
-    /// <param name="setFileName">どのファイルに保存するか教えて</param>
+    /// <param name="setFileName">編集するファイルの名前</param>
+    /// <param name="objKind">編集するオブジェクトの種類</param>
     StageDataEditor(std::string setFileName,InitObjKind objKind);
     /// <summary>
     /// 描画役と編集オブジェクトの解放
@@ -47,15 +48,37 @@ public:
         return nowEditAction == EditActionKind::select; 
     };
     /// <summary>
+    /// 編集しているオブジェクトの種類
+    /// </summary>
+    /// <returns></returns>
+    ObjectInit::InitObjKind GetEditObjectKind()const
+    {
+        return editKind;
+    }
+    /// <summary>
     /// 編集しているオブジェクトの配置情報
     /// </summary>
     /// <returns>編集しているオブジェクトの配置情報</returns>
-    PlacementData GetEditObjPlacementData()const;
+    PlacementData GetNowEditObjPlaceData()const
+    {
+        return nowEditObjPlaceData;
+    };
+    /// <summary>
+    /// 編集しているオブジェクトのVectorコンテナ
+    /// </summary>
+    /// <returns></returns>
+    std::vector<PlacementData> GetPlacementDataVector()const
+    {
+        return editedPlacementDataVec;
+    };
     /// <summary>
     /// 編集中かどうかを返す
     /// </summary>
     /// <returns>編集中ならTrue</returns>
-    bool IsNowEdit();
+    bool IsNowEdit() const
+    {
+        return nowEditAction != EditActionKind::select;
+    }
     /// <summary>
     /// 現在編集しているアイテムの出てくるタイミングを変更
     /// </summary>
@@ -104,7 +127,7 @@ protected:
     //オブジェクトの描画担当
     EditorDrawModel* drawer;
     //編集済みデータ
-    std::vector<PlacementData> placementDataVec;
+    std::vector<PlacementData> editedPlacementDataVec;
     //編集済みの物を左右キーで選ぼうとすると変動
     int selectEditedNum = -1;
 };

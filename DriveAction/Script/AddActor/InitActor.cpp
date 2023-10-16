@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#include <document.h>
 #include "InitActor.h"
 #include "CSVFileLoader.h"
 #include "Utility.h"
@@ -11,9 +12,9 @@
 std::vector<std::string> InitActor::objectInitDataPassVec;
 
 //initActorJsonFilePassのJsonSchemaのパス
-std::string InitActor::initActorSchemaPass = "data/model/InitObjPassSchema.json";
+std::string InitActor::initActorSchemaPass = "data/Json/Schema/assetPassSchema.json";
 //初期化要素のJsonSchemaのパス
-std::string InitActor::initObjParamatorSchemaPass = "data/model/InitObjParamatorSchema.json";
+std::string InitActor::initObjParamatorSchemaPass = "data/Json/Schema/InitObjParamatorSchema.json";
 //描画モデルの管理担当
 DrawModelManager* InitActor::drawModelManager;
 /// <summary>
@@ -21,29 +22,15 @@ DrawModelManager* InitActor::drawModelManager;
 /// </summary>
 InitActor::InitActor()
 {
-    CSVFileLoader* initDataLoader = new CSVFileLoader(GetInitFilePass(AssetList::object));
+    CSVFileLoader* initDataLoader = new CSVFileLoader(GetInitCsvFilePass(AssetList::object));
     if (initDataLoader->IsOpenFile())//ファイルが見つかったかどうか
     {
         objectInitDataPassVec = initDataLoader->GeFileStringData();
     }
-    else
+    else//Jsonで読み込む
     {
-        JsonFileLoader* initJsonFileLoader= new JsonFileLoader(GetInitFilePass(AssetList::object),initActorSchemaPass);
-        if (initJsonFileLoader->IsAccept())//スキーマと読み込むファイルのバリデーションチェック
-        {
-            objectInitDataPassVec.push_back(initJsonFileLoader->GetLoadString("player"));
-            objectInitDataPassVec.push_back(initJsonFileLoader->GetLoadString("moveSaw"));
-            objectInitDataPassVec.push_back(initJsonFileLoader->GetLoadString("saw"));
-            objectInitDataPassVec.push_back(initJsonFileLoader->GetLoadString("bomberShip"));
-            objectInitDataPassVec.push_back(initJsonFileLoader->GetLoadString("bomber"));
-            objectInitDataPassVec.push_back(initJsonFileLoader->GetLoadString("upDownShip"));
-            objectInitDataPassVec.push_back(initJsonFileLoader->GetLoadString("circleLaserShip"));
-            objectInitDataPassVec.push_back(initJsonFileLoader->GetLoadString("laser"));
-            objectInitDataPassVec.push_back(initJsonFileLoader->GetLoadString("collect"));
-            objectInitDataPassVec.push_back(initJsonFileLoader->GetLoadString("floor"));
-            objectInitDataPassVec.push_back(initJsonFileLoader->GetLoadString("skyDome"));
-            objectInitDataPassVec.push_back(initJsonFileLoader->GetLoadString("wall"));
-        }
+        JsonFileLoader* initJsonFileLoader= new JsonFileLoader(GetInitJsonFilePass(AssetList::object),initActorSchemaPass);
+        objectInitDataPassVec = GetAssetListJson(initJsonFileLoader);
         SAFE_DELETE(initJsonFileLoader);
     }
     SAFE_DELETE(initDataLoader);
@@ -98,7 +85,7 @@ int InitActor::GetModelHandle(InitObjKind kind)
 std::string InitActor::GetAddDataPass(AddDataObject kind)
 {
     //各オブジェクト毎に必要な追加データ
-    auto dataPass = new CSVFileLoader(GetInitFilePass(AssetList::objectAddData));
+    auto dataPass = new CSVFileLoader(GetInitCsvFilePass(AssetList::objectAddData));
     auto loadPass = dataPass->GeFileStringData();
     SAFE_DELETE(dataPass);
     return loadPass[CAST_I(kind)];

@@ -10,7 +10,7 @@
 CameraManager::CameraParamater CameraManager::GetCameraParamator(InitCamera::UseCameraSceneKind type)const
 {
     //カメラ情報まとめファイルを所得
-    CSVFileLoader* initFileLoader = new CSVFileLoader(GetInitFilePass(AssetList::camera));
+    CSVFileLoader* initFileLoader = new CSVFileLoader(GetInitCsvFilePass(AssetList::camera));
     auto strData = initFileLoader->GeFileStringData();
     //まとめファイルからシーンごとの情報を所得
     CSVFileLoader* initDataLoader = new CSVFileLoader(strData[static_cast<int>(type)]);

@@ -22,9 +22,9 @@ void CollectItemDataEditor::Update(std::weak_ptr<CameraObserver> cameraObserever
     StageDataEditor::Update(cameraObserever);
 
     //収集アイテムの数を他のEditorにも反映
-    if (!placementDataVec.empty())
+    if (!editedPlacementDataVec.empty())
     {
-        collectNum = placementDataVec.size() - 1;
+        collectNum = editedPlacementDataVec.size() - 1;
         collectNum = collectNum < 0 ? 0 : collectNum;
     }
 }

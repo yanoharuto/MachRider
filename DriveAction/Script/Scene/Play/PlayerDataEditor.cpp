@@ -12,9 +12,9 @@ const std::string PlayerDataEditor::loadEditFilePath = "playerData.csv";
 PlayerDataEditor::PlayerDataEditor()
     :StageDataEditor(loadEditFilePath,InitObjKind::player)
 {
-    if (!placementDataVec.empty())
+    if (!editedPlacementDataVec.empty())
     {
-        editObject->SetArrangementData(placementDataVec[0]);
+        editObject->SetArrangementData(editedPlacementDataVec[0]);
     }
     
 }
@@ -40,13 +40,13 @@ void PlayerDataEditor::Update(std::weak_ptr<CameraObserver> cameraObserever)
             nowEditAction = select;
             PlacementData editData = editObject->GePlacementData();
             editData.objKind = CAST_I(editKind);
-            if(placementDataVec.empty())
+            if(editedPlacementDataVec.empty())
             {
-                placementDataVec.push_back(editData);
+                editedPlacementDataVec.push_back(editData);
             }
             else
             {
-                placementDataVec[0] = editData;
+                editedPlacementDataVec[0] = editData;
             }
         }
     }

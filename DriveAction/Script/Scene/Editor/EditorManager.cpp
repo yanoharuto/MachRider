@@ -11,7 +11,7 @@
 #include "EditManual.h"
 #include "EditorEffect.h"
 #include "CameraObserver.h"
-
+#include "EditDataSaver.h"
 /// <summary>
 /// 編集に必要なものを確保
 /// </summary>
@@ -36,11 +36,14 @@ EditorManager::EditorManager()
 /// </summary>
 EditorManager::~EditorManager()
 {
+    EditDataSaver* dataSaver = new EditDataSaver();
     SAFE_DELETE(stage);
     for (unsigned int i = 0; i < editorVec.size(); i++)
     {
+        dataSaver->SaveEditData(editorVec[i]);
         editorVec[i].reset();
     }
+    SAFE_DELETE(dataSaver);
 }
 /// <summary>
 /// 編集する種類や各編集物の編集
@@ -92,7 +95,7 @@ bool EditorManager::IsNowEdit() const
 /// </summary>
 PlacementData EditorManager::GetNowEditObjPlaceData() const
 {
-    return nowEditor->GetEditObjPlacementData();
+    return nowEditor->GetNowEditObjPlaceData();
 }
 /// <summary>
 /// 次に何を編集するか選択する

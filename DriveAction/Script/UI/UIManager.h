@@ -134,7 +134,7 @@ namespace UIInit
         //画像の相対パス
         graphPass,
         //大きさ
-        UISize,
+        size,
         //分割してある場合のコマ送りスピード
         frameSpeed
     };

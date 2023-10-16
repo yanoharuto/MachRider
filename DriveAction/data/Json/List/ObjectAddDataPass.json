@@ -1,0 +1,9 @@
+{
+  "assetPass": [
+    { "item": "data/csv/AddObjectData/playerSpeed.csv" },
+    { "item": "data/csv/AddObjectData/circleFlyShip.csv" },
+    { "item": "data/csv/AddObjectData/upDownFlyShip.csv" },
+    { "item": "data/csv/AddObjectData/bomberShip.csv" },
+    { "item": "data/csv/AddObjectData/moveSaw.csv" }
+  ]
+}
