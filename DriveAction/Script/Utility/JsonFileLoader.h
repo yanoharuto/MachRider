@@ -15,9 +15,9 @@ public:
     /// <summary>
     /// Json形式のファイルを開く
     /// </summary>
-    /// <param name="filePass">開きたいファイル</param>
-    /// <param name="schemaFilePass">開くファイルのSchema</param>
-    JsonFileLoader(std::string filePass,std::string schemaFilePass);
+    /// <param name="filePath">開きたいファイル</param>
+    /// <param name="schemaFilePath">開くファイルのSchema</param>
+    JsonFileLoader(std::string filePath,std::string schemaFilePath);
     /// <summary>
     /// Schemaと開きたいファイルが適応しているなら
     /// </summary>
@@ -28,19 +28,19 @@ public:
     /// </summary>
     /// <param name="dataName">読み取りたいメンバの名前</param>
     /// <returns>欲しいデータ</returns>
-    inline int GetLoadInt(std::string dataName)const;
+    int GetLoadInt(std::string dataName)const;
     /// <summary>
     /// 必要なfloat型を読み取る
     /// </summary>
     /// <param name="dataName">読み取りたいメンバの名前</param>
     /// <returns>取りたいデータ</returns>
-    inline float GetLoadFloat(std::string dataName)const;
+    float GetLoadFloat(std::string dataName)const;
     /// <summary>
     /// 必要な文字列を読み取る
     /// </summary>
     /// <param name="dataName">読み取りたいメンバの名前</param>
     /// <returns>取りたいデータ</returns>
-    inline std::string GetLoadString(std::string dataName)const;
+    std::string GetLoadString(std::string dataName)const;
     /// <summary>
     /// 必要な配列を読み取る
     /// </summary>
@@ -52,4 +52,6 @@ private:
     bool isAccept;
     //読み取る状態
     rapidjson::Document loadDoc;
+    //スキーマファイルまでのパス
+    static std::string const jsonSchemaFilePath;
 };

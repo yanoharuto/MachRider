@@ -22,15 +22,15 @@ DrawModelManager::~DrawModelManager()
 /// <summary>
 /// modelをロードして渡す
 /// </summary>
-/// <param name="assetPass"></param>
+/// <param name="assetPath"></param>
 /// <returns>すでにロードしてたら複製</returns>
-int DrawModelManager::Get3DModelAssetHandle(std::string assetPass)
+int DrawModelManager::Get3DModelAssetHandle(std::string assetPath)
 {
-    if (modelMap.contains(assetPass))//すでに追加ロードされていたら複製
+    if (modelMap.contains(assetPath))//すでに追加ロードされていたら複製
     {
-        return MV1DuplicateModel(modelMap[assetPass]);
+        return MV1DuplicateModel(modelMap[assetPath]);
     }
     //まだロードしてないならロードする
-    modelMap.insert(std::make_pair(assetPass, MV1LoadModel(assetPass.c_str())));
-    return modelMap[assetPass];
+    modelMap.insert(std::make_pair(assetPath, MV1LoadModel(assetPath.c_str())));
+    return modelMap[assetPath];
 }

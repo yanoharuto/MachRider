@@ -10,7 +10,7 @@
 #include "UserInput.h"
 #include "Timer.h"
 #include "InitActor.h"
-#include "CSVFileLoader.h"
+#include "AddPlayerDataLoader.h"
 
 // なにもしない時の減速.
 const float Car::defaultDecel = 0.01f;
@@ -25,7 +25,7 @@ const float Car::gripDecel = 0.2f;
 Car::Car(ObjectInit::InitObjKind kind)
 	:Actor(kind)
 {
-	InitSpeedParamater(AddDataObject::playerSpeed);
+	InitSpeedParamater();
 	tag = ObjectTag::player;
 	ReflectsVelocity();
 	wheels = new Wheels();
@@ -142,11 +142,11 @@ void Car::UpdateAccelPower()
 /// 移動速度などの初期化
 /// </summary>
 /// <param name="kind"></param>
-void Car::InitSpeedParamater(ObjectInit::AddDataObject kind)
+void Car::InitSpeedParamater()
 {
 	//速さ関連の情報を所得
-	auto loader = new CSVFileLoader(InitActor::GetAddDataPass(kind));
-	auto strVec = loader->GeFileStringData();
+	auto loader = new AddPlayerDataLoader();
+	auto strVec = loader->GetLoadData();
 	//車の性能を初期化
 	using enum CarInitKind;
 	speedParamator.acceleSpeed = STR_TO_F(strVec[static_cast<int>(acceleSpeed)]);

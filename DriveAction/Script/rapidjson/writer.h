@@ -77,7 +77,7 @@ enum WriteFlag {
 
     User may programmatically calls the functions of a writer to generate JSON text.
 
-    On the other side, a writer can also be passed to objects that generates events, 
+    On the other side, a writer can also be Pathed to objects that generates events, 
 
     for example Reader::Parse() and Document::Accept().
 

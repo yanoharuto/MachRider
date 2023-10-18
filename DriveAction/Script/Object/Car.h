@@ -44,7 +44,7 @@ protected:
 	/// 移動速度などの初期化
 	/// </summary>
 	/// <param name="kind">この車の種類</param>
-	void InitSpeedParamater(ObjectInit::AddDataObject kind);
+	void InitSpeedParamater();
 	//スピードのパラメータ
 	struct SpeedParamator
 	{

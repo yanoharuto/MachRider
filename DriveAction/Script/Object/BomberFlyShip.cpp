@@ -1,18 +1,18 @@
-#include <iostream>
-#include <memory>
+#include "DamageObjectGenerator.h"
 #include "BomberFlyShip.h"
 #include "DamageObjectGenerator.h"
 #include "Utility.h"
 #include "ObjectObserver.h"
 #include "AssetManager.h"
 #include "ReusableTimer.h"
+#include "InitActor.h"
 /// <summary>
 /// 引数の位置に生成　
 /// </summary>
 /// <param name="data">生成位置と向きが入った構造体</param>
 /// <param name="initParam">爆弾発射クールタイムを所得</param>
 /// <param name="damageObjGenerator">爆弾発射に必要なクラス</param>
-BomberFlyShip::BomberFlyShip(PlacementData data, FlyShipInit::InitFlyShipParamator initParam, std::shared_ptr<DamageObjectGenerator> damageObjGenerator)
+BomberFlyShip::BomberFlyShip(PlacementData data, float coolTime, std::shared_ptr<DamageObjectGenerator> damageObjGenerator)
     :Actor(InitObjKind::bomberShip)
 {
     position.x = data.posX;
@@ -20,7 +20,7 @@ BomberFlyShip::BomberFlyShip(PlacementData data, FlyShipInit::InitFlyShipParamat
     direction.x = data.dirX;
     direction.z = data.dirZ;
     direction.y = 0;
-    bombFallTimer = new ReusableTimer(initParam.setCoolTime);
+    bombFallTimer = new ReusableTimer(coolTime);
 
     damageObjectGenerator = damageObjGenerator;
     velocity = direction;

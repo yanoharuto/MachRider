@@ -1,8 +1,10 @@
 #pragma once
-#include "Actor.h"
-#include "FlyShipController.h"
-#include "EditObjectData.h"
+#include <memory>
+#include <iostream>
 #include <string>
+#include "Actor.h"
+#include "EditObjectData.h"
+
 class Timer;
 class ReusableTimer;
 class DamageObjGenerator;
@@ -18,7 +20,7 @@ public:
     /// <param name="data">生成位置と向きが入った構造体</param>
     /// <param name="initParam">爆弾発射クールタイムを所得</param>
     /// <param name="damageObjGenerator">爆弾発射に必要なクラス</param>
-    BomberFlyShip(PlacementData data,FlyShipInit::InitFlyShipParamator initParam,std::shared_ptr<DamageObjectGenerator> damageObjGenerator);
+    BomberFlyShip(PlacementData data,float coolTime,std::shared_ptr<DamageObjectGenerator> damageObjGenerator);
     /// <summary>
     /// damageObjectGeneratorの開放
     /// </summary>
@@ -33,4 +35,3 @@ private:
     //爆弾を生成するのに必要なクラス
     std::shared_ptr<DamageObjectGenerator> damageObjectGenerator;
 };
-

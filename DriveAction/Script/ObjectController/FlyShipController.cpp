@@ -9,22 +9,22 @@ FlyShipController::FlyShipController(ObjectInit::InitObjKind kind, std::shared_p
     :AddableObjectController(kind)
 {
     param.actorParam = InitActor::GetActorParamator(kind);
-    ObjectInit::AddDataObject addKind = AddDataObject::circleFlyShip;
+    AddFlyShipDataLoader::AddData addKind = AddFlyShipDataLoader::AddData::circleFlyShip;
     switch (kind)//欲しい追加データの種類
     {
     case InitObjKind::upDownLaserShip:
-        addKind = AddDataObject::upDownFlyShip;
+        addKind = AddFlyShipDataLoader::AddData::upDownFlyShip;
         break;
     case InitObjKind::bomberShip:
-        addKind = AddDataObject::bomberShip;
+        addKind = AddFlyShipDataLoader::AddData::bomberShip;
         break;
     case InitObjKind::circleLaserShip:
-        addKind = AddDataObject::circleFlyShip;
+        addKind = AddFlyShipDataLoader::AddData::circleFlyShip;
         break;
     default:
         break;
     }
-    GetInitAddData(addKind);//追加データ所得
+    GetAddData(addKind);//追加データ所得
     damageObjectGenerator = damageObjGenerator;
 }
 /// <summary>
@@ -36,15 +36,14 @@ FlyShipController::~FlyShipController()
     damageObjectGenerator.reset();
 }
 /// <summary>
-/// 空飛んでるやつの情報所得
+/// 飛行船の追加情報所得
 /// </summary>
-/// <param name="kind"></param>
-/// <returns></returns>
-void FlyShipController::GetInitAddData(ObjectInit::AddDataObject kind)
+/// <param name="kind">飛行船の種類</param>
+void FlyShipController::GetAddData(AddFlyShipDataLoader::AddData kind)
 {
     //FlyShip用のデータをロード
-    CSVFileLoader* addDataLoader = new CSVFileLoader(InitActor::GetAddDataPass(kind));
-    auto addData = addDataLoader->GeFileStringData();
+    auto loader = new AddFlyShipDataLoader(kind);
+    auto addData = loader->GetLoadData();
     using enum FlyShipParamator;
     //移動速度
     param.moveSpeed = STR_TO_F(addData[CAST_I(moveSpeed)]);

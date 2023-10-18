@@ -1,7 +1,21 @@
 #pragma once
 #include "AssetManager.h"
-namespace InitCamera
+
+/// <summary>
+/// カメラの初期化を行う
+/// </summary>
+class CameraDataLoader final: public AssetManager
 {
+public:
+	struct  CameraParamater
+	{
+		float nearValue;//カメラの見れる開始位置
+		float farValue;//カメラの見れる最終1
+		float lookAngle;//カメラの画角
+		float targetBetween;//ターゲットまでの距離
+		float setYPos;//高さ
+		float speed;//移動速度
+	};
     /// <summary>
     /// カメラに必要なパラメータ
     /// </summary>
@@ -32,26 +46,12 @@ namespace InitCamera
         //リザルト画面でのカメラ
         editor = 2
     };
-}
-/// <summary>
-/// カメラの初期化を行う
-/// </summary>
-class CameraManager final: public AssetManager
-{
-public:
-	struct  CameraParamater
-	{
-		float nearValue;//カメラの見れる開始位置
-		float farValue;//カメラの見れる最終1
-		float lookAngle;//カメラの画角
-		float targetBetween;//ターゲットまでの距離
-		float setYPos;//高さ
-		float speed;//移動速度
-	};
     /// <summary>
     /// 初期化情報所得
     /// </summary>
     /// <param name="type">シーンによってカメラの性能を変える</param>
-	CameraParamater GetCameraParamator(InitCamera::UseCameraSceneKind type) const;
+	CameraParamater GetCameraParamator(UseCameraSceneKind type) const;
+private:
+    static std::string schemaPath;
 };
 

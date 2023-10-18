@@ -7,32 +7,78 @@
 #include "DxLib.h"
 #include "Object.h"
 #include "AssetManager.h"
-namespace InitStage
+
+
+class StageSelect;
+class ResultScore;
+class StopTimer;
+class ScoreRecordWriter;
+/// <summary>
+/// 遊ぶステージのデータを渡す
+/// </summary>
+class StageDataManager :public AssetManager
 {
+public:
     /// <summary>
-    /// ステージごとに設定しているデータ
+    /// ステージの情報管理者
     /// </summary>
-    enum StageData
+    StageDataManager();
+    struct ScoreBorder;
+    /// <summary>
+    /// 所得するステージの変更
+    /// </summary>
+    /// <param name="select">今選んでいるステージを教えてもらう</param>
+    static void ChangeStageData(StageSelect* const select);
+    /// <summary>
+    /// ステージの総数
+    /// </summary>
+    /// <returns>ステージの総数が返ってくる</returns>
+    static int GetStageTotalNumber();
+    /// <summary>
+    /// 遊ぶステージのスコアのボーダーラインを返す
+    /// </summary>
+    /// <returns>現在遊んでいるステージのスコアの線引きを纏めたもの</returns>
+    static StageDataManager::ScoreBorder GetScoreBorder();
+    /// <summary>
+    /// 初期位置の書いてあるパスを所得
+    /// </summary>
+    /// <param name="tag">欲しいオブジェクトのタグ</param>
+    /// <returns>tagのオブジェクトの初期位置が書いてあるパス</returns>
+    static std::string GetPlaceStrData(Object::ObjectTag tag);
+    /// <summary>
+    /// ゲームの制限時間のタイマーを作成
+    /// </summary>
+    /// <returns>ゲーム制限時間タイマー</returns>
+    static std::shared_ptr<StopTimer> CreateGameTimer();
+    /// <summary>
+    /// スコアの記録更新役を渡す
+    /// </summary>
+    /// <returns>スコアの記録更新役</returns>
+    static ScoreRecordWriter* GetScoreRecordWriter();
+    /// <summary>
+   /// ステージごとに設定しているデータ
+   /// </summary>
+    enum class StageData
     {
         //横幅
-        width ,
+        width,
         //縦幅
         length,
         //障害物の位置のファイルパス
-        enemyFilePass,
+        enemyFilePath,
         //収集アイテムと敵の位置のファイルパス
-        collectFilePass,
+        collectFilePath,
         //プレイヤーの初期位置のファイルパス
-        playerPositionFilePass,
+        playerPositionFilePath,
         //制限時間
         gameTime,
         //ステージのスコア
-        stageScoreFilePass
+        stageScoreFilePath
     };
     /// <summary>
     /// スコアの線引き
     /// </summary>
-    enum StageScore
+    enum class StageScore
     {
         //一番目にいいスコア
         goldScore,
@@ -65,69 +111,19 @@ namespace InitStage
         //3番目にいいスコア
         int third;
     };
-}
-using namespace InitStage;
-class StageSelect;
-class ResultScore;
-class StopTimer;
-class ScoreRecordWriter;
-/// <summary>
-/// 遊ぶステージのデータを渡す
-/// </summary>
-class StageDataManager :public AssetManager
-{
-public:
-    /// <summary>
-    /// 所得するステージの変更
-    /// </summary>
-    /// <param name="select">今選んでいるステージを教えてもらう</param>
-    static void ChangeStageData(StageSelect* const select);
-    /// <summary>
-    /// ステージの総数
-    /// </summary>
-    /// <returns>ステージの総数が返ってくる</returns>
-    static int GetStageTotalNumber();
-    /// <summary>
-    /// 遊ぶステージのスコアのボーダーラインを返す
-    /// </summary>
-    /// <returns>現在遊んでいるステージのスコアの線引きを纏めたもの</returns>
-    static ScoreBorder GetScoreBorder();
-    /// <summary>
-    /// 初期位置の文字列情報
-    /// </summary>
-    /// <param name="tag">欲しいオブジェクトの初期位置情報のタグ</param>
-    /// <returns>tagのオブジェクトが初期位置を決めるときに必要な文字列情報</returns>
-    static std::vector<std::string> GetPlaceStrData(Object::ObjectTag tag);
-    /// <summary>
-    /// ゲームの制限時間のタイマーを作成
-    /// </summary>
-    /// <returns>ゲーム制限時間タイマー</returns>
-    static std::shared_ptr<StopTimer> CreateGameTimer();
-    /// <summary>
-    /// スコアの記録更新役を渡す
-    /// </summary>
-    /// <returns>スコアの記録更新役</returns>
-    static ScoreRecordWriter* GetScoreRecordWriter();
 private:
-    /// <summary>
-    /// ステージの情報管理者
-    /// </summary>
-    StageDataManager();
+
     /// <summary>
     /// 各ステージのデータを取ってくる
     /// </summary>
     /// <param name="dataKind">欲しいステージのデータの種類</param>
     /// <returns>ステージの制限時間や縦幅横幅、初期位置の入ったファイルのパスなどが返ってくる</returns>
     static std::string GetSelectStageData(StageData dataKind);
+
     /// <summary>
-    /// どのステージを選んでいるか
+    /// 全ステージ一覧を読み取る
     /// </summary>
-    /// <returns>ステージの名前文字列を返す</returns>
-    static std::string GetSelectStageName();
-    /// <summary>
-    /// 初期化
-    /// </summary>
-    static void InitStageData();
+    static void LoadStageData();
     //ステージのデータ
     static std::vector<std::string> dataVector;
     //各ステージのデータのパス
@@ -136,4 +132,10 @@ private:
     static int stageWidth;
     //長さ
     static int stageLength;
+    //各ステージのデータのスキーマ
+    const static std::string stageDataSchema;
+    //各ステージのスコアのスキーマ
+    const static std::string scoreDataSchema;
+    //配置情報のスキーマ
+    const static std::string arrangeDataSchema;
 };

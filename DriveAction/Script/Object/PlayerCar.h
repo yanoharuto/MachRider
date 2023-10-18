@@ -71,11 +71,11 @@ private:
 	/// <summary>
 	/// エフェクトの位置と方向をセット
 	/// </summary>
-	/// <param name="playEffect"></param>
-	/// <param name="pos"></param>
-	/// <param name="dir"></param>
-	/// <param name="effectKind"></param>
-	void UpdateEffect(int* playEffect,VECTOR pos,VECTOR dir,EffectKind effectKind);
+	/// <param name="playEffect">対象のエフェクトハンドル</param>
+	/// <param name="pos">位置</param>
+	/// <param name="dir">向き</param>
+	/// <param name="effectKind">エフェクトの種類</param>
+	void SetEffectPosAndDir(int* playEffect,VECTOR pos,VECTOR dir,EffectKind effectKind);
 	/// <summary>
 	/// エフェクトを消去
 	/// </summary>

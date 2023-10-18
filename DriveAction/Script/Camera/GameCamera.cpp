@@ -8,7 +8,7 @@
 /// </summary>
 /// <param name="player">プレイヤーの位置</param>
 GameCamera::GameCamera(std::weak_ptr<ObjectObserver> target)
-    :Camera(InitCamera::UseCameraSceneKind::game)
+    :Camera(CameraDataLoader::UseCameraSceneKind::game)
 {
     targetObserver = target;
     //位置と向きを初期化

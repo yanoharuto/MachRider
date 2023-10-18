@@ -9,7 +9,7 @@
 #include "StageDataManager.h"
 #include "Utility.h"
 #include "StopTimer.h"
-#include "Timer.h"
+
 /// <summary>
 /// BGMとゲーム終了タイマーを起動
 /// </summary>
@@ -19,7 +19,6 @@ PlayGameProcess::PlayGameProcess(std::weak_ptr<PlayerObserver> player, std::shar
 {
 	timer = StageDataManager::CreateGameTimer();
 	playUI = new GamePlayUI(player, timer, collectItemObserver);
-	isEndProcess = false;
 	SoundPlayer::LoadAndInitSound(SoundKind::playBGM);
 }
 /// <summary>
@@ -36,6 +35,11 @@ PlayGameProcess::~PlayGameProcess()
 /// <param name="collectObserver">収集アイテムの残り数を教えてもらう</param>
 void PlayGameProcess::Update(std::weak_ptr<CollectItemObserver> const collectObserver)
 {
+	if (isFirstUpdate)//初回ならタイマー再起動
+	{
+		timer->Reset();
+		isFirstUpdate = false;
+	}
 	//収集アイテムが全部消え終わった,制限時間をオーバーしたなら終了
 	if (collectObserver.lock()->GetRemainingItemNum() == 0 || timer->IsOverLimitTime())
 	{

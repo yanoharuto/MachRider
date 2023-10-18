@@ -4,12 +4,12 @@
 #include "Utility.h"
 //カメラの画角
 float Camera::lookingAngle = 0;
-using namespace InitCamera;
+
 /// <summary>
 /// カメラの速度や高さの初期化
 /// </summary>
 /// <param name="type">どのタイミングで使うか教えて</param>
-Camera::Camera(UseCameraSceneKind type)
+Camera::Camera(CameraDataLoader::UseCameraSceneKind type)
 {
     //初期化
     LoadData(type);
@@ -43,11 +43,11 @@ float Camera::GetLookingAngle() const
 /// 初期化情報所得
 /// </summary>
 /// <param name="type">シーンによってカメラの性能を変える</param>
-void Camera::LoadData(UseCameraSceneKind type)
+void Camera::LoadData(CameraDataLoader::UseCameraSceneKind type)
 {
     //カメラ情報まとめファイルを所得
-    CameraManager* manager = new CameraManager();
-    CameraManager::CameraParamater paramater = manager->GetCameraParamator(type);
+    CameraDataLoader* manager = new CameraDataLoader();
+    CameraDataLoader::CameraParamater paramater = manager->GetCameraParamator(type);
     //カメラの有効範囲
     float nearValue = paramater.nearValue;
     float farValue = paramater.farValue;

@@ -1,6 +1,6 @@
 #include "MoveSaw.h"
 #include "ReusableTimer.h"
-#include "CSVFileLoader.h"
+#include "AddMoveSawDataLoader.h"
 #include "InitActor.h"
 #include "OriginalMath.h"
 #include "SphereHitChecker.h"
@@ -18,8 +18,8 @@ MoveSaw::MoveSaw(PlacementData editData)
     :Saw(InitObjKind::moveSaw,editData)
 {   
     //追加情報から移動速度などを所得
-    auto addDataLoader = new CSVFileLoader(InitActor::GetAddDataPass(AddDataObject::moveSaw));
-    auto addStrDataVec = addDataLoader->GeFileStringData();
+    auto addDataLoader = new AddMoveSawDataLoader();
+    auto addStrDataVec = addDataLoader->GetLoadData();
     using enum MoveParametor;
     //タイマーが動いている間だけ動く
     moveLarpTimer = new ReusableTimer(STR_TO_D(addStrDataVec[CAST_I(moveTime)]));

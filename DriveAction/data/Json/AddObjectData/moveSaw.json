@@ -1,7 +1,4 @@
 {
-  "aliveTime": 0,
-  "moveSpeed": 0.7,
-  "coolTime": 700,
-  "unitNum": 0,
-  "unitBetween": 0
+  "moveSpeed": 7.0,
+  "moveTime": 2.0
 }

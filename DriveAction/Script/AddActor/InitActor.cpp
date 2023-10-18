@@ -9,12 +9,9 @@
 #include "DrawModelManager.h"
 #include "JsonFileLoader.h"
 //initActorFileNameの先のファイルから所得したデータをまとめたVector
-std::vector<std::string> InitActor::objectInitDataPassVec;
-
-//initActorJsonFilePassのJsonSchemaのパス
-std::string InitActor::initActorSchemaPass = "data/Json/Schema/assetPassSchema.json";
+std::vector<std::string> InitActor::objectInitDataPathVec;
 //初期化要素のJsonSchemaのパス
-std::string InitActor::initObjParamatorSchemaPass = "data/Json/Schema/InitObjParamatorSchema.json";
+std::string InitActor::initObjParamatorSchemaPath = "InitObjParamatorSchema.json";
 //描画モデルの管理担当
 DrawModelManager* InitActor::drawModelManager;
 /// <summary>
@@ -22,16 +19,14 @@ DrawModelManager* InitActor::drawModelManager;
 /// </summary>
 InitActor::InitActor()
 {
-    CSVFileLoader* initDataLoader = new CSVFileLoader(GetInitCsvFilePass(AssetList::object));
+    CSVFileLoader* initDataLoader = new CSVFileLoader(GetInitCsvFilePath(AssetList::object));
     if (initDataLoader->IsOpenFile())//ファイルが見つかったかどうか
     {
-        objectInitDataPassVec = initDataLoader->GeFileStringData();
+        objectInitDataPathVec = initDataLoader->GetStringData();
     }
     else//Jsonで読み込む
     {
-        JsonFileLoader* initJsonFileLoader= new JsonFileLoader(GetInitJsonFilePass(AssetList::object),initActorSchemaPass);
-        objectInitDataPassVec = GetAssetListJson(initJsonFileLoader);
-        SAFE_DELETE(initJsonFileLoader);
+        objectInitDataPathVec = GetAssetList(AssetList::object);
     }
     SAFE_DELETE(initDataLoader);
     drawModelManager = new DrawModelManager();
@@ -70,26 +65,14 @@ int InitActor::GetModelHandle(InitObjKind kind)
 {
     auto initData = GetActorParametorStrVec(kind);
     //描画モデル
-    int modelHandle = drawModelManager->Get3DModelAssetHandle(initData[CAST_I(InitObjParamator::assetPass)]);
+    int modelHandle = drawModelManager->Get3DModelAssetHandle(initData[CAST_I(InitObjParamator::assetPath)]);
     char* end;
     //modelの大きさを変更
     float modelScale = strtof(GetActorParametorStrVec(kind)[CAST_I(InitObjParamator::modelSize)].c_str(), &end);
     MV1SetScale(modelHandle, VGet(modelScale, modelScale, modelScale));
     return modelHandle;
 }
-/// <summary>
-/// 追加情報の入ったファイルまでのパスを渡す
-/// </summary>
-/// <param name="obj">追加情報が欲しいオブジェクト</param>
-/// <returns>追加情報の入ったファイルまでのパス</returns>
-std::string InitActor::GetAddDataPass(AddDataObject kind)
-{
-    //各オブジェクト毎に必要な追加データ
-    auto dataPass = new CSVFileLoader(GetInitCsvFilePass(AssetList::objectAddData));
-    auto loadPass = dataPass->GeFileStringData();
-    SAFE_DELETE(dataPass);
-    return loadPass[CAST_I(kind)];
-}
+
 /// <summary>
 /// 初期化したいパラメータを文字列で所得
 /// </summary>
@@ -101,8 +84,8 @@ std::vector<std::string> InitActor::GetActorParametorStrVec(InitObjKind objKind)
     //初期化したいオブジェクトの種類をint型にする
     int num = CAST_I(objKind);
     //データ読み取り
-    CSVFileLoader* initDataLoader = new CSVFileLoader(objectInitDataPassVec[num]);
-    initData = initDataLoader->GeFileStringData();
+    CSVFileLoader* initDataLoader = new CSVFileLoader(objectInitDataPathVec[num]);
+    initData = initDataLoader->GetStringData();
     SAFE_DELETE(initDataLoader);
     return initData;
 }

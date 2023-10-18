@@ -1,19 +1,18 @@
 ﻿#include "SoundPlayer.h"
 #include "DxLib.h"
 #include "CSVFileLoader.h"
+#include "JsonFileLoader.h"
 #include "Utility.h"
 //サウンドの種類ごとのハンドル
 std::map<SoundKind, int> SoundPlayer::soundHandleMap;
 //サウンドの種類ごとの初期化パスコンテナ
-std::vector <std::string> SoundPlayer::initFilePassData;
+std::vector <std::string> SoundPlayer::initFilePathData;
 /// <summary>
 /// 全音のパスを把握
 /// </summary>
 SoundPlayer::SoundPlayer()
 {
-    CSVFileLoader* initDataLoader = new CSVFileLoader(GetInitCsvFilePass(AssetList::sound));
-    initFilePassData = initDataLoader->GeFileStringData();
-    SAFE_DELETE(initDataLoader);
+    initFilePathData = GetAssetList(AssetList::sound);
 }
 /// <summary>
 /// 音を全部止めて解放
@@ -110,20 +109,32 @@ void SoundPlayer::LoadAndInitSound(SoundKind kind)
     //音がロードされていないなら
     if (!soundHandleMap.contains(kind))
     {
+        std::vector<std::string> initData;
         int num = static_cast<int>(kind);
-        //データ読み取り
-        CSVFileLoader* initDataLoader = new CSVFileLoader(initFilePassData[num]);
-        std::vector<const char*> initData = initDataLoader->GetFileCharData();
+        if (IsExistJsonFile())//json版
+        {
+            JsonFileLoader* json = new JsonFileLoader(initFilePathData[num], "soundDataShema.json");
+            initData.push_back(json->GetLoadString("soudPass"));
+            initData.push_back(std::to_string(json->GetLoadFloat("soundVolume")));
+            initData.push_back(std::to_string(json->GetLoadFloat("soundRadius")));
+            SAFE_DELETE(json);
+        }
+        else
+        {
+            //データ読み取り
+            CSVFileLoader* initDataLoader = new CSVFileLoader(initFilePathData[num]);
+            initData = initDataLoader->GetStringData();
+            //読み取りクラスの開放
+            SAFE_DELETE(initDataLoader);
+        }
         //読み取った文字列からパスを受け取り音データを所得
-        int passNum = static_cast<int>(SoundInit::SoundParamator::soundPass);
-        int loadSoundHandleNum = LoadSoundMem(initData[passNum]);
+        int PathNum = static_cast<int>(SoundInit::SoundParamator::soundPath);
+        int loadSoundHandleNum = LoadSoundMem(initData[PathNum].c_str());
         //mapに追加
         soundHandleMap.insert(std::make_pair(kind, loadSoundHandleNum));
         //音量を設定
         int volumeNum = static_cast<int>(SoundInit::SoundParamator::soundVolume);
-        ChangeVolumeSoundMem(atoi(initData[volumeNum]), loadSoundHandleNum);
-        //読み取りクラスの開放
-        SAFE_DELETE(initDataLoader);
+        ChangeVolumeSoundMem(atoi(initData[volumeNum].c_str()), loadSoundHandleNum);
     }
 }
 /// <summary>
@@ -139,9 +150,9 @@ void SoundPlayer::LoadAndInit3DSound(SoundKind kind)
         LoadAndInitSound(kind);
         int num = static_cast<int>(kind);
         //データ読み取り
-        CSVFileLoader* initDataLoader = new CSVFileLoader(initFilePassData[num]);
+        CSVFileLoader* initDataLoader = new CSVFileLoader(initFilePathData[num]);
         //読み取ったデータから聞こえる半径を設定
-        auto initStrDataVec = initDataLoader->GeFileStringData();
+        auto initStrDataVec = initDataLoader->GetStringData();
         //聞こえる半径の大きさ
         int radiusNum = static_cast<int>(SoundInit::SoundParamator::soundRadius);
         Set3DRadiusSoundMem(STR_TO_F(initStrDataVec[radiusNum]), soundHandleMap[kind]);

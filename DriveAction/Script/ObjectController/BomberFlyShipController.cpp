@@ -16,5 +16,5 @@ BomberFlyShipController::BomberFlyShipController(std::shared_ptr<DamageObjectGen
 /// <param name="editData">îzíuèÓïÒ</param>
 void BomberFlyShipController::AddObject(PlacementData editData)
 {
-    actorList.push_back(new BomberFlyShip(editData,param,damageObjectGenerator));
+    actorList.push_back(new BomberFlyShip(editData,param.setCoolTime,damageObjectGenerator));
 }

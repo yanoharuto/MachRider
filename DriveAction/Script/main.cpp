@@ -14,7 +14,7 @@
 #include "EffectManager.h"
 #include "UIManager.h"
 #include "UIDrawer.h"
-
+#include "StageDataManager.h"
 //シーンを作るのに必要
 SceneBase* MakeScene(SceneType _NowSceneType);
 
@@ -52,10 +52,12 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance, 
 	UIDrawer* uiDrawer = new UIDrawer();//画面サイズに合わせて描画できるようにする
 	UserInput* userInput = new UserInput();//ユーザーの入力を所得する
 	Clock* clock = new Clock();//ゲーム内の時間
+	StageDataManager* stageDataManager = new StageDataManager();//各ステージの情報管理
 	UIManager* uiManager = new UIManager();//UIの管理
 	InitActor* initActor = new InitActor();//各actorのパラメータの初期化を行う
 	SoundPlayer* soundPlayer = new SoundPlayer();//音の管理
 	EffectManager* effectManager = new EffectManager();//エフェクトの管理
+	
 	//シーンを生成
 	SceneBase* scene = new TitleScene;
 	FadeInFadeOut::FadeIn();

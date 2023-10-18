@@ -10,7 +10,7 @@
 ScoreNum::ScoreNum()
     :NumUI(UIKind::totalScoreNum)
 {
-    ScoreBorder info = StageDataManager::GetScoreBorder();
+    StageDataManager::ScoreBorder info = StageDataManager::GetScoreBorder();
     first = info.gold;
     second = info.silver;
     third = info.bronze;

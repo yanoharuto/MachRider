@@ -1,7 +1,0 @@
-{
-  "assetPass": [
-    { "item": "﻿data/csv/Camera/TitleCameraInitData.csv" },
-    { "item": "data/csv/Camera/GameCameraInitData.csv" },
-    { "item": "data/csv/Camera/EditorCameraInitData.csv" }
-  ]
-}

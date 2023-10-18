@@ -209,15 +209,18 @@ void PlayerCar::UpdateEffects()
 			StopEffekseer3DEffect(turboCourceEffect);
 			turboCourceEffect = -1;
 		}
-
+		if (damageEffect != -1)//ダメージエフェクトを追従させる
+		{
+			SetPosPlayingEffekseer3DEffect(damageEffect, position.x, position.y, position.z);
+		}
 	}
 	else
 	{
 		using enum EffectKind;
 		if (isTurbo)//急加速中に出るエフェクト
 		{
-			UpdateEffect(&windEffect, VGet(position.x, 0, position.z), VGet(0, degree * RAGE, 0), carWind);
-			UpdateEffect(&turboBurnerEffect, VAdd(position, VScale(direction, -radius)), VGet(-twistZRota, degree * RAGE, 0), turboBurner);
+			SetEffectPosAndDir(&windEffect, VGet(position.x, 0, position.z), VGet(0, degree * RAGE, 0), carWind);
+			SetEffectPosAndDir(&turboBurnerEffect, VAdd(position, VScale(direction, -radius)), VGet(-twistZRota, degree * RAGE, 0), turboBurner);
 		}
 		else//加速終了
 		{
@@ -229,8 +232,8 @@ void PlayerCar::UpdateEffects()
 		//ターボ準備中なら
 		if (isTurboReserve)
 		{
-			UpdateEffect(&turboCourceEffect, VGet(position.x, 0, position.z), VGet(0, degree * RAGE, 0), turboCourse);
-			UpdateEffect(&chargeBurnerEffect, VAdd(position, VScale(direction, -radius)), VGet(-twistZRota, degree * RAGE, 0), chargeBurner);
+			SetEffectPosAndDir(&turboCourceEffect, VGet(position.x, 0, position.z), VGet(0, degree * RAGE, 0), turboCourse);
+			SetEffectPosAndDir(&chargeBurnerEffect, VAdd(position, VScale(direction, -radius)), VGet(-twistZRota, degree * RAGE, 0), chargeBurner);
 		}
 		else//ターボチャージ中エフェクト終了
 		{
@@ -243,7 +246,7 @@ void PlayerCar::UpdateEffects()
 		if (!(isTurbo || isTurboReserve))
 		{
 			//走っているとき出るエフェクト
-			UpdateEffect(&defaultBurnerEffect, VAdd(position, VScale(direction, -radius)), VGet(-twistZRota, degree * RAGE, 0), burner);
+			SetEffectPosAndDir(&defaultBurnerEffect, VAdd(position, VScale(direction, -radius)), VGet(-twistZRota, degree * RAGE, 0), burner);
 		}
 	}
 	
@@ -380,7 +383,7 @@ float PlayerCar::GetTurboPower()
 /// <param name="pos"></param>
 /// <param name="dir"></param>
 /// <param name="effectKind"></param>
-void PlayerCar::UpdateEffect(int* playEffect, VECTOR pos, VECTOR dir, EffectKind effectKind)
+void PlayerCar::SetEffectPosAndDir(int* playEffect, VECTOR pos, VECTOR dir, EffectKind effectKind)
 {
 	//エフェクトが出てなかったら出す
 	if (*playEffect == -1 || IsEffekseer3DEffectPlaying(*playEffect))

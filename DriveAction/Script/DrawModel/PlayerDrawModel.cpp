@@ -21,12 +21,7 @@ void PlayerDrawModel::Draw(PlayerCar* drawObj) const
     MATRIX tmpMat = MV1GetMatrix(modelHandle);
     //向きを変える
     ModelSetMatrix(drawObj);
-    // ３Dモデルのポジション設定
-    MV1SetPosition(modelHandle, drawObj->GetPos());
-
     MV1DrawModel(modelHandle);
-    //行列を元に戻す
-    MV1SetRotationMatrix(modelHandle, tmpMat);
 }
 
 /// <summary>
@@ -44,4 +39,7 @@ void PlayerDrawModel::ModelSetMatrix(PlayerCar* player) const
 	MATRIX rotYMat = MGetRotY((180.0f + playerRota.y) * RAGE);
 	tmpMat = MMult(tmpMat, rotYMat);
 	MV1SetRotationMatrix(modelHandle, tmpMat);
+
+	// ３Dモデルのポジション設定
+	MV1SetPosition(modelHandle, player->GetPos());
 }

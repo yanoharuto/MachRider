@@ -1,0 +1,9 @@
+{
+  "width": 6000,
+  "length": 6000,
+  "enemyFilePath": "data/Json/StageData/Stage4/enemyData.json",
+  "collectFilePath": "data/Json/StageData/Stage4/collectData.json",
+  "playerPositionFilePath": "data/Json/StageData/Stage4/playerData.json",
+  "gameTime": 75,
+  "stageScoreFilePath": "data/Json/StageData/Stage4/scoreData.json"
+}

@@ -19,7 +19,10 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Script\AddActor\AddFlyShipDataLoader.cpp" />
+    <ClCompile Include="Script\AddActor\AddMoveSawDataLoader.cpp" />
     <ClCompile Include="Script\AddActor\AddObjectDataLoader.cpp" />
+    <ClCompile Include="Script\AddActor\AddPlayerDataLoader.cpp" />
     <ClCompile Include="Script\AddActor\DamageObjectGenerator.cpp" />
     <ClCompile Include="Script\AddActor\DrawModelManager.cpp" />
     <ClCompile Include="Script\AddActor\EnemyGenerator.cpp" />
@@ -132,7 +135,10 @@
   <ItemGroup>
     <ClInclude Include="EditorEffect.h" />
     <ClInclude Include="JsonFileLoader.h" />
+    <ClInclude Include="Script\AddActor\AddFlyShipDataLoader.h" />
+    <ClInclude Include="Script\AddActor\AddMoveSawDataLoader.h" />
     <ClInclude Include="Script\AddActor\AddObjectDataLoader.h" />
+    <ClInclude Include="Script\AddActor\AddPlayerDataLoader.h" />
     <ClInclude Include="Script\AddActor\DamageObjectGenerator.h" />
     <ClInclude Include="Script\AddActor\DrawModelManager.h" />
     <ClInclude Include="Script\AddActor\EnemyGenerator.h" />

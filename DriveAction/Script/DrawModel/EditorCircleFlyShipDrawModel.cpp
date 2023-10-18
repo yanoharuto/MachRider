@@ -5,6 +5,7 @@
 #include "InitObjKind.h"
 #include "FlyShipController.h"
 #include "EditorDrawModel.h"
+#include "AddFlyShipDataLoader.h"
 #include "Utility.h"
 /// <summary>
 /// 円形飛行艇は編集時は陣形の飛行機纏めて描画する
@@ -29,9 +30,8 @@ void EditorCircleFlyShipDrawModel::Draw(PlacementData data) const
         //描画するモデルがないなら終了
         if (modelHandle == -1)return;
         //向きを変える
-        ModelSetMatrix(VGet(data.dirX, 0, data.dirZ));
+        ModelSetMatrix(VAdd(dataPos, VScale(dataDir, uniBetween)),VGet(data.dirX, 0, data.dirZ));
         // ３Dモデルのポジション設定
-        MV1SetPosition(modelHandle, VAdd(dataPos,VScale(dataDir,uniBetween)));
         MV1DrawModel(modelHandle);
     }
 }
@@ -52,9 +52,7 @@ void EditorCircleFlyShipDrawModel::SelectDraw(PlacementData data) const
         //描画するモデルがないなら終了
         if (modelHandle == -1)return;
         //向きを変える
-        ModelSetMatrix(VGet(data.dirX, 0, data.dirZ));
-        // ３Dモデルのポジション設定
-        MV1SetPosition(modelHandle, VAdd(dataPos, VScale(dataDir, uniBetween)));
+        ModelSetMatrix(VAdd(dataPos, VScale(dataDir, uniBetween)),VGet(data.dirX, 0, data.dirZ));
         MV1DrawModel(modelHandle);
     }
 }
@@ -63,14 +61,14 @@ void EditorCircleFlyShipDrawModel::SelectDraw(PlacementData data) const
 /// </summary>
 void EditorCircleFlyShipDrawModel::Init()
 {
-    //配置に必要な情報
-    using enum FlyShipInit::FlyShipParamator;
-
     //FlyShip用のデータをロード
-    CSVFileLoader* addDataLoader = new CSVFileLoader(InitActor::GetAddDataPass(AddDataObject::circleFlyShip));
-    auto addData = addDataLoader->GeFileStringData();
+    auto addDataLoader = new AddFlyShipDataLoader(AddObjectDataLoader::AddData::circleFlyShip);
+    auto addData = addDataLoader->GetLoadData();
+    using enum FlyShipController::FlyShipParamator;
     uniNum = STR_TO_I(addData[CAST_I(unitNum)]);
     uniBetween = STR_TO_F(addData[CAST_I(unitBetween)]);
     //機体の数だけ割る
     uniDirRota = 360.0f / uniNum;
+    //追加情報読み取り終了
+    SAFE_DELETE(addDataLoader);
 }

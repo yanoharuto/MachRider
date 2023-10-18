@@ -15,9 +15,9 @@ public:
     /// <summary>
     /// modelをロードして渡す
     /// </summary>
-    /// <param name="assetPass"></param>
+    /// <param name="assetPath"></param>
     /// <returns>すでにロードしてたら複製</returns>
-    int Get3DModelAssetHandle(std::string assetPass);
+    int Get3DModelAssetHandle(std::string assetPath);
 private:
     
     /// 描画モデルハンドル

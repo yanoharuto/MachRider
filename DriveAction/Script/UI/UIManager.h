@@ -132,7 +132,7 @@ namespace UIInit
         //縦分割数
         yNum,
         //画像の相対パス
-        graphPass,
+        graphPath,
         //大きさ
         size,
         //分割してある場合のコマ送りスピード
@@ -191,5 +191,7 @@ public:
      static UIData CreateUIData(int kindNum);
      //全てのUIのパス
     static std::vector<std::string> uiPathVec;
+    //UI所得に使うスキーマのパス
+    static std::string shemaPath;
 
 };

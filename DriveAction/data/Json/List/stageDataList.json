@@ -1,1 +1,9 @@
-{"assetPass":[{"item":"data/csv/StageData/stage1/stageData.csv"},{"item":"data/csv/StageData/stage2/stageData.csv"},{"item":"data/csv/StageData/stage3/stageData.csv"},{"item":"data/csv/StageData/stage4/stageData.csv"}]}
+{
+  "assetPass": [
+    {
+      "item": "data/Json/StageData/stage1/stageData.json"},
+    { "item": "data/Json/StageData/stage2/stageData.json" },
+    { "item": "data/Json/StageData/stage3/stageData.json" },
+    { "item": "data/Json/StageData/stage4/stageData.json" }
+  ]
+}

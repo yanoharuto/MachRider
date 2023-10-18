@@ -14,9 +14,9 @@ EditorEffect::EditorEffect()
     if (posEffect == -1)
     {
         EffectManager::LoadEffect(collectAura);
-        EffectManager::LoadEffect(compass);
+        EffectManager::LoadEffect(comPath);
         posEffect = EffectManager::GetPlayEffect3D(collectAura);
-        dirEffect = EffectManager::GetPlayEffect3D(compass);
+        dirEffect = EffectManager::GetPlayEffect3D(comPath);
         SetScalePlayingEffekseer3DEffect(dirEffect, dirEffectSize, dirEffectSize, dirEffectSize);
     }
 }

@@ -51,5 +51,7 @@ private:
     //遊んでいるときのUI
     GamePlayUI* playUI;
     //処理終了フラグ
-    bool isEndProcess;
+    bool isEndProcess = false;
+    //最初の更新フラグ
+    bool isFirstUpdate = true;
 };

@@ -432,7 +432,16 @@
     <ClCompile Include="Script\AddActor\DrawModelManager.cpp">
       <Filter>ソース ファイル\AddActor</Filter>
     </ClCompile>
+    <ClCompile Include="Script\AddActor\AddFlyShipDataLoader.cpp">
+      <Filter>ソース ファイル\AddActor</Filter>
+    </ClCompile>
+    <ClCompile Include="Script\AddActor\AddMoveSawDataLoader.cpp">
+      <Filter>ソース ファイル\AddActor</Filter>
+    </ClCompile>
     <ClCompile Include="Script\AddActor\AddObjectDataLoader.cpp">
+      <Filter>ソース ファイル\AddActor</Filter>
+    </ClCompile>
+    <ClCompile Include="Script\AddActor\AddPlayerDataLoader.cpp">
       <Filter>ソース ファイル\AddActor</Filter>
     </ClCompile>
   </ItemGroup>
@@ -893,9 +902,6 @@
     <ClInclude Include="Script\Utility\JsonFileLoader.h">
       <Filter>ヘッダー ファイル\Utility</Filter>
     </ClInclude>
-    <ClInclude Include="Script\AddActor\AddObjectDataLoader.h">
-      <Filter>ヘッダー ファイル\AddActor</Filter>
-    </ClInclude>
     <ClInclude Include="Script\AddActor\DrawModelManager.h">
       <Filter>ヘッダー ファイル\AddActor</Filter>
     </ClInclude>
@@ -904,6 +910,18 @@
     </ClInclude>
     <ClInclude Include="Script\Camera\CameraManager.h">
       <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Script\AddActor\AddFlyShipDataLoader.h">
+      <Filter>ヘッダー ファイル\AddActor</Filter>
+    </ClInclude>
+    <ClInclude Include="Script\AddActor\AddMoveSawDataLoader.h">
+      <Filter>ヘッダー ファイル\AddActor</Filter>
+    </ClInclude>
+    <ClInclude Include="Script\AddActor\AddObjectDataLoader.h">
+      <Filter>ヘッダー ファイル\AddActor</Filter>
+    </ClInclude>
+    <ClInclude Include="Script\AddActor\AddPlayerDataLoader.h">
+      <Filter>ヘッダー ファイル\AddActor</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

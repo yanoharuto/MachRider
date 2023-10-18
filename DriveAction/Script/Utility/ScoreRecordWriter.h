@@ -13,7 +13,7 @@ public:
     /// </summary>
     /// <param name="filePath">スコアのファイルのパス</param>
     /// <param name="scoreBorder">そのステージのスコアの記録の線引き</param>
-    ScoreRecordWriter(std::string filePath,InitStage::ScoreBorder scoreBorder);
+    ScoreRecordWriter(std::string filePath,StageDataManager::ScoreBorder scoreBorder);
     /// <summary>
     /// スコアの記録の更新
     /// </summary>
@@ -21,7 +21,7 @@ public:
     void UpdateScoreRecord(ResultScore* const score);
 private:
     //遊んでいるステージのスコアの記録の線引き
-    ScoreBorder border;
+    StageDataManager::ScoreBorder border;
     //borderから文字列に変換した
     std::string borderString;
     //記録すファイルのパス

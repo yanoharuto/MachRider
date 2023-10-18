@@ -6,8 +6,27 @@
 #include "InitObjKind.h"
 #include "InitActor.h"
 #include "AddableObjectController.h"
-namespace FlyShipInit
+#include "AddFlyShipDataLoader.h"
+
+class FlyShip;
+class DamageObjectGenerator;
+/// <summary>
+/// 空を飛ぶ船のまとめ役
+/// </summary>
+class FlyShipController abstract : public AddableObjectController
 {
+public:
+    /// <summary>
+    /// 纏める飛行船の初期化するために必要なデータを所得 
+    /// 飛行船が発射する物を生成できるdamageObjGeneratorを所得
+    /// </summary>
+    /// <param name="kind">初期化したいFlyShipの種類</param>
+    /// <param name="damageObjGenerator">レーザーや爆弾を発射するのに使う</param>
+    FlyShipController(ObjectInit::InitObjKind kind, std::shared_ptr<DamageObjectGenerator> damageObjGenerator);
+    /// <summary>
+    /// actorListとDrawModelとdamageObjectGeneratorの解放
+    /// </summary>
+    ~FlyShipController()override;
     /// <summary>
     /// 空を飛ぶ船の初期化情報
     /// </summary>
@@ -32,7 +51,7 @@ namespace FlyShipInit
     enum class FlyShipParamator
     {
         //生存時間
-        aliveTime ,
+        aliveTime,
 
         //移動速度
         moveSpeed,
@@ -46,33 +65,13 @@ namespace FlyShipInit
         //攻勢ユニット同士の距離
         unitBetween
     };
-}
-class FlyShip;
-class DamageObjectGenerator;
-using namespace FlyShipInit;
-/// <summary>
-/// 空を飛ぶ船のまとめ役
-/// </summary>
-class FlyShipController abstract : public AddableObjectController
-{
-public:
-    /// <summary>
-    /// 纏める飛行船の初期化するために必要なデータを所得 
-    /// 飛行船が発射する物を生成できるdamageObjGeneratorを所得
-    /// </summary>
-    /// <param name="kind">初期化したいFlyShipの種類</param>
-    /// <param name="damageObjGenerator">レーザーや爆弾を発射するのに使う</param>
-    FlyShipController(ObjectInit::InitObjKind kind, std::shared_ptr<DamageObjectGenerator> damageObjGenerator);
-    /// <summary>
-    /// actorListとDrawModelとdamageObjectGeneratorの解放
-    /// </summary>
-    ~FlyShipController()override;
 protected:
+  
     /// <summary>
-    /// 初期化するために必要なデータを所得
+    /// 飛行船の追加情報所得
     /// </summary>
-    /// <param name="kind">初期化したいFlyShipの種類</param>
-    void GetInitAddData(ObjectInit::AddDataObject kind);
+    /// <param name="kind">飛行船の種類</param>
+    void GetAddData(AddFlyShipDataLoader::AddData kind);
     //初期化情報
     InitFlyShipParamator param = {};
     //レーザーや爆弾を発射するのに使う

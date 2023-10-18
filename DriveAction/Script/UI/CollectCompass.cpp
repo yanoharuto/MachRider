@@ -17,7 +17,7 @@ CollectCompass::CollectCompass(std::weak_ptr<PlayerObserver> player, std::shared
 {
     collectObserver= collectItemObserver;
     playerObserver = player;
-    EffectManager::LoadEffect(EffectKind::compass);
+    EffectManager::LoadEffect(EffectKind::comPath);
 }
 /// <summary>
 /// エフェクト終了
@@ -34,7 +34,7 @@ void CollectCompass::Update()
     //エフェクトが止まってたらもう一度再生
     if (IsEffekseer3DEffectPlaying(compassEffect) == -1)
     {
-        compassEffect = EffectManager::GetPlayEffect3D(EffectKind::compass);
+        compassEffect = EffectManager::GetPlayEffect3D(EffectKind::comPath);
     }
     //エフェクトはプレイヤーの足元に表示
     VECTOR pos = playerObserver.lock()->GetSubjectPos();

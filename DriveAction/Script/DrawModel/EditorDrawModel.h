@@ -23,12 +23,12 @@ public:
     /// <param name="data"></param>
     virtual void SelectDraw(PlacementData data)const;
 protected:
-
     /// <summary>
     /// 描画モデルの行列をセット
     /// </summary>
-    /// <param name="dir"></param>
-    void ModelSetMatrix(VECTOR dir) const;
+    /// <param name="pos">位置</param>
+    /// <param name="dir">方向</param>
+    void ModelSetMatrix(VECTOR pos,VECTOR dir) const;
     //選択されているならちょっと位置が高くなる
     const float selectPosY = 75.0f;
 };

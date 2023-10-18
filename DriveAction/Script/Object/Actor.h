@@ -6,8 +6,7 @@
 /// <summary>
 /// “®‚­‚â‚Â
 /// </summary>
-class Actor abstract:
-    public Object
+class Actor abstract : public Object
 {
 public:
     Actor(ObjectInit::InitObjKind kind);

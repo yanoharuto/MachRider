@@ -1,17 +1,18 @@
 #include "UIManager.h"
 #include "CSVFileLoader.h"
+#include "JsonFileLoader.h"
 #include "Utility.h"
 #include "DxLib.h"
 //全てのUIのパス
 std::vector<std::string> UIManager::uiPathVec;
+//UI読み取りに使うスキーマ
+std::string UIManager::shemaPath = "uiDataSchema.json";
 /// <summary>
 /// 全てのUI画像のパスをuiPathVecに渡す
 /// </summary>
 UIManager::UIManager()
 {
-    CSVFileLoader* initDataFile = new CSVFileLoader(GetInitCsvFilePass(AssetList::ui));
-    uiPathVec = initDataFile->GeFileStringData();
-    SAFE_DELETE(initDataFile);
+    uiPathVec = GetAssetList(AssetList::ui);
 }
 /// <summary>
 /// UIを所得
@@ -42,11 +43,30 @@ void UIManager::DeleteUIGraph(UIData* ui)
 UIData UIManager::CreateUIData(int kindNum)
 {
     UIData data;
-
+    std::vector<std::string> dataVec;
     using enum InitUIData;
-    //データ読み取り
-    CSVFileLoader* initDataFile = new CSVFileLoader(uiPathVec[kindNum]);
-    std::vector<std::string> dataVec = initDataFile->GeFileStringData();
+    if (IsExistJsonFile())
+    {
+        JsonFileLoader* jsonFile = new JsonFileLoader(uiPathVec[kindNum], shemaPath);
+        dataVec.push_back(std::to_string(jsonFile->GetLoadInt("x")));
+        dataVec.push_back(std::to_string(jsonFile->GetLoadInt("y")));
+        dataVec.push_back(std::to_string(jsonFile->GetLoadInt("width")));
+        dataVec.push_back(std::to_string(jsonFile->GetLoadInt("height")));
+        dataVec.push_back(std::to_string(jsonFile->GetLoadInt("xNum")));
+        dataVec.push_back(std::to_string(jsonFile->GetLoadInt("yNum")));
+        dataVec.push_back(jsonFile->GetLoadString("graphPass"));
+        dataVec.push_back(std::to_string(jsonFile->GetLoadFloat("size")));
+        dataVec.push_back(std::to_string(jsonFile->GetLoadFloat("frameSpeed")));
+        
+    }
+    else
+    {
+        //データ読み取り
+        CSVFileLoader* initDataFile = new CSVFileLoader(uiPathVec[kindNum]);
+        dataVec = initDataFile->GetStringData();
+        //初期化データを消す
+        SAFE_DELETE(initDataFile);
+    }
     //位置とか幅とか分割数を読み取る
     data.x = STR_TO_I(dataVec[CAST_I(drawX)]);
     data.y = STR_TO_I(dataVec[CAST_I(drawY)]);
@@ -58,7 +78,7 @@ UIData UIManager::CreateUIData(int kindNum)
     data.height = STR_TO_I(dataVec[CAST_I(height)]) / divYNum;
     //画像を分割読み込み
     int graphArray[1000];
-    LoadDivGraph(dataVec[CAST_I(graphPass)].c_str(), divXNum * divYNum, divXNum, divYNum, data.width, data.height, graphArray);
+    LoadDivGraph(dataVec[CAST_I(graphPath)].c_str(), divXNum * divYNum, divXNum, divYNum, data.width, data.height, graphArray);
     for (int i = 0; i < divXNum + divYNum - 1; i++)
     {
         data.dataHandle.push_back(graphArray[i]);
@@ -66,8 +86,6 @@ UIData UIManager::CreateUIData(int kindNum)
     //大きさとコマ送り速度
     data.size = STR_TO_F(dataVec[CAST_I(size)]);
     data.frameSpeed = STR_TO_F(dataVec[CAST_I(frameSpeed)]);
-    //初期化データを消す
-    SAFE_DELETE(initDataFile);
 
     return data;
 }

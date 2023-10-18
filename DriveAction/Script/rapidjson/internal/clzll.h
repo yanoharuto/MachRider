@@ -30,7 +30,7 @@ RAPIDJSON_NAMESPACE_BEGIN
 namespace internal {
 
 inline uint32_t clzll(uint64_t x) {
-    // Passing 0 to __builtin_clzll is UB in GCC and results in an
+    // Pathing 0 to __builtin_clzll is UB in GCC and results in an
     // infinite loop in the software implementation.
     RAPIDJSON_ASSERT(x != 0);
 

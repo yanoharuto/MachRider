@@ -13,7 +13,7 @@ public:
     /// <summary>
     /// デフォルトコンストラクタ
     /// </summary>
-    AssetManager() {};
+    AssetManager();
     virtual ~AssetManager() {};
 
     enum class AssetList
@@ -26,29 +26,37 @@ public:
         stageData,//ステージの初期位置や制限時間
         objectAddData//オブジェクトの追加情報
     };
+
+    /// <summary>
+    /// Jsonファイルを読み取っていい状態か
+    /// </summary>
+    /// <returns>読み取っていいならtrue</returns>
+    static bool IsExistJsonFile();
 protected:
     /// <summary>
     /// 初期化で使うCSVファイルのパスを所得
     /// </summary>
     /// <param name="fileKind">欲しいファイルの種類</param>
     /// <returns>初期化で使うCSVファイルのパス</returns>
-   static std::string GetInitCsvFilePass(AssetList fileKind);
+   static std::string GetInitCsvFilePath(AssetList fileKind);
    /// <summary>
    /// 初期化で使うJsonファイルのパスを所得
    /// </summary>
    /// <param name="fileKind">欲しいファイルの種類</param>
    /// <returns>初期化で使うJsonファイルのパス</returns>
-   static std::string GetInitJsonFilePass(AssetList fileKind);
+   static std::string GetInitJsonFilePath(AssetList fileKind);
    /// <summary>
-   /// 読み取ったファイルからasset一覧をVectorに移していく
+   /// asset一覧をVectorに移していく
    /// </summary>
-   /// <param name="fileLoader">読み取ったファイル</param>
-   std::vector<std::string> GetAssetListJson( JsonFileLoader* const fileLoader);
+   /// <param name="listKind">読み取りたいファイルの種類</param>
+   static std::vector<std::string> GetAssetList(AssetList listKind);
    //csvファイルまでのパス
-   static std::string const initCSVFilePass;
+   static std::string const initCSVFilePath;
    //jsonファイルまでのパス
-   static std::string const initJSONFilePass;
+   static std::string const initJSONFilePath;
 private:
+    //asset一覧で使うスキーマのパス
+    static const std::string listSchemaPath;
     //初期化ファイルの名前
     static std::string const initFileNames[];
 };

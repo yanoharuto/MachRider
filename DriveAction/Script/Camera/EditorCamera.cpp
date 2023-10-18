@@ -6,7 +6,7 @@
 /// Editor‰æ–Ê‚ÌƒJƒƒ‰
 /// </summary>
 EditorCamera::EditorCamera()
-    :Camera(InitCamera::UseCameraSceneKind::editor)
+    :Camera(CameraDataLoader::UseCameraSceneKind::editor)
 {
     position = {};
     position.y = posY;

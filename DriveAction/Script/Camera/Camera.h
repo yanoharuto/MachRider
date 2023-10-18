@@ -19,7 +19,7 @@ public:
     /// カメラの速度や高さの初期化
     /// </summary>
     /// <param name="type">どのタイミングで使うか教えて</param>
-    Camera(InitCamera::UseCameraSceneKind type);
+    Camera(CameraDataLoader::UseCameraSceneKind type);
     /// <summary>
     /// カメラの向きを所得
     /// </summary>
@@ -40,7 +40,7 @@ protected:
     /// カメラのパラメータ等を読み取る
     /// </summary>
     /// <param name="type">シーンによってカメラの性能を変える</param>
-    void LoadData(InitCamera::UseCameraSceneKind type);
+    void LoadData(CameraDataLoader::UseCameraSceneKind type);
     //見たいものの位置等を教えてくれるやつ
     std::weak_ptr<ObjectObserver> targetObserver;
     //カメラの位置

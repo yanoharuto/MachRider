@@ -23,8 +23,7 @@ void DrawModel::Draw(Object* const drawObj) const
     {
         //向きを変える
         ModelSetMatrix(drawObj);
-        // ３Dモデルのポジション設定
-        MV1SetPosition(modelHandle, drawObj->GetPos());
+
         //描画
         MV1DrawModel(modelHandle);
     }
@@ -42,4 +41,6 @@ void DrawModel::ModelSetMatrix(Object* const drawObj) const
     MATRIX rotYMat = MGetRotY(180.0f * RAGE);
     tmpMat = MMult(tmpMat, rotYMat);
     MV1SetRotationMatrix(modelHandle, tmpMat);
+    // ３Dモデルのポジション設定
+    MV1SetPosition(modelHandle, drawObj->GetPos());
 }

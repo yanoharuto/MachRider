@@ -2,34 +2,44 @@
 #include "Utility.h"
 #include "ListUtility.h"
 #include "CSVFileLoader.h"
+#include "JsonFileLoader.h"
 #include "StageSelect.h"
 #include "StopTimer.h"
 #include "ResultScore.h"
 #include "ScoreRecordWriter.h"
 //ステージのファイルの名前
 std::string StageDataManager::fileAddres = "-1";
+//各ステージのデータのスキーマ
+const std::string StageDataManager::stageDataSchema = "stageDataSchema.json";
+//各ステージのスコアのスキーマ
+const std::string StageDataManager::scoreDataSchema = "scoreDataSchema.json";
+//配置に必要なスキーマ
+const std::string StageDataManager::arrangeDataSchema = "arrangeDataSchema.json";
 //ステージのデータ
 std::vector<std::string> StageDataManager::dataVector;
 //ステージの横幅
 int StageDataManager::stageWidth;
 //ステージの縦幅
 int StageDataManager::stageLength;
+StageDataManager::StageDataManager()
+{
+}
 /// <summary>
 /// 所得するステージの変更
 /// </summary>
 /// <param name="select">今選んでいるステージを教えてもらう</param>
 void StageDataManager::ChangeStageData(StageSelect* const select)
 {
-    //空だったら読み込む
     if (dataVector.empty())
     {
-        InitStageData();
+        LoadStageData();
     }
     //選んでいるステージのアドレスを保存
     fileAddres = dataVector[select->GetSelectStageNum()];
 
-    stageWidth = STR_TO_I(GetSelectStageData(InitStage::width));
-    stageLength = STR_TO_I(GetSelectStageData(InitStage::length));
+    stageWidth = STR_TO_I(GetSelectStageData(StageData::width));
+
+    stageLength = STR_TO_I(GetSelectStageData(StageData::length));
 }
 /// <summary>
 /// ステージの数
@@ -39,18 +49,7 @@ int StageDataManager::GetStageTotalNumber()
 {
     return dataVector.size();
 }
-/// <summary>
-/// ステージの名前
-/// </summary>
-/// <returns></returns>
-std::string StageDataManager::GetSelectStageName()
-{
-    if (fileAddres == "-1")
-    {
-        InitStageData();
-    }
-    return fileAddres;
-}
+
 /// <summary>
 /// 各ステージのデータを取ってくる
 /// </summary>
@@ -58,30 +57,60 @@ std::string StageDataManager::GetSelectStageName()
 /// <returns>ステージの制限時間や縦幅横幅、初期位置の入ったファイルのパスなどが返ってくる</returns>
 std::string StageDataManager::GetSelectStageData(StageData dataKind)
 {
-    //今選択中のステージの情報を所得
-    auto fileLoader = new CSVFileLoader(GetSelectStageName());
-    auto setStageInitDataVec = fileLoader->GeFileStringData();
-    SAFE_DELETE(fileLoader);
+    std::vector<std::string> setStageInitDataVec;
+    if (IsExistJsonFile())
+    {
+        auto fileLoader = new JsonFileLoader(fileAddres, stageDataSchema);
+        setStageInitDataVec.push_back(std::to_string(fileLoader->GetLoadInt("width")));
+        setStageInitDataVec.push_back(std::to_string(fileLoader->GetLoadInt("length")));
+        setStageInitDataVec.push_back(fileLoader->GetLoadString("enemyFilePath"));
+        setStageInitDataVec.push_back(fileLoader->GetLoadString("collectFilePath"));
+        setStageInitDataVec.push_back(fileLoader->GetLoadString("playerPositionFilePath"));
+        setStageInitDataVec.push_back(std::to_string(fileLoader->GetLoadInt("gameTime")));
+        setStageInitDataVec.push_back(fileLoader->GetLoadString("stageScoreFilePath"));
+    }
+    else
+    {
+        //今選択中のステージの情報を所得
+        auto fileLoader = new CSVFileLoader(fileAddres);
+        setStageInitDataVec = fileLoader->GetStringData();
+        SAFE_DELETE(fileLoader);
+    }
     //引数の情報を返す
-    return setStageInitDataVec[dataKind];
+    return setStageInitDataVec[CAST_I(dataKind)];
 }
 /// <summary>
 /// 遊ぶステージのスコアのボーダーラインを返す
 /// </summary>
 /// <returns>現在遊んでいるステージのスコアの線引きを纏めたもの</returns>
-ScoreBorder StageDataManager::GetScoreBorder()
+StageDataManager::ScoreBorder StageDataManager::GetScoreBorder()
 {
-    auto fileLoader = new CSVFileLoader(GetSelectStageData(stageScoreFilePass));
-    //ステージ情報文字列コンテナ
-    auto scoreStrInfoVec = fileLoader->GeFileStringData();
-    //ステージのスコアの線引き
-    ScoreBorder scoreBorder = {};
-    scoreBorder.gold = STR_TO_I(scoreStrInfoVec[StageScore::goldScore]);
-    scoreBorder.silver = STR_TO_I(scoreStrInfoVec[StageScore::silverScore]);
-    scoreBorder.bronze = STR_TO_I(scoreStrInfoVec[StageScore::bronzeScore]);
-    scoreBorder.highScore = STR_TO_I(scoreStrInfoVec[StageScore::highScore]);
-    scoreBorder.second = STR_TO_I(scoreStrInfoVec[StageScore::secondScore]);
-    scoreBorder.third = STR_TO_I(scoreStrInfoVec[StageScore::thirdScore]);
+    ScoreBorder scoreBorder = {};//ステージのスコアの線引き
+    std::vector<std::string> scoreStrInfoVec;
+    if (IsExistJsonFile())//jsonで読み込む
+    {
+        auto fileLoader = new JsonFileLoader(GetSelectStageData(StageData::stageScoreFilePath), scoreDataSchema);
+        scoreStrInfoVec.push_back(std::to_string(fileLoader->GetLoadInt("gold")));
+        scoreStrInfoVec.push_back(std::to_string(fileLoader->GetLoadInt("silver")));
+        scoreStrInfoVec.push_back(std::to_string(fileLoader->GetLoadInt("bronze")));
+        scoreStrInfoVec.push_back(std::to_string(fileLoader->GetLoadInt("firstScore")));
+        scoreStrInfoVec.push_back(std::to_string(fileLoader->GetLoadInt("secondScore")));
+        scoreStrInfoVec.push_back(std::to_string(fileLoader->GetLoadInt("thirdScore")));
+    }
+    else//ｃｓｖで読み込む
+    {
+        auto fileLoader = new CSVFileLoader(GetSelectStageData(StageData::stageScoreFilePath));
+        //ステージ情報文字列コンテナ
+        scoreStrInfoVec = fileLoader->GetStringData();
+        SAFE_DELETE(fileLoader);
+    }
+    //所得
+    scoreBorder.gold = STR_TO_I(scoreStrInfoVec[CAST_I(StageScore::goldScore)]);
+    scoreBorder.silver = STR_TO_I(scoreStrInfoVec[CAST_I(StageScore::silverScore)]);
+    scoreBorder.bronze = STR_TO_I(scoreStrInfoVec[CAST_I(StageScore::bronzeScore)]);
+    scoreBorder.highScore = STR_TO_I(scoreStrInfoVec[CAST_I(StageScore::highScore)]);
+    scoreBorder.second = STR_TO_I(scoreStrInfoVec[CAST_I(StageScore::secondScore)]);
+    scoreBorder.third = STR_TO_I(scoreStrInfoVec[CAST_I(StageScore::thirdScore)]);
     return scoreBorder;
 }
 /// <summary>
@@ -89,7 +118,7 @@ ScoreBorder StageDataManager::GetScoreBorder()
 /// </summary>
 /// <param name="tag">欲しいオブジェクトの初期位置情報のタグ</param>
 /// <returns>tagのオブジェクトが初期位置を決めるときに必要な文字列情報</returns>
-std::vector<std::string> StageDataManager::GetPlaceStrData(Object::ObjectTag tag)
+std::string StageDataManager::GetPlaceStrData(Object::ObjectTag tag)
 {
     ///今選択しているステージの初期位置の入ったファイルのパス
     std::string selectStageFirstPlaceFilePath;
@@ -98,18 +127,16 @@ std::vector<std::string> StageDataManager::GetPlaceStrData(Object::ObjectTag tag
     switch (tag)
     {
     case player:
-        selectStageFirstPlaceFilePath = GetSelectStageData(playerPositionFilePass);
+        selectStageFirstPlaceFilePath = GetSelectStageData(StageData::playerPositionFilePath);
         break;
     case collect:
-        selectStageFirstPlaceFilePath = GetSelectStageData(collectFilePass);
+        selectStageFirstPlaceFilePath = GetSelectStageData(StageData::collectFilePath);
         break;
     default:
-        selectStageFirstPlaceFilePath = GetSelectStageData(enemyFilePass);
+        selectStageFirstPlaceFilePath = GetSelectStageData(StageData::enemyFilePath);
         break;
     }
-    //初期化文字列リストを取ってくる
-    CSVFileLoader* csv = new CSVFileLoader(selectStageFirstPlaceFilePath);
-    return csv->GeFileStringData();
+    return selectStageFirstPlaceFilePath;
 }
 /// <summary>
 /// ゲームの制限時間のタイマーを作成
@@ -117,7 +144,7 @@ std::vector<std::string> StageDataManager::GetPlaceStrData(Object::ObjectTag tag
 /// <returns>ゲーム制限時間タイマー</returns>
 std::shared_ptr<StopTimer> StageDataManager::CreateGameTimer()
 {
-    double gameLimitTime = STR_TO_F(GetSelectStageData(gameTime));
+    double gameLimitTime = STR_TO_F(GetSelectStageData(StageData::gameTime));
     return std::make_shared<StopTimer>(gameLimitTime);
 }
 /// <summary>
@@ -126,15 +153,13 @@ std::shared_ptr<StopTimer> StageDataManager::CreateGameTimer()
 /// <returns>スコアの記録更新役</returns>
 ScoreRecordWriter* StageDataManager::GetScoreRecordWriter()
 {
-    return new ScoreRecordWriter(GetSelectStageData(stageScoreFilePass),GetScoreBorder());
+    return new ScoreRecordWriter(GetSelectStageData(StageData::stageScoreFilePath),GetScoreBorder());
 }
 /// <summary>
-/// 初期化
+/// 全ステージ一覧を読み取る
 /// </summary>
-void StageDataManager::InitStageData()
+void StageDataManager::LoadStageData()
 {
-    auto fileLoader = new CSVFileLoader(GetInitCsvFilePass(AssetList::stageData));//全ステージのデータリストを読み取る
-    dataVector = fileLoader->GeFileStringData();
-    SAFE_DELETE(fileLoader);
-    fileAddres = dataVector[0];//とりあえず先頭を渡す
+    dataVector = GetAssetList(AssetList::stageData);
+    fileAddres = dataVector[0];//とりあえず先頭のステージを渡す
 }

@@ -92,7 +92,7 @@ int ResultScore::GetUpdateScore() const
 void ResultScore::FixScore(int remainingTime, int getCollectNum)
 {
     //スコアの記録線引き
-    ScoreBorder score = StageDataManager::GetScoreBorder();
+    StageDataManager::ScoreBorder score = StageDataManager::GetScoreBorder();
     //制限時間を超過してたら0
     timeScore = remainingTime * clearTimeBonus; 
     //収集アイテムを取ってたらボーナス

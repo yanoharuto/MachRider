@@ -28,7 +28,7 @@ namespace EffectInit
         //コインの出すオーラ
         collectAura,
         //収集アイテムの方角を指すエフェクト
-        compass,
+        comPath,
         //車の後ろから出すエフェクト
         burner,
         //車が速くなる前に出すエフェクト
@@ -45,7 +45,7 @@ namespace EffectInit
     /// </summary>
     enum class EffectInitData
     {
-        effectPass,//エフェクトのパス
+        effectPath,//エフェクトのパス
         effectSize//エフェクトの大きさ
     };
 }
@@ -86,4 +86,6 @@ private:
     static std::unordered_map <EffectKind, int> effectMap;
     //エフェクトのパスが入る文字列
     static std::vector<std::string> initDataVec;
+    //jsonスキーマのパス
+    static std::string schemaPath;
 };

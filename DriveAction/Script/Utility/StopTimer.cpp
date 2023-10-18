@@ -10,6 +10,14 @@ StopTimer::StopTimer(double setLimitTime)
     stopFlag = false;
     stopTime = 0;
 }
+///<summary>
+/// もう一度最初に設定した計測時間分計測開始
+///</summary>
+void StopTimer::Reset()
+{
+    //計測開始時間を初期化
+    startTime = Clock::GetNowGameTime();
+}
 /// <summary>
 /// タイマー停止
 /// </summary>

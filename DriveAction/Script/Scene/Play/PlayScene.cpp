@@ -22,13 +22,10 @@
 /// </summary>
 PlayScene::PlayScene()
     :SceneBase(SceneType::play)
-{
-    
+{   
     //現在の処理
     nowProgress = PlaySceneProgress::start;
-    //ゴール後の処理とプレイヤーが操作する処理はまだ呼ばない
-    postGameEndProcess = nullptr;
-    playGameProcess = nullptr;
+
     //衝突判定管理
     conflictManager = new ConflictManager();
     //収集アイテム
@@ -61,6 +58,9 @@ PlayScene::PlayScene()
     camera->Update();
     //メニュー画面の開放
     menu = new Menu();
+    //ゴール後の処理はまだ呼ばない
+    postGameEndProcess = nullptr;
+    playGameProcess = new PlayGameProcess(playerObserver, collectItemObserver);
 }
 /// <summary>
 /// メニューとゲームの開放
@@ -146,7 +146,6 @@ void PlayScene::UpdatePreStartCountdownEnd()
     {
         nowProgress = PlaySceneProgress::game;
         SAFE_DELETE(gamePrevProcess);
-        playGameProcess = new PlayGameProcess(playerObserver, collectItemObserver);
     }
 }
 /// <summary>

@@ -8,12 +8,12 @@ using namespace std;
 /// <summary>
 /// CSVファイルを読み込む
 /// </summary>
-/// <param name="filePass">読み込むファイルのパス</param>
-CSVFileLoader::CSVFileLoader(std::string filePass)
+/// <param name="filePath">読み込むファイルのパス</param>
+CSVFileLoader::CSVFileLoader(std::string filePath)
 {
     //ファイルを開いて
     lineCount = 0;
-    ifstream ifs(filePass.c_str());
+    ifstream ifs(filePath.c_str());
     isOpen = static_cast<bool>(ifs);
     //1行ずつ読み込む
     string line;
@@ -29,7 +29,7 @@ CSVFileLoader::CSVFileLoader(std::string filePass)
 /// CSVファイルで読み込んだ文字列を渡す
 /// </summary>
 /// <returns> CSVファイルで読み込んだ文字列</returns>
-std::vector<std::string> CSVFileLoader::GeFileStringData()const
+std::vector<std::string> CSVFileLoader::GetStringData()const
 {
     return loadData;
 }

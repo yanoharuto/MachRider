@@ -12,7 +12,7 @@ namespace SoundInit
     enum class SoundParamator
     {
         //音の相対パス
-        soundPass ,
+        soundPath ,
         //音量
         soundVolume,
         //音が聞こえる範囲
@@ -117,5 +117,5 @@ private:
     //modelのアドレスを貰うとモデルハンドルを返す
     static std::map<SoundKind, int> soundHandleMap;
     //初期化ファイルに入っている音の情報パスのコンテナ
-    static std::vector <std::string> initFilePassData;
+    static std::vector <std::string> initFilePathData;
 };

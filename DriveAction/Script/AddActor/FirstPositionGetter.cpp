@@ -3,7 +3,7 @@
 #include "Utility.h"
 #include "JsonFileLoader.h"
 #include "StageDataManager.h"
-std::string FirstPositionGetter::schemaPass = "";
+std::string FirstPositionGetter::schemaPath = "arrangeDataSchema.json";
 /// <summary>
 /// 初期位置を渡す
 /// </summary>
@@ -11,6 +11,10 @@ std::string FirstPositionGetter::schemaPass = "";
 /// <returns>そのオブジェクトの位置をまとめたコンテナ</returns>
 std::vector<PlacementData> FirstPositionGetter::GetPlaceData(Object::ObjectTag tag)
 {
+    if (StageDataManager::IsExistJsonFile())
+    {
+        return JsonConvertFirstData(StageDataManager::GetPlaceStrData(tag));
+    }
     return CSVConvertFirstData(StageDataManager::GetPlaceStrData(tag));
 }
 /// <summary>
@@ -20,11 +24,9 @@ std::vector<PlacementData> FirstPositionGetter::GetPlaceData(Object::ObjectTag t
 /// <param name="kind">配置したいオブジェクトの種類</param>
 /// <returns>配置情報のコンテナ</returns>
 std::vector<PlacementData> FirstPositionGetter::GetPlaceData(std::string fileName, ObjectInit::InitObjKind kind)
-{
-    //初期化文字列をファイルから所得し
-    CSVFileLoader* csv = new CSVFileLoader(fileName);
+{    
     //配置情報に変換する
-    auto placeData = CSVConvertFirstData(csv->GeFileStringData());
+    auto placeData = CSVConvertFirstData(fileName);
     
     //同じ種類のオブジェクトだけ選定して返り値にする
     std::vector<PlacementData> returnData = {};
@@ -35,7 +37,6 @@ std::vector<PlacementData> FirstPositionGetter::GetPlaceData(std::string fileNam
             returnData.push_back(placeData[i]);
         }
     }
-    SAFE_DELETE(csv);
     return returnData;
 }
 /// <summary>
@@ -44,11 +45,13 @@ std::vector<PlacementData> FirstPositionGetter::GetPlaceData(std::string fileNam
 /// <param name="fileName">配置情報までのパス</param>
 /// <param name="kind">所得したい配置物の種類</param>
 /// <returns>CSVファイルからステージに配置するための情報</returns>
-std::vector<PlacementData> FirstPositionGetter::CSVConvertFirstData(std::vector<std::string> placeStrData)
+std::vector<PlacementData> FirstPositionGetter::CSVConvertFirstData(std::string fileName)
 {
+    CSVFileLoader* csvFile = new CSVFileLoader(fileName);
+    auto placeStrData = csvFile->GetStringData();
+    SAFE_DELETE(csvFile)
     //データの種類と列の多さからオブジェクトの数を計算
     int objCount = placeStrData.size() / EDIT_ARRANGEMENT_DATA_KIND_NUM;
-
     //戻り値
     std::vector<PlacementData> dataVec;
 
@@ -76,8 +79,10 @@ std::vector<PlacementData> FirstPositionGetter::CSVConvertFirstData(std::vector<
 /// <returns>ステージ配置情報</returns>
 std::vector<PlacementData> FirstPositionGetter::JsonConvertFirstData(std::string fileName)
 {
+    //ステージに配置するための情報
     std::vector<PlacementData> returnValue;
-    JsonFileLoader* fileLoader = new JsonFileLoader(fileName,schemaPass);
+    //Jsonから読み取る
+    JsonFileLoader* fileLoader = new JsonFileLoader(fileName, schemaPath);
     if (fileLoader->IsAccept())//スキーマと読み込むファイルのバリデーションチェック
     {
         const rapidjson::Value& list = fileLoader->GetLoadArray("arrangeData");
@@ -93,7 +98,9 @@ std::vector<PlacementData> FirstPositionGetter::JsonConvertFirstData(std::string
             firstPlaceData.dirX = array->FindMember("dirX")->value.GetFloat();
             firstPlaceData.dirZ = array->FindMember("dirZ")->value.GetFloat();
             array++;
+            returnValue.push_back(firstPlaceData);
         }
+        
     }
     return returnValue;
 }

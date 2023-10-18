@@ -11,6 +11,10 @@ public:
     /// </summary>
     /// <param name="setLimitTime">計測時間</param>
     StopTimer(double setLimitTime);
+    ///<summary>
+    /// もう一度最初に設定した計測時間分計測開始
+    ///</summary>
+    void Reset();
     /// <summary>
     /// タイマー停止
     /// </summary>

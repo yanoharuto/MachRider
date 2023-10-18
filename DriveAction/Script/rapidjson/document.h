@@ -337,7 +337,7 @@ public:
     const char* bar = foo;
     // Value x(bar); // not ok, can't rely on bar's lifetime
     Value x(StringRef(bar)); // lifetime explicitly guaranteed by user
-    Value y(StringRef(bar, 3));  // ok, explicitly pass length
+    Value y(StringRef(bar, 3));  // ok, explicitly Path length
     \endcode
 
     \see StringRef, GenericValue::SetString
@@ -425,7 +425,7 @@ private:
         return internal::StrLen(str);
     }
 
-    /// Empty string - used when passing in a NULL pointer
+    /// Empty string - used when Pathing in a NULL pointer
     static const Ch emptyString[];
 
     //! Disallow construction from non-const array
@@ -855,7 +855,7 @@ public:
     //! Constructor for Array.
     /*!
         \param a An array obtained by \c GetArray().
-        \note \c Array is always pass-by-value.
+        \note \c Array is always Path-by-value.
         \note the source array is moved into this value and the sourec array becomes empty.
     */
     GenericValue(Array a) RAPIDJSON_NOEXCEPT : data_(a.value_.data_) {
@@ -866,7 +866,7 @@ public:
     //! Constructor for Object.
     /*!
         \param o An object obtained by \c GetObject().
-        \note \c Object is always pass-by-value.
+        \note \c Object is always Path-by-value.
         \note the source object is moved into this value and the sourec object becomes empty.
     */
     GenericValue(Object o) RAPIDJSON_NOEXCEPT : data_(o.value_.data_) {

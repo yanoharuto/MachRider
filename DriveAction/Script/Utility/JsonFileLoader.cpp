@@ -1,21 +1,22 @@
 #include <fstream>
 #include <iostream>
 #include "JsonFileLoader.h"
-
+//スキーマファイルまでのパス
+std::string const JsonFileLoader::jsonSchemaFilePath = "data/Json/Schema/";
 /// <summary>
 /// Json形式のファイルを開く
 /// </summary>
-/// <param name="filePass">開きたいファイル</param>
-/// <param name="schemaFilePass">開くファイルのSchema</param>
-JsonFileLoader::JsonFileLoader(std::string filePass, std::string schemaFilePass)
+/// <param name="filePath">開きたいファイル</param>
+/// <param name="schemaFilePath">開くファイルのSchema</param>
+JsonFileLoader::JsonFileLoader(std::string filePath, std::string schemaFilePath)
 {
     //スキーマから書き方を調べる
-    std::ifstream schema_ifs(schemaFilePass);
+    std::ifstream schema_ifs(jsonSchemaFilePath + schemaFilePath);
     rapidjson::IStreamWrapper schema_isw(schema_ifs);
     rapidjson::Document schema_doc;
     schema_doc.ParseStream(schema_isw);
     //読み取りたいデータファイルを開く
-    std::ifstream ifs(filePass);
+    std::ifstream ifs(filePath);
     rapidjson::IStreamWrapper isw(ifs);
     loadDoc.ParseStream(isw);
     //スキーマ通りの書き方か調べる
@@ -43,7 +44,7 @@ bool JsonFileLoader::IsAccept() const
 /// </summary>
 /// <param name="dataName">読み取りたいメンバの名前</param>
 /// <returns>欲しいデータ</returns>
-inline int JsonFileLoader::GetLoadInt(std::string dataName) const
+int JsonFileLoader::GetLoadInt(std::string dataName) const
 {
     return loadDoc[dataName.c_str()].GetInt();
 }
@@ -52,7 +53,7 @@ inline int JsonFileLoader::GetLoadInt(std::string dataName) const
 /// </summary>
 /// <param name="dataName">読み取りたいデータ</param>
 /// <returns>取りたいデータ</returns>
-inline float JsonFileLoader::GetLoadFloat(std::string dataName)const
+float JsonFileLoader::GetLoadFloat(std::string dataName)const
 {
     return loadDoc[dataName.c_str()].GetFloat();
 }
@@ -61,7 +62,7 @@ inline float JsonFileLoader::GetLoadFloat(std::string dataName)const
 /// </summary>
 /// <param name="dataName">読み取りたいデータの名前</param>
 /// <returns>取りたいデータ</returns>
-inline std::string JsonFileLoader::GetLoadString(std::string dataName) const
+std::string JsonFileLoader::GetLoadString(std::string dataName) const
 {
     return loadDoc[dataName.c_str()].GetString();
 }

@@ -14,7 +14,7 @@ namespace ObjectInit
     enum class InitObjParamator
     {
         //modelの相対パス
-        assetPass = 0,
+        assetPath = 0,
         //大きさ
         modelSize = 1,
         //最初のポジション
@@ -23,17 +23,6 @@ namespace ObjectInit
         collRadius = 3,
         //跳ね返りの大きさ
         bouncePower = 4
-    };
-    /// <summary>
-    /// 各オブジェクトの追加情報
-    /// </summary>
-    enum class AddDataObject
-    {
-        playerSpeed = 0,
-        circleFlyShip = 1,
-        upDownFlyShip = 2,
-        bomberShip = 3,
-        moveSaw = 4
     };
     /// <summary>
     /// ゲームキャラの初期位置とか当たり判定の大きさとか
@@ -76,12 +65,6 @@ public:
     /// <param name="kind">取り出したい描画モデル</param>
     /// <returns>描画モデルハンドル</returns>
     static int GetModelHandle (InitObjKind obj);
-    /// <summary>
-    /// 追加情報の入ったファイルまでのパスを渡す
-    /// </summary>
-    /// <param name="obj">追加情報が欲しいオブジェクト</param>
-    /// <returns>追加情報の入ったファイルまでのパス</returns>
-    static std::string GetAddDataPass (AddDataObject obj);
 private:
     /// <summary>
     /// 初期化したいパラメータを文字列で所得
@@ -90,11 +73,11 @@ private:
     /// <returns>初期化したいパラメータの文字列</returns>
     static std::vector<std::string> GetActorParametorStrVec(InitObjKind obj);
     //initActorFileNameの先のファイルから所得したデータをまとめたVector
-    static std::vector<std::string> objectInitDataPassVec;
-    //initActorJsonFilePassのJsonSchemaのパス
-    static std::string initActorSchemaPass; 
+    static std::vector<std::string> objectInitDataPathVec;
+    //initActorJsonFilePathのJsonSchemaのパス
+    static std::string initActorSchemaPath; 
     //初期化要素のJsonSchemaのパス
-    static std::string initObjParamatorSchemaPass; 
+    static std::string initObjParamatorSchemaPath; 
     //描画モデルハンドル所得役
     static DrawModelManager* drawModelManager;
 };

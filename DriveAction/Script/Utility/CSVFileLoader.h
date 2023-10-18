@@ -11,20 +11,20 @@ public:
     /// <summary>
     /// CSVファイルを読み込む
     /// </summary>
-    /// <param name="filePass">読み込むファイルのパス</param>
-    CSVFileLoader(std::string filePass);
+    /// <param name="filePath">読み込むファイルのパス</param>
+    CSVFileLoader(std::string filePath);
     /// <summary>
-    /// CSVファイルを読み込む
+    /// CSVファイルで読み込んだ文字列を渡す
     /// </summary>
-    /// <returns></returns>
-    std::vector <std::string> GeFileStringData()const;
+    /// <returns> CSVファイルで読み込んだ文字列</returns>
+    std::vector <std::string> GetStringData()const;
     /// <summary>
-    /// CSVファイルを読み込む
+    /// CSVファイルで読み込んだ文字列を渡す
     /// </summary>
-    /// <returns></returns>
+    /// <returns> CSVファイルで読み込んだ文字列</returns>
     std::vector <const char*> GetFileCharData()const;
     /// <summary>
-    /// 読み込んだファイルの行
+    /// 読み込んだファイルの行の数
     /// </summary>
     /// <returns></returns>
     int GetLineCount()const;

@@ -49,7 +49,7 @@ concept Allocator {
 
     // Resize a memory block.
     // \param originalPtr The pointer to current memory block. Null pointer is permitted.
-    // \param originalSize The current size in bytes. (Design issue: since some allocator may not book-keep this, explicitly pass to it can save memory.)
+    // \param originalSize The current size in bytes. (Design issue: since some allocator may not book-keep this, explicitly Path to it can save memory.)
     // \param newSize the new size in bytes.
     void* Realloc(void* originalPtr, size_t originalSize, size_t newSize);
 
