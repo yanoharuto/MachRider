@@ -1,4 +1,4 @@
-#include "CameraManager.h"
+#include "CameraDataLoader.h"
 #include "CSVFileLoader.h"
 #include "Utility.h"
 #include "JsonFileLoader.h"
@@ -16,11 +16,6 @@ CameraDataLoader::CameraParamater CameraDataLoader::GetCameraParamator(UseCamera
     if (IsExistJsonFile())//jsonで読み込む
     {
         auto fileLoader = new JsonFileLoader(strData[CAST_I(type)], schemaPath);//シーン毎の情報を所得
-        if (!fileLoader->IsAccept())
-        {
-            int a = 0;
-        }
-        using enum CameraParameter;//各パラメータを所得
         returnValue.nearValue = fileLoader->GetLoadInt("nearValue");
         returnValue.farValue = fileLoader->GetLoadInt("farValue");
         returnValue.lookAngle = fileLoader->GetLoadInt("lookAngle");
@@ -36,18 +31,17 @@ CameraDataLoader::CameraParamater CameraDataLoader::GetCameraParamator(UseCamera
         strData = initDataLoader->GetStringData();
         SAFE_DELETE(initDataLoader);
 
-        using enum CameraParameter;
         //カメラの有効範囲
-        returnValue.nearValue = STR_TO_F(strData[CAST_I(setNearValue)]);
-        returnValue.farValue = STR_TO_F(strData[CAST_I(setFarValue)]);
+        returnValue.nearValue = STR_TO_F(strData[CAST_I(CameraParameter::setNearValue)]);
+        returnValue.farValue = STR_TO_F(strData[CAST_I(CameraParameter::setFarValue)]);
         //ターゲットとの距離
-        returnValue.targetBetween = STR_TO_F(strData[CAST_I(setTargetBetween)]);
+        returnValue.targetBetween = STR_TO_F(strData[CAST_I(CameraParameter::setTargetBetween)]);
         //高度
-        returnValue.setYPos = STR_TO_F(strData[CAST_I(setYPosition)]);
+        returnValue.setYPos = STR_TO_F(strData[CAST_I(CameraParameter::setYPosition)]);
         //カメラの速さ
-        returnValue.speed = STR_TO_F(strData[CAST_I(setCameraSpeed)]);
+        returnValue.speed = STR_TO_F(strData[CAST_I(CameraParameter::setCameraSpeed)]);
         //カメラの見えている範囲
-        returnValue.lookAngle = STR_TO_F(strData[CAST_I(setLookingAngle)]);
+        returnValue.lookAngle = STR_TO_F(strData[CAST_I(CameraParameter::setLookingAngle)]);
     }
     return returnValue;
 }

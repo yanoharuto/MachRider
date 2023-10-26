@@ -16,8 +16,8 @@ public:
     /// Json形式のファイルを開く
     /// </summary>
     /// <param name="filePath">開きたいファイル</param>
-    /// <param name="schemaFilePath">開くファイルのSchema</param>
-    JsonFileLoader(std::string filePath,std::string schemaFilePath);
+    /// <param name="schemaFileName">開くファイルのSchema</param>
+    JsonFileLoader(std::string filePath,std::string schemaFileName);
     /// <summary>
     /// Schemaと開きたいファイルが適応しているなら
     /// </summary>

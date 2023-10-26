@@ -44,7 +44,6 @@ UIData UIManager::CreateUIData(int kindNum)
 {
     UIData data;
     std::vector<std::string> dataVec;
-    using enum InitUIData;
     if (IsExistJsonFile())
     {
         JsonFileLoader* jsonFile = new JsonFileLoader(uiPathVec[kindNum], shemaPath);
@@ -68,24 +67,24 @@ UIData UIManager::CreateUIData(int kindNum)
         SAFE_DELETE(initDataFile);
     }
     //位置とか幅とか分割数を読み取る
-    data.x = STR_TO_I(dataVec[CAST_I(drawX)]);
-    data.y = STR_TO_I(dataVec[CAST_I(drawY)]);
+    data.x = STR_TO_I(dataVec[CAST_I(InitUIData::drawX)]);
+    data.y = STR_TO_I(dataVec[CAST_I(InitUIData::drawY)]);
     //横分割数
-    int divXNum = STR_TO_I(dataVec[CAST_I(xNum)]);
+    int divXNum = STR_TO_I(dataVec[CAST_I(InitUIData::xNum)]);
     //縦分割数
-    int divYNum = STR_TO_I(dataVec[CAST_I(yNum)]);
-    data.width = STR_TO_I(dataVec[CAST_I(width)]) / divXNum;
-    data.height = STR_TO_I(dataVec[CAST_I(height)]) / divYNum;
+    int divYNum = STR_TO_I(dataVec[CAST_I(InitUIData::yNum)]);
+    data.width = STR_TO_I(dataVec[CAST_I(InitUIData::width)]) / divXNum;
+    data.height = STR_TO_I(dataVec[CAST_I(InitUIData::height)]) / divYNum;
     //画像を分割読み込み
     int graphArray[1000];
-    LoadDivGraph(dataVec[CAST_I(graphPath)].c_str(), divXNum * divYNum, divXNum, divYNum, data.width, data.height, graphArray);
+    LoadDivGraph(dataVec[CAST_I(InitUIData::graphPath)].c_str(), divXNum * divYNum, divXNum, divYNum, data.width, data.height, graphArray);
     for (int i = 0; i < divXNum + divYNum - 1; i++)
     {
         data.dataHandle.push_back(graphArray[i]);
     }
     //大きさとコマ送り速度
-    data.size = STR_TO_F(dataVec[CAST_I(size)]);
-    data.frameSpeed = STR_TO_F(dataVec[CAST_I(frameSpeed)]);
+    data.size = STR_TO_F(dataVec[CAST_I(InitUIData::size)]);
+    data.frameSpeed = STR_TO_F(dataVec[CAST_I(InitUIData::frameSpeed)]);
 
     return data;
 }

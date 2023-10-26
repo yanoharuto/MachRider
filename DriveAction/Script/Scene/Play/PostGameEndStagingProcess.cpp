@@ -24,41 +24,39 @@ PostGameEndStagingProcess::PostGameEndStagingProcess(std::weak_ptr<PlayerObserve
     //スコアを確定
     resultScore = new ResultScore(player,gameTimer);
     //音を所得
-    using enum SoundKind;
-    using enum UIKind;
     SoundPlayer::StopAllSound();
-    SoundPlayer::LoadAndInitSound(clap);
-    SoundPlayer::LoadAndInitSound(scoreEndSE);
-    SoundPlayer::LoadAndInitSound(scoreStartSE);
-    SoundPlayer::LoadAndInitSound(sceneNextSE);
-    SoundPlayer::LoadAndInitSound(gameEndFanfare);
+    SoundPlayer::LoadAndInitSound(SoundKind::clap);
+    SoundPlayer::LoadAndInitSound(SoundKind::scoreEndSE);
+    SoundPlayer::LoadAndInitSound(SoundKind::scoreStartSE);
+    SoundPlayer::LoadAndInitSound(SoundKind::sceneNextSE);
+    SoundPlayer::LoadAndInitSound(SoundKind::gameEndFanfare);
     
     //プレイヤーの所得した収集アイテム
     getCollectNum = player.lock()->GetCollectCount();
     drawCollectIconNum = 0;
     //最初の処理
-    nowConvertScore = timeBonus;
+    nowConvertScore = ResultScore::ScoreKind::timeBonus;
     //タイムボーナス
-    timeScoreUI = GetScoreUI(timeScore);
+    timeScoreUI = GetScoreUI(UIKind::timeScore);
     
     //収集アイテムボーナス
-    collectScoreUI = GetScoreUI(collectScore);
-    collectUIData = UIManager::CreateUIData(collectScoreIcon);
+    collectScoreUI = GetScoreUI(UIKind::collectScore);
+    collectUIData = UIManager::CreateUIData(UIKind::collectScoreIcon);
     //合計スコア
-    totalScoreUI = GetScoreUI(totalScore);
+    totalScoreUI = GetScoreUI(UIKind::totalScore);
     totalScoreNumUI = new ScoreNum();
     //ハイスコア更新UI
-    highScoreUIData = UIManager::CreateUIData(PraiseWord);
+    highScoreUIData = UIManager::CreateUIData(UIKind::PraiseWord);
     //ゲーム終了時画面
     gameEndScreen = GameScreen::GetScreen();
     //スペースキー催促
-    pressSpaceKeyUI = new FlashUI(resultSpaceKey);
+    pressSpaceKeyUI = new FlashUI(UIKind::resultSpaceKey);
     //クリアタイム保存
     clearTime = static_cast<float>(gameTimer->GetRemainingTime());
     drawClearTime = clearTime;
-    clearTimeUI = new NumUI(timeScoreNum);
+    clearTimeUI = new NumUI(UIKind::timeScoreNum);
     //ゲーム終了アナウンス
-    finishAnnounceUIData = UIManager::CreateUIData(finishAnnounce);
+    finishAnnounceUIData = UIManager::CreateUIData(UIKind::finishAnnounce);
     finishAnnounceUIData.x = Utility::SCREEN_WIDTH;
     larpMoveAnnounceTimer = new Timer(finishAnounceTime);
     //花吹雪
@@ -96,7 +94,7 @@ void PostGameEndStagingProcess::Update()
 
         pressSpaceKeyUI->Update();
         //スペースキーを押して終了
-        if (UserInput::GetInputState(Space) == Push)
+        if (UserInput::GetInputState(UserInput::KeyInputKind::Space) == UserInput::InputState::Push)
         {
             SoundPlayer::Play2DSE(SoundKind::sceneNextSE);
             isEndProcess = true;
@@ -107,10 +105,10 @@ void PostGameEndStagingProcess::Update()
         //各スコアを総合スコアに変換
         switch (nowConvertScore)
         {
-        case timeBonus:
+        case ResultScore::ScoreKind::timeBonus:
             ConvertTimeScotre();
             break;
-        case collectBonus:
+        case ResultScore::ScoreKind::collectBonus:
             ConvertCollectScotre();
             break;
         }
@@ -125,7 +123,7 @@ void PostGameEndStagingProcess::Draw()const
     //ゲーム終了時の画面を暗く表示
     SetDrawBright(backScreenBright, backScreenBright, backScreenBright);
     DrawGraph(0, 0, gameEndScreen, false);
-    SetDrawBright(Utility::MAX1BYTEVALUE, Utility::MAX1BYTEVALUE, Utility::MAX1BYTEVALUE);
+    SetDrawBright(Utility::MAX_ONE_BYTE_RANGE, Utility::MAX_ONE_BYTE_RANGE, Utility::MAX_ONE_BYTE_RANGE);
 
     //終了アナウンス
     if (!isEndFinishAnnounce) 
@@ -166,17 +164,16 @@ bool PostGameEndStagingProcess::IsEndProcess() const
 /// </summary>
 void PostGameEndStagingProcess::ConvertTimeScotre()
 {
-    using enum SoundKind;
-    if (!SoundPlayer::IsPlaySound(sceneNextSE))
+    if (!SoundPlayer::IsPlaySound(SoundKind::sceneNextSE))
     {
         //スコアを換算し終えたか、スペースキーを押したら終了
-        if ((larpConvertScoreTimer->IsOverLimitTime() || clearTime < 0 || UserInput::GetInputState(Space) == Push))
+        if ((larpConvertScoreTimer->IsOverLimitTime() || clearTime < 0 || UserInput::GetInputState(UserInput::KeyInputKind::Space) == UserInput::InputState::Push))
         {
             //次の処理
-            nowConvertScore = collectBonus;
+            nowConvertScore = ResultScore::ScoreKind::collectBonus;
                 //タイムボーナスを表示したら終了
-                SoundPlayer::StopSound(scoreStartSE);
-                timeScoreUI.score = resultScore->GetScore(timeBonus);
+                SoundPlayer::StopSound(SoundKind::scoreStartSE);
+                timeScoreUI.score = resultScore->GetScore(ResultScore::ScoreKind::timeBonus);
                 drawClearTime = 0.0000f;
         }
         //タイマーが動いている間はスコア換算
@@ -185,13 +182,13 @@ void PostGameEndStagingProcess::ConvertTimeScotre()
             //残り時間をスコアに換算
             float larpValue = static_cast<float>(larpConvertScoreTimer->GetElaspedTime() / scoreLarpTime);
 
-            timeScoreUI.score = static_cast<int>(larpValue * resultScore->GetScore(timeBonus));
+            timeScoreUI.score = static_cast<int>(larpValue * resultScore->GetScore(ResultScore::ScoreKind::timeBonus));
             //描画するクリアタイムを更新
             drawClearTime = clearTime - static_cast<float>(clearTime * larpValue);
             //スコア加算中はずっと鳴る
-            if (!SoundPlayer::IsPlaySound(scoreStartSE))
+            if (!SoundPlayer::IsPlaySound(SoundKind::scoreStartSE))
             {
-                SoundPlayer::Play2DSE(scoreStartSE);
+                SoundPlayer::Play2DSE(SoundKind::scoreStartSE);
             }
         }
     }
@@ -203,30 +200,29 @@ void PostGameEndStagingProcess::ConvertTimeScotre()
 /// </summary>
 void PostGameEndStagingProcess::ConvertCollectScotre()
 {
-    using enum SoundKind;
     //一つ一つスコアに変換する工程をスキップ
-    bool isSkip = UserInput::GetInputState(Space) == Push;
+    bool isSkip = UserInput::GetInputState(UserInput::KeyInputKind::Space) == UserInput::InputState::Push;
     //効果音が鳴り終わったタイミングで入手した宝石をスコアに変換する
-    if (!SoundPlayer::IsPlaySound(scoreEndSE) || isSkip)
+    if (!SoundPlayer::IsPlaySound(SoundKind::scoreEndSE) || isSkip)
     {
         //描画したアイテムの数が獲得したアイテムの数と同じ以上にになったら
         if (isSkip || (drawCollectIconNum >= getCollectNum && !isEndConvertScore))
         {
             //描画するスコアなどを記録と統一
-            collectScoreUI.score = resultScore->GetScore(collectBonus);
+            collectScoreUI.score = resultScore->GetScore(ResultScore::ScoreKind::collectBonus);
             drawCollectIconNum = getCollectNum;
             isEndConvertScore = true;
             ////花吹雪エフェクト開始
             confettiEffect = EffectManager::GetPlayEffect2D(EffectKind::confetti);
             SetPosPlayingEffekseer2DEffect(confettiEffect, Utility::SCREEN_WIDTH / 2, Utility::SCREEN_HEIGHT, 5);
             //ファンファーレ効果音
-            SoundPlayer::Play2DSE(gameEndFanfare);
+            SoundPlayer::Play2DSE(SoundKind::gameEndFanfare);
         }
         else
         {        //収集アイテムを一個ずつ配置
-            SoundPlayer::Play2DSE(scoreEndSE);
+            SoundPlayer::Play2DSE(SoundKind::scoreEndSE);
             drawCollectIconNum++;
-            collectScoreUI.score = resultScore->GetScoreBonus(collectBonus) * drawCollectIconNum;
+            collectScoreUI.score = resultScore->GetScoreBonus(ResultScore::ScoreKind::collectBonus) * drawCollectIconNum;
         }
     }
     //各スコアを合計
@@ -237,11 +233,10 @@ void PostGameEndStagingProcess::ConvertCollectScotre()
 /// </summary>
 void PostGameEndStagingProcess::EndAnnounceProcess()
 {
-    using enum SoundKind;
     //最初の一回だけ拍手する
     if (!isSoundClapSE)
     {
-        SoundPlayer::Play2DSE(clap);
+        SoundPlayer::Play2DSE(SoundKind::clap);
         isSoundClapSE = true;
     }
     //larp移動が終了したら
@@ -249,7 +244,7 @@ void PostGameEndStagingProcess::EndAnnounceProcess()
     {
         isEndFinishAnnounce = true;
         larpConvertScoreTimer = new Timer(scoreLarpTime);
-        SoundPlayer::Play2DSE(sceneNextSE);
+        SoundPlayer::Play2DSE(SoundKind::sceneNextSE);
     }
     else//移動させる
     {
@@ -265,7 +260,7 @@ void PostGameEndStagingProcess::EndAnnounceProcess()
 /// </summary>
 /// <param name="kind"></param>
 /// <returns></returns>
-ScoreUI PostGameEndStagingProcess::GetScoreUI(UIKind kind)
+ScoreUI PostGameEndStagingProcess::GetScoreUI(UIInit::UIKind kind)
 {
     ScoreUI ui;
     ui.scoreKindData = UIManager::CreateUIData(kind);

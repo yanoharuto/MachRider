@@ -54,11 +54,10 @@ void CollectItemController::Update()
     //今現在動いているアイテムの場所を更新
     nowActiveCollectItemPos = (*objIte)->GetPos();
 
-    using enum Object::ObjectState;
     //取っているけどエフェクトを出している途中なら現存数をへらす
     Object::ObjectState objState = (*objIte)->GetObjectState();
     //プレイヤーにぶつかって取られたならアクティブ以外の状態になっている
-    if (objState == dead)
+    if (objState == Object::ObjectState::dead)
     {
         //残り数を全体から1減らす
         remainingCollectNum = actorList.size() - 1;
@@ -71,7 +70,7 @@ void CollectItemController::Update()
         collectCount = totalCollectNum - remainingCollectNum;
     }
     //最後の一つが回収されたか
-    else if (objState == activeEnd && static_cast<int>(actorList.size()) == 1)
+    else if (objState == Object::ObjectState::activeEnd && static_cast<int>(actorList.size()) == 1)
     {
         isCollectLastOne = true;
     }
@@ -93,7 +92,7 @@ void CollectItemController::PrepareGame()
 {
     //イテレーター
     auto objIte = actorList.begin();
-    (*objIte)->PrepareGame();
+     (*objIte)->PrepareGame();
     //今現在動いているアイテムの場所を更新
     nowActiveCollectItemPos = (*objIte)->GetPos();
 }

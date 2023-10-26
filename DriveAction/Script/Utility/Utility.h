@@ -27,9 +27,13 @@ namespace Utility
     //画面縦サイズ
     constexpr int SCREEN_HEIGHT = 1030;
     //1バイト最大値
-    constexpr int MAX1BYTEVALUE = 255;
+    constexpr int MAX_ONE_BYTE_RANGE = 255;
     //デルタタイム
     constexpr float DELTATIME = 0.016667f;
     //100
     constexpr int HUNDRED = 100;
+
+    constexpr char JSON_FILE[] = ".json";
+
+    constexpr char CSV_FILE[] = ".csv";
 }

@@ -26,11 +26,16 @@ public:
         stageData,//ステージの初期位置や制限時間
         objectAddData//オブジェクトの追加情報
     };
-
     /// <summary>
-    /// Jsonファイルを読み取っていい状態か
+    /// 引数のファイルが存在するか調べる
     /// </summary>
-    /// <returns>読み取っていいならtrue</returns>
+    /// <param name="fileName"></param>
+    /// <returns>存在するならtrue</returns>
+    static bool IsExistFile(std::string fileName);
+    /// <summary>
+    /// jsonFileで読み取れそうか調べる
+    /// </summary>
+    /// <returns>調べれそうならtrue</returns>
     static bool IsExistJsonFile();
 protected:
     /// <summary>
@@ -57,6 +62,8 @@ protected:
 private:
     //asset一覧で使うスキーマのパス
     static const std::string listSchemaPath;
+    //Jsonファイルがあるか調べるのに使う
+    static const std::string jsonExistFile;
     //初期化ファイルの名前
     static std::string const initFileNames[];
 };

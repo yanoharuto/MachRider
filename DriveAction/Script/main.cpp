@@ -26,11 +26,11 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance, 
 	// DirectX11を使用するようにする。(DirectX9も可、一部機能不可)
 	// Effekseerを使用するには必ず設定する。
 	SetUseDirect3DVersion(DX_DIRECT3D_11);
-
+	ChangeWindowMode(true);
 	// 画面の解像度と色ビット深度を設定
 	SetGraphMode(Utility::SCREEN_WIDTH, Utility::SCREEN_HEIGHT, 32);
 	SetZBufferBitDepth(24);
-	ChangeWindowMode(true);
+	
 	// １メートルに相当する値を設定する
 	Set3DSoundOneMetre(16.0f);
 	if (DxLib_Init() == -1)		// ＤＸライブラリ初期化処理

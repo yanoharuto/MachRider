@@ -13,6 +13,6 @@ public:
 /// </summary>
     EnemyDataEditor(InitObjKind enemyKind);
 private:
-    //読み込む配置情報の書いてあるファイルのパス
-    static const std::string loadEditFilePath;
+    //配置情報の書いてあるファイルのパス
+    static const std::string loadFileName;
 };

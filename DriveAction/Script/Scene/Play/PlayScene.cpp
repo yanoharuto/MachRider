@@ -85,20 +85,19 @@ SceneType PlayScene::Update()
 {
     //メニューでプレイヤーが何を選んだか
     menu->Update();
-    using enum Menu::MenuOptions;
     //メニューの状態によって次のシーンを変更    
     switch (menu->GetMenuState())
     {
         //ゲームをやり直す
-    case retry:
+    case Menu::MenuOptions::retry:
         nowSceneType = SceneType::reload;
         break;
         //タイトルに戻る
-    case returnTitle:
+    case Menu::MenuOptions::returnTitle:
         nowSceneType = SceneType::title;
         break;
         //ゲーム終了
-    case exitGame:
+    case Menu::MenuOptions::exitGame:
         nowSceneType = SceneType::escape;
         break;
     }

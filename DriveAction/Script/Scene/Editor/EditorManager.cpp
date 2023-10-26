@@ -19,15 +19,14 @@ EditorManager::EditorManager()
 {
     //背景
     stage = new StageObjectController();
-    using enum InitObjKind;
     //各オブジェクトのEditor
     editorVec.push_back(std::make_shared<PlayerDataEditor>());
     editorVec.push_back(std::make_shared<CollectItemDataEditor>());
-    editorVec.push_back(std::make_shared<EnemyDataEditor>(saw));
-    editorVec.push_back(std::make_shared<EnemyDataEditor>(moveSaw));
-    editorVec.push_back(std::make_shared<EnemyDataEditor>(circleLaserShip));
-    editorVec.push_back(std::make_shared<EnemyDataEditor>(upDownLaserShip));
-    editorVec.push_back(std::make_shared<EnemyDataEditor>(bomberShip));
+    editorVec.push_back(std::make_shared<EnemyDataEditor>(InitObjKind::saw));
+    editorVec.push_back(std::make_shared<EnemyDataEditor>(InitObjKind::moveSaw));
+    editorVec.push_back(std::make_shared<EnemyDataEditor>(InitObjKind::circleLaserShip));
+    editorVec.push_back(std::make_shared<EnemyDataEditor>(InitObjKind::upDownLaserShip));
+    editorVec.push_back(std::make_shared<EnemyDataEditor>(InitObjKind::bomberShip));
     //現在の編集クラス
     nowEditor = editorVec[0];
 }
@@ -51,7 +50,7 @@ EditorManager::~EditorManager()
 void EditorManager::Update(std::weak_ptr<CameraObserver> cameraObserever)
 {
     //skeyで出てくるタイミングを変更
-    if (UserInput::GetInputState(SKey) == Hold)
+    if (UserInput::GetInputState(UserInput::KeyInputKind::SKey) == UserInput::InputState::Hold)
     {
         nowEditor->ChangeEditedCollectNum();
     }
@@ -103,7 +102,7 @@ PlacementData EditorManager::GetNowEditObjPlaceData() const
 void EditorManager::SelectEditKind()
 {
     //上下キーで編集できるオブジェクトの種類を変更
-    if (UserInput::GetInputState(Up) == Push) 
+    if (UserInput::GetInputState(UserInput::KeyInputKind::Up) == UserInput::InputState::Push) 
     {
         selectEditorNum--;
         //一周したら後ろに繋げる
@@ -112,7 +111,7 @@ void EditorManager::SelectEditKind()
             selectEditorNum = editorVec.size() - 1;
         }
     }
-    else if (UserInput::GetInputState(Down) == Push)
+    else if (UserInput::GetInputState(UserInput::KeyInputKind::Down) == UserInput::InputState::Push)
     {
         selectEditorNum++;
         //一周したら一番前に繋げる

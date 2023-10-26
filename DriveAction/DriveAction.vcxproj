@@ -30,7 +30,7 @@
     <ClCompile Include="Script\AddActor\InitActor.cpp" />
     <ClCompile Include="Script\AssetManager.cpp" />
     <ClCompile Include="Script\Camera\Camera.cpp" />
-    <ClCompile Include="Script\Camera\CameraManager.cpp" />
+    <ClCompile Include="Script\Camera\CameraDataLoader.cpp" />
     <ClCompile Include="Script\Camera\EditorCamera.cpp" />
     <ClCompile Include="Script\Camera\GameCamera.cpp" />
     <ClCompile Include="Script\Camera\TitleCamera.cpp" />
@@ -147,7 +147,7 @@
     <ClInclude Include="Script\AddActor\InitObjKind.h" />
     <ClInclude Include="Script\AssetManager.h" />
     <ClInclude Include="Script\Camera\Camera.h" />
-    <ClInclude Include="Script\Camera\CameraManager.h" />
+    <ClInclude Include="Script\Camera\CameraDataLoader.h" />
     <ClInclude Include="Script\Camera\EditorCamera.h" />
     <ClInclude Include="Script\Camera\GameCamera.h" />
     <ClInclude Include="Script\Camera\TitleCamera.h" />

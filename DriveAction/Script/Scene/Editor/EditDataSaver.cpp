@@ -6,6 +6,7 @@
 #include "writer.h"
 #include "StageDataEditor.h"
 
+
 EditDataSaver::EditDataSaver()
 {
 }
@@ -32,23 +33,21 @@ EditDataSaver::~EditDataSaver()
 void EditDataSaver::SaveEditData(std::weak_ptr<StageDataEditor> editor)
 {
     std::string saveFileName;
-    using enum InitObjKind;
+    //保存したい情報
     auto placeVector = editor.lock()->GetPlacementDataVector();
-
-    //種類ごとに保存先を変える
+    //種類ごとに保存したい情報を分ける
     switch (editor.lock()->GetEditObjectKind())
     {
-    case player:
-        playerPlaceData = placeVector;
+    case InitObjKind::player:
+        playerPlaceData.insert(playerPlaceData.end(), placeVector.begin(), placeVector.end());
         break;
-    case collect:
-        collectPlaceData = placeVector;
+    case InitObjKind::collect:
+        collectPlaceData.insert(collectPlaceData.end(), placeVector.begin(), placeVector.end());
         break;
     default:
-        enemyPlaceData.insert(enemyPlaceData.end(),placeVector.begin(),placeVector.end());
+        enemyPlaceData.insert(enemyPlaceData.end(), placeVector.begin(),placeVector.end());
         break;
     }
-
 }
 
 /// <summary>
@@ -64,7 +63,7 @@ void EditDataSaver::SaveEditDataForCSV(std::vector<PlacementData> editData, std:
         std::ofstream writing_file;
         auto data = editData[i];
         // ファイルを開いて
-        writing_file.open(saveFileName + csvFile, std::ios::app);
+        writing_file.open(editFilePath + saveFileName + Utility::CSV_FILE, std::ios::app);
         //区切り文字
         std::string colon = ",";
         //オブジェクトの種類と
@@ -93,8 +92,8 @@ rapidjson::Value EditDataSaver::GetEditPlaceData(PlacementData editData, rapidjs
     objValue.SetObject();
     objValue.AddMember("objNum", editData.objKind, allocator);
     objValue.AddMember("collectNum", editData.collectNum, allocator);
-    objValue.AddMember("posX", editData.posX, allocator);
-    objValue.AddMember("posZ", editData.posZ, allocator);
+    objValue.AddMember("x", editData.posX, allocator);
+    objValue.AddMember("z", editData.posZ, allocator);
     objValue.AddMember("dirX", editData.dirX, allocator);
     objValue.AddMember("dirZ", editData.dirZ, allocator);
     return objValue;
@@ -115,12 +114,13 @@ void EditDataSaver::SaveEditDataForJSON(std::vector<PlacementData> editData, std
     //配置した収集アイテムを保存
     for (int i = 0; i < CONTAINER_GET_SIZE(editData); i++)
     {
-        myArray.PushBack(GetEditPlaceData( editData[i], allocator),allocator);
+        myArray.PushBack(GetEditPlaceData(editData[i], allocator),allocator);
     }
     //編集内容をsaveFileNameのファイルに書き込む
     jsonDoc.AddMember("arrangeData", myArray, allocator);
     //ファイルの中身を全部消した状態で書き込む
-    std::ofstream ofs(saveFileName + jsonFile);
+    saveFileName = editFilePath + saveFileName + Utility::JSON_FILE;
+    std::ofstream ofs(saveFileName);
     rapidjson::OStreamWrapper osw(ofs);
     rapidjson::Writer<rapidjson::OStreamWrapper> writer(osw);
     jsonDoc.Accept(writer);

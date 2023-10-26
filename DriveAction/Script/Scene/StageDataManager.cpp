@@ -122,14 +122,13 @@ std::string StageDataManager::GetPlaceStrData(Object::ObjectTag tag)
 {
     ///今選択しているステージの初期位置の入ったファイルのパス
     std::string selectStageFirstPlaceFilePath;
-    using enum Object::ObjectTag;
     //各オブジェクトの初期位置のファイルまでのパスを所得
     switch (tag)
     {
-    case player:
+    case Object::ObjectTag::player:
         selectStageFirstPlaceFilePath = GetSelectStageData(StageData::playerPositionFilePath);
         break;
-    case collect:
+    case Object::ObjectTag::collect:
         selectStageFirstPlaceFilePath = GetSelectStageData(StageData::collectFilePath);
         break;
     default:

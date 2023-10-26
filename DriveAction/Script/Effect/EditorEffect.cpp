@@ -9,14 +9,13 @@
 /// </summary>
 EditorEffect::EditorEffect()
 {
-    using enum EffectKind;
     //選択エフェクト
     if (posEffect == -1)
     {
-        EffectManager::LoadEffect(collectAura);
-        EffectManager::LoadEffect(comPath);
-        posEffect = EffectManager::GetPlayEffect3D(collectAura);
-        dirEffect = EffectManager::GetPlayEffect3D(comPath);
+        EffectManager::LoadEffect(EffectKind::collectAura);
+        EffectManager::LoadEffect(EffectKind::comPath);
+        posEffect = EffectManager::GetPlayEffect3D(EffectKind::collectAura);
+        dirEffect = EffectManager::GetPlayEffect3D(EffectKind::comPath);
         SetScalePlayingEffekseer3DEffect(dirEffect, dirEffectSize, dirEffectSize, dirEffectSize);
     }
 }

@@ -15,15 +15,14 @@
 StageObjectController::StageObjectController()
     :ActorController(ObjectInit::InitObjKind::wall)
 {   
-    using enum InitObjKind;
     //床の設定
-    floorModelHandle = InitActor::GetModelHandle(stageFloor);
-    auto param = InitActor::GetActorParamator(stageFloor);
+    floorModelHandle = InitActor::GetModelHandle(InitObjKind::stageFloor);
+    auto param = InitActor::GetActorParamator(InitObjKind::stageFloor);
     MV1SetPosition(floorModelHandle, VGet(0, param.firstPosY, 0));
     //skyDomeの設定
-    skyDomeModelHandle = InitActor::GetModelHandle(skyDome);
+    skyDomeModelHandle = InitActor::GetModelHandle(InitObjKind::skyDome);
     stageWall = new StageWall();
-    drawModel = new DrawModel(wall);
+    drawModel = new DrawModel(InitObjKind::wall);
 }
 /// <summary>
 /// ステージを囲むオブジェクトの解放

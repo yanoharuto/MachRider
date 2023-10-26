@@ -25,7 +25,7 @@ FlashUI::~FlashUI()
 void FlashUI::Update()
 {
     aValue += isAValueIncrement ? aSpeed : -aSpeed;
-    if (aValue > Utility::MAX1BYTEVALUE)//a値が最高値以上になったら下げるようにする
+    if (aValue > Utility::MAX_ONE_BYTE_RANGE)//a値が最高値以上になったら下げるようにする
     {
         isAValueIncrement = false;
     }

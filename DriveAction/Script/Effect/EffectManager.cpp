@@ -53,11 +53,10 @@ void EffectManager::LoadEffect(EffectKind kind)
             dataVec = initDataFile->GetStringData();
             SAFE_DELETE(initDataFile);
         }
-        using enum EffectInitData;
         //エフェクトのアセットのパス
-        const char* effectPathStr = dataVec[static_cast<int>(effectPath)].c_str();
+        const char* effectPathStr = dataVec[static_cast<int>(EffectInitData::effectPath)].c_str();
         //エフェクトの大きさ
-        float size = STR_TO_F(dataVec[static_cast<int>(effectSize)]);
+        float size = STR_TO_F(dataVec[static_cast<int>(EffectInitData::effectSize)]);
         //エフェクトの読み込みと大きさをセット
         int effectHandle = LoadEffekseerEffect(effectPathStr, size);
         effectMap.insert(std::make_pair(kind, effectHandle));

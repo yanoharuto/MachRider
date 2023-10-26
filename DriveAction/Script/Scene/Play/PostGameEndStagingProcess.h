@@ -20,7 +20,6 @@ class FlashUI;
 class TimerUI;
 class ScoreNum;
 class PlayerObserver;
-using enum ResultScore::ScoreKind;
 /// <summary>
 /// ゴール後の演出をする
 /// </summary>
@@ -69,7 +68,7 @@ private:
     /// </summary>
     /// <param name="kind"></param>
     /// <returns></returns>
-    ScoreUI GetScoreUI(UIKind kind);
+    ScoreUI GetScoreUI(UIInit::UIKind kind);
     /// <summary>
     /// 残り時間スコアの描画
     /// </summary>

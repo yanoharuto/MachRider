@@ -1,6 +1,7 @@
 #include "UserInput.h"
+#include "Utility.h"
 //入力情報
-InputState UserInput::keyInputState[KEY_INPUT_KIND_NUM];
+UserInput::InputState UserInput::keyInputState[KEY_INPUT_KIND_NUM];
 //パッドの情報
 XINPUT_STATE UserInput::xInput;
 //ゲームパッドで入力するか
@@ -13,17 +14,16 @@ UserInput::UserInput()
     //ゲームパッド入力ならTrue
     isInputPad = GetJoypadNum() != 0;
     //各入力キーの対応マクロを設定
-    using enum KeyInputKind;
-    keyInputCode[Up] = PAD_INPUT_UP;
-    keyInputCode[Down] = PAD_INPUT_DOWN;
-    keyInputCode[Left] = PAD_INPUT_LEFT;
-    keyInputCode[Right] = PAD_INPUT_RIGHT;
-    keyInputCode[Space] = PAD_INPUT_10;
-    keyInputCode[EscapeKey] = PAD_INPUT_9;
-    keyInputCode[WKey] = PAD_INPUT_8;
-    keyInputCode[DKey] = PAD_INPUT_6;
-    keyInputCode[SKey] = PAD_INPUT_5;
-    keyInputCode[AKey] = PAD_INPUT_4;
+    keyInputCode[CAST_I(KeyInputKind::Up)] = PAD_INPUT_UP;
+    keyInputCode[CAST_I(KeyInputKind::Down)] = PAD_INPUT_DOWN;
+    keyInputCode[CAST_I(KeyInputKind::Left)] = PAD_INPUT_LEFT;
+    keyInputCode[CAST_I(KeyInputKind::Right)] = PAD_INPUT_RIGHT;
+    keyInputCode[CAST_I(KeyInputKind::Space)] = PAD_INPUT_10;
+    keyInputCode[CAST_I(KeyInputKind::EscapeKey)] = PAD_INPUT_9;
+    keyInputCode[CAST_I(KeyInputKind::WKey)] = PAD_INPUT_8;
+    keyInputCode[CAST_I(KeyInputKind::DKey)] = PAD_INPUT_6;
+    keyInputCode[CAST_I(KeyInputKind::SKey)] = PAD_INPUT_5;
+    keyInputCode[CAST_I(KeyInputKind::AKey)] = PAD_INPUT_4;
 }
 /// <summary>
 /// 入力状況更新
@@ -52,9 +52,9 @@ void UserInput::Update()
 /// </summary>
 /// <param name="inputKind"></param>
 /// <returns></returns>
-InputState UserInput::GetInputState(KeyInputKind inputKind)
+UserInput::InputState UserInput::GetInputState(KeyInputKind inputKind)
 {
-    return keyInputState[inputKind];
+    return keyInputState[CAST_I(inputKind)];
 }
 /// <summary>
 /// キーボードボタンの入力更新
@@ -111,10 +111,10 @@ void UserInput::UpdateGamePadButton()
     //ゲームパッドの場合のボタン入力を所得
     GetJoypadXInputState(DX_INPUT_KEY_PAD1, &xInput);
 
-    UpdateButton(xInput.ThumbLY > LEVER_VALUE - 1, &keyInputState[Up]);
-    UpdateButton(xInput.ThumbLY < -LEVER_VALUE, &keyInputState[Down]);
-    UpdateButton(xInput.ThumbLX > LEVER_VALUE - 1, &keyInputState[Right]);
-    UpdateButton(xInput.ThumbLX < -LEVER_VALUE, &keyInputState[Left]);
-    UpdateButton(xInput.Buttons[XINPUT_BUTTON_B] == 1, &keyInputState[Space]);
-    UpdateButton(xInput.Buttons[XINPUT_BUTTON_BACK] == 1, &keyInputState[EscapeKey]);   
+    UpdateButton(xInput.ThumbLY > LEVER_VALUE - 1, &keyInputState[CAST_I(KeyInputKind::Up)]);
+    UpdateButton(xInput.ThumbLY < -LEVER_VALUE, &keyInputState[CAST_I(KeyInputKind::Down)]);
+    UpdateButton(xInput.ThumbLX > LEVER_VALUE - 1, &keyInputState[CAST_I(KeyInputKind::Right)]);
+    UpdateButton(xInput.ThumbLX < -LEVER_VALUE, &keyInputState[CAST_I(KeyInputKind::Left)]);
+    UpdateButton(xInput.Buttons[XINPUT_BUTTON_B] == 1, &keyInputState[CAST_I(KeyInputKind::Space)]);
+    UpdateButton(xInput.Buttons[XINPUT_BUTTON_BACK] == 1, &keyInputState[CAST_I(KeyInputKind::EscapeKey)]);   
 }

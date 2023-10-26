@@ -5,17 +5,16 @@
 /// </summary>
 PlayManual::PlayManual()
 {
-	using enum UIKind;
 	//操作方法で出来ることが書いてある
-    playManualUIData = UIManager::CreateUIData(manual);
+    playManualUIData = UIManager::CreateUIData(UIKind::manual);
 	//操作方法で下に引いてある枠
-    sheatUIData = UIManager::CreateUIData(playManualSheat);
+    sheatUIData = UIManager::CreateUIData(UIKind::playManualSheat);
 	//左ボタン
-	leftBUI.data = UIManager::CreateUIData(leftButton);
+	leftBUI.data = UIManager::CreateUIData(UIKind::leftButton);
 	//右ボタン
-	rightBUI.data = UIManager::CreateUIData(rightButton);
+	rightBUI.data = UIManager::CreateUIData(UIKind::rightButton);
 	//ジョイパッドならUI変更
-	downBUI.data = UIManager::CreateUIData((UserInput::IsInputPad()) ? xDownButton : downButton);
+	downBUI.data = UIManager::CreateUIData((UserInput::IsInputPad()) ? UIKind::xDownButton : UIKind::downButton);
 }
 /// <summary>
 /// UI削除
@@ -34,9 +33,10 @@ PlayManual::~PlayManual()
 void PlayManual::Update()
 {
 	//ボタン入力状況
-	leftBUI.push = UserInput::GetInputState(Left) == Hold;
-	rightBUI.push = UserInput::GetInputState(Right) == Hold;
-	downBUI.push = UserInput::GetInputState((UserInput::IsInputPad()) ? Space : Down) == Hold;
+	leftBUI.push = UserInput::GetInputState(UserInput::KeyInputKind::Left) == UserInput::InputState::Hold;
+	rightBUI.push = UserInput::GetInputState(UserInput::KeyInputKind::Right) == UserInput::InputState::Hold;
+	//パッドを使ってたら対応のボタンを変更する
+	downBUI.push = UserInput::GetInputState((UserInput::IsInputPad()) ? UserInput::KeyInputKind::Space : UserInput::KeyInputKind::Down) == UserInput::InputState::Hold;
 
 	UIKind nextUIKind = UIKind::manual;
 	//下方向に入力するとターボ準備完了

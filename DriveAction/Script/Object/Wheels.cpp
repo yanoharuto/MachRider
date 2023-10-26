@@ -27,13 +27,13 @@ Wheels::Wheels()
 void Wheels::Update()
 {	
 	//‰E‚ð‰Ÿ‚µ‚½‚ç
-	if (UserInput::GetInputState(Right) != Free)
+	if (UserInput::GetInputState(UserInput::KeyInputKind::Right) != UserInput::InputState::Free)
 	{		
 		//yŽ²‰ñ“]
 		axisY = axisY < maxAxisY ? axisY + wheelCurvePower : maxAxisY;
 	}
 	//¶‚ð‰Ÿ‚µ‚½‚ç
-	else if (UserInput::GetInputState(Left) != Free)
+	else if (UserInput::GetInputState(UserInput::KeyInputKind::Left) != UserInput::InputState::Free)
 	{
 		axisY = axisY > -maxAxisY ? axisY - wheelCurvePower : -maxAxisY;
 	}

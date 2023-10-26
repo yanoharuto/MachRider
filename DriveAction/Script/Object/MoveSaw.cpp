@@ -20,11 +20,10 @@ MoveSaw::MoveSaw(PlacementData editData)
     //追加情報から移動速度などを所得
     auto addDataLoader = new AddMoveSawDataLoader();
     auto addStrDataVec = addDataLoader->GetLoadData();
-    using enum MoveParametor;
     //タイマーが動いている間だけ動く
-    moveLarpTimer = new ReusableTimer(STR_TO_D(addStrDataVec[CAST_I(moveTime)]));
+    moveLarpTimer = new ReusableTimer(STR_TO_D(addStrDataVec[CAST_I(MoveParametor::moveTime)]));
     //前方方向に動く
-    velocity = VScale(direction, STR_TO_F(addStrDataVec[CAST_I(moveSpeed)]));
+    velocity = VScale(direction, STR_TO_F(addStrDataVec[CAST_I(MoveParametor::moveSpeed)]));
     //当たり判定
     collider = new SphereHitChecker(this);
     conflictProcessor = new ConflictProcessor(this);

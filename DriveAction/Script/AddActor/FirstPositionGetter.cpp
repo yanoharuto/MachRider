@@ -26,8 +26,18 @@ std::vector<PlacementData> FirstPositionGetter::GetPlaceData(Object::ObjectTag t
 std::vector<PlacementData> FirstPositionGetter::GetPlaceData(std::string fileName, ObjectInit::InitObjKind kind)
 {    
     //配置情報に変換する
-    auto placeData = CSVConvertFirstData(fileName);
-    
+    std::vector<PlacementData> placeData;
+
+    if (StageDataManager::IsExistJsonFile())
+    {
+        fileName += Utility::JSON_FILE;
+        placeData = JsonConvertFirstData(fileName);
+    }
+    else
+    {
+        fileName += Utility::CSV_FILE;
+        placeData = CSVConvertFirstData(fileName);
+    }
     //同じ種類のオブジェクトだけ選定して返り値にする
     std::vector<PlacementData> returnData = {};
     for (int i = 0; i < CONTAINER_GET_SIZE(placeData); i++)
@@ -61,13 +71,12 @@ std::vector<PlacementData> FirstPositionGetter::CSVConvertFirstData(std::string 
         int dataKindNum = i * EDIT_ARRANGEMENT_DATA_KIND_NUM;
         //配置初期化情報
         PlacementData initData = {};
-        using enum EditArrangementDataKind;
-        initData.objKind = STR_TO_I(placeStrData[dataKindNum + static_cast<int>(objectKindNum)]);
-        initData.collectNum = STR_TO_I(placeStrData[dataKindNum + static_cast<int>(appearCollectNum)]);
-        initData.posX = STR_TO_F(placeStrData[dataKindNum + static_cast<int>(positionX)]);
-        initData.posZ = STR_TO_F(placeStrData[dataKindNum + static_cast<int>(positionZ)]);
-        initData.dirX = STR_TO_F(placeStrData[dataKindNum + static_cast<int>(directionX)]);
-        initData.dirZ = STR_TO_F(placeStrData[dataKindNum + static_cast<int>(directionZ)]);
+        initData.objKind = STR_TO_I(placeStrData[dataKindNum + static_cast<int>(EditArrangementDataKind::objectKindNum)]);
+        initData.collectNum = STR_TO_I(placeStrData[dataKindNum + static_cast<int>(EditArrangementDataKind::appearCollectNum)]);
+        initData.posX = STR_TO_F(placeStrData[dataKindNum + static_cast<int>(EditArrangementDataKind::positionX)]);
+        initData.posZ = STR_TO_F(placeStrData[dataKindNum + static_cast<int>(EditArrangementDataKind::positionZ)]);
+        initData.dirX = STR_TO_F(placeStrData[dataKindNum + static_cast<int>(EditArrangementDataKind::directionX)]);
+        initData.dirZ = STR_TO_F(placeStrData[dataKindNum + static_cast<int>(EditArrangementDataKind::directionZ)]);
         dataVec.push_back(initData);
     }
     return dataVec;

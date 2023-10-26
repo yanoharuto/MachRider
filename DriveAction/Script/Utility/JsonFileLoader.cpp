@@ -7,11 +7,11 @@ std::string const JsonFileLoader::jsonSchemaFilePath = "data/Json/Schema/";
 /// Json形式のファイルを開く
 /// </summary>
 /// <param name="filePath">開きたいファイル</param>
-/// <param name="schemaFilePath">開くファイルのSchema</param>
-JsonFileLoader::JsonFileLoader(std::string filePath, std::string schemaFilePath)
+/// <param name="schemaFileName">開くファイルのSchema</param>
+JsonFileLoader::JsonFileLoader(std::string filePath, std::string schemaFileName)
 {
     //スキーマから書き方を調べる
-    std::ifstream schema_ifs(jsonSchemaFilePath + schemaFilePath);
+    std::ifstream schema_ifs(jsonSchemaFilePath + schemaFileName);
     rapidjson::IStreamWrapper schema_isw(schema_ifs);
     rapidjson::Document schema_doc;
     schema_doc.ParseStream(schema_isw);

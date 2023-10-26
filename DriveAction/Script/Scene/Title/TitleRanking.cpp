@@ -8,17 +8,16 @@
 /// </summary>
 TitleRanking::TitleRanking()
 {
-    using enum UIKind;
     //スコアUI
-    highUI = new NumUI(titleHiScoreNum);
-    secondUI = new NumUI(titleSecondScoreNum);
-    thirdUI = new NumUI(titleThirdScoreNum);
+    highUI = new NumUI(UIKind::titleHiScoreNum);
+    secondUI = new NumUI(UIKind::titleSecondScoreNum);
+    thirdUI = new NumUI(UIKind::titleThirdScoreNum);
     //順位UI
-    highRankUI = new NumUI(rank1);
-    secondRankUI = new NumUI(rank2);
-    thirdRankUI = new NumUI(rank3);
+    highRankUI = new NumUI(UIKind::rank1);
+    secondRankUI = new NumUI(UIKind::rank2);
+    thirdRankUI = new NumUI(UIKind::rank3);
     //HighScoreの文字
-    rankUIData = UIManager::CreateUIData(titleHighScore);
+    rankUIData = UIManager::CreateUIData(UIKind::titleHighScore);
 }
 /// <summary>
 /// ランキングを構成する数字UIを消去
@@ -61,5 +60,5 @@ void TitleRanking::Draw(NumUI* ui, int num, VECTOR color) const
 {
     SetDrawBright(static_cast<int>(color.x), static_cast<int>(color.y), static_cast<int>(color.z));
     ui->Draw(num);
-    SetDrawBright(Utility::MAX1BYTEVALUE, Utility::MAX1BYTEVALUE, Utility::MAX1BYTEVALUE);
+    SetDrawBright(Utility::MAX_ONE_BYTE_RANGE, Utility::MAX_ONE_BYTE_RANGE, Utility::MAX_ONE_BYTE_RANGE);
 }

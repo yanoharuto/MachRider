@@ -5,18 +5,17 @@
 #include "EditorDrawModel.h"
 #include "Utility.h"
 //読み込むプレイヤーの位置や向きが入ったファイルのパス
-const std::string PlayerDataEditor::loadEditFilePath = "playerData.csv";
+const std::string PlayerDataEditor::loadFileName = "playerData";
 /// <summary>
 /// プレイヤーの初期位置の編集
 /// </summary>
 PlayerDataEditor::PlayerDataEditor()
-    :StageDataEditor(loadEditFilePath,InitObjKind::player)
+    :StageDataEditor(loadFileName,InitObjKind::player)
 {
-    if (!editedPlacementDataVec.empty())
+    if (!editedPlacementDataVec.empty())//ファイルが空じゃなかったら編集オブジェクトに位置を渡す
     {
         editObject->SetArrangementData(editedPlacementDataVec[0]);
     }
-    
 }
 
 /// <summary>
@@ -24,22 +23,22 @@ PlayerDataEditor::PlayerDataEditor()
 /// </summary>
 void PlayerDataEditor::Update(std::weak_ptr<CameraObserver> cameraObserever)
 {
-    using enum EditActionKind;
-    if (nowEditAction == select && UserInput::GetInputState(Space) == Push)
+    if (nowEditAction == EditActionKind::select && UserInput::GetInputState(UserInput::KeyInputKind::Space) == UserInput::InputState::Push)
     {
         //スペースキーで編集開始
-        nowEditAction = edit;
+        nowEditAction = EditActionKind::edit;
     }
-    else if (nowEditAction == edit)
+    else if (nowEditAction == EditActionKind::edit)
     {
         //移動回転
         editObject->Update(cameraObserever);
         //編集終了
-        if (UserInput::GetInputState(Space) == Push)
+        if (UserInput::GetInputState(UserInput::KeyInputKind::Space) == UserInput::InputState::Push)
         {
-            nowEditAction = select;
+            nowEditAction = EditActionKind::select;
             PlacementData editData = editObject->GePlacementData();
             editData.objKind = CAST_I(editKind);
+            //プレイヤーは一つだけなので先頭のみ
             if(editedPlacementDataVec.empty())
             {
                 editedPlacementDataVec.push_back(editData);

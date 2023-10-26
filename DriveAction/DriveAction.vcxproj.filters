@@ -426,7 +426,7 @@
     <ClCompile Include="Script\AssetManager.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Script\Camera\CameraManager.cpp">
+    <ClCompile Include="Script\Camera\CameraDataLoader.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Script\AddActor\DrawModelManager.cpp">
@@ -908,7 +908,7 @@
     <ClInclude Include="Script\AssetManager.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Script\Camera\CameraManager.h">
+    <ClInclude Include="Script\Camera\CameraDataLoader.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Script\AddActor\AddFlyShipDataLoader.h">

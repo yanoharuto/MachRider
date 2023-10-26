@@ -44,25 +44,23 @@ EditorScene::~EditorScene()
 SceneType EditorScene::Update()
 {
     menu->Update();//メニュー画面の更新
-
-    using enum Menu::MenuOptions;
     switch (menu->GetMenuState())
     {
         //メニューUIの選択ごとにシーンを新しく読み込む
-    case retry:
+    case Menu::MenuOptions::retry:
         return SceneType::reload;//再読み込み
         break;
-    case returnTitle:
+    case Menu::MenuOptions::returnTitle:
         return SceneType::title;//タイトル
         break;
-    case exitGame:
+    case Menu::MenuOptions::exitGame:
         return SceneType::escape;//ゲーム終了
         break;
     }
     //メニュー画面開いてなかったら
     if (!menu->IsMenuOpen())
     {
-        if (UserInput::GetInputState(AKey) == Hold)
+        if (UserInput::GetInputState(UserInput::KeyInputKind::AKey) == UserInput::InputState::Hold)
         {
             camera->UpdateDirectionAndTargetBetween();
         }

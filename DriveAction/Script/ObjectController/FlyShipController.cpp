@@ -44,15 +44,14 @@ void FlyShipController::GetAddData(AddFlyShipDataLoader::AddData kind)
     //FlyShip用のデータをロード
     auto loader = new AddFlyShipDataLoader(kind);
     auto addData = loader->GetLoadData();
-    using enum FlyShipParamator;
     //移動速度
-    param.moveSpeed = STR_TO_F(addData[CAST_I(moveSpeed)]);
+    param.moveSpeed = STR_TO_F(addData[CAST_I(FlyShipParamator::moveSpeed)]);
     //生存時間
-    param.setAliveTime = STR_TO_F(addData[CAST_I(aliveTime)]);
+    param.setAliveTime = STR_TO_F(addData[CAST_I(FlyShipParamator::aliveTime)]);
     //クールタイム
-    param.setCoolTime = STR_TO_F(addData[CAST_I(coolTime)]);
+    param.setCoolTime = STR_TO_F(addData[CAST_I(FlyShipParamator::coolTime)]);
     //１グループ何体か
-    param.unitNum = STR_TO_I(addData[CAST_I(unitNum)]);
+    param.unitNum = STR_TO_I(addData[CAST_I(FlyShipParamator::unitNum)]);
     //個体間距離
-    param.unitBetween = STR_TO_F(addData[CAST_I(unitBetween)]);
+    param.unitBetween = STR_TO_F(addData[CAST_I(FlyShipParamator::unitBetween)]);
 }

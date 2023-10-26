@@ -8,13 +8,15 @@
 #include "EditorObject.h"
 #include "EditorDrawModel.h"
 #include "Utility.h"
+#include "StageDataManager.h"
 //今編集しているオブジェクトのポジション
 PlacementData StageDataEditor::nowEditObjPlaceData = {};
 /// 収集アイテムの数
 int StageDataEditor::collectNum = 0;
 /// 収集アイテムを取ったどのタイミングで出てくるか
 int StageDataEditor::getCollectNum = 0;
-
+//編集ファイル置き場
+const std::string StageDataEditor::editFilePath = "data/editFile/";
 /// <summary>
 ///ステージに配置するオブジェクトの位置などを保存する
 /// </summary>
@@ -22,8 +24,9 @@ int StageDataEditor::getCollectNum = 0;
 StageDataEditor::StageDataEditor(std::string setFileName, InitObjKind objKind)
 {
     editKind = objKind;
+    auto a = StageDataManager::IsExistFile(editFilePath + setFileName + Utility::JSON_FILE);
     //もしすでにファイルがあるならデータを取ってくる
-    editedPlacementDataVec = FirstPositionGetter::GetPlaceData(setFileName,objKind);
+    editedPlacementDataVec = FirstPositionGetter::GetPlaceData(editFilePath + setFileName,objKind);
     //編集オブジェクト
     editObject = new EditorObject();
     drawer = new EditorDrawModel(editKind);
@@ -43,15 +46,14 @@ StageDataEditor::~StageDataEditor()
 /// </summary>
 void StageDataEditor::Update(std::weak_ptr<CameraObserver> cameraObserever)
 {
-    using enum EditActionKind;
     if (nowEditAction == EditActionKind::select)
     {
         SelectEditedObject();
         //スペースキーで編集開始
-        if(UserInput::GetInputState(Space) == Push)
+        if(UserInput::GetInputState(UserInput::KeyInputKind::Space) == UserInput::InputState::Push)
         {
             //selectEditedNumにNEW_EDIT_NUM以外の数字が入っているなら再編集
-            nowEditAction = selectEditedNum != NEW_EDIT_NUM ? reEdit : edit;
+            nowEditAction = selectEditedNum != NEW_EDIT_NUM ? EditActionKind::reEdit : EditActionKind::edit;
         }
     }
     else//編集モード
@@ -59,16 +61,16 @@ void StageDataEditor::Update(std::weak_ptr<CameraObserver> cameraObserever)
         Edit(cameraObserever);
     }
     //DKeyを押したら今選択している物を削除
-    if (UserInput::GetInputState(DKey) == Push)
+    if (UserInput::GetInputState(UserInput::KeyInputKind::DKey) == UserInput::InputState::Push)
     {
         //再編集しようとしていたら
-        if (nowEditAction != edit && selectEditedNum != NEW_EDIT_NUM)
+        if (nowEditAction != EditActionKind::edit && selectEditedNum != NEW_EDIT_NUM)
         {
             //再編集中ならそれを削除
             EraceEndEditData(selectEditedNum);
             selectEditedNum = NEW_EDIT_NUM;
         }
-        nowEditAction = select;
+        nowEditAction = EditActionKind::select;
     }
     UpdateNowEditObjData();
 
@@ -78,7 +80,6 @@ void StageDataEditor::Update(std::weak_ptr<CameraObserver> cameraObserever)
 /// </summary>
 void StageDataEditor::Draw() const
 {
-    using enum EditActionKind;
     if (!editedPlacementDataVec.empty())
     {
         //編集済みのオブジェクト全て描画
@@ -93,7 +94,7 @@ void StageDataEditor::Draw() const
         }
     }
     //今現在編集中なら
-    if (nowEditAction != select)
+    if (nowEditAction != EditActionKind::select)
     {
         //編集中のものを表示
         auto editData = editObject->GePlacementData();
@@ -112,7 +113,7 @@ void StageDataEditor::Draw() const
 /// </summary>
 void StageDataEditor::ChangeEditedCollectNum()
 {
-    if (UserInput::GetInputState(Up) == Push)
+    if (UserInput::GetInputState(UserInput::KeyInputKind::Up) == UserInput::InputState::Push)
     {
         //収集アイテムの数より多くならない
         if (getCollectNum + 1 > collectNum)
@@ -124,7 +125,7 @@ void StageDataEditor::ChangeEditedCollectNum()
             getCollectNum++;
         }
     }
-    else if (UserInput::GetInputState(Down) == Push)
+    else if (UserInput::GetInputState(UserInput::KeyInputKind::Down) == UserInput::InputState::Push)
     {
         //0より少なくならない
         if (getCollectNum - 1 < 0)
@@ -153,11 +154,10 @@ void StageDataEditor::EraceEndEditData(int eraceNum)
 /// </summary>
 void StageDataEditor::Edit(std::weak_ptr<CameraObserver> cameraObserever)
 {
-    using enum EditActionKind;
     //移動回転
     editObject->Update(cameraObserever);
     //スペースキーを押したら
-    if (UserInput::GetInputState(Space) == Push)
+    if (UserInput::GetInputState(UserInput::KeyInputKind::Space) == UserInput::InputState::Push)
     {
         //編集したオブジェクトの位置と向きと種類
         PlacementData editData = editObject->GePlacementData();
@@ -165,7 +165,7 @@ void StageDataEditor::Edit(std::weak_ptr<CameraObserver> cameraObserever)
         //何個目のアイテムを回収したかで出てくるか設定する
         editData.collectNum = getCollectNum;
         //過去に編集していたオブジェクトを再編集していたら
-        if (nowEditAction == reEdit)
+        if (nowEditAction == EditActionKind::reEdit)
         {
             //配置情報を再保存
             editedPlacementDataVec[selectEditedNum] = editData;
@@ -177,7 +177,7 @@ void StageDataEditor::Edit(std::weak_ptr<CameraObserver> cameraObserever)
             editedPlacementDataVec.push_back(editData);
         }
         //スペースキーを押したら編集終了
-        nowEditAction = select;
+        nowEditAction = EditActionKind::select;
     }
 }
 /// <summary>
@@ -199,7 +199,7 @@ void StageDataEditor::SelectEditedObject()
     {
         int prevNum = selectEditedNum;
         //左キーで古い保存されたオブジェクトを引き出せるようになる
-        if (UserInput::GetInputState(Left) == Push)
+        if (UserInput::GetInputState(UserInput::KeyInputKind::Left) == UserInput::InputState::Push)
         {
             selectEditedNum--;
             //-1だったら新しく作ろうとしている
@@ -210,7 +210,7 @@ void StageDataEditor::SelectEditedObject()
             }
         }
         //右キーで一番新しい保存されたオブジェクトを引き出せるようになる
-        else if (UserInput::GetInputState(Right) == Push) 
+        else if (UserInput::GetInputState(UserInput::KeyInputKind::Right) == UserInput::InputState::Push)
         {
             selectEditedNum++;
             //過去に編集したアイテムの数より少なくなっているか

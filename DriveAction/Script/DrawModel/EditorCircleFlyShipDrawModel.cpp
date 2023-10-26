@@ -64,9 +64,8 @@ void EditorCircleFlyShipDrawModel::Init()
     //FlyShip用のデータをロード
     auto addDataLoader = new AddFlyShipDataLoader(AddObjectDataLoader::AddData::circleFlyShip);
     auto addData = addDataLoader->GetLoadData();
-    using enum FlyShipController::FlyShipParamator;
-    uniNum = STR_TO_I(addData[CAST_I(unitNum)]);
-    uniBetween = STR_TO_F(addData[CAST_I(unitBetween)]);
+    uniNum = STR_TO_I(addData[CAST_I(FlyShipController::FlyShipParamator::unitNum)]);
+    uniBetween = STR_TO_F(addData[CAST_I(FlyShipController::FlyShipParamator::unitBetween)]);
     //機体の数だけ割る
     uniDirRota = 360.0f / uniNum;
     //追加情報読み取り終了

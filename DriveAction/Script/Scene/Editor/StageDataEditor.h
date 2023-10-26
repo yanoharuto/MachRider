@@ -51,7 +51,7 @@ public:
     /// 編集しているオブジェクトの種類
     /// </summary>
     /// <returns></returns>
-    ObjectInit::InitObjKind GetEditObjectKind()const
+    InitObjKind GetEditObjectKind()const
     {
         return editKind;
     }
@@ -111,7 +111,6 @@ protected:
     /// NowEditObjDataメンバ変数を更新する
     /// </summary>
     void UpdateNowEditObjData();
-    
     //今編集しているオブジェクトの情報
     static PlacementData nowEditObjPlaceData;
     // 編集したいエネミーの種類
@@ -130,4 +129,6 @@ protected:
     std::vector<PlacementData> editedPlacementDataVec;
     //編集済みの物を左右キーで選ぼうとすると変動
     int selectEditedNum = -1;
+    //編集ファイル置き場
+    static const std::string editFilePath;
 };

@@ -31,17 +31,17 @@ void EditorCamera::UpdatePositionAndTarget(PlacementData targetPlaceData)
 void EditorCamera::UpdateDirectionAndTargetBetween()
 {
     //‰E¶‚ÅŒü‚«•ÏX
-    if (UserInput::GetInputState(Left))
+    if (UserInput::GetInputState(UserInput::KeyInputKind::Left) != UserInput::InputState::Free)
     {
         direction = VNorm(OriginalMath::GetYRotateVector(direction, -rotaSpeed));
     }
-    else if (UserInput::GetInputState(Right))
+    else if (UserInput::GetInputState(UserInput::KeyInputKind::Right) != UserInput::InputState::Free)
     {
         direction = VNorm(OriginalMath::GetYRotateVector(direction, rotaSpeed));
     }
 
     //ã‰º‚ÅˆÚ“®
-    if (UserInput::GetInputState(Up))
+    if (UserInput::GetInputState(UserInput::KeyInputKind::Up) != UserInput::InputState::Free)
     {
         //‹——£‚ğk‚ß‚é
         targetBetweenSize -= cameraSpeed;
@@ -50,7 +50,7 @@ void EditorCamera::UpdateDirectionAndTargetBetween()
             targetBetweenSize = cameraSpeed;
         }
     }
-    else if (UserInput::GetInputState(Down))
+    else if (UserInput::GetInputState(UserInput::KeyInputKind::Down) != UserInput::InputState::Free)
     {
         //‹——£‚ğ˜b‚·
         targetBetweenSize += cameraSpeed;

@@ -5,7 +5,7 @@
 #include <memory>
 #include "DxLib.h"
 #include "Camera.h"
-#include "CameraManager.h"
+#include "CameraDataLoader.h"
 class ObjectObserver;
 class Actor;
 

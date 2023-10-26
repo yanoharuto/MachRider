@@ -48,24 +48,22 @@ SceneType TitleScene::Update()
 {
     //タイトルでの処理//車が勝手に動いたりする
     titleObject->Update();
-    using enum SoundKind;
     //BGM長しっぱ
-    if (!SoundPlayer::IsPlaySound(titleBGM) && titleState != TitleState::processEnd)
+    if (!SoundPlayer::IsPlaySound(SoundKind::titleBGM) && titleState != TitleState::processEnd)
     {
-        SoundPlayer::Play2DSE(titleBGM);
+        SoundPlayer::Play2DSE(SoundKind::titleBGM);
     }
-    using enum TitleScene::TitleState;
     //状況によってやるべき処理を変更
     switch (titleState)
     {
-    case waitSpaceKey:
+    case TitleScene::TitleState::waitSpaceKey:
         WaitPressSpaceKey();//スペースキー待ち
         break;
-    case stageSelect:
+    case TitleScene::TitleState::stageSelect:
         SelectStageProcess();//ステージ選択
         break;
-    case processEnd:
-        SoundPlayer::StopSound(titleBGM);
+    case TitleScene::TitleState::processEnd:
+        SoundPlayer::StopSound(SoundKind::titleBGM);
         return SceneType::play;//処理終了
         break;
     default:
@@ -73,12 +71,12 @@ SceneType TitleScene::Update()
     }
 
     //エスケープキーを押したら終了
-    if (UserInput::GetInputState(EscapeKey) == Push)
+    if (UserInput::GetInputState(UserInput::KeyInputKind::EscapeKey) == UserInput::InputState::Push)
     {
         return SceneType::escape;
     }
     //WキーでEditorモード
-    else if (UserInput::GetInputState(WKey) == Push)
+    else if (UserInput::GetInputState(UserInput::KeyInputKind::WKey) == UserInput::InputState::Push)
     {
         return SceneType::editor;
     }
@@ -112,7 +110,7 @@ void TitleScene::Draw() const
 /// <param name="changedState">変更先の状態</param>
 void TitleScene::OnPressSpaceKeyProcess(TitleState changedState)
 {
-    if (UserInput::GetInputState(Space) == Push)
+    if (UserInput::GetInputState(UserInput::KeyInputKind::Space) == UserInput::InputState::Push)
     {
         SoundPlayer::Play2DSE(SoundKind::sceneNextSE);
         titleState = changedState;

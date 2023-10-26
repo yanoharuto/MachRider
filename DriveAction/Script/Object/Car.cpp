@@ -108,13 +108,13 @@ void Car::ReflectsVelocity()
 void Car::UpdateAccelPower()
 {
 	//ジョイパッドだったらブレーキの対応ボタンを変更
-	InputState breakInput = UserInput::GetInputState(Down);
+	UserInput::InputState breakInput = UserInput::GetInputState(UserInput::KeyInputKind::Down);
 	if (UserInput::IsInputPad())
 	{
-		breakInput = UserInput::GetInputState(Space);
+		breakInput = UserInput::GetInputState(UserInput::KeyInputKind::Space);
 	}
 	//ブレーキした
-	if (breakInput == InputState::Hold)
+	if (breakInput == UserInput::InputState::Hold)
 	{
 		accelPower -= accelPower * speedParamator.breakPower;
 	}
@@ -127,7 +127,7 @@ void Car::UpdateAccelPower()
 		}
 	}
 	//左右に曲がろうとしていたら減速
-	if (UserInput::GetInputState(Left) == InputState::Hold && UserInput::GetInputState(Right) == InputState::Hold)
+	if (UserInput::GetInputState(UserInput::KeyInputKind::Left) == UserInput::InputState::Hold && UserInput::GetInputState(UserInput::KeyInputKind::Right) == UserInput::InputState::Hold)
 	{
 		//左右に曲がろうとしたら減速する
 		accelPower -= accelPower * gripDecel;
@@ -148,13 +148,12 @@ void Car::InitSpeedParamater()
 	auto loader = new AddPlayerDataLoader();
 	auto strVec = loader->GetLoadData();
 	//車の性能を初期化
-	using enum CarInitKind;
-	speedParamator.acceleSpeed = STR_TO_F(strVec[static_cast<int>(acceleSpeed)]);
-	speedParamator.lowestSpeed = STR_TO_F(strVec[static_cast<int>(lowestSpeed)]);
-	speedParamator.maxSpeed = STR_TO_F(strVec[static_cast<int>(maxSpeed)]);
-	speedParamator.turboAddSpeed = STR_TO_F(strVec[static_cast<int>(turboSpeed)]);
-	speedParamator.turboTime = STR_TO_F(strVec[static_cast<int>(turboTime)]);
-	speedParamator.gripPower = STR_TO_F(strVec[static_cast<int>(gripPower)]);
-	speedParamator.breakPower = STR_TO_F(strVec[static_cast<int>(breakePower)]);
-	speedParamator.turboChargeTime = STR_TO_F(strVec[static_cast<int>(turboChargeTime)]);
+	speedParamator.acceleSpeed = STR_TO_F(strVec[static_cast<int>(CarInitKind::acceleSpeed)]);
+	speedParamator.lowestSpeed = STR_TO_F(strVec[static_cast<int>(CarInitKind::lowestSpeed)]);
+	speedParamator.maxSpeed = STR_TO_F(strVec[static_cast<int>(CarInitKind::maxSpeed)]);
+	speedParamator.turboAddSpeed = STR_TO_F(strVec[static_cast<int>(CarInitKind::turboSpeed)]);
+	speedParamator.turboTime = STR_TO_F(strVec[static_cast<int>(CarInitKind::turboTime)]);
+	speedParamator.gripPower = STR_TO_F(strVec[static_cast<int>(CarInitKind::gripPower)]);
+	speedParamator.breakPower = STR_TO_F(strVec[static_cast<int>(CarInitKind::breakePower)]);
+	speedParamator.turboChargeTime = STR_TO_F(strVec[static_cast<int>(CarInitKind::turboChargeTime)]);
 }

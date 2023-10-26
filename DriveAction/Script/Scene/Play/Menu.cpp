@@ -16,17 +16,15 @@ double Menu::openMenuTime=0;
 /// </summary>
 Menu::Menu()
 {
-    using enum Menu::MenuOptions;
-    using enum UIKind;
     //ゲーム続行状態
-    menuOption = continueGame;
+    menuOption = MenuOptions::continueGame;
     //項目を移動するカーソルのUI
-    cursorUIData = UIManager::CreateUIData(menuCursor);
+    cursorUIData = UIManager::CreateUIData(UIKind::menuCursor);
     //各項目のUI準備
-    uiDatas[static_cast<int>(continueGame)] = UIManager::CreateUIData(playUI);
-    uiDatas[static_cast<int>(exitGame)] = UIManager::CreateUIData(exitUI);
-    uiDatas[static_cast<int>(retry)] = UIManager::CreateUIData(retryUI);
-    uiDatas[static_cast<int>(returnTitle)] = UIManager::CreateUIData(returnTitleBottonUI);
+    uiDatas[static_cast<int>(MenuOptions::continueGame)] = UIManager::CreateUIData(UIKind::playUI);
+    uiDatas[static_cast<int>(MenuOptions::exitGame)] = UIManager::CreateUIData(UIKind::exitUI);
+    uiDatas[static_cast<int>(MenuOptions::retry)] = UIManager::CreateUIData(UIKind::retryUI);
+    uiDatas[static_cast<int>(MenuOptions::returnTitle)] = UIManager::CreateUIData(UIKind::returnTitleBottonUI);
     isOpenMenu = false;
     openMenuTime = 0;
 }
@@ -47,12 +45,11 @@ Menu::~Menu()
 /// </summary>
 void Menu::Update()
 {    
-    using enum Menu::MenuOptions;
     
     //開いているときに上下に押すと項目を変更
     if (isOpenMenu)
     {
-        if (UserInput::GetInputState(Up) == Push)
+        if (UserInput::GetInputState(UserInput::KeyInputKind::Up) == UserInput::InputState::Push)
         {
             selectUI--;
 
@@ -62,7 +59,7 @@ void Menu::Update()
                 selectUI = 0;
             }
         }
-        else if (UserInput::GetInputState(Down) == Push)
+        else if (UserInput::GetInputState(UserInput::KeyInputKind::Down) == UserInput::InputState::Push)
         {
             selectUI++;
             //一番下の項目からさらに下に行く場合そのまま
@@ -75,15 +72,15 @@ void Menu::Update()
         cursorUIData.y = uiDatas[selectUI % MENU_STATE_KIND_NUM].y;
 
         //メニューを開いた状態でスペースキーを押したら押した項目を保存
-        if (UserInput::GetInputState(Input::Space) == Push)
+        if (UserInput::GetInputState(UserInput::KeyInputKind::Space) == UserInput::InputState::Push)
         {
             menuOption = static_cast<MenuOptions>(selectUI);
-            isOpenMenu = !(menuOption == continueGame);
+            isOpenMenu = !(menuOption == MenuOptions::continueGame);
             openMenuTime += Clock::GetNowGameTime() - startTime;
         }
     }
     //Escapeを押したら
-    else if (UserInput::GetInputState(Input::EscapeKey) == Push)
+    else if (UserInput::GetInputState(UserInput::KeyInputKind::EscapeKey) == UserInput::InputState::Push)
     {
         //メニュー画面を開いたり閉じたり
         isOpenMenu = !isOpenMenu;
@@ -135,7 +132,7 @@ void Menu::Draw() const
     {
         SetDrawBright(backScreenBright, backScreenBright, backScreenBright);
         DrawGraph(0, 0, backScreen, false);
-        SetDrawBright(Utility::MAX1BYTEVALUE, Utility::MAX1BYTEVALUE, Utility::MAX1BYTEVALUE);
+        SetDrawBright(Utility::MAX_ONE_BYTE_RANGE, Utility::MAX_ONE_BYTE_RANGE, Utility::MAX_ONE_BYTE_RANGE);
         //各UIを描画  選択中なら二枚目の状態にする
         UIDrawer::DrawRotaUI(cursorUIData);
         DrawUI(MenuOptions::continueGame);

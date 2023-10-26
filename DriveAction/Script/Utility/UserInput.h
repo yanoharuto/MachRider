@@ -1,10 +1,25 @@
 #pragma once
 #include "DxLib.h"
-namespace Input
-{/// <summary>
-/// ボタンの入力状況
+//入力の種類
+constexpr int KEY_INPUT_KIND_NUM = 10;
+//レバーの値の幅
+constexpr int LEVER_VALUE = 12767;
+/// <summary>
+/// ユーザーが入力した情報
 /// </summary>
-    enum InputState
+class UserInput
+{
+public:
+
+    /// <summary>
+    /// 入力したキーがどれか分かるように準備
+    /// </summary>
+    UserInput();
+    ~UserInput() {};
+    /// <summary>
+    /// ボタンの入力状況
+    /// </summary>
+    enum class InputState
     {
         //何もしていない
         Free,
@@ -18,7 +33,7 @@ namespace Input
     /// <summary>
     /// ボタンの情報
     /// </summary>
-    enum KeyInputKind
+    enum class KeyInputKind
     {
         //上入力
         Up = 0,
@@ -41,23 +56,7 @@ namespace Input
         //Aキー
         AKey = 9
     };
-    //入力の種類
-#define KEY_INPUT_KIND_NUM 10
-    //レバーの値の幅
-#define LEVER_VALUE 12767
-}
-using namespace Input;
-/// <summary>
-/// ユーザーが入力した情報
-/// </summary>
-class UserInput
-{
-public:
-    /// <summary>
-/// 入力したキーがどれか分かるように準備
-/// </summary>
-    UserInput();
-    ~UserInput() {};
+
     /// <summary>
     /// 入力状況更新
     /// </summary>
@@ -67,7 +66,7 @@ public:
     /// </summary>
     /// <param name="inputKind"></param>
     /// <returns></returns>
-    static InputState GetInputState(KeyInputKind inputKind);
+    static UserInput::InputState GetInputState(KeyInputKind inputKind);
     /// <summary>
     /// ゲームパッドで遊んでいるか
     /// </summary>

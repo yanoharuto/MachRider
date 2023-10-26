@@ -16,18 +16,17 @@
 /// <param name="collectObserver">何個回収するか教えてもらう</param>
 PrePlayGameProcess::PrePlayGameProcess(std::weak_ptr<CollectItemObserver> collectObserver)
 {
-    using enum UIKind;
     //音の確保
     SoundPlayer::LoadAndInitSound(SoundKind::fanfare);
     SoundPlayer::Play2DSE(SoundKind::fanfare);
     //UIの準備
-    gamePuroseUIData = UIManager::CreateUIData(gamePurose);
-    collectIconUIData = UIManager::CreateUIData(collectIcon);
-    collectItemNum = new NumUI(collectTargetNumberUI);
+    gamePuroseUIData = UIManager::CreateUIData(UIKind::gamePurose);
+    collectIconUIData = UIManager::CreateUIData(UIKind::collectIcon);
+    collectItemNum = new NumUI(UIKind::collectTargetNumberUI);
     playManual = new PlayManual();
     //フェードインフェードアウト用のタイマー
     frameByFrameTimer = new ReusableTimer(gamePuroseUIData.frameSpeed);
-    fadeValue = Utility::MAX1BYTEVALUE;
+    fadeValue = Utility::MAX_ONE_BYTE_RANGE;
     //アイテムの数を保存
     remainingCollectNum = collectObserver.lock()->GetTotalItemNum();
 }
@@ -79,7 +78,7 @@ void PrePlayGameProcess::Draw() const
     if (fadeValue > 0)//フェードアウト中なら操作説明と目標を伝える
     {
         //ゲームの目的が見えにくいのでいったん後ろを白で埋める
-        int colorValue = Utility::MAX1BYTEVALUE;
+        int colorValue = Utility::MAX_ONE_BYTE_RANGE;
         SetDrawBlendMode(DX_BLENDMODE_ALPHA, fadeValue);//α値をいじる
         DrawBox(0, 0, Utility::SCREEN_WIDTH, Utility::SCREEN_HEIGHT, GetColor(colorValue, colorValue, colorValue), true);
         SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);//元に戻す

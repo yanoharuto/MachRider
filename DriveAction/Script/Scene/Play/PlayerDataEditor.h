@@ -20,6 +20,6 @@ public:
     void Draw()const override;
 private:
     //読み込むプレイヤーの位置や向きが入ったファイルのパス
-    static const std::string loadEditFilePath;
+    static const std::string loadFileName;
 };
 

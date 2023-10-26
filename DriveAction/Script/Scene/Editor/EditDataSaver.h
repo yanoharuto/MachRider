@@ -44,19 +44,17 @@ private:
     /// <param name="saveFileName">保存先のファイルの名前</param>
     void SaveEditDataForJSON(std::vector<PlacementData> editData, std::string saveFileName)const;
     //プレイヤーの配置情報の保存先ファイル
-    const std::string playerSaveFileName = "playerData(1)";
+    const std::string playerSaveFileName = "playerData";
     //収集アイテムの配置情報の保存ファイル
-    const std::string collectSaveFileName = "collectData(1)";
+    const std::string collectSaveFileName = "collectData";
     //敵の配置情報の保存ファイル
-    const std::string enemySaveFileName = "enemyData(1)";
-    //json形式
-    const std::string jsonFile = ".json";
-    //ｃｓｖ形式
-    const std::string csvFile = ".csv";
+    const std::string enemySaveFileName = "enemyData";
     //プレイヤー編集位置情報
     std::vector<PlacementData> playerPlaceData;
     //敵編集位置情報
     std::vector<PlacementData> enemyPlaceData;
     //収集アイテム位置情報
     std::vector<PlacementData> collectPlaceData;
+    //編集ファイル置き場
+    const std::string editFilePath = "data/editFile/";
 };

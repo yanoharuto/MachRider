@@ -29,15 +29,14 @@ PlayerCar::PlayerCar(PlacementData arrangementData)
 	position.y = firstPosY;
 	prevPos = position;
 	direction = VGet(arrangementData.dirX,0,arrangementData.dirZ);
-	using enum EffectKind;
 	//エフェクトを読み込ませる
-	EffectManager::LoadEffect(carConflict);
-	EffectManager::LoadEffect(carWind);
-	EffectManager::LoadEffect(carDamage);
-	EffectManager::LoadEffect(turboCourse);
-	EffectManager::LoadEffect(burner);
-	EffectManager::LoadEffect(chargeBurner);
-	EffectManager::LoadEffect(turboBurner);
+	EffectManager::LoadEffect(EffectKind::carConflict);
+	EffectManager::LoadEffect(EffectKind::carWind);
+	EffectManager::LoadEffect(EffectKind::carDamage);
+	EffectManager::LoadEffect(EffectKind::turboCourse);
+	EffectManager::LoadEffect(EffectKind::burner);
+	EffectManager::LoadEffect(EffectKind::chargeBurner);
+	EffectManager::LoadEffect(EffectKind::turboBurner);
 	//音を読み込ませる
 	SoundPlayer::LoadAndInitSound(SoundKind::playerFlight);
 	SoundPlayer::LoadAndInitSound(SoundKind::playerCharge);
@@ -163,11 +162,11 @@ void PlayerCar::UpdateVelocity()
 void PlayerCar::UpdateRotate()
 {
 	//右か左か押してたら機体を傾ける
-	if (UserInput::GetInputState(Right) == Hold)
+	if (UserInput::GetInputState(UserInput::KeyInputKind::Right) == UserInput::InputState::Hold)
 	{
 		twistZRota = twistZRota + twistZRotaSpeed > twistZMaxRota ? twistZMaxRota : twistZRota + twistZRotaSpeed;//上限値を越しそうならMaxRotaをセット
 	}
-	else if (UserInput::GetInputState(Left) == Hold)
+	else if (UserInput::GetInputState(UserInput::KeyInputKind::Left) == UserInput::InputState::Hold)
 	{
 		twistZRota = twistZRota - twistZRotaSpeed < -twistZMaxRota? -twistZMaxRota : twistZRota - twistZRotaSpeed;
 	}
@@ -216,11 +215,10 @@ void PlayerCar::UpdateEffects()
 	}
 	else
 	{
-		using enum EffectKind;
 		if (isTurbo)//急加速中に出るエフェクト
 		{
-			SetEffectPosAndDir(&windEffect, VGet(position.x, 0, position.z), VGet(0, degree * RAGE, 0), carWind);
-			SetEffectPosAndDir(&turboBurnerEffect, VAdd(position, VScale(direction, -radius)), VGet(-twistZRota, degree * RAGE, 0), turboBurner);
+			SetEffectPosAndDir(&windEffect, VGet(position.x, 0, position.z), VGet(0, degree * RAGE, 0), EffectKind::carWind);
+			SetEffectPosAndDir(&turboBurnerEffect, VAdd(position, VScale(direction, -radius)), VGet(-twistZRota, degree * RAGE, 0), EffectKind::turboBurner);
 		}
 		else//加速終了
 		{
@@ -232,8 +230,8 @@ void PlayerCar::UpdateEffects()
 		//ターボ準備中なら
 		if (isTurboReserve)
 		{
-			SetEffectPosAndDir(&turboCourceEffect, VGet(position.x, 0, position.z), VGet(0, degree * RAGE, 0), turboCourse);
-			SetEffectPosAndDir(&chargeBurnerEffect, VAdd(position, VScale(direction, -radius)), VGet(-twistZRota, degree * RAGE, 0), chargeBurner);
+			SetEffectPosAndDir(&turboCourceEffect, VGet(position.x, 0, position.z), VGet(0, degree * RAGE, 0), EffectKind::turboCourse);
+			SetEffectPosAndDir(&chargeBurnerEffect, VAdd(position, VScale(direction, -radius)), VGet(-twistZRota, degree * RAGE, 0), EffectKind::chargeBurner);
 		}
 		else//ターボチャージ中エフェクト終了
 		{
@@ -246,7 +244,7 @@ void PlayerCar::UpdateEffects()
 		if (!(isTurbo || isTurboReserve))
 		{
 			//走っているとき出るエフェクト
-			SetEffectPosAndDir(&defaultBurnerEffect, VAdd(position, VScale(direction, -radius)), VGet(-twistZRota, degree * RAGE, 0), burner);
+			SetEffectPosAndDir(&defaultBurnerEffect, VAdd(position, VScale(direction, -radius)), VGet(-twistZRota, degree * RAGE, 0), EffectKind::burner);
 		}
 	}
 	
@@ -317,13 +315,13 @@ void PlayerCar::ReactionConflict(CollisionResultInfo conflictInfo)
 float PlayerCar::GetTurboPower()
 {
 	//ジョイパッドだったら対応ボタンを変更
-	InputState turboInput = UserInput::GetInputState(Down);
+	UserInput::InputState turboInput = UserInput::GetInputState(UserInput::KeyInputKind::Down);
 	if (GetJoypadNum() != 0)
 	{
-		turboInput = UserInput::GetInputState(Space);
+		turboInput = UserInput::GetInputState(UserInput::KeyInputKind::Space);
 	}
 	//下方向に入力するとターボ準備完了
-	if (turboInput == Hold && ! isTurbo)
+	if (turboInput == UserInput::InputState::Hold && ! isTurbo)
 	{
 		turboChargeTime += Utility::DELTATIME;
 		//初めてターボ準備中
@@ -340,7 +338,7 @@ float PlayerCar::GetTurboPower()
 	else 
 	{	
 		//離したらチャージ終了
-		if (turboInput == Detach)
+		if (turboInput == UserInput::InputState::Detach)
 		{
 			//十分にチャージ出来たらターボに入る
 			if (!isTurbo && turboChargeTime > speedParamator.turboChargeTime)

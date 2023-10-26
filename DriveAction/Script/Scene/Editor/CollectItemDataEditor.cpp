@@ -5,12 +5,12 @@
 #include "EditorDrawModel.h"
 #include "CameraObserver.h"
 //読み込む配置情報の書いてあるファイルのパス
-const std::string CollectItemDataEditor::loadEditFilePath = "collectData.csv";
+const std::string CollectItemDataEditor::loadFileName = "collectData";
 /// <summary>
 /// 収集アイテムの編集するクラス
 /// </summary>
 CollectItemDataEditor::CollectItemDataEditor()
-    :StageDataEditor(loadEditFilePath,InitObjKind::collect)
+    :StageDataEditor(loadFileName,InitObjKind::collect)
 {
 }
 /// <summary>

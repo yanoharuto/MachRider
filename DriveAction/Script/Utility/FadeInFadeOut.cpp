@@ -14,7 +14,7 @@ int FadeInFadeOut::backScreen = -1;
 /// </summary>
 void FadeInFadeOut::FadeIn()
 {
-	fadeValue = Utility::MAX1BYTEVALUE;
+	fadeValue = Utility::MAX_ONE_BYTE_RANGE;
 	//切り替え前の画像が残ってたら消去
 	if (backScreen != -1)
 	{
@@ -34,7 +34,7 @@ void FadeInFadeOut::FadeOut()
 {
 	fadeValue = 0;
 	backScreen = GameScreen::GetScreen();
-	while (fadeValue < Utility::MAX1BYTEVALUE)
+	while (fadeValue < Utility::MAX_ONE_BYTE_RANGE)
 	{
 		fadeValue += fadeSpeed;//α値と色のRGB増加
 		Fading();
@@ -48,7 +48,7 @@ void FadeInFadeOut::Fading()
 	//画面を初期化する
 	ClearDrawScreen();
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, fadeValue);//α値をいじる
-	int colorValue = Utility::MAX1BYTEVALUE;
+	int colorValue = Utility::MAX_ONE_BYTE_RANGE;
 	DrawGraph(0, 0, backScreen, false);
 	DrawBox(0, 0, Utility::SCREEN_WIDTH, Utility::SCREEN_HEIGHT, GetColor(colorValue, colorValue, colorValue), true);
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);//元に戻す

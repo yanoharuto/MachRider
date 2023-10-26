@@ -104,7 +104,7 @@ void ConflictManager::DrawCollisionSphere()
     for (auto objIte = hitCheckList.begin(); objIte != hitCheckList.end(); objIte++)
     {
        HitCheckInfo info = (*objIte)->GetHitExamineCheckInfo();
-       DrawSphere3D(info.pos, info.radius, 4, GetColor(Utility::MAX1BYTEVALUE, Utility::MAX1BYTEVALUE, Utility::MAX1BYTEVALUE), GetColor(Utility::MAX1BYTEVALUE, Utility::MAX1BYTEVALUE, Utility::MAX1BYTEVALUE), false);
+       DrawSphere3D(info.pos, info.radius, 4, GetColor(Utility::MAX_ONE_BYTE_RANGE, Utility::MAX_ONE_BYTE_RANGE, Utility::MAX_ONE_BYTE_RANGE), GetColor(Utility::MAX_ONE_BYTE_RANGE, Utility::MAX_ONE_BYTE_RANGE, Utility::MAX_ONE_BYTE_RANGE), false);
     }
 }
 /// <summary>

@@ -28,7 +28,7 @@ StageSelect::~StageSelect()
 void StageSelect::Update()
 {
     //上下に押したら変更
-    if (UserInput::GetInputState(Down) == Push)
+    if (UserInput::GetInputState(UserInput::KeyInputKind::Down) == UserInput::InputState::Push)
     {
         selectStageNum++;
         //ステージ数の限界に来たら0に
@@ -37,7 +37,7 @@ void StageSelect::Update()
             selectStageNum = 0;
         }
     }
-    else if (UserInput::GetInputState(Up) == Push)
+    else if (UserInput::GetInputState(UserInput::KeyInputKind::Up) == UserInput::InputState::Push)
     {
         selectStageNum--;
         //ステージ数の最低に来たら最大値に

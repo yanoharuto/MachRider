@@ -1,6 +1,6 @@
 #include "Camera.h"
 #include "Actor.h"
-#include "CameraManager.h"
+#include "CameraDataLoader.h"
 #include "Utility.h"
 //ƒJƒƒ‰‚Ì‰æŠp
 float Camera::lookingAngle = 0;

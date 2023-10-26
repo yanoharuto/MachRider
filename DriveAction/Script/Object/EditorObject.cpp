@@ -54,14 +54,14 @@ void EditorObject::SetArrangementData(PlacementData setData)
 /// </summary>
 void EditorObject::ReflectInput(std::weak_ptr<CameraObserver> cameraObserever)
 {
-    if (UserInput::GetInputState(WKey) == Hold)//ｗキーを押してたら回転モード
+    if (UserInput::GetInputState(UserInput::KeyInputKind::WKey) == UserInput::InputState::Hold)//ｗキーを押してたら回転モード
     {
         //左右キーを押すと回転する
-        if (UserInput::GetInputState(Left) == Hold)
+        if (UserInput::GetInputState(UserInput::KeyInputKind::Left) == UserInput::InputState::Hold)
         {
            direction = OriginalMath::GetYRotateVector(direction, -rotaSpeed);
         }
-        else if (UserInput::GetInputState(Right) == Hold)
+        else if (UserInput::GetInputState(UserInput::KeyInputKind::Right) == UserInput::InputState::Hold)
         {
             direction = OriginalMath::GetYRotateVector(direction, rotaSpeed);
         }
@@ -73,22 +73,22 @@ void EditorObject::ReflectInput(std::weak_ptr<CameraObserver> cameraObserever)
         cameraDir.y = 0;//平行移動だけできる
         //移動量
         VECTOR moveValue = {};
-        if (UserInput::GetInputState(Left) == Hold)//左移動
+        if (UserInput::GetInputState(UserInput::KeyInputKind::Left) == UserInput::InputState::Hold)//左移動
         {
             moveValue = VCross(cameraDir, VGet(0, -moveSpeed, 0));
             position = VAdd(position, moveValue);
         }
-        else if (UserInput::GetInputState(Right) == Hold)//右移動
+        else if (UserInput::GetInputState(UserInput::KeyInputKind::Right) == UserInput::InputState::Hold)//右移動
         {
             moveValue = VCross(cameraDir, VGet(0, moveSpeed, 0));
             position = VAdd(position, moveValue);
         }
-        else if (UserInput::GetInputState(Up) == Hold)//前移動
+        else if (UserInput::GetInputState(UserInput::KeyInputKind::Up) == UserInput::InputState::Hold)//前移動
         {
             moveValue = VScale(cameraDir, -moveSpeed);
             position = VAdd(position, moveValue);
         }
-        else if (UserInput::GetInputState(Down) == Hold)//後ろ移動
+        else if (UserInput::GetInputState(UserInput::KeyInputKind::Down) == UserInput::InputState::Hold)//後ろ移動
         {
             moveValue = VScale(cameraDir, moveSpeed);
             position = VAdd(position, moveValue);

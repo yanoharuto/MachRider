@@ -24,6 +24,6 @@ private:
     //今　何番目のミッションかの位置
     const int drawEditedCollectNumY = 0;
     //読み込む配置情報の書いてあるファイルのパス
-    static const std::string loadEditFilePath;
+    static const std::string loadFileName;
 };
 

@@ -20,21 +20,20 @@
 /// <param name="collectItemObserver">収集アイテム情報</param>
 GamePlayUI::GamePlayUI(std::weak_ptr<PlayerObserver> player, std::weak_ptr<Timer> timer, std::shared_ptr<CollectItemObserver> collectItemObserver)
 {
-    using enum UIKind;
     //残り時間
     gameTimerUI = new TimerUI(timer);
     //ミニマップ
     minimapUI = new MiniMap(player);
     //残りの収集アイテムの数
     firstCoinNum = collectItemObserver->GetTotalItemNum();
-    firstCollectNumUI = new NumUI(allCollectItemNum);
+    firstCollectNumUI = new NumUI(UIKind::allCollectItemNum);
     //現在取った数
-    getNumUI = new NumUI(getCollectItemNum);
-    remainingNumUI = new NumUI(remainingCollectItemNum);
+    getNumUI = new NumUI(UIKind::getCollectItemNum);
+    remainingNumUI = new NumUI(UIKind::remainingCollectItemNum);
     //収集アイテムに関するUIの枠
-    frameUIData = UIManager::CreateUIData(collectItemFrameUI);
+    frameUIData = UIManager::CreateUIData(UIKind::collectItemFrameUI);
     //残り収集アイテムについてのコメントUI
-    remainingFrazeUIData = UIManager::CreateUIData(remainingCollectItemPhrase);
+    remainingFrazeUIData = UIManager::CreateUIData(UIKind::remainingCollectItemPhrase);
     //プレイヤーのアイテム所得情報を教えてもらう
     playerObserver = player;
     //収集アイテムの方向を出す
